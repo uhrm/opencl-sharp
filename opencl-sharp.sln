@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opencl-sharp", "opencl-sharp\opencl-sharp.csproj", "{8636A44F-7FD6-4F86-BC5B-7CCAE0B70517}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opencl-samples", "opencl-samples\opencl-samples.csproj", "{1DF0B7DB-27C4-4469-A166-F502A7F1CFAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opencl-compiler", "opencl-compiler\opencl-compiler.csproj", "{1A5F2767-414E-4AB1-80E7-C611E6DC83B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opencl-tests", "opencl-tests\opencl-tests.csproj", "{79D7B3A0-5196-4CBF-9F7F-9B8F2A878529}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A5F2767-414E-4AB1-80E7-C611E6DC83B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A5F2767-414E-4AB1-80E7-C611E6DC83B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A5F2767-414E-4AB1-80E7-C611E6DC83B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A5F2767-414E-4AB1-80E7-C611E6DC83B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DF0B7DB-27C4-4469-A166-F502A7F1CFAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DF0B7DB-27C4-4469-A166-F502A7F1CFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DF0B7DB-27C4-4469-A166-F502A7F1CFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DF0B7DB-27C4-4469-A166-F502A7F1CFAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79D7B3A0-5196-4CBF-9F7F-9B8F2A878529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79D7B3A0-5196-4CBF-9F7F-9B8F2A878529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79D7B3A0-5196-4CBF-9F7F-9B8F2A878529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79D7B3A0-5196-4CBF-9F7F-9B8F2A878529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8636A44F-7FD6-4F86-BC5B-7CCAE0B70517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8636A44F-7FD6-4F86-BC5B-7CCAE0B70517}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8636A44F-7FD6-4F86-BC5B-7CCAE0B70517}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8636A44F-7FD6-4F86-BC5B-7CCAE0B70517}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $2
+		$2.inheritsSet = null
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.PropertyBraceStyle = NextLine
+		$3.PropertyGetBraceStyle = NextLine
+		$3.PropertySetBraceStyle = NextLine
+		$3.EventBraceStyle = NextLine
+		$3.EventAddBraceStyle = NextLine
+		$3.EventRemoveBraceStyle = NextLine
+		$3.StatementBraceStyle = NextLine
+		$3.ElseNewLinePlacement = NewLine
+		$3.CatchNewLinePlacement = NewLine
+		$3.FinallyNewLinePlacement = NewLine
+		$3.BeforeMethodDeclarationParentheses = False
+		$3.BeforeMethodCallParentheses = False
+		$3.BeforeConstructorDeclarationParentheses = False
+		$3.BeforeIndexerDeclarationBracket = False
+		$3.BeforeDelegateDeclarationParentheses = False
+		$3.AfterDelegateDeclarationParameterComma = True
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/x-csharp
+		$3.scope = text/x-csharp
+		$0.TextStylePolicy = $4
+		$4.FileWidth = 120
+		$4.NoTabsAfterNonTabs = True
+		$4.inheritsSet = VisualStudio
+		$4.inheritsScope = text/plain
+		$4.scope = text/plain
+		$0.TextStylePolicy = $5
+		$5.inheritsSet = null
+		$5.scope = application/xml
+		$0.XmlFormattingPolicy = $6
+		$6.inheritsSet = Mono
+		$6.inheritsScope = application/xml
+		$6.scope = application/xml
+		$0.StandardHeader = $7
+		$7.Text = 
+		$7.IncludeInNewFiles = True
+	EndGlobalSection
+EndGlobal

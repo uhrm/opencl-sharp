@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{79D7B3A0-5196-4CBF-9F7F-9B8F2A878529}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>OpenCl.Tests</RootNamespace>
+    <AssemblyName>opencl-tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TestInt4.cs" />
+    <Compile Include="TestByte2.cs" />
+    <Compile Include="TestByte3.cs" />
+    <Compile Include="TestByte4.cs" />
+    <Compile Include="TestByte8.cs" />
+    <Compile Include="TestByte16.cs" />
+    <Compile Include="TestDouble2.cs" />
+    <Compile Include="TestDouble3.cs" />
+    <Compile Include="TestDouble4.cs" />
+    <Compile Include="TestDouble8.cs" />
+    <Compile Include="TestDouble16.cs" />
+    <Compile Include="TestFloat2.cs" />
+    <Compile Include="TestFloat3.cs" />
+    <Compile Include="TestFloat4.cs" />
+    <Compile Include="TestFloat8.cs" />
+    <Compile Include="TestFloat16.cs" />
+    <Compile Include="TestInt2.cs" />
+    <Compile Include="TestInt3.cs" />
+    <Compile Include="TestInt8.cs" />
+    <Compile Include="TestInt16.cs" />
+    <Compile Include="TestLong2.cs" />
+    <Compile Include="TestLong3.cs" />
+    <Compile Include="TestLong4.cs" />
+    <Compile Include="TestLong8.cs" />
+    <Compile Include="TestLong16.cs" />
+    <Compile Include="TestSbyte2.cs" />
+    <Compile Include="TestSbyte3.cs" />
+    <Compile Include="TestSbyte4.cs" />
+    <Compile Include="TestSbyte8.cs" />
+    <Compile Include="TestSbyte16.cs" />
+    <Compile Include="TestShort2.cs" />
+    <Compile Include="TestShort3.cs" />
+    <Compile Include="TestShort4.cs" />
+    <Compile Include="TestShort8.cs" />
+    <Compile Include="TestShort16.cs" />
+    <Compile Include="TestUint2.cs" />
+    <Compile Include="TestUint3.cs" />
+    <Compile Include="TestUint4.cs" />
+    <Compile Include="TestUint8.cs" />
+    <Compile Include="TestUint16.cs" />
+    <Compile Include="TestUlong2.cs" />
+    <Compile Include="TestUlong3.cs" />
+    <Compile Include="TestUlong4.cs" />
+    <Compile Include="TestUlong8.cs" />
+    <Compile Include="TestUlong16.cs" />
+    <Compile Include="TestUshort2.cs" />
+    <Compile Include="TestUshort3.cs" />
+    <Compile Include="TestUshort4.cs" />
+    <Compile Include="TestUshort8.cs" />
+    <Compile Include="TestUshort16.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\opencl-sharp\opencl-sharp.csproj">
+      <Project>{8636A44F-7FD6-4F86-BC5B-7CCAE0B70517}</Project>
+      <Name>opencl-sharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\opencl-compiler\opencl-compiler.csproj">
+      <Project>{1A5F2767-414E-4AB1-80E7-C611E6DC83B4}</Project>
+      <Name>opencl-compiler</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

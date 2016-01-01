@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1DF0B7DB-27C4-4469-A166-F502A7F1CFAE}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>OpenCl.Samples</RootNamespace>
+    <AssemblyName>opencl-samples</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MainProgram.cs" />
+    <Compile Include="Kernels\ConvolveSample.cs" />
+    <Compile Include="Kernels\BitonicSortSample.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\opencl-sharp\opencl-sharp.csproj">
+      <Project>{8636A44F-7FD6-4F86-BC5B-7CCAE0B70517}</Project>
+      <Name>opencl-sharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\opencl-compiler\opencl-compiler.csproj">
+      <Project>{1A5F2767-414E-4AB1-80E7-C611E6DC83B4}</Project>
+      <Name>opencl-compiler</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Kernels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Kernels\convolve.cl" />
+    <EmbeddedResource Include="Kernels\bitonicsort.cl" />
+  </ItemGroup>
+</Project>
