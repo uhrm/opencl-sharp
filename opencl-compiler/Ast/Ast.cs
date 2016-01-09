@@ -6,6 +6,18 @@ namespace OpenCl.Ast
 {
     internal abstract class AstNode
     {
+        private TypeReference type;
+
+        protected AstNode(TypeReference type)
+        {
+            this.type = type;
+        }
+
+        public TypeReference Type
+        {
+            get { return this.type; }
+        }
+
         protected internal abstract void Accept(AstVisitor visitor);
     }
 
@@ -13,7 +25,7 @@ namespace OpenCl.Ast
     {
         private readonly T val;
 
-        public Const(T val)
+        public Const(TypeReference type, T val) : base(type)
         {
             this.val = val;
         }
@@ -32,15 +44,24 @@ namespace OpenCl.Ast
     internal class VarRef : AstNode
     {
         private readonly int idx;
+        private readonly bool tmp;
 
-        public VarRef(int idx)
+        public VarRef(TypeReference type, int idx) : this(type, idx, false) { }
+
+        public VarRef(TypeReference type, int idx, bool tmp) : base(type)
         {
             this.idx = idx;
+            this.tmp = tmp;
         }
 
         public int Index
         {
             get { return this.idx; }
+        }
+
+        public bool IsTemp
+        {
+            get { return this.tmp; }
         }
 
         protected internal override void Accept(AstVisitor visitor)
@@ -53,7 +74,7 @@ namespace OpenCl.Ast
     {
         private readonly string name;
 
-        public ParamRef(string name)
+        public ParamRef(TypeReference type, string name) : base(type)
         {
             this.name = name;
         }
@@ -74,7 +95,7 @@ namespace OpenCl.Ast
         private readonly AstNode array;
         private readonly AstNode index;
 
-        public ElemRef(AstNode arr, AstNode idx)
+        public ElemRef(TypeReference type, AstNode arr, AstNode idx) : base(type)
         {
             this.array = arr;
             this.index = idx;
@@ -96,7 +117,7 @@ namespace OpenCl.Ast
         private readonly string name;
         private readonly AstNode node;
 
-        public FieldRef(string name, AstNode node)
+        public FieldRef(TypeReference type, string name, AstNode node) : base(type)
         {
             this.name = name;
             this.node = node;
@@ -119,7 +140,7 @@ namespace OpenCl.Ast
     {
         private readonly int idx;
 
-        public VarAddr(int idx)
+        public VarAddr(TypeReference type, int idx) : base(type)
         {
             this.idx = idx;
         }
@@ -140,7 +161,7 @@ namespace OpenCl.Ast
         private readonly AstNode array;
         private readonly AstNode index;
 
-        public ElemAddr(AstNode arr, AstNode idx)
+        public ElemAddr(TypeReference type, AstNode arr, AstNode idx) : base(type)
         {
             this.array = arr;
             this.index = idx;
@@ -161,7 +182,7 @@ namespace OpenCl.Ast
     {
         private readonly AstNode addr;
 
-        public LoadAddr(AstNode addr)
+        public LoadAddr(AstNode addr) : base((addr.Type as PointerType).ElementType)
         {
             this.addr = addr;
         }
@@ -170,6 +191,23 @@ namespace OpenCl.Ast
         {
             visitor.Enter(this);
             this.addr.Accept(visitor);
+            visitor.Exit(this);
+        }
+    }
+
+    internal class LocAlloc : AstNode
+    {
+        private readonly AstNode size;
+
+        public LocAlloc(TypeReference type, AstNode size) : base(type)
+        {
+            this.size = size;
+        }
+
+        protected internal override void Accept(AstVisitor visitor)
+        {
+            visitor.Enter(this);
+            this.size.Accept(visitor);
             visitor.Exit(this);
         }
     }
@@ -199,7 +237,7 @@ namespace OpenCl.Ast
         private readonly AstNode left;
         private readonly AstNode rght;
 
-        public BinaryOp(BinaryOpCode code, AstNode left, AstNode rght)
+        public BinaryOp(TypeReference type, BinaryOpCode code, AstNode left, AstNode rght) : base(type)
         {
             this.code = code;
             this.left = left;
@@ -243,7 +281,9 @@ namespace OpenCl.Ast
         private readonly UnaryOpCode code;
         private readonly AstNode node;
 
-        public UnaryOp(UnaryOpCode code, AstNode node)
+        public UnaryOp(UnaryOpCode code, AstNode node) : this(node.Type, code, node) { }
+
+        public UnaryOp(TypeReference type, UnaryOpCode code, AstNode node) : base(type)
         {
             this.code = code;
             this.node = node;
@@ -273,7 +313,7 @@ namespace OpenCl.Ast
         private readonly string name;
         private readonly ReadOnlyCollection<AstNode> args;
 
-        public Call(string name, AstNode[] args)
+        public Call(TypeReference type, string name, AstNode[] args) : base(type)
         {
             this.name = name;
             var a = new AstNode[args.Length];
@@ -366,6 +406,14 @@ namespace OpenCl.Ast
         }
 
         public virtual void Exit(LoadAddr node)
+        {
+        }
+
+        public virtual void Enter(LocAlloc node)
+        {
+        }
+
+        public virtual void Exit(LocAlloc node)
         {
         }
 

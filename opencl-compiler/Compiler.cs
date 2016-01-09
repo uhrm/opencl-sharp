@@ -6,6 +6,8 @@ using System.Text;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using OpenCl.Ast;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace OpenCl
 {
@@ -45,7 +47,7 @@ namespace OpenCl
 
             public override void Visit(VarRef node)
             {
-                this.builder.AppendFormat("__V{0}", node.Index);
+                this.builder.AppendFormat("__{0}{1}", node.IsTemp ? "T" : "V", node.Index);
             }
 
             // ElemRef
@@ -106,6 +108,18 @@ namespace OpenCl
             public override void Exit(LoadAddr node)
             {
                 this.builder.Append("))");
+            }
+
+            // LocAlloc
+
+            public override void Enter(LocAlloc node)
+            {
+                this.builder.Append("alloca(");
+            }
+
+            public override void Exit(LocAlloc node)
+            {
+                this.builder.Append(")");
             }
 
             // Call
@@ -231,8 +245,6 @@ namespace OpenCl
             { "System.Single",   "float" },
             { "System.Double",   "double" },
 
-            { "System.String",   "char*" },
-
             { "OpenCl.sbyte2",   "char2" },
             { "OpenCl.sbyte3",   "char3" },
             { "OpenCl.sbyte4",   "char4" },
@@ -295,8 +307,6 @@ namespace OpenCl
             { "System.Single[]",   "float*" },
             { "System.Double[]",   "double*" },
 
-            { "System.String[]",   "char**" },
-
             { "OpenCl.sbyte2[]",   "char2*" },
             { "OpenCl.sbyte3[]",   "char3*" },
             { "OpenCl.sbyte4[]",   "char4*" },
@@ -347,17 +357,274 @@ namespace OpenCl
             { "OpenCl.double4[]",  "double4*" },
             { "OpenCl.double8[]",  "double8*" },
             { "OpenCl.double16[]", "double16*" },
+
+            { "System.Int8*",     "char*" },
+            { "System.UInt8*",    "uchar*" },
+            { "System.Int16*",    "short*" },
+            { "System.UInt16*",   "ushort*" },
+            { "System.Int32*",    "int*" },
+            { "System.UInt32*",   "uint*" },
+            { "System.Int64*",    "long*" },
+            { "System.UInt64*",   "ulong*" },
+            { "System.Single*",   "float*" },
+            { "System.Double*",   "double*" },
+
+            { "OpenCl.sbyte2*",   "char2*" },
+            { "OpenCl.sbyte3*",   "char3*" },
+            { "OpenCl.sbyte4*",   "char4*" },
+            { "OpenCl.sbyte8*",   "char8*" },
+            { "OpenCl.sbyte16*",  "char16*" },
+            { "OpenCl.byte2*",    "uchar2*" },
+            { "OpenCl.byte3*",    "uchar3*" },
+            { "OpenCl.byte4*",    "uchar4*" },
+            { "OpenCl.byte8*",    "uchar8*" },
+            { "OpenCl.byte16*",   "uchar16*" },
+            { "OpenCl.short2*",   "short2*" },
+            { "OpenCl.short3*",   "short3*" },
+            { "OpenCl.short4*",   "short4*" },
+            { "OpenCl.short8*",   "short8*" },
+            { "OpenCl.short16*",  "short16*" },
+            { "OpenCl.ushort2*",  "ushort2*" },
+            { "OpenCl.ushort3*",  "ushort3*" },
+            { "OpenCl.ushort4*",  "ushort4*" },
+            { "OpenCl.ushort8*",  "ushort8*" },
+            { "OpenCl.ushort16*", "ushort16*" },
+            { "OpenCl.int2*",     "int2*" },
+            { "OpenCl.int3*",     "int3*" },
+            { "OpenCl.int4*",     "int4*" },
+            { "OpenCl.int8*",     "int8*" },
+            { "OpenCl.int16*",    "int16*" },
+            { "OpenCl.uint2*",    "uint2*" },
+            { "OpenCl.uint3*",    "uint3*" },
+            { "OpenCl.uint4*",    "uint4*" },
+            { "OpenCl.uint8*",    "uint8*" },
+            { "OpenCl.uint16*",   "uint16*" },
+            { "OpenCl.long2*",    "long2*" },
+            { "OpenCl.long3*",    "long3*" },
+            { "OpenCl.long4*",    "long4*" },
+            { "OpenCl.long8*",    "long8*" },
+            { "OpenCl.long16*",   "long16*" },
+            { "OpenCl.ulong2*",   "ulong2*" },
+            { "OpenCl.ulong3*",   "ulong3*" },
+            { "OpenCl.ulong4*",   "ulong4*" },
+            { "OpenCl.ulong8*",   "ulong8*" },
+            { "OpenCl.ulong16*",  "ulong16*" },
+            { "OpenCl.float2*",   "float2*" },
+            { "OpenCl.float3*",   "float3*" },
+            { "OpenCl.float4*",   "float4*" },
+            { "OpenCl.float8*",   "float8*" },
+            { "OpenCl.float16*",  "float16*" },
+            { "OpenCl.double2*",  "double2*" },
+            { "OpenCl.double3*",  "double3*" },
+            { "OpenCl.double4*",  "double4*" },
+            { "OpenCl.double8*",  "double8*" },
+            { "OpenCl.double16*", "double16*" },
         };
 
+        private TypeReference GetAddType(TypeReference l, TypeReference r) {
+            if (l.IsPointer) {
+                if (r.FullName == "System.IntPtr") {
+                    return l;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.IntPtr") {
+                if (r.IsPointer) {
+                    return r;
+                }
+                else if (r.FullName == "System.IntPtr") {
+                    return l;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int32") {
+                if (r.IsPointer) {
+                    return r;
+                }
+                else if (r.FullName == "System.IntPtr") {
+                    return r;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int64") {
+                if (r.FullName == "System.Int64") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Single") {
+                if (r.FullName == "System.Single") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Double") {
+                if (r.FullName == "System.Double") {
+                    return l;
+                }
+            }
+            throw new ArgumentException(String.Format("Incompatible types for addition: {0} and {1}", l, r));
+        }
+
+        private TypeReference GetSubType(TypeReference l, TypeReference r) {
+            if (l.IsPointer) {
+                if (r.IsPointer) {
+                    return this.module.Import(typeof(IntPtr));
+                }
+                else if (r.FullName == "System.IntPtr") {
+                    return l;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.IntPtr") {
+                if (r.FullName == "System.IntPtr") {
+                    return l;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int32") {
+                if (r.FullName == "System.IntPtr") {
+                    return r;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int64") {
+                if (r.FullName == "System.Int64") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Single") {
+                if (r.FullName == "System.Single") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Double") {
+                if (r.FullName == "System.Double") {
+                    return l;
+                }
+            }
+            throw new ArgumentException(String.Format("Incompatible types for subtraction: {0} and {1}", l, r));
+        }
+
+        private TypeReference GetMulType(TypeReference l, TypeReference r) {
+            if (l.FullName == "System.IntPtr") {
+                if (r.FullName == "System.IntPtr") {
+                    return l;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int32") {
+                if (r.FullName == "System.IntPtr") {
+                    return r;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int64") {
+                if (r.FullName == "System.Int64") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Single") {
+                if (r.FullName == "System.Single") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Double") {
+                if (r.FullName == "System.Double") {
+                    return l;
+                }
+            }
+            throw new ArgumentException(String.Format("Incompatible types for multiplication: {0} and {1}", l, r));
+        }
+
+        private TypeReference GetDivType(TypeReference l, TypeReference r) {
+            if (l.FullName == "System.IntPtr") {
+                if (r.FullName == "System.IntPtr") {
+                    return l;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int32") {
+                if (r.FullName == "System.IntPtr") {
+                    return r;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int64") {
+                if (r.FullName == "System.Int64") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Single") {
+                if (r.FullName == "System.Single") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Double") {
+                if (r.FullName == "System.Double") {
+                    return l;
+                }
+            }
+            throw new ArgumentException(String.Format("Incompatible types for division: {0} and {1}", l, r));
+        }
+
+        private TypeReference GetIntType(TypeReference l, TypeReference r) {
+            if (l.FullName == "System.IntPtr") {
+                if (r.FullName == "System.IntPtr") {
+                    return l;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int32") {
+                if (r.FullName == "System.IntPtr") {
+                    return r;
+                }
+                else if (r.FullName == "System.Int32") {
+                    return l;
+                }
+            }
+            else if (l.FullName == "System.Int64") {
+                if (r.FullName == "System.Int64") {
+                    return l;
+                }
+            }
+            throw new ArgumentException(String.Format("Incompatible types for bit-wise operation: {0} and {1}", l, r));
+        }
+
+        private readonly ModuleDefinition module;
+        private readonly TypeDefinition type;
         private readonly MethodDefinition method;
+
         private readonly StringBuilder builder;
 
         private readonly ClExprVisitor printer;
 
         private readonly Dictionary<int,BranchType> labels;
 
-        private Compiler(MethodDefinition method)
+        private Compiler(ModuleDefinition module, TypeDefinition type, MethodDefinition method)
         {
+            this.module = module;
+            this.type = type;
             this.method = method;
             this.builder = new StringBuilder();
             this.printer = new ClExprVisitor(this.builder);
@@ -477,10 +744,14 @@ namespace OpenCl
         private void EmitBody()
         {
             this.builder.AppendLine("{");
-            MethodBody body = this.method.Body;
+            var body = this.method.Body;
             var vars = body.Variables;
             foreach (var v in vars) {
-                this.builder.AppendFormat("{0} __V{1};\n", typeMap[v.VariableType.FullName], v.Index);
+                string name = null;
+                if (!typeMap.TryGetValue(v.VariableType.FullName, out name)) {
+                    throw new ArgumentException(String.Format("Unsupported type: {0}.", v.VariableType.FullName));
+                }
+                this.builder.AppendFormat("{0} __V{1};\n", name, v.Index);
             }
             var code = body.Instructions;
             foreach (var instr in code) {
@@ -508,6 +779,7 @@ namespace OpenCl
                 }
             }
             var stack = new Stack<AstNode>();
+            var ndups = 0;
             foreach (var instr in code) {
                 if (this.labels.ContainsKey(instr.Offset)) {
                     switch (this.labels[instr.Offset])
@@ -531,105 +803,201 @@ namespace OpenCl
                 case Code.Nop:
                     // nothing to do...
                     break;
-                case Code.Ldc_I4_0:
-                    stack.Push(new Const<int>(0));
-                    break;
-                case Code.Ldc_I4_1:
-                    stack.Push(new Const<int>(1));
-                    break;
-                case Code.Ldc_I4_2:
-                    stack.Push(new Const<int>(2));
-                    break;
-                case Code.Ldc_I4_3:
-                    stack.Push(new Const<int>(3));
-                    break;
-                case Code.Ldc_I4_4:
-                    stack.Push(new Const<int>(4));
-                    break;
-                case Code.Ldc_I4_5:
-                    stack.Push(new Const<int>(5));
-                    break;
-                case Code.Ldc_I4_6:
-                    stack.Push(new Const<int>(6));
-                    break;
-                case Code.Ldc_I4_7:
-                    stack.Push(new Const<int>(7));
-                    break;
-                case Code.Ldc_I4_8:
-                    stack.Push(new Const<int>(8));
-                    break;
-                case Code.Ldc_I4_M1:
-                    stack.Push(new Const<int>(-1));
-                    break;
-                case Code.Ldc_I4:
-                    stack.Push(new Const<int>((int)instr.Operand));
-                    break;
-                case Code.Ldc_I4_S:
-                    stack.Push(new Const<int>((sbyte)instr.Operand));
-                    break;
-                case Code.Ldarg_0:
-                    stack.Push(new ParamRef(this.method.Parameters[0].Name));
-                    break;
-                case Code.Ldarg_1:
-                    stack.Push(new ParamRef(this.method.Parameters[1].Name));
-                    break;
-                case Code.Ldarg_2:
-                    stack.Push(new ParamRef(this.method.Parameters[2].Name));
-                    break;
-                case Code.Ldarg_3:
-                    stack.Push(new ParamRef(this.method.Parameters[3].Name));
-                    break;
-                case Code.Ldarg:
-                    stack.Push(new ParamRef((instr.Operand as ParameterDefinition).Name));
-                    break;
-                case Code.Ldarg_S:
-                    stack.Push(new ParamRef((instr.Operand as ParameterDefinition).Name));
-                    break;
-                case Code.Ldloc_0:
-                    stack.Push(new VarRef(0));
-                    break;
-                case Code.Ldloc_1:
-                    stack.Push(new VarRef(1));
-                    break;
-                case Code.Ldloc_2:
-                    stack.Push(new VarRef(2));
-                    break;
-                case Code.Ldloc_3:
-                    stack.Push(new VarRef(3));
-                    break;
-                case Code.Ldloc:
-                case Code.Ldloc_S:
-                    stack.Push(new VarRef((instr.Operand as VariableDefinition).Index));
-                    break;
-                case Code.Ldelem_Any:
-                case Code.Ldelem_I:
-                case Code.Ldelem_I1:
-                case Code.Ldelem_I2:
-                case Code.Ldelem_I4:
-                case Code.Ldelem_I8:
-                case Code.Ldelem_U1:
-                case Code.Ldelem_U2:
-                case Code.Ldelem_U4:
-                case Code.Ldelem_R4:
-                case Code.Ldelem_R8: {
-                    var idx = stack.Pop();
-                    var arr = stack.Pop();
-                    stack.Push(new ElemRef(arr, idx));
+                case Code.Dup: {
+                    var node = stack.Pop();
+                        string name = null;
+                        if (!typeMap.TryGetValue(node.Type.FullName, out name)) {
+                            throw new ArgumentException(String.Format("Unsupported type: {0}.", node.Type.FullName));
+                        }
+                        this.builder.AppendFormat("{0} __T{1} = ", name, ndups);
+                        node.Accept(printer);
+                        this.builder.AppendLine(";");
+                        stack.Push(new VarRef(node.Type, ndups, true));
+                        stack.Push(new VarRef(node.Type, ndups, true));
+                        ndups++;
                     break;
                 }
+                case Code.Ldc_I4_0:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), 0));
+                    break;
+                case Code.Ldc_I4_1:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), 1));
+                    break;
+                case Code.Ldc_I4_2:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), 2));
+                    break;
+                case Code.Ldc_I4_3:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), 3));
+                    break;
+                case Code.Ldc_I4_4:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), 4));
+                    break;
+                case Code.Ldc_I4_5:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), 5));
+                    break;
+                case Code.Ldc_I4_6:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), 6));
+                    break;
+                case Code.Ldc_I4_7:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), 7));
+                    break;
+                case Code.Ldc_I4_8:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), 8));
+                    break;
+                case Code.Ldc_I4_M1:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), -1));
+                    break;
+                case Code.Ldc_I4:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), (int)instr.Operand));
+                    break;
+                case Code.Ldc_I4_S:
+                    stack.Push(new Const<int>(this.module.Import(typeof(int)), (sbyte)instr.Operand));
+                    break;
+                case Code.Ldc_I8:
+                    stack.Push(new Const<long>(this.module.Import(typeof(long)), (long)instr.Operand));
+                    break;
+                case Code.Ldc_R4:
+                    stack.Push(new Const<float>(this.module.Import(typeof(float)), (float)instr.Operand));
+                    break;
+                case Code.Ldc_R8:
+                    stack.Push(new Const<double>(this.module.Import(typeof(double)), (double)instr.Operand));
+                    break;
+                case Code.Ldarg_0:
+                    stack.Push(new ParamRef(this.method.Parameters[0].ParameterType, this.method.Parameters[0].Name));
+                    break;
+                case Code.Ldarg_1:
+                    stack.Push(new ParamRef(this.method.Parameters[1].ParameterType, this.method.Parameters[1].Name));
+                    break;
+                case Code.Ldarg_2:
+                    stack.Push(new ParamRef(this.method.Parameters[2].ParameterType, this.method.Parameters[2].Name));
+                    break;
+                case Code.Ldarg_3:
+                    stack.Push(new ParamRef(this.method.Parameters[3].ParameterType, this.method.Parameters[3].Name));
+                    break;
+                case Code.Ldarg:
+                case Code.Ldarg_S: {
+                    var arg = instr.Operand as ParameterDefinition;
+                    stack.Push(new ParamRef(arg.ParameterType, arg.Name));
+                    break;
+                }
+                case Code.Ldloc_0:
+                    stack.Push(new VarRef(vars[0].VariableType, 0));
+                    break;
+                case Code.Ldloc_1:
+                    stack.Push(new VarRef(vars[1].VariableType, 1));
+                    break;
+                case Code.Ldloc_2:
+                    stack.Push(new VarRef(vars[2].VariableType, 2));
+                    break;
+                case Code.Ldloc_3:
+                    stack.Push(new VarRef(vars[3].VariableType, 3));
+                    break;
+                case Code.Ldloc:
+                case Code.Ldloc_S: {
+                    var loc = instr.Operand as VariableDefinition;
+                    stack.Push(new VarRef(loc.VariableType, loc.Index));
+                    break;
+                }
+                /*case Code.Ldelem_Any:*/
+                case Code.Ldelem_I: {
+                    var type = this.module.Import(typeof(IntPtr));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldelem_I1: {
+                    var type = this.module.Import(typeof(sbyte));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldelem_I2: {
+                    var type = this.module.Import(typeof(short));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldelem_I4: {
+                    var type = this.module.Import(typeof(int));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldelem_I8: {
+                    var type = this.module.Import(typeof(long));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldelem_U1: {
+                    var type = this.module.Import(typeof(byte));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldelem_U2: {
+                    var type = this.module.Import(typeof(ushort));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldelem_U4: {
+                    var type = this.module.Import(typeof(uint));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldelem_R4: {
+                    var type = this.module.Import(typeof(float));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldelem_R8: {
+                    var type = this.module.Import(typeof(double));
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(type, arr, idx));
+                    break;
+                }
+                case Code.Ldind_I:
+                case Code.Ldind_I1:
+                case Code.Ldind_I2:
+                case Code.Ldind_I4:
+                case Code.Ldind_I8:
+                case Code.Ldind_R4:
+                case Code.Ldind_R8:
                 case Code.Ldobj: {
                     var ptr = stack.Pop();
                     stack.Push(new LoadAddr(ptr));
                     break;
                 }
                 case Code.Ldloca:
-                case Code.Ldloca_S:
-                    stack.Push(new VarAddr((instr.Operand as VariableDefinition).Index));
+                case Code.Ldloca_S: {
+                    var loc = instr.Operand as VariableDefinition;
+                    stack.Push(new VarAddr(new PointerType(loc.VariableType), loc.Index));
                     break;
+                }
                 case Code.Ldelema: {
                     var idx = stack.Pop();
                     var arr = stack.Pop();
-                    stack.Push(new ElemAddr(arr, idx));
+                    var typ = new PointerType(arr.Type.GetElementType());
+                    stack.Push(new ElemAddr(typ, arr, idx));
+                    break;
+                }
+                case Code.Localloc: {
+                    var size = stack.Pop();
+                    var type = new PointerType(this.module.Import(typeof(IntPtr)));
+                    stack.Push(new LocAlloc(type, size));
                     break;
                 }
                 case Code.Stloc_0: {
@@ -682,6 +1050,13 @@ namespace OpenCl
                     this.builder.AppendLine(";");
                     break;
                 }
+                case Code.Stind_I:
+                case Code.Stind_I1:
+                case Code.Stind_I2:
+                case Code.Stind_I4:
+                case Code.Stind_I8:
+                case Code.Stind_R4:
+                case Code.Stind_R8:
                 case Code.Stobj: {
                     var val = stack.Pop();
                     var ptr = stack.Pop();
@@ -693,153 +1068,168 @@ namespace OpenCl
                     break;
                 }
                 case Code.Add:
-                /*case Code.Add_Ovf:
-                case Code.Add_Ovf_Un:*/ {
+                case Code.Add_Ovf:
+                case Code.Add_Ovf_Un: {
                     var r = stack.Pop();
                     var l = stack.Pop();
-                    stack.Push(new BinaryOp(BinaryOpCode.Add, l, r));
+                    var t = GetAddType(l.Type, r.Type);
+                    if (l.Type.IsPointer) {
+                        var e = (l.Type as PointerType).ElementType.Resolve();
+                        var n = Assembly.CreateQualifiedName(e.Module.Assembly.FullName, e.FullName);
+                        var s = Marshal.SizeOf(Type.GetType(n));
+                        r = new BinaryOp (r.Type, BinaryOpCode.Div, r, new Const<int> (r.Type, s));
+                    }
+                    stack.Push(new BinaryOp(t, BinaryOpCode.Add, l, r));
                     break;
                 }
                 case Code.Sub:
-                /*case Code.Sub_Ovf:
-                case Code.Sub_Ovf_Un:*/ {
+                case Code.Sub_Ovf:
+                case Code.Sub_Ovf_Un: {
                     var r = stack.Pop();
                     var l = stack.Pop();
-                    stack.Push(new BinaryOp(BinaryOpCode.Sub, l, r));
+                    var t = GetSubType(l.Type, r.Type);
+                    stack.Push(new BinaryOp(t, BinaryOpCode.Sub, l, r));
                     break;
                 }
                 case Code.Mul:
-                /*case Code.Mul_Ovf:
-                case Code.Mul_Ovf_Un:*/ {
+                case Code.Mul_Ovf:
+                case Code.Mul_Ovf_Un: {
                     var r = stack.Pop();
                     var l = stack.Pop();
-                    stack.Push(new BinaryOp(BinaryOpCode.Mul, l, r));
+                    var t = GetMulType(l.Type, r.Type);
+                    stack.Push(new BinaryOp(t, BinaryOpCode.Mul, l, r));
                     break;
                 }
                 case Code.Div:
                 case Code.Div_Un: {
                     var r = stack.Pop();
                     var l = stack.Pop();
-                    stack.Push(new BinaryOp(BinaryOpCode.Div, l, r));
+                    var t = GetDivType(l.Type, r.Type);
+                    stack.Push(new BinaryOp(t, BinaryOpCode.Div, l, r));
                     break;
                 }
                 case Code.And: {
                     var r = stack.Pop();
                     var l = stack.Pop();
-                    stack.Push(new BinaryOp(BinaryOpCode.And, l, r));
+                    var t = GetIntType(l.Type, r.Type);
+                    stack.Push(new BinaryOp(t, BinaryOpCode.And, l, r));
                     break;
                 }
                 case Code.Or: {
                     var r = stack.Pop();
                     var l = stack.Pop();
-                    stack.Push(new BinaryOp(BinaryOpCode.Or, l, r));
+                    var t = GetIntType(l.Type, r.Type);
+                    stack.Push(new BinaryOp(t, BinaryOpCode.Or, l, r));
                     break;
                 }
                 case Code.Xor: {
                     var r = stack.Pop();
                     var l = stack.Pop();
-                    stack.Push(new BinaryOp(BinaryOpCode.Xor, l, r));
+                    var t = GetIntType(l.Type, r.Type);
+                    stack.Push(new BinaryOp(t, BinaryOpCode.Xor, l, r));
                     break;
                 }
                 case Code.Shl: {
                     var r = stack.Pop();
                     var l = stack.Pop();
-                    stack.Push(new BinaryOp(BinaryOpCode.Shl, l, r));
+                    var t = GetIntType(l.Type, r.Type);
+                    stack.Push(new BinaryOp(t, BinaryOpCode.Shl, l, r));
                     break;
                 }
                 case Code.Shr:
                 case Code.Shr_Un: {
                     var r = stack.Pop();
                     var l = stack.Pop();
-                    stack.Push(new BinaryOp(BinaryOpCode.Shr, l, r));
+                    var t = GetIntType(l.Type, r.Type);
+                    stack.Push(new BinaryOp(t, BinaryOpCode.Shr, l, r));
                     break;
                 }
                 case Code.Call: {
                     var mref = instr.Operand as MethodReference;
-                        var mdef = mref.Resolve();
-                        var name = GetMethodName(mdef);
-                        var nargs = mref.Parameters.Count;
-                        if (mdef.HasThis && !mdef.ExplicitThis) {
-                            nargs++;
-                        }
-                        var args = new AstNode[nargs];
-                        for (var i=nargs-1; i>=0; i--) {
-                            args[i] = stack.Pop();
-                        }
-                        if (mdef.IsConstructor) {
-                            var tdef = mdef.DeclaringType;
-                            if (tdef.IsValueType) {
-                                // Note: this assumes that the struct constructor
-                                // is compatible with C-style compound literals.
-                                this.builder.Append("*(");
-                                args[0].Accept(this.printer);
-                                this.builder.AppendFormat(") = ({0}){{ ", tdef.Name);
-                                for (int i=1; i<nargs; i++) {
-                                    if (i > 1) {
-                                        this.builder.Append(", ");
-                                    }
-                                    args[i].Accept(this.printer);
+                    var mdef = mref.Resolve();
+                    var name = GetMethodName(mdef);
+                    var nargs = mref.Parameters.Count;
+                    if (mdef.HasThis && !mdef.ExplicitThis) {
+                        nargs++;
+                    }
+                    var args = new AstNode[nargs];
+                    for (var i=nargs-1; i>=0; i--) {
+                        args[i] = stack.Pop();
+                    }
+                    if (mdef.IsConstructor) {
+                        var tdef = mdef.DeclaringType;
+                        if (tdef.IsValueType) {
+                            // Note: this assumes that the struct constructor
+                            // is compatible with C-style compound literals.
+                            this.builder.Append("*(");
+                            args[0].Accept(this.printer);
+                            this.builder.AppendFormat(") = ({0}){{ ", tdef.Name);
+                            for (int i=1; i<nargs; i++) {
+                                if (i > 1) {
+                                    this.builder.Append(", ");
                                 }
-                                this.builder.AppendLine(" };");
+                                args[i].Accept(this.printer);
                             }
+                            this.builder.AppendLine(" };");
                         }
-                        else {
-                            switch (name)
-                            {
-                            case "op_Addition":
-                                stack.Push(new BinaryOp(BinaryOpCode.Add, args[0], args[1]));
-                                break;
-                            case "op_Subtraction":
-                                stack.Push(new BinaryOp(BinaryOpCode.Sub, args[0], args[1]));
-                                break;
-                            case "op_Multiply":
-                                stack.Push(new BinaryOp(BinaryOpCode.Mul, args[0], args[1]));
-                                break;
-                            case "op_Division":
-                                stack.Push(new BinaryOp(BinaryOpCode.Div, args[0], args[1]));
-                                break;
-                            case "op_Equality":
-                                stack.Push(new BinaryOp(BinaryOpCode.Eq, args[0], args[1]));
-                                break;
-                            case "op_Inequality":
-                                stack.Push(new BinaryOp(BinaryOpCode.Neq, args[0], args[1]));
-                                break;
-                            case "op_LessThan":
-                                stack.Push(new BinaryOp(BinaryOpCode.Lt, args[0], args[1]));
-                                break;
-                            case "op_LessThanOrEqual":
-                                stack.Push(new BinaryOp(BinaryOpCode.Le, args[0], args[1]));
-                                break;
-                            case "op_GreaterThan":
-                                stack.Push(new BinaryOp(BinaryOpCode.Gt, args[0], args[1]));
-                                break;
-                            case "op_GreaterThanOrEqual":
-                                stack.Push(new BinaryOp(BinaryOpCode.Ge, args[0], args[1]));
-                                break;
-                            case "op_BitwiseAnd":
-                                stack.Push(new BinaryOp(BinaryOpCode.And, args[0], args[1]));
-                                break;
-                            case "op_BitwiseOr":
-                                stack.Push(new BinaryOp(BinaryOpCode.Or, args[0], args[1]));
-                                break;
-                            case "op_ExclusiveOr":
-                                stack.Push(new BinaryOp(BinaryOpCode.Xor, args[0], args[1]));
-                                break;
-                            case "op_OnesComplement":
-                                stack.Push(new UnaryOp(UnaryOpCode.Not, args[0]));
-                                break;
-                            default:
-                                if (mdef.HasThis && name.StartsWith("get_")) {
-                                    // Note: this assumes that the property getter is a valid
-                                    // C-style field reference.
-                                    stack.Push(new FieldRef(name.Substring(4), args[0]));
-                                }
-                                else {
-                                    stack.Push(new Call(name, args));
-                                }
-                                break;
+                    }
+                    else {
+                        switch (name)
+                        {
+                        case "op_Addition":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Add, args[0], args[1]));
+                            break;
+                        case "op_Subtraction":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Sub, args[0], args[1]));
+                            break;
+                        case "op_Multiply":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Mul, args[0], args[1]));
+                            break;
+                        case "op_Division":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Div, args[0], args[1]));
+                            break;
+                        case "op_Equality":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Eq, args[0], args[1]));
+                            break;
+                        case "op_Inequality":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Neq, args[0], args[1]));
+                            break;
+                        case "op_LessThan":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Lt, args[0], args[1]));
+                            break;
+                        case "op_LessThanOrEqual":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Le, args[0], args[1]));
+                            break;
+                        case "op_GreaterThan":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Gt, args[0], args[1]));
+                            break;
+                        case "op_GreaterThanOrEqual":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Ge, args[0], args[1]));
+                            break;
+                        case "op_BitwiseAnd":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.And, args[0], args[1]));
+                            break;
+                        case "op_BitwiseOr":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Or, args[0], args[1]));
+                            break;
+                        case "op_ExclusiveOr":
+                            stack.Push(new BinaryOp(mdef.ReturnType, BinaryOpCode.Xor, args[0], args[1]));
+                            break;
+                        case "op_OnesComplement":
+                            stack.Push(new UnaryOp(mdef.ReturnType, UnaryOpCode.Not, args[0]));
+                            break;
+                        default:
+                            if (mdef.HasThis && name.StartsWith("get_")) {
+                                // Note: this assumes that the property getter is a valid
+                                // C-style field reference.
+                                stack.Push(new FieldRef(mdef.ReturnType, name.Substring(4), args[0]));
                             }
+                            else {
+                                stack.Push(new Call(mdef.ReturnType, name, args));
+                            }
+                            break;
                         }
+                    }
                     break;
                 }
                 case Code.Br:
@@ -931,12 +1321,12 @@ namespace OpenCl
             ModuleDefinition _module = ModuleDefinition.ReadModule(module);
             TypeDefinition _type = _module.Types.Single(ti => ti.FullName == type);
             MethodDefinition _method = _type.Methods.Single(mi => mi.Name == method);
-            return EmitKernel(_method);
+            return EmitKernel(_module, _type, _method);
         }
 
-        public static string EmitKernel(MethodDefinition method)
+        public static string EmitKernel(ModuleDefinition module, TypeDefinition type, MethodDefinition method)
         {
-            Compiler compiler = new Compiler(method);
+            Compiler compiler = new Compiler(module, type, method);
             compiler.Run();
             return compiler.builder.ToString();
         }
