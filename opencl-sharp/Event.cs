@@ -90,6 +90,12 @@ namespace OpenCl
 
         // Event methods
 
+        public static void WaitForEvents(Event[] eventWaitList)
+        {
+            var l = ToIntPtr(eventWaitList);
+            NativeMethods.clWaitForEvents((uint)l.Length, l);
+        }
+
         // RefCountedObject
 
 		protected override void Retain()

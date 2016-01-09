@@ -238,10 +238,10 @@ namespace OpenCl
             get { return Cl.GetInfo<ulong>(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_MAX_MEM_ALLOC_SIZE); }
         }
 
-//                    CL_DEVICE_MAX_PARAMETER_SIZE    
-//                    Return type: size_t
-//
-//                    Max size in bytes of the arguments that can be passed to a kernel. The minimum value is 256.
+        public uint MaxParameterSize
+        {
+            get { return (uint)Cl.GetInfo<UIntPtr>(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_MAX_PARAMETER_SIZE); }
+        }
 
         public uint MaxReadImageArgs
         {
@@ -253,22 +253,27 @@ namespace OpenCl
             get { return Cl.GetInfo<uint>(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_MAX_SAMPLERS); }
         }
 
-//                    CL_DEVICE_MAX_WORK_GROUP_SIZE   
-//                    Return type: size_t
-//
-//                    Maximum number of work-items in a work-group executing a kernel using the data parallel execution model. (Refer to clEnqueueNDRangeKernel). The minimum value is 1.
+        public uint MaxWorkGroupSize
+        {
+            get { return (uint)Cl.GetInfo<UIntPtr>(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_MAX_WORK_GROUP_SIZE); }
+        }
 
         public uint MaxWorkItemDimensions
         {
             get { return Cl.GetInfo<uint>(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS); }
         }
 
-//                        CL_DEVICE_MAX_WORK_ITEM_SIZES   
-//                        Return type: size_t[]
-//
-//                        Maximum number of work-items that can be specified in each dimension of the work-group to clEnqueueNDRangeKernel.
-//
-//                        Returns n size_t entries, where n is the value returned by the query for CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS. The minimum value is (1, 1, 1).
+        public uint[] MaxWorkItemSizes
+        {
+            get {
+                var sizes = Cl.GetInfoArray<UIntPtr>(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_MAX_WORK_ITEM_SIZES);
+                var result = new uint[sizes.Length];
+                for (var i=0; i<sizes.Length; i++) {
+                    result[i] = (uint)sizes[i];
+                }
+                return result;
+            }
+        }
 
         public uint MaxWriteImageArgs
         {

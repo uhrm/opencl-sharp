@@ -360,7 +360,7 @@ namespace OpenCl
         //
 
         [DllImport("opencl.dll")]
-        internal static extern ErrorCode clWaitForEvents(uint numEvents, [In] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt, SizeParamIndex = 0)] Event[] eventWaitList);
+        internal static extern ErrorCode clWaitForEvents(uint numEvents, IntPtr[] eventWaitList);
 
         [DllImport("opencl.dll")]
         internal static extern ErrorCode clGetEventInfo(IntPtr e, uint paramName, IntPtr paramValueSize, IntPtr paramValue, out IntPtr paramValueSizeRet);
