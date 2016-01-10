@@ -2,18 +2,21 @@
 using Mono.Cecil;
 using System.Collections.ObjectModel;
 
-namespace OpenCl.Ast
+namespace OpenCl.Compiler
 {
     internal abstract class AstNode
     {
-        private TypeReference type;
+        private CliType type;
 
-        protected AstNode(TypeReference type)
+        protected AstNode(CliType type)
         {
+            if (type == null) {
+                throw new ArgumentNullException("type");
+            }
             this.type = type;
         }
 
-        public TypeReference Type
+        public CliType CliType
         {
             get { return this.type; }
         }
@@ -25,7 +28,7 @@ namespace OpenCl.Ast
     {
         private readonly T val;
 
-        public Const(TypeReference type, T val) : base(type)
+        public Const(CliType type, T val) : base(type)
         {
             this.val = val;
         }
@@ -46,9 +49,9 @@ namespace OpenCl.Ast
         private readonly int idx;
         private readonly bool tmp;
 
-        public VarRef(TypeReference type, int idx) : this(type, idx, false) { }
+        public VarRef(CliType type, int idx) : this(type, idx, false) { }
 
-        public VarRef(TypeReference type, int idx, bool tmp) : base(type)
+        public VarRef(CliType type, int idx, bool tmp) : base(type)
         {
             this.idx = idx;
             this.tmp = tmp;
@@ -74,7 +77,7 @@ namespace OpenCl.Ast
     {
         private readonly string name;
 
-        public ParamRef(TypeReference type, string name) : base(type)
+        public ParamRef(CliType type, string name) : base(type)
         {
             this.name = name;
         }
@@ -95,7 +98,7 @@ namespace OpenCl.Ast
         private readonly AstNode array;
         private readonly AstNode index;
 
-        public ElemRef(TypeReference type, AstNode arr, AstNode idx) : base(type)
+        public ElemRef(CliType type, AstNode arr, AstNode idx) : base(type)
         {
             this.array = arr;
             this.index = idx;
@@ -117,7 +120,7 @@ namespace OpenCl.Ast
         private readonly string name;
         private readonly AstNode node;
 
-        public FieldRef(TypeReference type, string name, AstNode node) : base(type)
+        public FieldRef(CliType type, string name, AstNode node) : base(type)
         {
             this.name = name;
             this.node = node;
@@ -140,7 +143,7 @@ namespace OpenCl.Ast
     {
         private readonly int idx;
 
-        public VarAddr(TypeReference type, int idx) : base(type)
+        public VarAddr(CliPointerType type, int idx) : base(type)
         {
             this.idx = idx;
         }
@@ -161,7 +164,7 @@ namespace OpenCl.Ast
         private readonly AstNode array;
         private readonly AstNode index;
 
-        public ElemAddr(TypeReference type, AstNode arr, AstNode idx) : base(type)
+        public ElemAddr(CliType type, AstNode arr, AstNode idx) : base(type)
         {
             this.array = arr;
             this.index = idx;
@@ -182,7 +185,16 @@ namespace OpenCl.Ast
     {
         private readonly AstNode addr;
 
-        public LoadAddr(AstNode addr) : base((addr.Type as PointerType).ElementType)
+        private static Type DerefPointer(CliType type)
+        {
+            var ptr = type as CliPointerType;
+            if (ptr == null) {
+                throw new ArgumentException(String.Format("Unsupported type: expected CliPointerType but found {0} ({1}).", type.Code, type.SystemType));
+            }
+            return ptr.Element;
+        }
+
+        public LoadAddr(AstNode addr) : base(CliType.FromType(DerefPointer(addr.CliType)))
         {
             this.addr = addr;
         }
@@ -199,7 +211,7 @@ namespace OpenCl.Ast
     {
         private readonly AstNode size;
 
-        public LocAlloc(TypeReference type, AstNode size) : base(type)
+        public LocAlloc(AstNode size) : base(new CliPointerType(typeof(IntPtr*)))
         {
             this.size = size;
         }
@@ -237,7 +249,7 @@ namespace OpenCl.Ast
         private readonly AstNode left;
         private readonly AstNode rght;
 
-        public BinaryOp(TypeReference type, BinaryOpCode code, AstNode left, AstNode rght) : base(type)
+        public BinaryOp(CliType type, BinaryOpCode code, AstNode left, AstNode rght) : base(type)
         {
             this.code = code;
             this.left = left;
@@ -281,9 +293,7 @@ namespace OpenCl.Ast
         private readonly UnaryOpCode code;
         private readonly AstNode node;
 
-        public UnaryOp(UnaryOpCode code, AstNode node) : this(node.Type, code, node) { }
-
-        public UnaryOp(TypeReference type, UnaryOpCode code, AstNode node) : base(type)
+        public UnaryOp(UnaryOpCode code, AstNode node) : base(node.CliType)
         {
             this.code = code;
             this.node = node;
@@ -313,7 +323,7 @@ namespace OpenCl.Ast
         private readonly string name;
         private readonly ReadOnlyCollection<AstNode> args;
 
-        public Call(TypeReference type, string name, AstNode[] args) : base(type)
+        public Call(CliType type, string name, AstNode[] args) : base(type)
         {
             this.name = name;
             var a = new AstNode[args.Length];
@@ -453,5 +463,4 @@ namespace OpenCl.Ast
         {
         }
     }
-
 }

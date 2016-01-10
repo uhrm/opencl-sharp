@@ -39,6 +39,7 @@
     <Compile Include="Cl.cs" />
     <Compile Include="Ast\Ast.cs" />
     <Compile Include="ClNameAttribute.cs" />
+    <Compile Include="Types.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
