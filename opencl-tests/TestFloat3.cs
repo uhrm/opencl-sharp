@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
+using OpenCl.Compiler;
 
 namespace OpenCl.Tests
 {
@@ -39,7 +40,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  36.00000000, r[1].s2, 1e-7);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_add");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_add");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -114,7 +115,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  -6.00000000, r[1].s2, 1e-7);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_sub");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_sub");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -189,7 +190,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 315.00000000, r[1].s2, 1e-7);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_mul");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_mul");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -264,7 +265,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0.71428573, r[1].s2, 1e-7);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_div");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_div");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -339,7 +340,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s2);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_eq");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_eq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -415,7 +416,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s2);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_neq");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_neq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -491,7 +492,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s2);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_lt");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_lt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -567,7 +568,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s2);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_le");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_le");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -643,7 +644,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s2);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_gt");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_gt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -719,7 +720,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s2);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_ge");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat3", "test_float3_ge");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];

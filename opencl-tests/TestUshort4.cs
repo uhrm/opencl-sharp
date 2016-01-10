@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
+using OpenCl.Compiler;
 
 namespace OpenCl.Tests
 {
@@ -41,7 +42,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  48, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_add");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_add");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -120,7 +121,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(65528, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_sub");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_sub");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -199,7 +200,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 560, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_mul");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_mul");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -278,7 +279,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_div");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_div");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -357,7 +358,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_eq");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_eq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -437,7 +438,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_neq");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_neq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -517,7 +518,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_lt");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_lt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -597,7 +598,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_le");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_le");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -677,7 +678,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_gt");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_gt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -757,7 +758,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_ge");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_ge");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -837,7 +838,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  20, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_and");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_and");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -917,7 +918,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  28, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_or");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_or");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -997,7 +998,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(   8, r[1].s3);
 
             // compile kernel
-            var source = Compiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_xor");
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUshort4", "test_ushort4_xor");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
