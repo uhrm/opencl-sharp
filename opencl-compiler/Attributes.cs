@@ -17,4 +17,14 @@ namespace OpenCl
             get { return this.name; }
         }
     }
+
+    [System.AttributeUsage(System.AttributeTargets.Parameter)]
+    public class GlobalAttribute : System.Attribute
+    {
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Method)]
+    public class KernelAttribute : System.Attribute
+    {
+    }
 }

@@ -33,13 +33,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="KernelAttribute.cs" />
-    <Compile Include="GlobalAttribute.cs" />
     <Compile Include="Cl.cs" />
-    <Compile Include="ClNameAttribute.cs" />
     <Compile Include="Compiler\Ast.cs" />
-    <Compile Include="Compiler\Compiler.cs" />
-    <Compile Include="Compiler\Types.cs" />
+    <Compile Include="Compiler\CliTypes.cs" />
+    <Compile Include="Compiler\ClCompiler.cs" />
+    <Compile Include="Attributes.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
