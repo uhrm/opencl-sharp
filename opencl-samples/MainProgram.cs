@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 
 namespace OpenCl.Samples
 {
@@ -18,7 +18,7 @@ namespace OpenCl.Samples
                 Console.WriteLine("*** platform {0}", p.Name);
                 Console.WriteLine("***   version: {0}", p.Version);
                 Console.WriteLine("***   profile: {0}", p.Profile);
-                Console.WriteLine("***   vendor: {0}", p.Vendor);
+                Console.WriteLine("***   vendor:  {0}", p.Vendor);
                 Console.WriteLine("***   extensions:");
                 foreach (var e in p.Extensions) {
                     Console.WriteLine("***     {0}", e);
@@ -30,10 +30,17 @@ namespace OpenCl.Samples
                 Console.WriteLine("*** ");
                 foreach (var d in devices) {
                     Console.WriteLine("***   device {0}", d.Name);
-                    Console.WriteLine("***     type: {0}", d.Type);
-                    Console.WriteLine("***     version: {0}", d.Version);
-                    Console.WriteLine("***     profile: {0}", d.Profile);
-                    Console.WriteLine("***     vendor: {0}", d.Vendor);
+                    Console.WriteLine("***     type:  . . . . . . . . . {0}", d.Type);
+                    Console.WriteLine("***     profile: . . . . . . . . {0}", d.Profile);
+                    Console.WriteLine("***     version: . . . . . . . . {0}", d.Version);
+                    Console.WriteLine("***     C version: . . . . . . . {0}", d.ClVersion);
+                    Console.WriteLine("***     max workitem dimensions: {0}", d.MaxWorkItemDimensions);
+                    Console.WriteLine("***     max workitem sizes:  . . {0}", String.Join(", ", d.MaxWorkItemSizes.Select(i => i.ToString())));
+                    Console.WriteLine("***     max workgroup size:  . . {0}", d.MaxWorkGroupSize);
+                    Console.WriteLine("***     max mem alloc size:  . . {0:0.0} MiB", ((float)d.MaxMemAllocSize)/1024.0/1024.0);
+                    Console.WriteLine("***     global mem size: . . . . {0:0.0} MiB", ((float)d.GlobalMemSize)/1024.0/1024.0);
+                    Console.WriteLine("***     local mem size:  . . . . {0:0.0} KiB", ((float)d.LocalMemSize)/1024.0);
+                    Console.WriteLine("***     vendor:  . . . . . . . . {0}", d.Vendor);
                     Console.WriteLine("***     extensions:");
                     foreach (var e in d.Extensions) {
                         Console.WriteLine("***       {0}", e);

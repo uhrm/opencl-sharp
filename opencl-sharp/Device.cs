@@ -295,6 +295,11 @@ namespace OpenCl
             get { return Cl.GetInfoString(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_NAME); }
         }
 
+        public string ClVersion
+        {
+            get { return Cl.GetInfoString(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_OPENCL_C_VERSION); }
+        }
+
         public Platform Platform
         {
             get {

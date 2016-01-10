@@ -36,9 +36,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainProgram.cs" />
-    <Compile Include="Kernels\ConvolveSample.cs" />
-    <Compile Include="Kernels\BitonicSortSample.cs" />
-    <Compile Include="Kernels\GemmSample.cs" />
+    <Compile Include="BitonicSort\BitonicSortSample.cs" />
+    <Compile Include="Convolve\ConvolveSample.cs" />
+    <Compile Include="Gemm\GemmSample.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -52,6 +52,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Kernels\" />
+    <Folder Include="BitonicSort\" />
+    <Folder Include="Convolve\" />
+    <Folder Include="Gemm\" />
   </ItemGroup>
 </Project>
