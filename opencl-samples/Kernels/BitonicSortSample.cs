@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using OpenCl.Compiler;
 
 namespace OpenCl.Samples
 {
@@ -236,23 +237,23 @@ namespace OpenCl.Samples
             Console.WriteLine("*** ");
             PrintArray(data);
 
-            Console.WriteLine("*** manifest resource:");
-            Console.WriteLine("*** ");
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "OpenCl.Samples.Kernels.bitonicsort.cl";
-            var source = (String)null;
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                source = reader.ReadToEnd();
-            }
-            RunNative(source, true);
+//            Console.WriteLine("*** manifest resource:");
+//            Console.WriteLine("*** ");
+//            var assembly = Assembly.GetExecutingAssembly();
+//            var resourceName = "OpenCl.Samples.Kernels.bitonicsort.cl";
+//            var source = (String)null;
+//            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+//            using (StreamReader reader = new StreamReader(stream))
+//            {
+//                source = reader.ReadToEnd();
+//            }
+//            RunNative(source, true);
 
             Console.WriteLine("*** IL translation:");
 //            Console.WriteLine("*** ");
 //            Console.WriteLine(Compiler.EmitKernel("opencl-samples.exe", "OpenCl.Samples.BitonicSortSample", "BitonicSort"));
             Console.WriteLine("*** ");
-            RunNative(Compiler.EmitKernel("opencl-samples.exe", "OpenCl.Samples.BitonicSortSample", "BitonicSort"), true);
+            RunNative(ClCompiler.EmitKernel("opencl-samples.exe", "OpenCl.Samples.BitonicSortSample", "BitonicSort"), true);
 
             Console.WriteLine("*** Cl.RunKernel:");
             Console.WriteLine("*** ");

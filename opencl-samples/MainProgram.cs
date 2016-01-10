@@ -60,13 +60,17 @@ namespace OpenCl.Samples
 
             ListDevices();
 
-//            Console.WriteLine("*** Convolve sample");
-//            Console.WriteLine("*** ");
-//            ConvolveSample.Run();
+            Console.WriteLine("*** Convolve sample");
+            Console.WriteLine("*** ");
+            ConvolveSample.Run();
 
             Console.WriteLine("*** BitronicSort sample");
             Console.WriteLine("*** ");
             BitonicSortSample.Run();
+
+            Console.WriteLine("*** Gemm sample");
+            Console.WriteLine("*** ");
+            GemmSample.Run();
         }
 
 //		private const int RTLD_LAZY = 0x1;

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using OpenCl.Compiler;
 
 namespace OpenCl.Samples
 {
@@ -104,21 +105,9 @@ namespace OpenCl.Samples
 
         public static void Run()
         {
-            Console.WriteLine("*** manifest resource:");
-            Console.WriteLine("*** ");
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "OpenCl.Samples.Kernels.convolve.cl";
-            var source = (String)null;
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                source = reader.ReadToEnd();
-            }
-            RunConvolution(source);
-
             Console.WriteLine("*** IL translation:");
             Console.WriteLine("*** ");
-            RunConvolution(Compiler.EmitKernel("opencl-samples.exe", "OpenCl.Samples.ConvolveSample", "Conv"));
+            RunConvolution(ClCompiler.EmitKernel("opencl-samples.exe", "OpenCl.Samples.ConvolveSample", "Conv"));
 
             Console.WriteLine("*** Cl.RunKernel:");
             Console.WriteLine("*** ");
