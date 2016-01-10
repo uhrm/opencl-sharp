@@ -33,13 +33,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Compiler.cs" />
     <Compile Include="KernelAttribute.cs" />
     <Compile Include="GlobalAttribute.cs" />
     <Compile Include="Cl.cs" />
-    <Compile Include="Ast\Ast.cs" />
     <Compile Include="ClNameAttribute.cs" />
-    <Compile Include="Types.cs" />
+    <Compile Include="Compiler\Ast.cs" />
+    <Compile Include="Compiler\Compiler.cs" />
+    <Compile Include="Compiler\Types.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -49,6 +49,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Ast\" />
+    <Folder Include="Compiler\" />
   </ItemGroup>
 </Project>
