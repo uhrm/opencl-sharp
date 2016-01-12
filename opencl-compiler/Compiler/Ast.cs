@@ -43,6 +43,26 @@ namespace OpenCl.Compiler
             visitor.Visit(this);
         }
     }
+    
+    internal class ParamRef : AstNode
+    {
+        private readonly string name;
+        
+        public ParamRef(CliType type, string name) : base(type)
+        {
+            this.name = name;
+        }
+        
+        public string Name
+        {
+            get { return this.name; }
+        }
+        
+        protected internal override void Accept(AstVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
+    }
 
     internal class VarRef : AstNode
     {
@@ -65,26 +85,6 @@ namespace OpenCl.Compiler
         public bool IsTemp
         {
             get { return this.tmp; }
-        }
-
-        protected internal override void Accept(AstVisitor visitor)
-        {
-            visitor.Visit(this);
-        }
-    }
-
-    internal class ParamRef : AstNode
-    {
-        private readonly string name;
-
-        public ParamRef(CliType type, string name) : base(type)
-        {
-            this.name = name;
-        }
-
-        public string Name
-        {
-            get { return this.name; }
         }
 
         protected internal override void Accept(AstVisitor visitor)
@@ -136,6 +136,26 @@ namespace OpenCl.Compiler
             visitor.Enter(this);
             this.node.Accept(visitor);
             visitor.Exit(this);
+        }
+    }
+
+    internal class ParamAddr : AstNode
+    {
+        private readonly string name;
+
+        public ParamAddr(CliPointerType type, string name) : base(type)
+        {
+            this.name = name;
+        }
+
+        public string Name
+        {
+            get { return this.name; }
+        }
+
+        protected internal override void Accept(AstVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 
@@ -358,12 +378,12 @@ namespace OpenCl.Compiler
         public virtual void Visit<T>(Const<T> node)
         {
         }
-
-        public virtual void Visit(VarRef node)
+        
+        public virtual void Visit(ParamRef node)
         {
         }
 
-        public virtual void Visit(ParamRef node)
+        public virtual void Visit(VarRef node)
         {
         }
 
@@ -388,6 +408,10 @@ namespace OpenCl.Compiler
         }
 
         public virtual void Exit(FieldRef node)
+        {
+        }
+
+        public virtual void Visit(ParamAddr node)
         {
         }
 

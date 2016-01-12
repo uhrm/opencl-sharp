@@ -73,6 +73,13 @@ namespace OpenCl.Compiler
                 this.builder.AppendFormat(")).{0}", node.Name);
             }
 
+            // ParamAddr
+
+            public override void Visit(ParamAddr node)
+            {
+                this.builder.AppendFormat("&{0}", node.Name);
+            }
+
             // VarAddr
 
             public override void Visit(VarAddr node)
@@ -419,196 +426,6 @@ namespace OpenCl.Compiler
             { "OpenCl.double8*",  "double8*" },
             { "OpenCl.double16*", "double16*" },
         };
-
-        private TypeReference GetAddType(TypeReference l, TypeReference r) {
-            if (l.IsPointer) {
-                if (r.FullName == "System.IntPtr") {
-                    return l;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.IntPtr") {
-                if (r.IsPointer) {
-                    return r;
-                }
-                else if (r.FullName == "System.IntPtr") {
-                    return l;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int32") {
-                if (r.IsPointer) {
-                    return r;
-                }
-                else if (r.FullName == "System.IntPtr") {
-                    return r;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int64") {
-                if (r.FullName == "System.Int64") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Single") {
-                if (r.FullName == "System.Single") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Double") {
-                if (r.FullName == "System.Double") {
-                    return l;
-                }
-            }
-            throw new ArgumentException(String.Format("Incompatible types for addition: {0} and {1}", l, r));
-        }
-
-        private TypeReference GetSubType(TypeReference l, TypeReference r) {
-            if (l.IsPointer) {
-                if (r.IsPointer) {
-                    return this.module.Import(typeof(IntPtr));
-                }
-                else if (r.FullName == "System.IntPtr") {
-                    return l;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.IntPtr") {
-                if (r.FullName == "System.IntPtr") {
-                    return l;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int32") {
-                if (r.FullName == "System.IntPtr") {
-                    return r;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int64") {
-                if (r.FullName == "System.Int64") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Single") {
-                if (r.FullName == "System.Single") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Double") {
-                if (r.FullName == "System.Double") {
-                    return l;
-                }
-            }
-            throw new ArgumentException(String.Format("Incompatible types for subtraction: {0} and {1}", l, r));
-        }
-
-        private TypeReference GetMulType(TypeReference l, TypeReference r) {
-            if (l.FullName == "System.IntPtr") {
-                if (r.FullName == "System.IntPtr") {
-                    return l;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int32") {
-                if (r.FullName == "System.IntPtr") {
-                    return r;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int64") {
-                if (r.FullName == "System.Int64") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Single") {
-                if (r.FullName == "System.Single") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Double") {
-                if (r.FullName == "System.Double") {
-                    return l;
-                }
-            }
-            throw new ArgumentException(String.Format("Incompatible types for multiplication: {0} and {1}", l, r));
-        }
-
-        private TypeReference GetDivType(TypeReference l, TypeReference r) {
-            if (l.FullName == "System.IntPtr") {
-                if (r.FullName == "System.IntPtr") {
-                    return l;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int32") {
-                if (r.FullName == "System.IntPtr") {
-                    return r;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int64") {
-                if (r.FullName == "System.Int64") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Single") {
-                if (r.FullName == "System.Single") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Double") {
-                if (r.FullName == "System.Double") {
-                    return l;
-                }
-            }
-            throw new ArgumentException(String.Format("Incompatible types for division: {0} and {1}", l, r));
-        }
-
-        private TypeReference GetIntType(TypeReference l, TypeReference r) {
-            if (l.FullName == "System.IntPtr") {
-                if (r.FullName == "System.IntPtr") {
-                    return l;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int32") {
-                if (r.FullName == "System.IntPtr") {
-                    return r;
-                }
-                else if (r.FullName == "System.Int32") {
-                    return l;
-                }
-            }
-            else if (l.FullName == "System.Int64") {
-                if (r.FullName == "System.Int64") {
-                    return l;
-                }
-            }
-            throw new ArgumentException(String.Format("Incompatible types for bit-wise operation: {0} and {1}", l, r));
-        }
 
         private readonly ModuleDefinition module;
         private readonly TypeDefinition type;
@@ -976,6 +793,13 @@ namespace OpenCl.Compiler
                 case Code.Ldobj: {
                     var ptr = stack.Pop();
                     stack.Push(new LoadAddr(ptr));
+                    break;
+                }
+                case Code.Ldarga:
+                case Code.Ldarga_S: {
+                    var arg = instr.Operand as ParameterDefinition;
+                    var type = new PointerType(arg.ParameterType);
+                    stack.Push(new ParamAddr(new CliPointerType(type), arg.Name));
                     break;
                 }
                 case Code.Ldloca:
