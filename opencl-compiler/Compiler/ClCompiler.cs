@@ -1044,6 +1044,15 @@ namespace OpenCl.Compiler
                                 // C-style field reference.
                                 stack.Push(new FieldRef(rtype, name.Substring(4), args[0]));
                             }
+                            else if (mdef.HasThis && name.StartsWith("set_")) {
+                                // Note: this assumes that the property setter is a valid
+                                // C-style field reference.
+                                this.builder.Append("(*");
+                                args[0].Accept(this.printer);
+                                this.builder.AppendFormat(").{0} = ", name.Substring(4));
+                                args[1].Accept(this.printer);
+                                this.builder.AppendLine(";");
+                            }
                             else {
                                 stack.Push(new Call(rtype, name, args));
                             }
