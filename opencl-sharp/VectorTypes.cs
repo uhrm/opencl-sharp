@@ -25,10 +25,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public sbyte2(sbyte s0, sbyte s1)
+        public sbyte2(sbyte2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public sbyte2(sbyte v0, sbyte v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public sbyte x
@@ -51,11 +57,19 @@ namespace OpenCl
         public sbyte2 xy
         {
             get { return new sbyte2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public sbyte2 yx
         {
             get { return new sbyte2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public sbyte2 yy
@@ -184,11 +198,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public sbyte3(sbyte s0, sbyte s1, sbyte s2)
+        public sbyte3(sbyte3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public sbyte3(sbyte v0, sbyte2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public sbyte3(sbyte2 v0, sbyte v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public sbyte3(sbyte v0, sbyte v1, sbyte v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public sbyte x
@@ -207,6 +242,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public sbyte2 xx
+        {
+            get { return new sbyte2(this.s0, this.s0); }
+        }
+
+        public sbyte2 xy
+        {
+            get { return new sbyte2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public sbyte2 xz
+        {
+            get { return new sbyte2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public sbyte2 yx
+        {
+            get { return new sbyte2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public sbyte2 yy
+        {
+            get { return new sbyte2(this.s1, this.s1); }
+        }
+
+        public sbyte2 yz
+        {
+            get { return new sbyte2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public sbyte2 zx
+        {
+            get { return new sbyte2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public sbyte2 zy
+        {
+            get { return new sbyte2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public sbyte2 zz
+        {
+            get { return new sbyte2(this.s2, this.s2); }
         }
 
         public sbyte3 xxx
@@ -237,6 +341,11 @@ namespace OpenCl
         public sbyte3 xyz
         {
             get { return new sbyte3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public sbyte3 xzx
@@ -247,6 +356,11 @@ namespace OpenCl
         public sbyte3 xzy
         {
             get { return new sbyte3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public sbyte3 xzz
@@ -267,6 +381,11 @@ namespace OpenCl
         public sbyte3 yxz
         {
             get { return new sbyte3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public sbyte3 yyx
@@ -287,6 +406,11 @@ namespace OpenCl
         public sbyte3 yzx
         {
             get { return new sbyte3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public sbyte3 yzy
@@ -307,6 +431,11 @@ namespace OpenCl
         public sbyte3 zxy
         {
             get { return new sbyte3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public sbyte3 zxz
@@ -317,6 +446,11 @@ namespace OpenCl
         public sbyte3 zyx
         {
             get { return new sbyte3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public sbyte3 zyy
@@ -473,12 +607,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public sbyte4(sbyte s0, sbyte s1, sbyte s2, sbyte s3)
+        public sbyte4(sbyte4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public sbyte4(sbyte v0, sbyte3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public sbyte4(sbyte2 v0, sbyte2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public sbyte4(sbyte3 v0, sbyte v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public sbyte4(sbyte v0, sbyte v1, sbyte2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public sbyte4(sbyte v0, sbyte2 v1, sbyte v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public sbyte4(sbyte2 v0, sbyte v1, sbyte v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public sbyte4(sbyte v0, sbyte v1, sbyte v2, sbyte v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public sbyte x
@@ -503,6 +693,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public sbyte2 xx
+        {
+            get { return new sbyte2(this.s0, this.s0); }
+        }
+
+        public sbyte2 xy
+        {
+            get { return new sbyte2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public sbyte2 xz
+        {
+            get { return new sbyte2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public sbyte2 xw
+        {
+            get { return new sbyte2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public sbyte2 yx
+        {
+            get { return new sbyte2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public sbyte2 yy
+        {
+            get { return new sbyte2(this.s1, this.s1); }
+        }
+
+        public sbyte2 yz
+        {
+            get { return new sbyte2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public sbyte2 yw
+        {
+            get { return new sbyte2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public sbyte2 zx
+        {
+            get { return new sbyte2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public sbyte2 zy
+        {
+            get { return new sbyte2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public sbyte2 zz
+        {
+            get { return new sbyte2(this.s2, this.s2); }
+        }
+
+        public sbyte2 zw
+        {
+            get { return new sbyte2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public sbyte2 wx
+        {
+            get { return new sbyte2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public sbyte2 wy
+        {
+            get { return new sbyte2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public sbyte2 wz
+        {
+            get { return new sbyte2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public sbyte2 ww
+        {
+            get { return new sbyte2(this.s3, this.s3); }
+        }
+
+        public sbyte3 xxx
+        {
+            get { return new sbyte3(this.s0, this.s0, this.s0); }
+        }
+
+        public sbyte3 xxy
+        {
+            get { return new sbyte3(this.s0, this.s0, this.s1); }
+        }
+
+        public sbyte3 xxz
+        {
+            get { return new sbyte3(this.s0, this.s0, this.s2); }
+        }
+
+        public sbyte3 xxw
+        {
+            get { return new sbyte3(this.s0, this.s0, this.s3); }
+        }
+
+        public sbyte3 xyx
+        {
+            get { return new sbyte3(this.s0, this.s1, this.s0); }
+        }
+
+        public sbyte3 xyy
+        {
+            get { return new sbyte3(this.s0, this.s1, this.s1); }
+        }
+
+        public sbyte3 xyz
+        {
+            get { return new sbyte3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public sbyte3 xyw
+        {
+            get { return new sbyte3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public sbyte3 xzx
+        {
+            get { return new sbyte3(this.s0, this.s2, this.s0); }
+        }
+
+        public sbyte3 xzy
+        {
+            get { return new sbyte3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public sbyte3 xzz
+        {
+            get { return new sbyte3(this.s0, this.s2, this.s2); }
+        }
+
+        public sbyte3 xzw
+        {
+            get { return new sbyte3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public sbyte3 xwx
+        {
+            get { return new sbyte3(this.s0, this.s3, this.s0); }
+        }
+
+        public sbyte3 xwy
+        {
+            get { return new sbyte3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public sbyte3 xwz
+        {
+            get { return new sbyte3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public sbyte3 xww
+        {
+            get { return new sbyte3(this.s0, this.s3, this.s3); }
+        }
+
+        public sbyte3 yxx
+        {
+            get { return new sbyte3(this.s1, this.s0, this.s0); }
+        }
+
+        public sbyte3 yxy
+        {
+            get { return new sbyte3(this.s1, this.s0, this.s1); }
+        }
+
+        public sbyte3 yxz
+        {
+            get { return new sbyte3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public sbyte3 yxw
+        {
+            get { return new sbyte3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public sbyte3 yyx
+        {
+            get { return new sbyte3(this.s1, this.s1, this.s0); }
+        }
+
+        public sbyte3 yyy
+        {
+            get { return new sbyte3(this.s1, this.s1, this.s1); }
+        }
+
+        public sbyte3 yyz
+        {
+            get { return new sbyte3(this.s1, this.s1, this.s2); }
+        }
+
+        public sbyte3 yyw
+        {
+            get { return new sbyte3(this.s1, this.s1, this.s3); }
+        }
+
+        public sbyte3 yzx
+        {
+            get { return new sbyte3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public sbyte3 yzy
+        {
+            get { return new sbyte3(this.s1, this.s2, this.s1); }
+        }
+
+        public sbyte3 yzz
+        {
+            get { return new sbyte3(this.s1, this.s2, this.s2); }
+        }
+
+        public sbyte3 yzw
+        {
+            get { return new sbyte3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public sbyte3 ywx
+        {
+            get { return new sbyte3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public sbyte3 ywy
+        {
+            get { return new sbyte3(this.s1, this.s3, this.s1); }
+        }
+
+        public sbyte3 ywz
+        {
+            get { return new sbyte3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public sbyte3 yww
+        {
+            get { return new sbyte3(this.s1, this.s3, this.s3); }
+        }
+
+        public sbyte3 zxx
+        {
+            get { return new sbyte3(this.s2, this.s0, this.s0); }
+        }
+
+        public sbyte3 zxy
+        {
+            get { return new sbyte3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public sbyte3 zxz
+        {
+            get { return new sbyte3(this.s2, this.s0, this.s2); }
+        }
+
+        public sbyte3 zxw
+        {
+            get { return new sbyte3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public sbyte3 zyx
+        {
+            get { return new sbyte3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public sbyte3 zyy
+        {
+            get { return new sbyte3(this.s2, this.s1, this.s1); }
+        }
+
+        public sbyte3 zyz
+        {
+            get { return new sbyte3(this.s2, this.s1, this.s2); }
+        }
+
+        public sbyte3 zyw
+        {
+            get { return new sbyte3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public sbyte3 zzx
+        {
+            get { return new sbyte3(this.s2, this.s2, this.s0); }
+        }
+
+        public sbyte3 zzy
+        {
+            get { return new sbyte3(this.s2, this.s2, this.s1); }
+        }
+
+        public sbyte3 zzz
+        {
+            get { return new sbyte3(this.s2, this.s2, this.s2); }
+        }
+
+        public sbyte3 zzw
+        {
+            get { return new sbyte3(this.s2, this.s2, this.s3); }
+        }
+
+        public sbyte3 zwx
+        {
+            get { return new sbyte3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public sbyte3 zwy
+        {
+            get { return new sbyte3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public sbyte3 zwz
+        {
+            get { return new sbyte3(this.s2, this.s3, this.s2); }
+        }
+
+        public sbyte3 zww
+        {
+            get { return new sbyte3(this.s2, this.s3, this.s3); }
+        }
+
+        public sbyte3 wxx
+        {
+            get { return new sbyte3(this.s3, this.s0, this.s0); }
+        }
+
+        public sbyte3 wxy
+        {
+            get { return new sbyte3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public sbyte3 wxz
+        {
+            get { return new sbyte3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public sbyte3 wxw
+        {
+            get { return new sbyte3(this.s3, this.s0, this.s3); }
+        }
+
+        public sbyte3 wyx
+        {
+            get { return new sbyte3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public sbyte3 wyy
+        {
+            get { return new sbyte3(this.s3, this.s1, this.s1); }
+        }
+
+        public sbyte3 wyz
+        {
+            get { return new sbyte3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public sbyte3 wyw
+        {
+            get { return new sbyte3(this.s3, this.s1, this.s3); }
+        }
+
+        public sbyte3 wzx
+        {
+            get { return new sbyte3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public sbyte3 wzy
+        {
+            get { return new sbyte3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public sbyte3 wzz
+        {
+            get { return new sbyte3(this.s3, this.s2, this.s2); }
+        }
+
+        public sbyte3 wzw
+        {
+            get { return new sbyte3(this.s3, this.s2, this.s3); }
+        }
+
+        public sbyte3 wwx
+        {
+            get { return new sbyte3(this.s3, this.s3, this.s0); }
+        }
+
+        public sbyte3 wwy
+        {
+            get { return new sbyte3(this.s3, this.s3, this.s1); }
+        }
+
+        public sbyte3 wwz
+        {
+            get { return new sbyte3(this.s3, this.s3, this.s2); }
+        }
+
+        public sbyte3 www
+        {
+            get { return new sbyte3(this.s3, this.s3, this.s3); }
         }
 
         public sbyte4 xxxx
@@ -643,6 +1401,12 @@ namespace OpenCl
         public sbyte4 xyzw
         {
             get { return new sbyte4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public sbyte4 xywx
@@ -658,6 +1422,12 @@ namespace OpenCl
         public sbyte4 xywz
         {
             get { return new sbyte4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public sbyte4 xyww
@@ -703,6 +1473,12 @@ namespace OpenCl
         public sbyte4 xzyw
         {
             get { return new sbyte4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public sbyte4 xzzx
@@ -733,6 +1509,12 @@ namespace OpenCl
         public sbyte4 xzwy
         {
             get { return new sbyte4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public sbyte4 xzwz
@@ -778,6 +1560,12 @@ namespace OpenCl
         public sbyte4 xwyz
         {
             get { return new sbyte4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public sbyte4 xwyw
@@ -793,6 +1581,12 @@ namespace OpenCl
         public sbyte4 xwzy
         {
             get { return new sbyte4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public sbyte4 xwzz
@@ -883,6 +1677,12 @@ namespace OpenCl
         public sbyte4 yxzw
         {
             get { return new sbyte4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public sbyte4 yxwx
@@ -898,6 +1698,12 @@ namespace OpenCl
         public sbyte4 yxwz
         {
             get { return new sbyte4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public sbyte4 yxww
@@ -1003,6 +1809,12 @@ namespace OpenCl
         public sbyte4 yzxw
         {
             get { return new sbyte4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public sbyte4 yzyx
@@ -1048,6 +1860,12 @@ namespace OpenCl
         public sbyte4 yzwx
         {
             get { return new sbyte4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public sbyte4 yzwy
@@ -1078,6 +1896,12 @@ namespace OpenCl
         public sbyte4 ywxz
         {
             get { return new sbyte4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public sbyte4 ywxw
@@ -1108,6 +1932,12 @@ namespace OpenCl
         public sbyte4 ywzx
         {
             get { return new sbyte4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public sbyte4 ywzy
@@ -1183,6 +2013,12 @@ namespace OpenCl
         public sbyte4 zxyw
         {
             get { return new sbyte4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public sbyte4 zxzx
@@ -1213,6 +2049,12 @@ namespace OpenCl
         public sbyte4 zxwy
         {
             get { return new sbyte4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public sbyte4 zxwz
@@ -1243,6 +2085,12 @@ namespace OpenCl
         public sbyte4 zyxw
         {
             get { return new sbyte4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public sbyte4 zyyx
@@ -1288,6 +2136,12 @@ namespace OpenCl
         public sbyte4 zywx
         {
             get { return new sbyte4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public sbyte4 zywy
@@ -1393,6 +2247,12 @@ namespace OpenCl
         public sbyte4 zwxy
         {
             get { return new sbyte4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public sbyte4 zwxz
@@ -1408,6 +2268,12 @@ namespace OpenCl
         public sbyte4 zwyx
         {
             get { return new sbyte4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public sbyte4 zwyy
@@ -1498,6 +2364,12 @@ namespace OpenCl
         public sbyte4 wxyz
         {
             get { return new sbyte4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public sbyte4 wxyw
@@ -1513,6 +2385,12 @@ namespace OpenCl
         public sbyte4 wxzy
         {
             get { return new sbyte4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public sbyte4 wxzz
@@ -1558,6 +2436,12 @@ namespace OpenCl
         public sbyte4 wyxz
         {
             get { return new sbyte4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public sbyte4 wyxw
@@ -1588,6 +2472,12 @@ namespace OpenCl
         public sbyte4 wyzx
         {
             get { return new sbyte4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public sbyte4 wyzy
@@ -1633,6 +2523,12 @@ namespace OpenCl
         public sbyte4 wzxy
         {
             get { return new sbyte4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public sbyte4 wzxz
@@ -1648,6 +2544,12 @@ namespace OpenCl
         public sbyte4 wzyx
         {
             get { return new sbyte4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public sbyte4 wzyy
@@ -1931,16 +2833,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public sbyte8(sbyte s0, sbyte s1, sbyte s2, sbyte s3, sbyte s4, sbyte s5, sbyte s6, sbyte s7)
+        public sbyte8(sbyte v0, sbyte v1, sbyte v2, sbyte v3, sbyte v4, sbyte v5, sbyte v6, sbyte v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public sbyte this[int index]
@@ -2133,24 +3035,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public sbyte16(sbyte s0, sbyte s1, sbyte s2, sbyte s3, sbyte s4, sbyte s5, sbyte s6, sbyte s7, sbyte s8, sbyte s9, sbyte sa, sbyte sb, sbyte sc, sbyte sd, sbyte se, sbyte sf)
+        public sbyte16(sbyte v0, sbyte v1, sbyte v2, sbyte v3, sbyte v4, sbyte v5, sbyte v6, sbyte v7, sbyte v8, sbyte v9, sbyte va, sbyte vb, sbyte vc, sbyte vd, sbyte ve, sbyte vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public sbyte sA
@@ -2377,10 +3279,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public byte2(byte s0, byte s1)
+        public byte2(byte2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public byte2(byte v0, byte v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public byte x
@@ -2403,11 +3311,19 @@ namespace OpenCl
         public byte2 xy
         {
             get { return new byte2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public byte2 yx
         {
             get { return new byte2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public byte2 yy
@@ -2534,11 +3450,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public byte3(byte s0, byte s1, byte s2)
+        public byte3(byte3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public byte3(byte v0, byte2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public byte3(byte2 v0, byte v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public byte3(byte v0, byte v1, byte v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public byte x
@@ -2557,6 +3494,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public byte2 xx
+        {
+            get { return new byte2(this.s0, this.s0); }
+        }
+
+        public byte2 xy
+        {
+            get { return new byte2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public byte2 xz
+        {
+            get { return new byte2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public byte2 yx
+        {
+            get { return new byte2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public byte2 yy
+        {
+            get { return new byte2(this.s1, this.s1); }
+        }
+
+        public byte2 yz
+        {
+            get { return new byte2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public byte2 zx
+        {
+            get { return new byte2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public byte2 zy
+        {
+            get { return new byte2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public byte2 zz
+        {
+            get { return new byte2(this.s2, this.s2); }
         }
 
         public byte3 xxx
@@ -2587,6 +3593,11 @@ namespace OpenCl
         public byte3 xyz
         {
             get { return new byte3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public byte3 xzx
@@ -2597,6 +3608,11 @@ namespace OpenCl
         public byte3 xzy
         {
             get { return new byte3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public byte3 xzz
@@ -2617,6 +3633,11 @@ namespace OpenCl
         public byte3 yxz
         {
             get { return new byte3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public byte3 yyx
@@ -2637,6 +3658,11 @@ namespace OpenCl
         public byte3 yzx
         {
             get { return new byte3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public byte3 yzy
@@ -2657,6 +3683,11 @@ namespace OpenCl
         public byte3 zxy
         {
             get { return new byte3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public byte3 zxz
@@ -2667,6 +3698,11 @@ namespace OpenCl
         public byte3 zyx
         {
             get { return new byte3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public byte3 zyy
@@ -2821,12 +3857,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public byte4(byte s0, byte s1, byte s2, byte s3)
+        public byte4(byte4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public byte4(byte v0, byte3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public byte4(byte2 v0, byte2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public byte4(byte3 v0, byte v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public byte4(byte v0, byte v1, byte2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public byte4(byte v0, byte2 v1, byte v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public byte4(byte2 v0, byte v1, byte v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public byte4(byte v0, byte v1, byte v2, byte v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public byte x
@@ -2851,6 +3943,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public byte2 xx
+        {
+            get { return new byte2(this.s0, this.s0); }
+        }
+
+        public byte2 xy
+        {
+            get { return new byte2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public byte2 xz
+        {
+            get { return new byte2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public byte2 xw
+        {
+            get { return new byte2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public byte2 yx
+        {
+            get { return new byte2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public byte2 yy
+        {
+            get { return new byte2(this.s1, this.s1); }
+        }
+
+        public byte2 yz
+        {
+            get { return new byte2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public byte2 yw
+        {
+            get { return new byte2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public byte2 zx
+        {
+            get { return new byte2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public byte2 zy
+        {
+            get { return new byte2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public byte2 zz
+        {
+            get { return new byte2(this.s2, this.s2); }
+        }
+
+        public byte2 zw
+        {
+            get { return new byte2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public byte2 wx
+        {
+            get { return new byte2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public byte2 wy
+        {
+            get { return new byte2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public byte2 wz
+        {
+            get { return new byte2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public byte2 ww
+        {
+            get { return new byte2(this.s3, this.s3); }
+        }
+
+        public byte3 xxx
+        {
+            get { return new byte3(this.s0, this.s0, this.s0); }
+        }
+
+        public byte3 xxy
+        {
+            get { return new byte3(this.s0, this.s0, this.s1); }
+        }
+
+        public byte3 xxz
+        {
+            get { return new byte3(this.s0, this.s0, this.s2); }
+        }
+
+        public byte3 xxw
+        {
+            get { return new byte3(this.s0, this.s0, this.s3); }
+        }
+
+        public byte3 xyx
+        {
+            get { return new byte3(this.s0, this.s1, this.s0); }
+        }
+
+        public byte3 xyy
+        {
+            get { return new byte3(this.s0, this.s1, this.s1); }
+        }
+
+        public byte3 xyz
+        {
+            get { return new byte3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public byte3 xyw
+        {
+            get { return new byte3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public byte3 xzx
+        {
+            get { return new byte3(this.s0, this.s2, this.s0); }
+        }
+
+        public byte3 xzy
+        {
+            get { return new byte3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public byte3 xzz
+        {
+            get { return new byte3(this.s0, this.s2, this.s2); }
+        }
+
+        public byte3 xzw
+        {
+            get { return new byte3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public byte3 xwx
+        {
+            get { return new byte3(this.s0, this.s3, this.s0); }
+        }
+
+        public byte3 xwy
+        {
+            get { return new byte3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public byte3 xwz
+        {
+            get { return new byte3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public byte3 xww
+        {
+            get { return new byte3(this.s0, this.s3, this.s3); }
+        }
+
+        public byte3 yxx
+        {
+            get { return new byte3(this.s1, this.s0, this.s0); }
+        }
+
+        public byte3 yxy
+        {
+            get { return new byte3(this.s1, this.s0, this.s1); }
+        }
+
+        public byte3 yxz
+        {
+            get { return new byte3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public byte3 yxw
+        {
+            get { return new byte3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public byte3 yyx
+        {
+            get { return new byte3(this.s1, this.s1, this.s0); }
+        }
+
+        public byte3 yyy
+        {
+            get { return new byte3(this.s1, this.s1, this.s1); }
+        }
+
+        public byte3 yyz
+        {
+            get { return new byte3(this.s1, this.s1, this.s2); }
+        }
+
+        public byte3 yyw
+        {
+            get { return new byte3(this.s1, this.s1, this.s3); }
+        }
+
+        public byte3 yzx
+        {
+            get { return new byte3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public byte3 yzy
+        {
+            get { return new byte3(this.s1, this.s2, this.s1); }
+        }
+
+        public byte3 yzz
+        {
+            get { return new byte3(this.s1, this.s2, this.s2); }
+        }
+
+        public byte3 yzw
+        {
+            get { return new byte3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public byte3 ywx
+        {
+            get { return new byte3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public byte3 ywy
+        {
+            get { return new byte3(this.s1, this.s3, this.s1); }
+        }
+
+        public byte3 ywz
+        {
+            get { return new byte3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public byte3 yww
+        {
+            get { return new byte3(this.s1, this.s3, this.s3); }
+        }
+
+        public byte3 zxx
+        {
+            get { return new byte3(this.s2, this.s0, this.s0); }
+        }
+
+        public byte3 zxy
+        {
+            get { return new byte3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public byte3 zxz
+        {
+            get { return new byte3(this.s2, this.s0, this.s2); }
+        }
+
+        public byte3 zxw
+        {
+            get { return new byte3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public byte3 zyx
+        {
+            get { return new byte3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public byte3 zyy
+        {
+            get { return new byte3(this.s2, this.s1, this.s1); }
+        }
+
+        public byte3 zyz
+        {
+            get { return new byte3(this.s2, this.s1, this.s2); }
+        }
+
+        public byte3 zyw
+        {
+            get { return new byte3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public byte3 zzx
+        {
+            get { return new byte3(this.s2, this.s2, this.s0); }
+        }
+
+        public byte3 zzy
+        {
+            get { return new byte3(this.s2, this.s2, this.s1); }
+        }
+
+        public byte3 zzz
+        {
+            get { return new byte3(this.s2, this.s2, this.s2); }
+        }
+
+        public byte3 zzw
+        {
+            get { return new byte3(this.s2, this.s2, this.s3); }
+        }
+
+        public byte3 zwx
+        {
+            get { return new byte3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public byte3 zwy
+        {
+            get { return new byte3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public byte3 zwz
+        {
+            get { return new byte3(this.s2, this.s3, this.s2); }
+        }
+
+        public byte3 zww
+        {
+            get { return new byte3(this.s2, this.s3, this.s3); }
+        }
+
+        public byte3 wxx
+        {
+            get { return new byte3(this.s3, this.s0, this.s0); }
+        }
+
+        public byte3 wxy
+        {
+            get { return new byte3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public byte3 wxz
+        {
+            get { return new byte3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public byte3 wxw
+        {
+            get { return new byte3(this.s3, this.s0, this.s3); }
+        }
+
+        public byte3 wyx
+        {
+            get { return new byte3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public byte3 wyy
+        {
+            get { return new byte3(this.s3, this.s1, this.s1); }
+        }
+
+        public byte3 wyz
+        {
+            get { return new byte3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public byte3 wyw
+        {
+            get { return new byte3(this.s3, this.s1, this.s3); }
+        }
+
+        public byte3 wzx
+        {
+            get { return new byte3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public byte3 wzy
+        {
+            get { return new byte3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public byte3 wzz
+        {
+            get { return new byte3(this.s3, this.s2, this.s2); }
+        }
+
+        public byte3 wzw
+        {
+            get { return new byte3(this.s3, this.s2, this.s3); }
+        }
+
+        public byte3 wwx
+        {
+            get { return new byte3(this.s3, this.s3, this.s0); }
+        }
+
+        public byte3 wwy
+        {
+            get { return new byte3(this.s3, this.s3, this.s1); }
+        }
+
+        public byte3 wwz
+        {
+            get { return new byte3(this.s3, this.s3, this.s2); }
+        }
+
+        public byte3 www
+        {
+            get { return new byte3(this.s3, this.s3, this.s3); }
         }
 
         public byte4 xxxx
@@ -2991,6 +4651,12 @@ namespace OpenCl
         public byte4 xyzw
         {
             get { return new byte4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public byte4 xywx
@@ -3006,6 +4672,12 @@ namespace OpenCl
         public byte4 xywz
         {
             get { return new byte4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public byte4 xyww
@@ -3051,6 +4723,12 @@ namespace OpenCl
         public byte4 xzyw
         {
             get { return new byte4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public byte4 xzzx
@@ -3081,6 +4759,12 @@ namespace OpenCl
         public byte4 xzwy
         {
             get { return new byte4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public byte4 xzwz
@@ -3126,6 +4810,12 @@ namespace OpenCl
         public byte4 xwyz
         {
             get { return new byte4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public byte4 xwyw
@@ -3141,6 +4831,12 @@ namespace OpenCl
         public byte4 xwzy
         {
             get { return new byte4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public byte4 xwzz
@@ -3231,6 +4927,12 @@ namespace OpenCl
         public byte4 yxzw
         {
             get { return new byte4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public byte4 yxwx
@@ -3246,6 +4948,12 @@ namespace OpenCl
         public byte4 yxwz
         {
             get { return new byte4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public byte4 yxww
@@ -3351,6 +5059,12 @@ namespace OpenCl
         public byte4 yzxw
         {
             get { return new byte4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public byte4 yzyx
@@ -3396,6 +5110,12 @@ namespace OpenCl
         public byte4 yzwx
         {
             get { return new byte4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public byte4 yzwy
@@ -3426,6 +5146,12 @@ namespace OpenCl
         public byte4 ywxz
         {
             get { return new byte4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public byte4 ywxw
@@ -3456,6 +5182,12 @@ namespace OpenCl
         public byte4 ywzx
         {
             get { return new byte4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public byte4 ywzy
@@ -3531,6 +5263,12 @@ namespace OpenCl
         public byte4 zxyw
         {
             get { return new byte4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public byte4 zxzx
@@ -3561,6 +5299,12 @@ namespace OpenCl
         public byte4 zxwy
         {
             get { return new byte4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public byte4 zxwz
@@ -3591,6 +5335,12 @@ namespace OpenCl
         public byte4 zyxw
         {
             get { return new byte4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public byte4 zyyx
@@ -3636,6 +5386,12 @@ namespace OpenCl
         public byte4 zywx
         {
             get { return new byte4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public byte4 zywy
@@ -3741,6 +5497,12 @@ namespace OpenCl
         public byte4 zwxy
         {
             get { return new byte4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public byte4 zwxz
@@ -3756,6 +5518,12 @@ namespace OpenCl
         public byte4 zwyx
         {
             get { return new byte4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public byte4 zwyy
@@ -3846,6 +5614,12 @@ namespace OpenCl
         public byte4 wxyz
         {
             get { return new byte4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public byte4 wxyw
@@ -3861,6 +5635,12 @@ namespace OpenCl
         public byte4 wxzy
         {
             get { return new byte4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public byte4 wxzz
@@ -3906,6 +5686,12 @@ namespace OpenCl
         public byte4 wyxz
         {
             get { return new byte4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public byte4 wyxw
@@ -3936,6 +5722,12 @@ namespace OpenCl
         public byte4 wyzx
         {
             get { return new byte4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public byte4 wyzy
@@ -3981,6 +5773,12 @@ namespace OpenCl
         public byte4 wzxy
         {
             get { return new byte4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public byte4 wzxz
@@ -3996,6 +5794,12 @@ namespace OpenCl
         public byte4 wzyx
         {
             get { return new byte4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public byte4 wzyy
@@ -4277,16 +6081,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public byte8(byte s0, byte s1, byte s2, byte s3, byte s4, byte s5, byte s6, byte s7)
+        public byte8(byte v0, byte v1, byte v2, byte v3, byte v4, byte v5, byte v6, byte v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public byte this[int index]
@@ -4477,24 +6281,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public byte16(byte s0, byte s1, byte s2, byte s3, byte s4, byte s5, byte s6, byte s7, byte s8, byte s9, byte sa, byte sb, byte sc, byte sd, byte se, byte sf)
+        public byte16(byte v0, byte v1, byte v2, byte v3, byte v4, byte v5, byte v6, byte v7, byte v8, byte v9, byte va, byte vb, byte vc, byte vd, byte ve, byte vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public byte sA
@@ -4719,10 +6523,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public short2(short s0, short s1)
+        public short2(short2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public short2(short v0, short v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public short x
@@ -4745,11 +6555,19 @@ namespace OpenCl
         public short2 xy
         {
             get { return new short2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public short2 yx
         {
             get { return new short2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public short2 yy
@@ -4878,11 +6696,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public short3(short s0, short s1, short s2)
+        public short3(short3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public short3(short v0, short2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public short3(short2 v0, short v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public short3(short v0, short v1, short v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public short x
@@ -4901,6 +6740,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public short2 xx
+        {
+            get { return new short2(this.s0, this.s0); }
+        }
+
+        public short2 xy
+        {
+            get { return new short2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public short2 xz
+        {
+            get { return new short2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public short2 yx
+        {
+            get { return new short2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public short2 yy
+        {
+            get { return new short2(this.s1, this.s1); }
+        }
+
+        public short2 yz
+        {
+            get { return new short2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public short2 zx
+        {
+            get { return new short2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public short2 zy
+        {
+            get { return new short2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public short2 zz
+        {
+            get { return new short2(this.s2, this.s2); }
         }
 
         public short3 xxx
@@ -4931,6 +6839,11 @@ namespace OpenCl
         public short3 xyz
         {
             get { return new short3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public short3 xzx
@@ -4941,6 +6854,11 @@ namespace OpenCl
         public short3 xzy
         {
             get { return new short3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public short3 xzz
@@ -4961,6 +6879,11 @@ namespace OpenCl
         public short3 yxz
         {
             get { return new short3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public short3 yyx
@@ -4981,6 +6904,11 @@ namespace OpenCl
         public short3 yzx
         {
             get { return new short3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public short3 yzy
@@ -5001,6 +6929,11 @@ namespace OpenCl
         public short3 zxy
         {
             get { return new short3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public short3 zxz
@@ -5011,6 +6944,11 @@ namespace OpenCl
         public short3 zyx
         {
             get { return new short3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public short3 zyy
@@ -5167,12 +7105,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public short4(short s0, short s1, short s2, short s3)
+        public short4(short4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public short4(short v0, short3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public short4(short2 v0, short2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public short4(short3 v0, short v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public short4(short v0, short v1, short2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public short4(short v0, short2 v1, short v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public short4(short2 v0, short v1, short v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public short4(short v0, short v1, short v2, short v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public short x
@@ -5197,6 +7191,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public short2 xx
+        {
+            get { return new short2(this.s0, this.s0); }
+        }
+
+        public short2 xy
+        {
+            get { return new short2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public short2 xz
+        {
+            get { return new short2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public short2 xw
+        {
+            get { return new short2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public short2 yx
+        {
+            get { return new short2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public short2 yy
+        {
+            get { return new short2(this.s1, this.s1); }
+        }
+
+        public short2 yz
+        {
+            get { return new short2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public short2 yw
+        {
+            get { return new short2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public short2 zx
+        {
+            get { return new short2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public short2 zy
+        {
+            get { return new short2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public short2 zz
+        {
+            get { return new short2(this.s2, this.s2); }
+        }
+
+        public short2 zw
+        {
+            get { return new short2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public short2 wx
+        {
+            get { return new short2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public short2 wy
+        {
+            get { return new short2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public short2 wz
+        {
+            get { return new short2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public short2 ww
+        {
+            get { return new short2(this.s3, this.s3); }
+        }
+
+        public short3 xxx
+        {
+            get { return new short3(this.s0, this.s0, this.s0); }
+        }
+
+        public short3 xxy
+        {
+            get { return new short3(this.s0, this.s0, this.s1); }
+        }
+
+        public short3 xxz
+        {
+            get { return new short3(this.s0, this.s0, this.s2); }
+        }
+
+        public short3 xxw
+        {
+            get { return new short3(this.s0, this.s0, this.s3); }
+        }
+
+        public short3 xyx
+        {
+            get { return new short3(this.s0, this.s1, this.s0); }
+        }
+
+        public short3 xyy
+        {
+            get { return new short3(this.s0, this.s1, this.s1); }
+        }
+
+        public short3 xyz
+        {
+            get { return new short3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public short3 xyw
+        {
+            get { return new short3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public short3 xzx
+        {
+            get { return new short3(this.s0, this.s2, this.s0); }
+        }
+
+        public short3 xzy
+        {
+            get { return new short3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public short3 xzz
+        {
+            get { return new short3(this.s0, this.s2, this.s2); }
+        }
+
+        public short3 xzw
+        {
+            get { return new short3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public short3 xwx
+        {
+            get { return new short3(this.s0, this.s3, this.s0); }
+        }
+
+        public short3 xwy
+        {
+            get { return new short3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public short3 xwz
+        {
+            get { return new short3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public short3 xww
+        {
+            get { return new short3(this.s0, this.s3, this.s3); }
+        }
+
+        public short3 yxx
+        {
+            get { return new short3(this.s1, this.s0, this.s0); }
+        }
+
+        public short3 yxy
+        {
+            get { return new short3(this.s1, this.s0, this.s1); }
+        }
+
+        public short3 yxz
+        {
+            get { return new short3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public short3 yxw
+        {
+            get { return new short3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public short3 yyx
+        {
+            get { return new short3(this.s1, this.s1, this.s0); }
+        }
+
+        public short3 yyy
+        {
+            get { return new short3(this.s1, this.s1, this.s1); }
+        }
+
+        public short3 yyz
+        {
+            get { return new short3(this.s1, this.s1, this.s2); }
+        }
+
+        public short3 yyw
+        {
+            get { return new short3(this.s1, this.s1, this.s3); }
+        }
+
+        public short3 yzx
+        {
+            get { return new short3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public short3 yzy
+        {
+            get { return new short3(this.s1, this.s2, this.s1); }
+        }
+
+        public short3 yzz
+        {
+            get { return new short3(this.s1, this.s2, this.s2); }
+        }
+
+        public short3 yzw
+        {
+            get { return new short3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public short3 ywx
+        {
+            get { return new short3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public short3 ywy
+        {
+            get { return new short3(this.s1, this.s3, this.s1); }
+        }
+
+        public short3 ywz
+        {
+            get { return new short3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public short3 yww
+        {
+            get { return new short3(this.s1, this.s3, this.s3); }
+        }
+
+        public short3 zxx
+        {
+            get { return new short3(this.s2, this.s0, this.s0); }
+        }
+
+        public short3 zxy
+        {
+            get { return new short3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public short3 zxz
+        {
+            get { return new short3(this.s2, this.s0, this.s2); }
+        }
+
+        public short3 zxw
+        {
+            get { return new short3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public short3 zyx
+        {
+            get { return new short3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public short3 zyy
+        {
+            get { return new short3(this.s2, this.s1, this.s1); }
+        }
+
+        public short3 zyz
+        {
+            get { return new short3(this.s2, this.s1, this.s2); }
+        }
+
+        public short3 zyw
+        {
+            get { return new short3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public short3 zzx
+        {
+            get { return new short3(this.s2, this.s2, this.s0); }
+        }
+
+        public short3 zzy
+        {
+            get { return new short3(this.s2, this.s2, this.s1); }
+        }
+
+        public short3 zzz
+        {
+            get { return new short3(this.s2, this.s2, this.s2); }
+        }
+
+        public short3 zzw
+        {
+            get { return new short3(this.s2, this.s2, this.s3); }
+        }
+
+        public short3 zwx
+        {
+            get { return new short3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public short3 zwy
+        {
+            get { return new short3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public short3 zwz
+        {
+            get { return new short3(this.s2, this.s3, this.s2); }
+        }
+
+        public short3 zww
+        {
+            get { return new short3(this.s2, this.s3, this.s3); }
+        }
+
+        public short3 wxx
+        {
+            get { return new short3(this.s3, this.s0, this.s0); }
+        }
+
+        public short3 wxy
+        {
+            get { return new short3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public short3 wxz
+        {
+            get { return new short3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public short3 wxw
+        {
+            get { return new short3(this.s3, this.s0, this.s3); }
+        }
+
+        public short3 wyx
+        {
+            get { return new short3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public short3 wyy
+        {
+            get { return new short3(this.s3, this.s1, this.s1); }
+        }
+
+        public short3 wyz
+        {
+            get { return new short3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public short3 wyw
+        {
+            get { return new short3(this.s3, this.s1, this.s3); }
+        }
+
+        public short3 wzx
+        {
+            get { return new short3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public short3 wzy
+        {
+            get { return new short3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public short3 wzz
+        {
+            get { return new short3(this.s3, this.s2, this.s2); }
+        }
+
+        public short3 wzw
+        {
+            get { return new short3(this.s3, this.s2, this.s3); }
+        }
+
+        public short3 wwx
+        {
+            get { return new short3(this.s3, this.s3, this.s0); }
+        }
+
+        public short3 wwy
+        {
+            get { return new short3(this.s3, this.s3, this.s1); }
+        }
+
+        public short3 wwz
+        {
+            get { return new short3(this.s3, this.s3, this.s2); }
+        }
+
+        public short3 www
+        {
+            get { return new short3(this.s3, this.s3, this.s3); }
         }
 
         public short4 xxxx
@@ -5337,6 +7899,12 @@ namespace OpenCl
         public short4 xyzw
         {
             get { return new short4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public short4 xywx
@@ -5352,6 +7920,12 @@ namespace OpenCl
         public short4 xywz
         {
             get { return new short4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public short4 xyww
@@ -5397,6 +7971,12 @@ namespace OpenCl
         public short4 xzyw
         {
             get { return new short4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public short4 xzzx
@@ -5427,6 +8007,12 @@ namespace OpenCl
         public short4 xzwy
         {
             get { return new short4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public short4 xzwz
@@ -5472,6 +8058,12 @@ namespace OpenCl
         public short4 xwyz
         {
             get { return new short4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public short4 xwyw
@@ -5487,6 +8079,12 @@ namespace OpenCl
         public short4 xwzy
         {
             get { return new short4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public short4 xwzz
@@ -5577,6 +8175,12 @@ namespace OpenCl
         public short4 yxzw
         {
             get { return new short4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public short4 yxwx
@@ -5592,6 +8196,12 @@ namespace OpenCl
         public short4 yxwz
         {
             get { return new short4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public short4 yxww
@@ -5697,6 +8307,12 @@ namespace OpenCl
         public short4 yzxw
         {
             get { return new short4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public short4 yzyx
@@ -5742,6 +8358,12 @@ namespace OpenCl
         public short4 yzwx
         {
             get { return new short4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public short4 yzwy
@@ -5772,6 +8394,12 @@ namespace OpenCl
         public short4 ywxz
         {
             get { return new short4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public short4 ywxw
@@ -5802,6 +8430,12 @@ namespace OpenCl
         public short4 ywzx
         {
             get { return new short4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public short4 ywzy
@@ -5877,6 +8511,12 @@ namespace OpenCl
         public short4 zxyw
         {
             get { return new short4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public short4 zxzx
@@ -5907,6 +8547,12 @@ namespace OpenCl
         public short4 zxwy
         {
             get { return new short4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public short4 zxwz
@@ -5937,6 +8583,12 @@ namespace OpenCl
         public short4 zyxw
         {
             get { return new short4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public short4 zyyx
@@ -5982,6 +8634,12 @@ namespace OpenCl
         public short4 zywx
         {
             get { return new short4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public short4 zywy
@@ -6087,6 +8745,12 @@ namespace OpenCl
         public short4 zwxy
         {
             get { return new short4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public short4 zwxz
@@ -6102,6 +8766,12 @@ namespace OpenCl
         public short4 zwyx
         {
             get { return new short4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public short4 zwyy
@@ -6192,6 +8862,12 @@ namespace OpenCl
         public short4 wxyz
         {
             get { return new short4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public short4 wxyw
@@ -6207,6 +8883,12 @@ namespace OpenCl
         public short4 wxzy
         {
             get { return new short4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public short4 wxzz
@@ -6252,6 +8934,12 @@ namespace OpenCl
         public short4 wyxz
         {
             get { return new short4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public short4 wyxw
@@ -6282,6 +8970,12 @@ namespace OpenCl
         public short4 wyzx
         {
             get { return new short4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public short4 wyzy
@@ -6327,6 +9021,12 @@ namespace OpenCl
         public short4 wzxy
         {
             get { return new short4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public short4 wzxz
@@ -6342,6 +9042,12 @@ namespace OpenCl
         public short4 wzyx
         {
             get { return new short4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public short4 wzyy
@@ -6625,16 +9331,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public short8(short s0, short s1, short s2, short s3, short s4, short s5, short s6, short s7)
+        public short8(short v0, short v1, short v2, short v3, short v4, short v5, short v6, short v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public short this[int index]
@@ -6827,24 +9533,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public short16(short s0, short s1, short s2, short s3, short s4, short s5, short s6, short s7, short s8, short s9, short sa, short sb, short sc, short sd, short se, short sf)
+        public short16(short v0, short v1, short v2, short v3, short v4, short v5, short v6, short v7, short v8, short v9, short va, short vb, short vc, short vd, short ve, short vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public short sA
@@ -7071,10 +9777,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public ushort2(ushort s0, ushort s1)
+        public ushort2(ushort2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public ushort2(ushort v0, ushort v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public ushort x
@@ -7097,11 +9809,19 @@ namespace OpenCl
         public ushort2 xy
         {
             get { return new ushort2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public ushort2 yx
         {
             get { return new ushort2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public ushort2 yy
@@ -7228,11 +9948,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public ushort3(ushort s0, ushort s1, ushort s2)
+        public ushort3(ushort3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public ushort3(ushort v0, ushort2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public ushort3(ushort2 v0, ushort v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public ushort3(ushort v0, ushort v1, ushort v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public ushort x
@@ -7251,6 +9992,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public ushort2 xx
+        {
+            get { return new ushort2(this.s0, this.s0); }
+        }
+
+        public ushort2 xy
+        {
+            get { return new ushort2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ushort2 xz
+        {
+            get { return new ushort2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ushort2 yx
+        {
+            get { return new ushort2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ushort2 yy
+        {
+            get { return new ushort2(this.s1, this.s1); }
+        }
+
+        public ushort2 yz
+        {
+            get { return new ushort2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ushort2 zx
+        {
+            get { return new ushort2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ushort2 zy
+        {
+            get { return new ushort2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ushort2 zz
+        {
+            get { return new ushort2(this.s2, this.s2); }
         }
 
         public ushort3 xxx
@@ -7281,6 +10091,11 @@ namespace OpenCl
         public ushort3 xyz
         {
             get { return new ushort3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public ushort3 xzx
@@ -7291,6 +10106,11 @@ namespace OpenCl
         public ushort3 xzy
         {
             get { return new ushort3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public ushort3 xzz
@@ -7311,6 +10131,11 @@ namespace OpenCl
         public ushort3 yxz
         {
             get { return new ushort3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public ushort3 yyx
@@ -7331,6 +10156,11 @@ namespace OpenCl
         public ushort3 yzx
         {
             get { return new ushort3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public ushort3 yzy
@@ -7351,6 +10181,11 @@ namespace OpenCl
         public ushort3 zxy
         {
             get { return new ushort3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public ushort3 zxz
@@ -7361,6 +10196,11 @@ namespace OpenCl
         public ushort3 zyx
         {
             get { return new ushort3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public ushort3 zyy
@@ -7515,12 +10355,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public ushort4(ushort s0, ushort s1, ushort s2, ushort s3)
+        public ushort4(ushort4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public ushort4(ushort v0, ushort3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public ushort4(ushort2 v0, ushort2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public ushort4(ushort3 v0, ushort v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public ushort4(ushort v0, ushort v1, ushort2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public ushort4(ushort v0, ushort2 v1, ushort v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public ushort4(ushort2 v0, ushort v1, ushort v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public ushort4(ushort v0, ushort v1, ushort v2, ushort v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public ushort x
@@ -7545,6 +10441,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public ushort2 xx
+        {
+            get { return new ushort2(this.s0, this.s0); }
+        }
+
+        public ushort2 xy
+        {
+            get { return new ushort2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ushort2 xz
+        {
+            get { return new ushort2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ushort2 xw
+        {
+            get { return new ushort2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public ushort2 yx
+        {
+            get { return new ushort2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ushort2 yy
+        {
+            get { return new ushort2(this.s1, this.s1); }
+        }
+
+        public ushort2 yz
+        {
+            get { return new ushort2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ushort2 yw
+        {
+            get { return new ushort2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public ushort2 zx
+        {
+            get { return new ushort2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ushort2 zy
+        {
+            get { return new ushort2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ushort2 zz
+        {
+            get { return new ushort2(this.s2, this.s2); }
+        }
+
+        public ushort2 zw
+        {
+            get { return new ushort2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public ushort2 wx
+        {
+            get { return new ushort2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ushort2 wy
+        {
+            get { return new ushort2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ushort2 wz
+        {
+            get { return new ushort2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ushort2 ww
+        {
+            get { return new ushort2(this.s3, this.s3); }
+        }
+
+        public ushort3 xxx
+        {
+            get { return new ushort3(this.s0, this.s0, this.s0); }
+        }
+
+        public ushort3 xxy
+        {
+            get { return new ushort3(this.s0, this.s0, this.s1); }
+        }
+
+        public ushort3 xxz
+        {
+            get { return new ushort3(this.s0, this.s0, this.s2); }
+        }
+
+        public ushort3 xxw
+        {
+            get { return new ushort3(this.s0, this.s0, this.s3); }
+        }
+
+        public ushort3 xyx
+        {
+            get { return new ushort3(this.s0, this.s1, this.s0); }
+        }
+
+        public ushort3 xyy
+        {
+            get { return new ushort3(this.s0, this.s1, this.s1); }
+        }
+
+        public ushort3 xyz
+        {
+            get { return new ushort3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ushort3 xyw
+        {
+            get { return new ushort3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ushort3 xzx
+        {
+            get { return new ushort3(this.s0, this.s2, this.s0); }
+        }
+
+        public ushort3 xzy
+        {
+            get { return new ushort3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ushort3 xzz
+        {
+            get { return new ushort3(this.s0, this.s2, this.s2); }
+        }
+
+        public ushort3 xzw
+        {
+            get { return new ushort3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ushort3 xwx
+        {
+            get { return new ushort3(this.s0, this.s3, this.s0); }
+        }
+
+        public ushort3 xwy
+        {
+            get { return new ushort3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ushort3 xwz
+        {
+            get { return new ushort3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ushort3 xww
+        {
+            get { return new ushort3(this.s0, this.s3, this.s3); }
+        }
+
+        public ushort3 yxx
+        {
+            get { return new ushort3(this.s1, this.s0, this.s0); }
+        }
+
+        public ushort3 yxy
+        {
+            get { return new ushort3(this.s1, this.s0, this.s1); }
+        }
+
+        public ushort3 yxz
+        {
+            get { return new ushort3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ushort3 yxw
+        {
+            get { return new ushort3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ushort3 yyx
+        {
+            get { return new ushort3(this.s1, this.s1, this.s0); }
+        }
+
+        public ushort3 yyy
+        {
+            get { return new ushort3(this.s1, this.s1, this.s1); }
+        }
+
+        public ushort3 yyz
+        {
+            get { return new ushort3(this.s1, this.s1, this.s2); }
+        }
+
+        public ushort3 yyw
+        {
+            get { return new ushort3(this.s1, this.s1, this.s3); }
+        }
+
+        public ushort3 yzx
+        {
+            get { return new ushort3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ushort3 yzy
+        {
+            get { return new ushort3(this.s1, this.s2, this.s1); }
+        }
+
+        public ushort3 yzz
+        {
+            get { return new ushort3(this.s1, this.s2, this.s2); }
+        }
+
+        public ushort3 yzw
+        {
+            get { return new ushort3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ushort3 ywx
+        {
+            get { return new ushort3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ushort3 ywy
+        {
+            get { return new ushort3(this.s1, this.s3, this.s1); }
+        }
+
+        public ushort3 ywz
+        {
+            get { return new ushort3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ushort3 yww
+        {
+            get { return new ushort3(this.s1, this.s3, this.s3); }
+        }
+
+        public ushort3 zxx
+        {
+            get { return new ushort3(this.s2, this.s0, this.s0); }
+        }
+
+        public ushort3 zxy
+        {
+            get { return new ushort3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ushort3 zxz
+        {
+            get { return new ushort3(this.s2, this.s0, this.s2); }
+        }
+
+        public ushort3 zxw
+        {
+            get { return new ushort3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ushort3 zyx
+        {
+            get { return new ushort3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ushort3 zyy
+        {
+            get { return new ushort3(this.s2, this.s1, this.s1); }
+        }
+
+        public ushort3 zyz
+        {
+            get { return new ushort3(this.s2, this.s1, this.s2); }
+        }
+
+        public ushort3 zyw
+        {
+            get { return new ushort3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ushort3 zzx
+        {
+            get { return new ushort3(this.s2, this.s2, this.s0); }
+        }
+
+        public ushort3 zzy
+        {
+            get { return new ushort3(this.s2, this.s2, this.s1); }
+        }
+
+        public ushort3 zzz
+        {
+            get { return new ushort3(this.s2, this.s2, this.s2); }
+        }
+
+        public ushort3 zzw
+        {
+            get { return new ushort3(this.s2, this.s2, this.s3); }
+        }
+
+        public ushort3 zwx
+        {
+            get { return new ushort3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ushort3 zwy
+        {
+            get { return new ushort3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ushort3 zwz
+        {
+            get { return new ushort3(this.s2, this.s3, this.s2); }
+        }
+
+        public ushort3 zww
+        {
+            get { return new ushort3(this.s2, this.s3, this.s3); }
+        }
+
+        public ushort3 wxx
+        {
+            get { return new ushort3(this.s3, this.s0, this.s0); }
+        }
+
+        public ushort3 wxy
+        {
+            get { return new ushort3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ushort3 wxz
+        {
+            get { return new ushort3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ushort3 wxw
+        {
+            get { return new ushort3(this.s3, this.s0, this.s3); }
+        }
+
+        public ushort3 wyx
+        {
+            get { return new ushort3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ushort3 wyy
+        {
+            get { return new ushort3(this.s3, this.s1, this.s1); }
+        }
+
+        public ushort3 wyz
+        {
+            get { return new ushort3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ushort3 wyw
+        {
+            get { return new ushort3(this.s3, this.s1, this.s3); }
+        }
+
+        public ushort3 wzx
+        {
+            get { return new ushort3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ushort3 wzy
+        {
+            get { return new ushort3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ushort3 wzz
+        {
+            get { return new ushort3(this.s3, this.s2, this.s2); }
+        }
+
+        public ushort3 wzw
+        {
+            get { return new ushort3(this.s3, this.s2, this.s3); }
+        }
+
+        public ushort3 wwx
+        {
+            get { return new ushort3(this.s3, this.s3, this.s0); }
+        }
+
+        public ushort3 wwy
+        {
+            get { return new ushort3(this.s3, this.s3, this.s1); }
+        }
+
+        public ushort3 wwz
+        {
+            get { return new ushort3(this.s3, this.s3, this.s2); }
+        }
+
+        public ushort3 www
+        {
+            get { return new ushort3(this.s3, this.s3, this.s3); }
         }
 
         public ushort4 xxxx
@@ -7685,6 +11149,12 @@ namespace OpenCl
         public ushort4 xyzw
         {
             get { return new ushort4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ushort4 xywx
@@ -7700,6 +11170,12 @@ namespace OpenCl
         public ushort4 xywz
         {
             get { return new ushort4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ushort4 xyww
@@ -7745,6 +11221,12 @@ namespace OpenCl
         public ushort4 xzyw
         {
             get { return new ushort4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ushort4 xzzx
@@ -7775,6 +11257,12 @@ namespace OpenCl
         public ushort4 xzwy
         {
             get { return new ushort4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ushort4 xzwz
@@ -7820,6 +11308,12 @@ namespace OpenCl
         public ushort4 xwyz
         {
             get { return new ushort4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ushort4 xwyw
@@ -7835,6 +11329,12 @@ namespace OpenCl
         public ushort4 xwzy
         {
             get { return new ushort4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ushort4 xwzz
@@ -7925,6 +11425,12 @@ namespace OpenCl
         public ushort4 yxzw
         {
             get { return new ushort4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ushort4 yxwx
@@ -7940,6 +11446,12 @@ namespace OpenCl
         public ushort4 yxwz
         {
             get { return new ushort4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ushort4 yxww
@@ -8045,6 +11557,12 @@ namespace OpenCl
         public ushort4 yzxw
         {
             get { return new ushort4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ushort4 yzyx
@@ -8090,6 +11608,12 @@ namespace OpenCl
         public ushort4 yzwx
         {
             get { return new ushort4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ushort4 yzwy
@@ -8120,6 +11644,12 @@ namespace OpenCl
         public ushort4 ywxz
         {
             get { return new ushort4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ushort4 ywxw
@@ -8150,6 +11680,12 @@ namespace OpenCl
         public ushort4 ywzx
         {
             get { return new ushort4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ushort4 ywzy
@@ -8225,6 +11761,12 @@ namespace OpenCl
         public ushort4 zxyw
         {
             get { return new ushort4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ushort4 zxzx
@@ -8255,6 +11797,12 @@ namespace OpenCl
         public ushort4 zxwy
         {
             get { return new ushort4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ushort4 zxwz
@@ -8285,6 +11833,12 @@ namespace OpenCl
         public ushort4 zyxw
         {
             get { return new ushort4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ushort4 zyyx
@@ -8330,6 +11884,12 @@ namespace OpenCl
         public ushort4 zywx
         {
             get { return new ushort4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ushort4 zywy
@@ -8435,6 +11995,12 @@ namespace OpenCl
         public ushort4 zwxy
         {
             get { return new ushort4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ushort4 zwxz
@@ -8450,6 +12016,12 @@ namespace OpenCl
         public ushort4 zwyx
         {
             get { return new ushort4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ushort4 zwyy
@@ -8540,6 +12112,12 @@ namespace OpenCl
         public ushort4 wxyz
         {
             get { return new ushort4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ushort4 wxyw
@@ -8555,6 +12133,12 @@ namespace OpenCl
         public ushort4 wxzy
         {
             get { return new ushort4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ushort4 wxzz
@@ -8600,6 +12184,12 @@ namespace OpenCl
         public ushort4 wyxz
         {
             get { return new ushort4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ushort4 wyxw
@@ -8630,6 +12220,12 @@ namespace OpenCl
         public ushort4 wyzx
         {
             get { return new ushort4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ushort4 wyzy
@@ -8675,6 +12271,12 @@ namespace OpenCl
         public ushort4 wzxy
         {
             get { return new ushort4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ushort4 wzxz
@@ -8690,6 +12292,12 @@ namespace OpenCl
         public ushort4 wzyx
         {
             get { return new ushort4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ushort4 wzyy
@@ -8971,16 +12579,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public ushort8(ushort s0, ushort s1, ushort s2, ushort s3, ushort s4, ushort s5, ushort s6, ushort s7)
+        public ushort8(ushort v0, ushort v1, ushort v2, ushort v3, ushort v4, ushort v5, ushort v6, ushort v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public ushort this[int index]
@@ -9171,24 +12779,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public ushort16(ushort s0, ushort s1, ushort s2, ushort s3, ushort s4, ushort s5, ushort s6, ushort s7, ushort s8, ushort s9, ushort sa, ushort sb, ushort sc, ushort sd, ushort se, ushort sf)
+        public ushort16(ushort v0, ushort v1, ushort v2, ushort v3, ushort v4, ushort v5, ushort v6, ushort v7, ushort v8, ushort v9, ushort va, ushort vb, ushort vc, ushort vd, ushort ve, ushort vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public ushort sA
@@ -9413,10 +13021,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public int2(int s0, int s1)
+        public int2(int2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public int2(int v0, int v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public int x
@@ -9439,11 +13053,19 @@ namespace OpenCl
         public int2 xy
         {
             get { return new int2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public int2 yx
         {
             get { return new int2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public int2 yy
@@ -9572,11 +13194,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public int3(int s0, int s1, int s2)
+        public int3(int3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public int3(int v0, int2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public int3(int2 v0, int v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public int3(int v0, int v1, int v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public int x
@@ -9595,6 +13238,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public int2 xx
+        {
+            get { return new int2(this.s0, this.s0); }
+        }
+
+        public int2 xy
+        {
+            get { return new int2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public int2 xz
+        {
+            get { return new int2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public int2 yx
+        {
+            get { return new int2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public int2 yy
+        {
+            get { return new int2(this.s1, this.s1); }
+        }
+
+        public int2 yz
+        {
+            get { return new int2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public int2 zx
+        {
+            get { return new int2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public int2 zy
+        {
+            get { return new int2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public int2 zz
+        {
+            get { return new int2(this.s2, this.s2); }
         }
 
         public int3 xxx
@@ -9625,6 +13337,11 @@ namespace OpenCl
         public int3 xyz
         {
             get { return new int3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public int3 xzx
@@ -9635,6 +13352,11 @@ namespace OpenCl
         public int3 xzy
         {
             get { return new int3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public int3 xzz
@@ -9655,6 +13377,11 @@ namespace OpenCl
         public int3 yxz
         {
             get { return new int3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public int3 yyx
@@ -9675,6 +13402,11 @@ namespace OpenCl
         public int3 yzx
         {
             get { return new int3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public int3 yzy
@@ -9695,6 +13427,11 @@ namespace OpenCl
         public int3 zxy
         {
             get { return new int3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public int3 zxz
@@ -9705,6 +13442,11 @@ namespace OpenCl
         public int3 zyx
         {
             get { return new int3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public int3 zyy
@@ -9861,12 +13603,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public int4(int s0, int s1, int s2, int s3)
+        public int4(int4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public int4(int v0, int3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public int4(int2 v0, int2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public int4(int3 v0, int v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public int4(int v0, int v1, int2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public int4(int v0, int2 v1, int v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public int4(int2 v0, int v1, int v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public int4(int v0, int v1, int v2, int v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public int x
@@ -9891,6 +13689,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public int2 xx
+        {
+            get { return new int2(this.s0, this.s0); }
+        }
+
+        public int2 xy
+        {
+            get { return new int2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public int2 xz
+        {
+            get { return new int2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public int2 xw
+        {
+            get { return new int2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public int2 yx
+        {
+            get { return new int2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public int2 yy
+        {
+            get { return new int2(this.s1, this.s1); }
+        }
+
+        public int2 yz
+        {
+            get { return new int2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public int2 yw
+        {
+            get { return new int2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public int2 zx
+        {
+            get { return new int2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public int2 zy
+        {
+            get { return new int2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public int2 zz
+        {
+            get { return new int2(this.s2, this.s2); }
+        }
+
+        public int2 zw
+        {
+            get { return new int2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public int2 wx
+        {
+            get { return new int2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public int2 wy
+        {
+            get { return new int2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public int2 wz
+        {
+            get { return new int2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public int2 ww
+        {
+            get { return new int2(this.s3, this.s3); }
+        }
+
+        public int3 xxx
+        {
+            get { return new int3(this.s0, this.s0, this.s0); }
+        }
+
+        public int3 xxy
+        {
+            get { return new int3(this.s0, this.s0, this.s1); }
+        }
+
+        public int3 xxz
+        {
+            get { return new int3(this.s0, this.s0, this.s2); }
+        }
+
+        public int3 xxw
+        {
+            get { return new int3(this.s0, this.s0, this.s3); }
+        }
+
+        public int3 xyx
+        {
+            get { return new int3(this.s0, this.s1, this.s0); }
+        }
+
+        public int3 xyy
+        {
+            get { return new int3(this.s0, this.s1, this.s1); }
+        }
+
+        public int3 xyz
+        {
+            get { return new int3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public int3 xyw
+        {
+            get { return new int3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public int3 xzx
+        {
+            get { return new int3(this.s0, this.s2, this.s0); }
+        }
+
+        public int3 xzy
+        {
+            get { return new int3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public int3 xzz
+        {
+            get { return new int3(this.s0, this.s2, this.s2); }
+        }
+
+        public int3 xzw
+        {
+            get { return new int3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public int3 xwx
+        {
+            get { return new int3(this.s0, this.s3, this.s0); }
+        }
+
+        public int3 xwy
+        {
+            get { return new int3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public int3 xwz
+        {
+            get { return new int3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public int3 xww
+        {
+            get { return new int3(this.s0, this.s3, this.s3); }
+        }
+
+        public int3 yxx
+        {
+            get { return new int3(this.s1, this.s0, this.s0); }
+        }
+
+        public int3 yxy
+        {
+            get { return new int3(this.s1, this.s0, this.s1); }
+        }
+
+        public int3 yxz
+        {
+            get { return new int3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public int3 yxw
+        {
+            get { return new int3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public int3 yyx
+        {
+            get { return new int3(this.s1, this.s1, this.s0); }
+        }
+
+        public int3 yyy
+        {
+            get { return new int3(this.s1, this.s1, this.s1); }
+        }
+
+        public int3 yyz
+        {
+            get { return new int3(this.s1, this.s1, this.s2); }
+        }
+
+        public int3 yyw
+        {
+            get { return new int3(this.s1, this.s1, this.s3); }
+        }
+
+        public int3 yzx
+        {
+            get { return new int3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public int3 yzy
+        {
+            get { return new int3(this.s1, this.s2, this.s1); }
+        }
+
+        public int3 yzz
+        {
+            get { return new int3(this.s1, this.s2, this.s2); }
+        }
+
+        public int3 yzw
+        {
+            get { return new int3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public int3 ywx
+        {
+            get { return new int3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public int3 ywy
+        {
+            get { return new int3(this.s1, this.s3, this.s1); }
+        }
+
+        public int3 ywz
+        {
+            get { return new int3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public int3 yww
+        {
+            get { return new int3(this.s1, this.s3, this.s3); }
+        }
+
+        public int3 zxx
+        {
+            get { return new int3(this.s2, this.s0, this.s0); }
+        }
+
+        public int3 zxy
+        {
+            get { return new int3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public int3 zxz
+        {
+            get { return new int3(this.s2, this.s0, this.s2); }
+        }
+
+        public int3 zxw
+        {
+            get { return new int3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public int3 zyx
+        {
+            get { return new int3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public int3 zyy
+        {
+            get { return new int3(this.s2, this.s1, this.s1); }
+        }
+
+        public int3 zyz
+        {
+            get { return new int3(this.s2, this.s1, this.s2); }
+        }
+
+        public int3 zyw
+        {
+            get { return new int3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public int3 zzx
+        {
+            get { return new int3(this.s2, this.s2, this.s0); }
+        }
+
+        public int3 zzy
+        {
+            get { return new int3(this.s2, this.s2, this.s1); }
+        }
+
+        public int3 zzz
+        {
+            get { return new int3(this.s2, this.s2, this.s2); }
+        }
+
+        public int3 zzw
+        {
+            get { return new int3(this.s2, this.s2, this.s3); }
+        }
+
+        public int3 zwx
+        {
+            get { return new int3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public int3 zwy
+        {
+            get { return new int3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public int3 zwz
+        {
+            get { return new int3(this.s2, this.s3, this.s2); }
+        }
+
+        public int3 zww
+        {
+            get { return new int3(this.s2, this.s3, this.s3); }
+        }
+
+        public int3 wxx
+        {
+            get { return new int3(this.s3, this.s0, this.s0); }
+        }
+
+        public int3 wxy
+        {
+            get { return new int3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public int3 wxz
+        {
+            get { return new int3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public int3 wxw
+        {
+            get { return new int3(this.s3, this.s0, this.s3); }
+        }
+
+        public int3 wyx
+        {
+            get { return new int3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public int3 wyy
+        {
+            get { return new int3(this.s3, this.s1, this.s1); }
+        }
+
+        public int3 wyz
+        {
+            get { return new int3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public int3 wyw
+        {
+            get { return new int3(this.s3, this.s1, this.s3); }
+        }
+
+        public int3 wzx
+        {
+            get { return new int3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public int3 wzy
+        {
+            get { return new int3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public int3 wzz
+        {
+            get { return new int3(this.s3, this.s2, this.s2); }
+        }
+
+        public int3 wzw
+        {
+            get { return new int3(this.s3, this.s2, this.s3); }
+        }
+
+        public int3 wwx
+        {
+            get { return new int3(this.s3, this.s3, this.s0); }
+        }
+
+        public int3 wwy
+        {
+            get { return new int3(this.s3, this.s3, this.s1); }
+        }
+
+        public int3 wwz
+        {
+            get { return new int3(this.s3, this.s3, this.s2); }
+        }
+
+        public int3 www
+        {
+            get { return new int3(this.s3, this.s3, this.s3); }
         }
 
         public int4 xxxx
@@ -10031,6 +14397,12 @@ namespace OpenCl
         public int4 xyzw
         {
             get { return new int4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public int4 xywx
@@ -10046,6 +14418,12 @@ namespace OpenCl
         public int4 xywz
         {
             get { return new int4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public int4 xyww
@@ -10091,6 +14469,12 @@ namespace OpenCl
         public int4 xzyw
         {
             get { return new int4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public int4 xzzx
@@ -10121,6 +14505,12 @@ namespace OpenCl
         public int4 xzwy
         {
             get { return new int4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public int4 xzwz
@@ -10166,6 +14556,12 @@ namespace OpenCl
         public int4 xwyz
         {
             get { return new int4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public int4 xwyw
@@ -10181,6 +14577,12 @@ namespace OpenCl
         public int4 xwzy
         {
             get { return new int4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public int4 xwzz
@@ -10271,6 +14673,12 @@ namespace OpenCl
         public int4 yxzw
         {
             get { return new int4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public int4 yxwx
@@ -10286,6 +14694,12 @@ namespace OpenCl
         public int4 yxwz
         {
             get { return new int4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public int4 yxww
@@ -10391,6 +14805,12 @@ namespace OpenCl
         public int4 yzxw
         {
             get { return new int4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public int4 yzyx
@@ -10436,6 +14856,12 @@ namespace OpenCl
         public int4 yzwx
         {
             get { return new int4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public int4 yzwy
@@ -10466,6 +14892,12 @@ namespace OpenCl
         public int4 ywxz
         {
             get { return new int4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public int4 ywxw
@@ -10496,6 +14928,12 @@ namespace OpenCl
         public int4 ywzx
         {
             get { return new int4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public int4 ywzy
@@ -10571,6 +15009,12 @@ namespace OpenCl
         public int4 zxyw
         {
             get { return new int4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public int4 zxzx
@@ -10601,6 +15045,12 @@ namespace OpenCl
         public int4 zxwy
         {
             get { return new int4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public int4 zxwz
@@ -10631,6 +15081,12 @@ namespace OpenCl
         public int4 zyxw
         {
             get { return new int4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public int4 zyyx
@@ -10676,6 +15132,12 @@ namespace OpenCl
         public int4 zywx
         {
             get { return new int4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public int4 zywy
@@ -10781,6 +15243,12 @@ namespace OpenCl
         public int4 zwxy
         {
             get { return new int4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public int4 zwxz
@@ -10796,6 +15264,12 @@ namespace OpenCl
         public int4 zwyx
         {
             get { return new int4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public int4 zwyy
@@ -10886,6 +15360,12 @@ namespace OpenCl
         public int4 wxyz
         {
             get { return new int4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public int4 wxyw
@@ -10901,6 +15381,12 @@ namespace OpenCl
         public int4 wxzy
         {
             get { return new int4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public int4 wxzz
@@ -10946,6 +15432,12 @@ namespace OpenCl
         public int4 wyxz
         {
             get { return new int4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public int4 wyxw
@@ -10976,6 +15468,12 @@ namespace OpenCl
         public int4 wyzx
         {
             get { return new int4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public int4 wyzy
@@ -11021,6 +15519,12 @@ namespace OpenCl
         public int4 wzxy
         {
             get { return new int4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public int4 wzxz
@@ -11036,6 +15540,12 @@ namespace OpenCl
         public int4 wzyx
         {
             get { return new int4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public int4 wzyy
@@ -11319,16 +15829,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public int8(int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7)
+        public int8(int v0, int v1, int v2, int v3, int v4, int v5, int v6, int v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public int this[int index]
@@ -11521,24 +16031,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public int16(int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, int s8, int s9, int sa, int sb, int sc, int sd, int se, int sf)
+        public int16(int v0, int v1, int v2, int v3, int v4, int v5, int v6, int v7, int v8, int v9, int va, int vb, int vc, int vd, int ve, int vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public int sA
@@ -11765,10 +16275,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public uint2(uint s0, uint s1)
+        public uint2(uint2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public uint2(uint v0, uint v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public uint x
@@ -11791,11 +16307,19 @@ namespace OpenCl
         public uint2 xy
         {
             get { return new uint2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public uint2 yx
         {
             get { return new uint2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public uint2 yy
@@ -11922,11 +16446,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public uint3(uint s0, uint s1, uint s2)
+        public uint3(uint3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public uint3(uint v0, uint2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public uint3(uint2 v0, uint v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public uint3(uint v0, uint v1, uint v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public uint x
@@ -11945,6 +16490,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public uint2 xx
+        {
+            get { return new uint2(this.s0, this.s0); }
+        }
+
+        public uint2 xy
+        {
+            get { return new uint2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public uint2 xz
+        {
+            get { return new uint2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public uint2 yx
+        {
+            get { return new uint2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public uint2 yy
+        {
+            get { return new uint2(this.s1, this.s1); }
+        }
+
+        public uint2 yz
+        {
+            get { return new uint2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public uint2 zx
+        {
+            get { return new uint2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public uint2 zy
+        {
+            get { return new uint2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public uint2 zz
+        {
+            get { return new uint2(this.s2, this.s2); }
         }
 
         public uint3 xxx
@@ -11975,6 +16589,11 @@ namespace OpenCl
         public uint3 xyz
         {
             get { return new uint3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public uint3 xzx
@@ -11985,6 +16604,11 @@ namespace OpenCl
         public uint3 xzy
         {
             get { return new uint3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public uint3 xzz
@@ -12005,6 +16629,11 @@ namespace OpenCl
         public uint3 yxz
         {
             get { return new uint3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public uint3 yyx
@@ -12025,6 +16654,11 @@ namespace OpenCl
         public uint3 yzx
         {
             get { return new uint3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public uint3 yzy
@@ -12045,6 +16679,11 @@ namespace OpenCl
         public uint3 zxy
         {
             get { return new uint3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public uint3 zxz
@@ -12055,6 +16694,11 @@ namespace OpenCl
         public uint3 zyx
         {
             get { return new uint3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public uint3 zyy
@@ -12209,12 +16853,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public uint4(uint s0, uint s1, uint s2, uint s3)
+        public uint4(uint4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public uint4(uint v0, uint3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public uint4(uint2 v0, uint2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public uint4(uint3 v0, uint v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public uint4(uint v0, uint v1, uint2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public uint4(uint v0, uint2 v1, uint v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public uint4(uint2 v0, uint v1, uint v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public uint4(uint v0, uint v1, uint v2, uint v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public uint x
@@ -12239,6 +16939,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public uint2 xx
+        {
+            get { return new uint2(this.s0, this.s0); }
+        }
+
+        public uint2 xy
+        {
+            get { return new uint2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public uint2 xz
+        {
+            get { return new uint2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public uint2 xw
+        {
+            get { return new uint2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public uint2 yx
+        {
+            get { return new uint2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public uint2 yy
+        {
+            get { return new uint2(this.s1, this.s1); }
+        }
+
+        public uint2 yz
+        {
+            get { return new uint2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public uint2 yw
+        {
+            get { return new uint2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public uint2 zx
+        {
+            get { return new uint2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public uint2 zy
+        {
+            get { return new uint2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public uint2 zz
+        {
+            get { return new uint2(this.s2, this.s2); }
+        }
+
+        public uint2 zw
+        {
+            get { return new uint2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public uint2 wx
+        {
+            get { return new uint2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public uint2 wy
+        {
+            get { return new uint2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public uint2 wz
+        {
+            get { return new uint2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public uint2 ww
+        {
+            get { return new uint2(this.s3, this.s3); }
+        }
+
+        public uint3 xxx
+        {
+            get { return new uint3(this.s0, this.s0, this.s0); }
+        }
+
+        public uint3 xxy
+        {
+            get { return new uint3(this.s0, this.s0, this.s1); }
+        }
+
+        public uint3 xxz
+        {
+            get { return new uint3(this.s0, this.s0, this.s2); }
+        }
+
+        public uint3 xxw
+        {
+            get { return new uint3(this.s0, this.s0, this.s3); }
+        }
+
+        public uint3 xyx
+        {
+            get { return new uint3(this.s0, this.s1, this.s0); }
+        }
+
+        public uint3 xyy
+        {
+            get { return new uint3(this.s0, this.s1, this.s1); }
+        }
+
+        public uint3 xyz
+        {
+            get { return new uint3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public uint3 xyw
+        {
+            get { return new uint3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public uint3 xzx
+        {
+            get { return new uint3(this.s0, this.s2, this.s0); }
+        }
+
+        public uint3 xzy
+        {
+            get { return new uint3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public uint3 xzz
+        {
+            get { return new uint3(this.s0, this.s2, this.s2); }
+        }
+
+        public uint3 xzw
+        {
+            get { return new uint3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public uint3 xwx
+        {
+            get { return new uint3(this.s0, this.s3, this.s0); }
+        }
+
+        public uint3 xwy
+        {
+            get { return new uint3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public uint3 xwz
+        {
+            get { return new uint3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public uint3 xww
+        {
+            get { return new uint3(this.s0, this.s3, this.s3); }
+        }
+
+        public uint3 yxx
+        {
+            get { return new uint3(this.s1, this.s0, this.s0); }
+        }
+
+        public uint3 yxy
+        {
+            get { return new uint3(this.s1, this.s0, this.s1); }
+        }
+
+        public uint3 yxz
+        {
+            get { return new uint3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public uint3 yxw
+        {
+            get { return new uint3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public uint3 yyx
+        {
+            get { return new uint3(this.s1, this.s1, this.s0); }
+        }
+
+        public uint3 yyy
+        {
+            get { return new uint3(this.s1, this.s1, this.s1); }
+        }
+
+        public uint3 yyz
+        {
+            get { return new uint3(this.s1, this.s1, this.s2); }
+        }
+
+        public uint3 yyw
+        {
+            get { return new uint3(this.s1, this.s1, this.s3); }
+        }
+
+        public uint3 yzx
+        {
+            get { return new uint3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public uint3 yzy
+        {
+            get { return new uint3(this.s1, this.s2, this.s1); }
+        }
+
+        public uint3 yzz
+        {
+            get { return new uint3(this.s1, this.s2, this.s2); }
+        }
+
+        public uint3 yzw
+        {
+            get { return new uint3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public uint3 ywx
+        {
+            get { return new uint3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public uint3 ywy
+        {
+            get { return new uint3(this.s1, this.s3, this.s1); }
+        }
+
+        public uint3 ywz
+        {
+            get { return new uint3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public uint3 yww
+        {
+            get { return new uint3(this.s1, this.s3, this.s3); }
+        }
+
+        public uint3 zxx
+        {
+            get { return new uint3(this.s2, this.s0, this.s0); }
+        }
+
+        public uint3 zxy
+        {
+            get { return new uint3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public uint3 zxz
+        {
+            get { return new uint3(this.s2, this.s0, this.s2); }
+        }
+
+        public uint3 zxw
+        {
+            get { return new uint3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public uint3 zyx
+        {
+            get { return new uint3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public uint3 zyy
+        {
+            get { return new uint3(this.s2, this.s1, this.s1); }
+        }
+
+        public uint3 zyz
+        {
+            get { return new uint3(this.s2, this.s1, this.s2); }
+        }
+
+        public uint3 zyw
+        {
+            get { return new uint3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public uint3 zzx
+        {
+            get { return new uint3(this.s2, this.s2, this.s0); }
+        }
+
+        public uint3 zzy
+        {
+            get { return new uint3(this.s2, this.s2, this.s1); }
+        }
+
+        public uint3 zzz
+        {
+            get { return new uint3(this.s2, this.s2, this.s2); }
+        }
+
+        public uint3 zzw
+        {
+            get { return new uint3(this.s2, this.s2, this.s3); }
+        }
+
+        public uint3 zwx
+        {
+            get { return new uint3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public uint3 zwy
+        {
+            get { return new uint3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public uint3 zwz
+        {
+            get { return new uint3(this.s2, this.s3, this.s2); }
+        }
+
+        public uint3 zww
+        {
+            get { return new uint3(this.s2, this.s3, this.s3); }
+        }
+
+        public uint3 wxx
+        {
+            get { return new uint3(this.s3, this.s0, this.s0); }
+        }
+
+        public uint3 wxy
+        {
+            get { return new uint3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public uint3 wxz
+        {
+            get { return new uint3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public uint3 wxw
+        {
+            get { return new uint3(this.s3, this.s0, this.s3); }
+        }
+
+        public uint3 wyx
+        {
+            get { return new uint3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public uint3 wyy
+        {
+            get { return new uint3(this.s3, this.s1, this.s1); }
+        }
+
+        public uint3 wyz
+        {
+            get { return new uint3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public uint3 wyw
+        {
+            get { return new uint3(this.s3, this.s1, this.s3); }
+        }
+
+        public uint3 wzx
+        {
+            get { return new uint3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public uint3 wzy
+        {
+            get { return new uint3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public uint3 wzz
+        {
+            get { return new uint3(this.s3, this.s2, this.s2); }
+        }
+
+        public uint3 wzw
+        {
+            get { return new uint3(this.s3, this.s2, this.s3); }
+        }
+
+        public uint3 wwx
+        {
+            get { return new uint3(this.s3, this.s3, this.s0); }
+        }
+
+        public uint3 wwy
+        {
+            get { return new uint3(this.s3, this.s3, this.s1); }
+        }
+
+        public uint3 wwz
+        {
+            get { return new uint3(this.s3, this.s3, this.s2); }
+        }
+
+        public uint3 www
+        {
+            get { return new uint3(this.s3, this.s3, this.s3); }
         }
 
         public uint4 xxxx
@@ -12379,6 +17647,12 @@ namespace OpenCl
         public uint4 xyzw
         {
             get { return new uint4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public uint4 xywx
@@ -12394,6 +17668,12 @@ namespace OpenCl
         public uint4 xywz
         {
             get { return new uint4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public uint4 xyww
@@ -12439,6 +17719,12 @@ namespace OpenCl
         public uint4 xzyw
         {
             get { return new uint4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public uint4 xzzx
@@ -12469,6 +17755,12 @@ namespace OpenCl
         public uint4 xzwy
         {
             get { return new uint4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public uint4 xzwz
@@ -12514,6 +17806,12 @@ namespace OpenCl
         public uint4 xwyz
         {
             get { return new uint4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public uint4 xwyw
@@ -12529,6 +17827,12 @@ namespace OpenCl
         public uint4 xwzy
         {
             get { return new uint4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public uint4 xwzz
@@ -12619,6 +17923,12 @@ namespace OpenCl
         public uint4 yxzw
         {
             get { return new uint4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public uint4 yxwx
@@ -12634,6 +17944,12 @@ namespace OpenCl
         public uint4 yxwz
         {
             get { return new uint4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public uint4 yxww
@@ -12739,6 +18055,12 @@ namespace OpenCl
         public uint4 yzxw
         {
             get { return new uint4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public uint4 yzyx
@@ -12784,6 +18106,12 @@ namespace OpenCl
         public uint4 yzwx
         {
             get { return new uint4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public uint4 yzwy
@@ -12814,6 +18142,12 @@ namespace OpenCl
         public uint4 ywxz
         {
             get { return new uint4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public uint4 ywxw
@@ -12844,6 +18178,12 @@ namespace OpenCl
         public uint4 ywzx
         {
             get { return new uint4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public uint4 ywzy
@@ -12919,6 +18259,12 @@ namespace OpenCl
         public uint4 zxyw
         {
             get { return new uint4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public uint4 zxzx
@@ -12949,6 +18295,12 @@ namespace OpenCl
         public uint4 zxwy
         {
             get { return new uint4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public uint4 zxwz
@@ -12979,6 +18331,12 @@ namespace OpenCl
         public uint4 zyxw
         {
             get { return new uint4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public uint4 zyyx
@@ -13024,6 +18382,12 @@ namespace OpenCl
         public uint4 zywx
         {
             get { return new uint4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public uint4 zywy
@@ -13129,6 +18493,12 @@ namespace OpenCl
         public uint4 zwxy
         {
             get { return new uint4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public uint4 zwxz
@@ -13144,6 +18514,12 @@ namespace OpenCl
         public uint4 zwyx
         {
             get { return new uint4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public uint4 zwyy
@@ -13234,6 +18610,12 @@ namespace OpenCl
         public uint4 wxyz
         {
             get { return new uint4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public uint4 wxyw
@@ -13249,6 +18631,12 @@ namespace OpenCl
         public uint4 wxzy
         {
             get { return new uint4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public uint4 wxzz
@@ -13294,6 +18682,12 @@ namespace OpenCl
         public uint4 wyxz
         {
             get { return new uint4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public uint4 wyxw
@@ -13324,6 +18718,12 @@ namespace OpenCl
         public uint4 wyzx
         {
             get { return new uint4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public uint4 wyzy
@@ -13369,6 +18769,12 @@ namespace OpenCl
         public uint4 wzxy
         {
             get { return new uint4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public uint4 wzxz
@@ -13384,6 +18790,12 @@ namespace OpenCl
         public uint4 wzyx
         {
             get { return new uint4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public uint4 wzyy
@@ -13665,16 +19077,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public uint8(uint s0, uint s1, uint s2, uint s3, uint s4, uint s5, uint s6, uint s7)
+        public uint8(uint v0, uint v1, uint v2, uint v3, uint v4, uint v5, uint v6, uint v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public uint this[int index]
@@ -13865,24 +19277,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public uint16(uint s0, uint s1, uint s2, uint s3, uint s4, uint s5, uint s6, uint s7, uint s8, uint s9, uint sa, uint sb, uint sc, uint sd, uint se, uint sf)
+        public uint16(uint v0, uint v1, uint v2, uint v3, uint v4, uint v5, uint v6, uint v7, uint v8, uint v9, uint va, uint vb, uint vc, uint vd, uint ve, uint vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public uint sA
@@ -14107,10 +19519,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public long2(long s0, long s1)
+        public long2(long2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public long2(long v0, long v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public long x
@@ -14133,11 +19551,19 @@ namespace OpenCl
         public long2 xy
         {
             get { return new long2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public long2 yx
         {
             get { return new long2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public long2 yy
@@ -14266,11 +19692,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public long3(long s0, long s1, long s2)
+        public long3(long3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public long3(long v0, long2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public long3(long2 v0, long v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public long3(long v0, long v1, long v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public long x
@@ -14289,6 +19736,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public long2 xx
+        {
+            get { return new long2(this.s0, this.s0); }
+        }
+
+        public long2 xy
+        {
+            get { return new long2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public long2 xz
+        {
+            get { return new long2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public long2 yx
+        {
+            get { return new long2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public long2 yy
+        {
+            get { return new long2(this.s1, this.s1); }
+        }
+
+        public long2 yz
+        {
+            get { return new long2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public long2 zx
+        {
+            get { return new long2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public long2 zy
+        {
+            get { return new long2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public long2 zz
+        {
+            get { return new long2(this.s2, this.s2); }
         }
 
         public long3 xxx
@@ -14319,6 +19835,11 @@ namespace OpenCl
         public long3 xyz
         {
             get { return new long3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public long3 xzx
@@ -14329,6 +19850,11 @@ namespace OpenCl
         public long3 xzy
         {
             get { return new long3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public long3 xzz
@@ -14349,6 +19875,11 @@ namespace OpenCl
         public long3 yxz
         {
             get { return new long3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public long3 yyx
@@ -14369,6 +19900,11 @@ namespace OpenCl
         public long3 yzx
         {
             get { return new long3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public long3 yzy
@@ -14389,6 +19925,11 @@ namespace OpenCl
         public long3 zxy
         {
             get { return new long3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public long3 zxz
@@ -14399,6 +19940,11 @@ namespace OpenCl
         public long3 zyx
         {
             get { return new long3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public long3 zyy
@@ -14555,12 +20101,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public long4(long s0, long s1, long s2, long s3)
+        public long4(long4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public long4(long v0, long3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public long4(long2 v0, long2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public long4(long3 v0, long v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public long4(long v0, long v1, long2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public long4(long v0, long2 v1, long v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public long4(long2 v0, long v1, long v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public long4(long v0, long v1, long v2, long v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public long x
@@ -14585,6 +20187,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public long2 xx
+        {
+            get { return new long2(this.s0, this.s0); }
+        }
+
+        public long2 xy
+        {
+            get { return new long2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public long2 xz
+        {
+            get { return new long2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public long2 xw
+        {
+            get { return new long2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public long2 yx
+        {
+            get { return new long2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public long2 yy
+        {
+            get { return new long2(this.s1, this.s1); }
+        }
+
+        public long2 yz
+        {
+            get { return new long2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public long2 yw
+        {
+            get { return new long2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public long2 zx
+        {
+            get { return new long2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public long2 zy
+        {
+            get { return new long2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public long2 zz
+        {
+            get { return new long2(this.s2, this.s2); }
+        }
+
+        public long2 zw
+        {
+            get { return new long2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public long2 wx
+        {
+            get { return new long2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public long2 wy
+        {
+            get { return new long2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public long2 wz
+        {
+            get { return new long2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public long2 ww
+        {
+            get { return new long2(this.s3, this.s3); }
+        }
+
+        public long3 xxx
+        {
+            get { return new long3(this.s0, this.s0, this.s0); }
+        }
+
+        public long3 xxy
+        {
+            get { return new long3(this.s0, this.s0, this.s1); }
+        }
+
+        public long3 xxz
+        {
+            get { return new long3(this.s0, this.s0, this.s2); }
+        }
+
+        public long3 xxw
+        {
+            get { return new long3(this.s0, this.s0, this.s3); }
+        }
+
+        public long3 xyx
+        {
+            get { return new long3(this.s0, this.s1, this.s0); }
+        }
+
+        public long3 xyy
+        {
+            get { return new long3(this.s0, this.s1, this.s1); }
+        }
+
+        public long3 xyz
+        {
+            get { return new long3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public long3 xyw
+        {
+            get { return new long3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public long3 xzx
+        {
+            get { return new long3(this.s0, this.s2, this.s0); }
+        }
+
+        public long3 xzy
+        {
+            get { return new long3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public long3 xzz
+        {
+            get { return new long3(this.s0, this.s2, this.s2); }
+        }
+
+        public long3 xzw
+        {
+            get { return new long3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public long3 xwx
+        {
+            get { return new long3(this.s0, this.s3, this.s0); }
+        }
+
+        public long3 xwy
+        {
+            get { return new long3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public long3 xwz
+        {
+            get { return new long3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public long3 xww
+        {
+            get { return new long3(this.s0, this.s3, this.s3); }
+        }
+
+        public long3 yxx
+        {
+            get { return new long3(this.s1, this.s0, this.s0); }
+        }
+
+        public long3 yxy
+        {
+            get { return new long3(this.s1, this.s0, this.s1); }
+        }
+
+        public long3 yxz
+        {
+            get { return new long3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public long3 yxw
+        {
+            get { return new long3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public long3 yyx
+        {
+            get { return new long3(this.s1, this.s1, this.s0); }
+        }
+
+        public long3 yyy
+        {
+            get { return new long3(this.s1, this.s1, this.s1); }
+        }
+
+        public long3 yyz
+        {
+            get { return new long3(this.s1, this.s1, this.s2); }
+        }
+
+        public long3 yyw
+        {
+            get { return new long3(this.s1, this.s1, this.s3); }
+        }
+
+        public long3 yzx
+        {
+            get { return new long3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public long3 yzy
+        {
+            get { return new long3(this.s1, this.s2, this.s1); }
+        }
+
+        public long3 yzz
+        {
+            get { return new long3(this.s1, this.s2, this.s2); }
+        }
+
+        public long3 yzw
+        {
+            get { return new long3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public long3 ywx
+        {
+            get { return new long3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public long3 ywy
+        {
+            get { return new long3(this.s1, this.s3, this.s1); }
+        }
+
+        public long3 ywz
+        {
+            get { return new long3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public long3 yww
+        {
+            get { return new long3(this.s1, this.s3, this.s3); }
+        }
+
+        public long3 zxx
+        {
+            get { return new long3(this.s2, this.s0, this.s0); }
+        }
+
+        public long3 zxy
+        {
+            get { return new long3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public long3 zxz
+        {
+            get { return new long3(this.s2, this.s0, this.s2); }
+        }
+
+        public long3 zxw
+        {
+            get { return new long3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public long3 zyx
+        {
+            get { return new long3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public long3 zyy
+        {
+            get { return new long3(this.s2, this.s1, this.s1); }
+        }
+
+        public long3 zyz
+        {
+            get { return new long3(this.s2, this.s1, this.s2); }
+        }
+
+        public long3 zyw
+        {
+            get { return new long3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public long3 zzx
+        {
+            get { return new long3(this.s2, this.s2, this.s0); }
+        }
+
+        public long3 zzy
+        {
+            get { return new long3(this.s2, this.s2, this.s1); }
+        }
+
+        public long3 zzz
+        {
+            get { return new long3(this.s2, this.s2, this.s2); }
+        }
+
+        public long3 zzw
+        {
+            get { return new long3(this.s2, this.s2, this.s3); }
+        }
+
+        public long3 zwx
+        {
+            get { return new long3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public long3 zwy
+        {
+            get { return new long3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public long3 zwz
+        {
+            get { return new long3(this.s2, this.s3, this.s2); }
+        }
+
+        public long3 zww
+        {
+            get { return new long3(this.s2, this.s3, this.s3); }
+        }
+
+        public long3 wxx
+        {
+            get { return new long3(this.s3, this.s0, this.s0); }
+        }
+
+        public long3 wxy
+        {
+            get { return new long3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public long3 wxz
+        {
+            get { return new long3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public long3 wxw
+        {
+            get { return new long3(this.s3, this.s0, this.s3); }
+        }
+
+        public long3 wyx
+        {
+            get { return new long3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public long3 wyy
+        {
+            get { return new long3(this.s3, this.s1, this.s1); }
+        }
+
+        public long3 wyz
+        {
+            get { return new long3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public long3 wyw
+        {
+            get { return new long3(this.s3, this.s1, this.s3); }
+        }
+
+        public long3 wzx
+        {
+            get { return new long3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public long3 wzy
+        {
+            get { return new long3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public long3 wzz
+        {
+            get { return new long3(this.s3, this.s2, this.s2); }
+        }
+
+        public long3 wzw
+        {
+            get { return new long3(this.s3, this.s2, this.s3); }
+        }
+
+        public long3 wwx
+        {
+            get { return new long3(this.s3, this.s3, this.s0); }
+        }
+
+        public long3 wwy
+        {
+            get { return new long3(this.s3, this.s3, this.s1); }
+        }
+
+        public long3 wwz
+        {
+            get { return new long3(this.s3, this.s3, this.s2); }
+        }
+
+        public long3 www
+        {
+            get { return new long3(this.s3, this.s3, this.s3); }
         }
 
         public long4 xxxx
@@ -14725,6 +20895,12 @@ namespace OpenCl
         public long4 xyzw
         {
             get { return new long4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public long4 xywx
@@ -14740,6 +20916,12 @@ namespace OpenCl
         public long4 xywz
         {
             get { return new long4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public long4 xyww
@@ -14785,6 +20967,12 @@ namespace OpenCl
         public long4 xzyw
         {
             get { return new long4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public long4 xzzx
@@ -14815,6 +21003,12 @@ namespace OpenCl
         public long4 xzwy
         {
             get { return new long4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public long4 xzwz
@@ -14860,6 +21054,12 @@ namespace OpenCl
         public long4 xwyz
         {
             get { return new long4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public long4 xwyw
@@ -14875,6 +21075,12 @@ namespace OpenCl
         public long4 xwzy
         {
             get { return new long4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public long4 xwzz
@@ -14965,6 +21171,12 @@ namespace OpenCl
         public long4 yxzw
         {
             get { return new long4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public long4 yxwx
@@ -14980,6 +21192,12 @@ namespace OpenCl
         public long4 yxwz
         {
             get { return new long4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public long4 yxww
@@ -15085,6 +21303,12 @@ namespace OpenCl
         public long4 yzxw
         {
             get { return new long4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public long4 yzyx
@@ -15130,6 +21354,12 @@ namespace OpenCl
         public long4 yzwx
         {
             get { return new long4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public long4 yzwy
@@ -15160,6 +21390,12 @@ namespace OpenCl
         public long4 ywxz
         {
             get { return new long4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public long4 ywxw
@@ -15190,6 +21426,12 @@ namespace OpenCl
         public long4 ywzx
         {
             get { return new long4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public long4 ywzy
@@ -15265,6 +21507,12 @@ namespace OpenCl
         public long4 zxyw
         {
             get { return new long4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public long4 zxzx
@@ -15295,6 +21543,12 @@ namespace OpenCl
         public long4 zxwy
         {
             get { return new long4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public long4 zxwz
@@ -15325,6 +21579,12 @@ namespace OpenCl
         public long4 zyxw
         {
             get { return new long4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public long4 zyyx
@@ -15370,6 +21630,12 @@ namespace OpenCl
         public long4 zywx
         {
             get { return new long4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public long4 zywy
@@ -15475,6 +21741,12 @@ namespace OpenCl
         public long4 zwxy
         {
             get { return new long4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public long4 zwxz
@@ -15490,6 +21762,12 @@ namespace OpenCl
         public long4 zwyx
         {
             get { return new long4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public long4 zwyy
@@ -15580,6 +21858,12 @@ namespace OpenCl
         public long4 wxyz
         {
             get { return new long4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public long4 wxyw
@@ -15595,6 +21879,12 @@ namespace OpenCl
         public long4 wxzy
         {
             get { return new long4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public long4 wxzz
@@ -15640,6 +21930,12 @@ namespace OpenCl
         public long4 wyxz
         {
             get { return new long4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public long4 wyxw
@@ -15670,6 +21966,12 @@ namespace OpenCl
         public long4 wyzx
         {
             get { return new long4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public long4 wyzy
@@ -15715,6 +22017,12 @@ namespace OpenCl
         public long4 wzxy
         {
             get { return new long4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public long4 wzxz
@@ -15730,6 +22038,12 @@ namespace OpenCl
         public long4 wzyx
         {
             get { return new long4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public long4 wzyy
@@ -16013,16 +22327,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public long8(long s0, long s1, long s2, long s3, long s4, long s5, long s6, long s7)
+        public long8(long v0, long v1, long v2, long v3, long v4, long v5, long v6, long v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public long this[int index]
@@ -16215,24 +22529,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public long16(long s0, long s1, long s2, long s3, long s4, long s5, long s6, long s7, long s8, long s9, long sa, long sb, long sc, long sd, long se, long sf)
+        public long16(long v0, long v1, long v2, long v3, long v4, long v5, long v6, long v7, long v8, long v9, long va, long vb, long vc, long vd, long ve, long vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public long sA
@@ -16459,10 +22773,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public ulong2(ulong s0, ulong s1)
+        public ulong2(ulong2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public ulong2(ulong v0, ulong v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public ulong x
@@ -16485,11 +22805,19 @@ namespace OpenCl
         public ulong2 xy
         {
             get { return new ulong2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public ulong2 yx
         {
             get { return new ulong2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public ulong2 yy
@@ -16616,11 +22944,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public ulong3(ulong s0, ulong s1, ulong s2)
+        public ulong3(ulong3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public ulong3(ulong v0, ulong2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public ulong3(ulong2 v0, ulong v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public ulong3(ulong v0, ulong v1, ulong v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public ulong x
@@ -16639,6 +22988,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public ulong2 xx
+        {
+            get { return new ulong2(this.s0, this.s0); }
+        }
+
+        public ulong2 xy
+        {
+            get { return new ulong2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ulong2 xz
+        {
+            get { return new ulong2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ulong2 yx
+        {
+            get { return new ulong2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ulong2 yy
+        {
+            get { return new ulong2(this.s1, this.s1); }
+        }
+
+        public ulong2 yz
+        {
+            get { return new ulong2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ulong2 zx
+        {
+            get { return new ulong2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ulong2 zy
+        {
+            get { return new ulong2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ulong2 zz
+        {
+            get { return new ulong2(this.s2, this.s2); }
         }
 
         public ulong3 xxx
@@ -16669,6 +23087,11 @@ namespace OpenCl
         public ulong3 xyz
         {
             get { return new ulong3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public ulong3 xzx
@@ -16679,6 +23102,11 @@ namespace OpenCl
         public ulong3 xzy
         {
             get { return new ulong3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public ulong3 xzz
@@ -16699,6 +23127,11 @@ namespace OpenCl
         public ulong3 yxz
         {
             get { return new ulong3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public ulong3 yyx
@@ -16719,6 +23152,11 @@ namespace OpenCl
         public ulong3 yzx
         {
             get { return new ulong3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public ulong3 yzy
@@ -16739,6 +23177,11 @@ namespace OpenCl
         public ulong3 zxy
         {
             get { return new ulong3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public ulong3 zxz
@@ -16749,6 +23192,11 @@ namespace OpenCl
         public ulong3 zyx
         {
             get { return new ulong3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public ulong3 zyy
@@ -16903,12 +23351,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public ulong4(ulong s0, ulong s1, ulong s2, ulong s3)
+        public ulong4(ulong4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public ulong4(ulong v0, ulong3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public ulong4(ulong2 v0, ulong2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public ulong4(ulong3 v0, ulong v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public ulong4(ulong v0, ulong v1, ulong2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public ulong4(ulong v0, ulong2 v1, ulong v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public ulong4(ulong2 v0, ulong v1, ulong v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public ulong4(ulong v0, ulong v1, ulong v2, ulong v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public ulong x
@@ -16933,6 +23437,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public ulong2 xx
+        {
+            get { return new ulong2(this.s0, this.s0); }
+        }
+
+        public ulong2 xy
+        {
+            get { return new ulong2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ulong2 xz
+        {
+            get { return new ulong2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ulong2 xw
+        {
+            get { return new ulong2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public ulong2 yx
+        {
+            get { return new ulong2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ulong2 yy
+        {
+            get { return new ulong2(this.s1, this.s1); }
+        }
+
+        public ulong2 yz
+        {
+            get { return new ulong2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ulong2 yw
+        {
+            get { return new ulong2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public ulong2 zx
+        {
+            get { return new ulong2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ulong2 zy
+        {
+            get { return new ulong2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ulong2 zz
+        {
+            get { return new ulong2(this.s2, this.s2); }
+        }
+
+        public ulong2 zw
+        {
+            get { return new ulong2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public ulong2 wx
+        {
+            get { return new ulong2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public ulong2 wy
+        {
+            get { return new ulong2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public ulong2 wz
+        {
+            get { return new ulong2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public ulong2 ww
+        {
+            get { return new ulong2(this.s3, this.s3); }
+        }
+
+        public ulong3 xxx
+        {
+            get { return new ulong3(this.s0, this.s0, this.s0); }
+        }
+
+        public ulong3 xxy
+        {
+            get { return new ulong3(this.s0, this.s0, this.s1); }
+        }
+
+        public ulong3 xxz
+        {
+            get { return new ulong3(this.s0, this.s0, this.s2); }
+        }
+
+        public ulong3 xxw
+        {
+            get { return new ulong3(this.s0, this.s0, this.s3); }
+        }
+
+        public ulong3 xyx
+        {
+            get { return new ulong3(this.s0, this.s1, this.s0); }
+        }
+
+        public ulong3 xyy
+        {
+            get { return new ulong3(this.s0, this.s1, this.s1); }
+        }
+
+        public ulong3 xyz
+        {
+            get { return new ulong3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ulong3 xyw
+        {
+            get { return new ulong3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ulong3 xzx
+        {
+            get { return new ulong3(this.s0, this.s2, this.s0); }
+        }
+
+        public ulong3 xzy
+        {
+            get { return new ulong3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ulong3 xzz
+        {
+            get { return new ulong3(this.s0, this.s2, this.s2); }
+        }
+
+        public ulong3 xzw
+        {
+            get { return new ulong3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ulong3 xwx
+        {
+            get { return new ulong3(this.s0, this.s3, this.s0); }
+        }
+
+        public ulong3 xwy
+        {
+            get { return new ulong3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ulong3 xwz
+        {
+            get { return new ulong3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ulong3 xww
+        {
+            get { return new ulong3(this.s0, this.s3, this.s3); }
+        }
+
+        public ulong3 yxx
+        {
+            get { return new ulong3(this.s1, this.s0, this.s0); }
+        }
+
+        public ulong3 yxy
+        {
+            get { return new ulong3(this.s1, this.s0, this.s1); }
+        }
+
+        public ulong3 yxz
+        {
+            get { return new ulong3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ulong3 yxw
+        {
+            get { return new ulong3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ulong3 yyx
+        {
+            get { return new ulong3(this.s1, this.s1, this.s0); }
+        }
+
+        public ulong3 yyy
+        {
+            get { return new ulong3(this.s1, this.s1, this.s1); }
+        }
+
+        public ulong3 yyz
+        {
+            get { return new ulong3(this.s1, this.s1, this.s2); }
+        }
+
+        public ulong3 yyw
+        {
+            get { return new ulong3(this.s1, this.s1, this.s3); }
+        }
+
+        public ulong3 yzx
+        {
+            get { return new ulong3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ulong3 yzy
+        {
+            get { return new ulong3(this.s1, this.s2, this.s1); }
+        }
+
+        public ulong3 yzz
+        {
+            get { return new ulong3(this.s1, this.s2, this.s2); }
+        }
+
+        public ulong3 yzw
+        {
+            get { return new ulong3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ulong3 ywx
+        {
+            get { return new ulong3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ulong3 ywy
+        {
+            get { return new ulong3(this.s1, this.s3, this.s1); }
+        }
+
+        public ulong3 ywz
+        {
+            get { return new ulong3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ulong3 yww
+        {
+            get { return new ulong3(this.s1, this.s3, this.s3); }
+        }
+
+        public ulong3 zxx
+        {
+            get { return new ulong3(this.s2, this.s0, this.s0); }
+        }
+
+        public ulong3 zxy
+        {
+            get { return new ulong3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ulong3 zxz
+        {
+            get { return new ulong3(this.s2, this.s0, this.s2); }
+        }
+
+        public ulong3 zxw
+        {
+            get { return new ulong3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ulong3 zyx
+        {
+            get { return new ulong3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ulong3 zyy
+        {
+            get { return new ulong3(this.s2, this.s1, this.s1); }
+        }
+
+        public ulong3 zyz
+        {
+            get { return new ulong3(this.s2, this.s1, this.s2); }
+        }
+
+        public ulong3 zyw
+        {
+            get { return new ulong3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public ulong3 zzx
+        {
+            get { return new ulong3(this.s2, this.s2, this.s0); }
+        }
+
+        public ulong3 zzy
+        {
+            get { return new ulong3(this.s2, this.s2, this.s1); }
+        }
+
+        public ulong3 zzz
+        {
+            get { return new ulong3(this.s2, this.s2, this.s2); }
+        }
+
+        public ulong3 zzw
+        {
+            get { return new ulong3(this.s2, this.s2, this.s3); }
+        }
+
+        public ulong3 zwx
+        {
+            get { return new ulong3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ulong3 zwy
+        {
+            get { return new ulong3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ulong3 zwz
+        {
+            get { return new ulong3(this.s2, this.s3, this.s2); }
+        }
+
+        public ulong3 zww
+        {
+            get { return new ulong3(this.s2, this.s3, this.s3); }
+        }
+
+        public ulong3 wxx
+        {
+            get { return new ulong3(this.s3, this.s0, this.s0); }
+        }
+
+        public ulong3 wxy
+        {
+            get { return new ulong3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ulong3 wxz
+        {
+            get { return new ulong3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ulong3 wxw
+        {
+            get { return new ulong3(this.s3, this.s0, this.s3); }
+        }
+
+        public ulong3 wyx
+        {
+            get { return new ulong3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ulong3 wyy
+        {
+            get { return new ulong3(this.s3, this.s1, this.s1); }
+        }
+
+        public ulong3 wyz
+        {
+            get { return new ulong3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public ulong3 wyw
+        {
+            get { return new ulong3(this.s3, this.s1, this.s3); }
+        }
+
+        public ulong3 wzx
+        {
+            get { return new ulong3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public ulong3 wzy
+        {
+            get { return new ulong3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public ulong3 wzz
+        {
+            get { return new ulong3(this.s3, this.s2, this.s2); }
+        }
+
+        public ulong3 wzw
+        {
+            get { return new ulong3(this.s3, this.s2, this.s3); }
+        }
+
+        public ulong3 wwx
+        {
+            get { return new ulong3(this.s3, this.s3, this.s0); }
+        }
+
+        public ulong3 wwy
+        {
+            get { return new ulong3(this.s3, this.s3, this.s1); }
+        }
+
+        public ulong3 wwz
+        {
+            get { return new ulong3(this.s3, this.s3, this.s2); }
+        }
+
+        public ulong3 www
+        {
+            get { return new ulong3(this.s3, this.s3, this.s3); }
         }
 
         public ulong4 xxxx
@@ -17073,6 +24145,12 @@ namespace OpenCl
         public ulong4 xyzw
         {
             get { return new ulong4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ulong4 xywx
@@ -17088,6 +24166,12 @@ namespace OpenCl
         public ulong4 xywz
         {
             get { return new ulong4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ulong4 xyww
@@ -17133,6 +24217,12 @@ namespace OpenCl
         public ulong4 xzyw
         {
             get { return new ulong4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ulong4 xzzx
@@ -17163,6 +24253,12 @@ namespace OpenCl
         public ulong4 xzwy
         {
             get { return new ulong4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ulong4 xzwz
@@ -17208,6 +24304,12 @@ namespace OpenCl
         public ulong4 xwyz
         {
             get { return new ulong4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ulong4 xwyw
@@ -17223,6 +24325,12 @@ namespace OpenCl
         public ulong4 xwzy
         {
             get { return new ulong4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ulong4 xwzz
@@ -17313,6 +24421,12 @@ namespace OpenCl
         public ulong4 yxzw
         {
             get { return new ulong4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ulong4 yxwx
@@ -17328,6 +24442,12 @@ namespace OpenCl
         public ulong4 yxwz
         {
             get { return new ulong4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ulong4 yxww
@@ -17433,6 +24553,12 @@ namespace OpenCl
         public ulong4 yzxw
         {
             get { return new ulong4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ulong4 yzyx
@@ -17478,6 +24604,12 @@ namespace OpenCl
         public ulong4 yzwx
         {
             get { return new ulong4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ulong4 yzwy
@@ -17508,6 +24640,12 @@ namespace OpenCl
         public ulong4 ywxz
         {
             get { return new ulong4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ulong4 ywxw
@@ -17538,6 +24676,12 @@ namespace OpenCl
         public ulong4 ywzx
         {
             get { return new ulong4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ulong4 ywzy
@@ -17613,6 +24757,12 @@ namespace OpenCl
         public ulong4 zxyw
         {
             get { return new ulong4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ulong4 zxzx
@@ -17643,6 +24793,12 @@ namespace OpenCl
         public ulong4 zxwy
         {
             get { return new ulong4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ulong4 zxwz
@@ -17673,6 +24829,12 @@ namespace OpenCl
         public ulong4 zyxw
         {
             get { return new ulong4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public ulong4 zyyx
@@ -17718,6 +24880,12 @@ namespace OpenCl
         public ulong4 zywx
         {
             get { return new ulong4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ulong4 zywy
@@ -17823,6 +24991,12 @@ namespace OpenCl
         public ulong4 zwxy
         {
             get { return new ulong4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ulong4 zwxz
@@ -17838,6 +25012,12 @@ namespace OpenCl
         public ulong4 zwyx
         {
             get { return new ulong4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ulong4 zwyy
@@ -17928,6 +25108,12 @@ namespace OpenCl
         public ulong4 wxyz
         {
             get { return new ulong4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ulong4 wxyw
@@ -17943,6 +25129,12 @@ namespace OpenCl
         public ulong4 wxzy
         {
             get { return new ulong4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ulong4 wxzz
@@ -17988,6 +25180,12 @@ namespace OpenCl
         public ulong4 wyxz
         {
             get { return new ulong4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public ulong4 wyxw
@@ -18018,6 +25216,12 @@ namespace OpenCl
         public ulong4 wyzx
         {
             get { return new ulong4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ulong4 wyzy
@@ -18063,6 +25267,12 @@ namespace OpenCl
         public ulong4 wzxy
         {
             get { return new ulong4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public ulong4 wzxz
@@ -18078,6 +25288,12 @@ namespace OpenCl
         public ulong4 wzyx
         {
             get { return new ulong4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public ulong4 wzyy
@@ -18359,16 +25575,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public ulong8(ulong s0, ulong s1, ulong s2, ulong s3, ulong s4, ulong s5, ulong s6, ulong s7)
+        public ulong8(ulong v0, ulong v1, ulong v2, ulong v3, ulong v4, ulong v5, ulong v6, ulong v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public ulong this[int index]
@@ -18559,24 +25775,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public ulong16(ulong s0, ulong s1, ulong s2, ulong s3, ulong s4, ulong s5, ulong s6, ulong s7, ulong s8, ulong s9, ulong sa, ulong sb, ulong sc, ulong sd, ulong se, ulong sf)
+        public ulong16(ulong v0, ulong v1, ulong v2, ulong v3, ulong v4, ulong v5, ulong v6, ulong v7, ulong v8, ulong v9, ulong va, ulong vb, ulong vc, ulong vd, ulong ve, ulong vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public ulong sA
@@ -18801,10 +26017,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public float2(float s0, float s1)
+        public float2(float2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public float2(float v0, float v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public float x
@@ -18827,11 +26049,19 @@ namespace OpenCl
         public float2 xy
         {
             get { return new float2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public float2 yx
         {
             get { return new float2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public float2 yy
@@ -18948,11 +26178,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public float3(float s0, float s1, float s2)
+        public float3(float3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public float3(float v0, float2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public float3(float2 v0, float v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public float3(float v0, float v1, float v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public float x
@@ -18971,6 +26222,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public float2 xx
+        {
+            get { return new float2(this.s0, this.s0); }
+        }
+
+        public float2 xy
+        {
+            get { return new float2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public float2 xz
+        {
+            get { return new float2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public float2 yx
+        {
+            get { return new float2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public float2 yy
+        {
+            get { return new float2(this.s1, this.s1); }
+        }
+
+        public float2 yz
+        {
+            get { return new float2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public float2 zx
+        {
+            get { return new float2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public float2 zy
+        {
+            get { return new float2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public float2 zz
+        {
+            get { return new float2(this.s2, this.s2); }
         }
 
         public float3 xxx
@@ -19001,6 +26321,11 @@ namespace OpenCl
         public float3 xyz
         {
             get { return new float3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public float3 xzx
@@ -19011,6 +26336,11 @@ namespace OpenCl
         public float3 xzy
         {
             get { return new float3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public float3 xzz
@@ -19031,6 +26361,11 @@ namespace OpenCl
         public float3 yxz
         {
             get { return new float3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public float3 yyx
@@ -19051,6 +26386,11 @@ namespace OpenCl
         public float3 yzx
         {
             get { return new float3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public float3 yzy
@@ -19071,6 +26411,11 @@ namespace OpenCl
         public float3 zxy
         {
             get { return new float3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public float3 zxz
@@ -19081,6 +26426,11 @@ namespace OpenCl
         public float3 zyx
         {
             get { return new float3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public float3 zyy
@@ -19225,12 +26575,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public float4(float s0, float s1, float s2, float s3)
+        public float4(float4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public float4(float v0, float3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public float4(float2 v0, float2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public float4(float3 v0, float v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public float4(float v0, float v1, float2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public float4(float v0, float2 v1, float v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public float4(float2 v0, float v1, float v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public float4(float v0, float v1, float v2, float v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public float x
@@ -19255,6 +26661,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public float2 xx
+        {
+            get { return new float2(this.s0, this.s0); }
+        }
+
+        public float2 xy
+        {
+            get { return new float2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public float2 xz
+        {
+            get { return new float2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public float2 xw
+        {
+            get { return new float2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public float2 yx
+        {
+            get { return new float2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public float2 yy
+        {
+            get { return new float2(this.s1, this.s1); }
+        }
+
+        public float2 yz
+        {
+            get { return new float2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public float2 yw
+        {
+            get { return new float2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public float2 zx
+        {
+            get { return new float2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public float2 zy
+        {
+            get { return new float2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public float2 zz
+        {
+            get { return new float2(this.s2, this.s2); }
+        }
+
+        public float2 zw
+        {
+            get { return new float2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public float2 wx
+        {
+            get { return new float2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public float2 wy
+        {
+            get { return new float2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public float2 wz
+        {
+            get { return new float2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public float2 ww
+        {
+            get { return new float2(this.s3, this.s3); }
+        }
+
+        public float3 xxx
+        {
+            get { return new float3(this.s0, this.s0, this.s0); }
+        }
+
+        public float3 xxy
+        {
+            get { return new float3(this.s0, this.s0, this.s1); }
+        }
+
+        public float3 xxz
+        {
+            get { return new float3(this.s0, this.s0, this.s2); }
+        }
+
+        public float3 xxw
+        {
+            get { return new float3(this.s0, this.s0, this.s3); }
+        }
+
+        public float3 xyx
+        {
+            get { return new float3(this.s0, this.s1, this.s0); }
+        }
+
+        public float3 xyy
+        {
+            get { return new float3(this.s0, this.s1, this.s1); }
+        }
+
+        public float3 xyz
+        {
+            get { return new float3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public float3 xyw
+        {
+            get { return new float3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public float3 xzx
+        {
+            get { return new float3(this.s0, this.s2, this.s0); }
+        }
+
+        public float3 xzy
+        {
+            get { return new float3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public float3 xzz
+        {
+            get { return new float3(this.s0, this.s2, this.s2); }
+        }
+
+        public float3 xzw
+        {
+            get { return new float3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public float3 xwx
+        {
+            get { return new float3(this.s0, this.s3, this.s0); }
+        }
+
+        public float3 xwy
+        {
+            get { return new float3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public float3 xwz
+        {
+            get { return new float3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public float3 xww
+        {
+            get { return new float3(this.s0, this.s3, this.s3); }
+        }
+
+        public float3 yxx
+        {
+            get { return new float3(this.s1, this.s0, this.s0); }
+        }
+
+        public float3 yxy
+        {
+            get { return new float3(this.s1, this.s0, this.s1); }
+        }
+
+        public float3 yxz
+        {
+            get { return new float3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public float3 yxw
+        {
+            get { return new float3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public float3 yyx
+        {
+            get { return new float3(this.s1, this.s1, this.s0); }
+        }
+
+        public float3 yyy
+        {
+            get { return new float3(this.s1, this.s1, this.s1); }
+        }
+
+        public float3 yyz
+        {
+            get { return new float3(this.s1, this.s1, this.s2); }
+        }
+
+        public float3 yyw
+        {
+            get { return new float3(this.s1, this.s1, this.s3); }
+        }
+
+        public float3 yzx
+        {
+            get { return new float3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public float3 yzy
+        {
+            get { return new float3(this.s1, this.s2, this.s1); }
+        }
+
+        public float3 yzz
+        {
+            get { return new float3(this.s1, this.s2, this.s2); }
+        }
+
+        public float3 yzw
+        {
+            get { return new float3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public float3 ywx
+        {
+            get { return new float3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public float3 ywy
+        {
+            get { return new float3(this.s1, this.s3, this.s1); }
+        }
+
+        public float3 ywz
+        {
+            get { return new float3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public float3 yww
+        {
+            get { return new float3(this.s1, this.s3, this.s3); }
+        }
+
+        public float3 zxx
+        {
+            get { return new float3(this.s2, this.s0, this.s0); }
+        }
+
+        public float3 zxy
+        {
+            get { return new float3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public float3 zxz
+        {
+            get { return new float3(this.s2, this.s0, this.s2); }
+        }
+
+        public float3 zxw
+        {
+            get { return new float3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public float3 zyx
+        {
+            get { return new float3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public float3 zyy
+        {
+            get { return new float3(this.s2, this.s1, this.s1); }
+        }
+
+        public float3 zyz
+        {
+            get { return new float3(this.s2, this.s1, this.s2); }
+        }
+
+        public float3 zyw
+        {
+            get { return new float3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public float3 zzx
+        {
+            get { return new float3(this.s2, this.s2, this.s0); }
+        }
+
+        public float3 zzy
+        {
+            get { return new float3(this.s2, this.s2, this.s1); }
+        }
+
+        public float3 zzz
+        {
+            get { return new float3(this.s2, this.s2, this.s2); }
+        }
+
+        public float3 zzw
+        {
+            get { return new float3(this.s2, this.s2, this.s3); }
+        }
+
+        public float3 zwx
+        {
+            get { return new float3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public float3 zwy
+        {
+            get { return new float3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public float3 zwz
+        {
+            get { return new float3(this.s2, this.s3, this.s2); }
+        }
+
+        public float3 zww
+        {
+            get { return new float3(this.s2, this.s3, this.s3); }
+        }
+
+        public float3 wxx
+        {
+            get { return new float3(this.s3, this.s0, this.s0); }
+        }
+
+        public float3 wxy
+        {
+            get { return new float3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public float3 wxz
+        {
+            get { return new float3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public float3 wxw
+        {
+            get { return new float3(this.s3, this.s0, this.s3); }
+        }
+
+        public float3 wyx
+        {
+            get { return new float3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public float3 wyy
+        {
+            get { return new float3(this.s3, this.s1, this.s1); }
+        }
+
+        public float3 wyz
+        {
+            get { return new float3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public float3 wyw
+        {
+            get { return new float3(this.s3, this.s1, this.s3); }
+        }
+
+        public float3 wzx
+        {
+            get { return new float3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public float3 wzy
+        {
+            get { return new float3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public float3 wzz
+        {
+            get { return new float3(this.s3, this.s2, this.s2); }
+        }
+
+        public float3 wzw
+        {
+            get { return new float3(this.s3, this.s2, this.s3); }
+        }
+
+        public float3 wwx
+        {
+            get { return new float3(this.s3, this.s3, this.s0); }
+        }
+
+        public float3 wwy
+        {
+            get { return new float3(this.s3, this.s3, this.s1); }
+        }
+
+        public float3 wwz
+        {
+            get { return new float3(this.s3, this.s3, this.s2); }
+        }
+
+        public float3 www
+        {
+            get { return new float3(this.s3, this.s3, this.s3); }
         }
 
         public float4 xxxx
@@ -19395,6 +27369,12 @@ namespace OpenCl
         public float4 xyzw
         {
             get { return new float4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public float4 xywx
@@ -19410,6 +27390,12 @@ namespace OpenCl
         public float4 xywz
         {
             get { return new float4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public float4 xyww
@@ -19455,6 +27441,12 @@ namespace OpenCl
         public float4 xzyw
         {
             get { return new float4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public float4 xzzx
@@ -19485,6 +27477,12 @@ namespace OpenCl
         public float4 xzwy
         {
             get { return new float4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public float4 xzwz
@@ -19530,6 +27528,12 @@ namespace OpenCl
         public float4 xwyz
         {
             get { return new float4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public float4 xwyw
@@ -19545,6 +27549,12 @@ namespace OpenCl
         public float4 xwzy
         {
             get { return new float4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public float4 xwzz
@@ -19635,6 +27645,12 @@ namespace OpenCl
         public float4 yxzw
         {
             get { return new float4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public float4 yxwx
@@ -19650,6 +27666,12 @@ namespace OpenCl
         public float4 yxwz
         {
             get { return new float4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public float4 yxww
@@ -19755,6 +27777,12 @@ namespace OpenCl
         public float4 yzxw
         {
             get { return new float4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public float4 yzyx
@@ -19800,6 +27828,12 @@ namespace OpenCl
         public float4 yzwx
         {
             get { return new float4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public float4 yzwy
@@ -19830,6 +27864,12 @@ namespace OpenCl
         public float4 ywxz
         {
             get { return new float4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public float4 ywxw
@@ -19860,6 +27900,12 @@ namespace OpenCl
         public float4 ywzx
         {
             get { return new float4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public float4 ywzy
@@ -19935,6 +27981,12 @@ namespace OpenCl
         public float4 zxyw
         {
             get { return new float4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public float4 zxzx
@@ -19965,6 +28017,12 @@ namespace OpenCl
         public float4 zxwy
         {
             get { return new float4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public float4 zxwz
@@ -19995,6 +28053,12 @@ namespace OpenCl
         public float4 zyxw
         {
             get { return new float4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public float4 zyyx
@@ -20040,6 +28104,12 @@ namespace OpenCl
         public float4 zywx
         {
             get { return new float4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public float4 zywy
@@ -20145,6 +28215,12 @@ namespace OpenCl
         public float4 zwxy
         {
             get { return new float4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public float4 zwxz
@@ -20160,6 +28236,12 @@ namespace OpenCl
         public float4 zwyx
         {
             get { return new float4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public float4 zwyy
@@ -20250,6 +28332,12 @@ namespace OpenCl
         public float4 wxyz
         {
             get { return new float4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public float4 wxyw
@@ -20265,6 +28353,12 @@ namespace OpenCl
         public float4 wxzy
         {
             get { return new float4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public float4 wxzz
@@ -20310,6 +28404,12 @@ namespace OpenCl
         public float4 wyxz
         {
             get { return new float4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public float4 wyxw
@@ -20340,6 +28440,12 @@ namespace OpenCl
         public float4 wyzx
         {
             get { return new float4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public float4 wyzy
@@ -20385,6 +28491,12 @@ namespace OpenCl
         public float4 wzxy
         {
             get { return new float4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public float4 wzxz
@@ -20400,6 +28512,12 @@ namespace OpenCl
         public float4 wzyx
         {
             get { return new float4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public float4 wzyy
@@ -20671,16 +28789,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public float8(float s0, float s1, float s2, float s3, float s4, float s5, float s6, float s7)
+        public float8(float v0, float v1, float v2, float v3, float v4, float v5, float v6, float v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public float this[int index]
@@ -20861,24 +28979,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public float16(float s0, float s1, float s2, float s3, float s4, float s5, float s6, float s7, float s8, float s9, float sa, float sb, float sc, float sd, float se, float sf)
+        public float16(float v0, float v1, float v2, float v3, float v4, float v5, float v6, float v7, float v8, float v9, float va, float vb, float vc, float vd, float ve, float vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public float sA
@@ -21093,10 +29211,16 @@ namespace OpenCl
             this.s1 = v;
         }
 
-        public double2(double s0, double s1)
+        public double2(double2 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+        }
+
+        public double2(double v0, double v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
         }
 
         public double x
@@ -21119,11 +29243,19 @@ namespace OpenCl
         public double2 xy
         {
             get { return new double2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
         }
 
         public double2 yx
         {
             get { return new double2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
         }
 
         public double2 yy
@@ -21240,11 +29372,32 @@ namespace OpenCl
             this.s2 = v;
         }
 
-        public double3(double s0, double s1, double s2)
+        public double3(double3 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+        }
+
+        public double3(double v0, double2 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+        }
+
+        public double3(double2 v0, double v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+        }
+
+        public double3(double v0, double v1, double v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
         }
 
         public double x
@@ -21263,6 +29416,75 @@ namespace OpenCl
         {
             get { return this.s2; }
             set { this.s2 = value; }
+        }
+
+        public double2 xx
+        {
+            get { return new double2(this.s0, this.s0); }
+        }
+
+        public double2 xy
+        {
+            get { return new double2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public double2 xz
+        {
+            get { return new double2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public double2 yx
+        {
+            get { return new double2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public double2 yy
+        {
+            get { return new double2(this.s1, this.s1); }
+        }
+
+        public double2 yz
+        {
+            get { return new double2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public double2 zx
+        {
+            get { return new double2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public double2 zy
+        {
+            get { return new double2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public double2 zz
+        {
+            get { return new double2(this.s2, this.s2); }
         }
 
         public double3 xxx
@@ -21293,6 +29515,11 @@ namespace OpenCl
         public double3 xyz
         {
             get { return new double3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public double3 xzx
@@ -21303,6 +29530,11 @@ namespace OpenCl
         public double3 xzy
         {
             get { return new double3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public double3 xzz
@@ -21323,6 +29555,11 @@ namespace OpenCl
         public double3 yxz
         {
             get { return new double3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
         }
 
         public double3 yyx
@@ -21343,6 +29580,11 @@ namespace OpenCl
         public double3 yzx
         {
             get { return new double3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public double3 yzy
@@ -21363,6 +29605,11 @@ namespace OpenCl
         public double3 zxy
         {
             get { return new double3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
         }
 
         public double3 zxz
@@ -21373,6 +29620,11 @@ namespace OpenCl
         public double3 zyx
         {
             get { return new double3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
         }
 
         public double3 zyy
@@ -21517,12 +29769,68 @@ namespace OpenCl
             this.s3 = v;
         }
 
-        public double4(double s0, double s1, double s2, double s3)
+        public double4(double4 v0)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v0.s3;
+        }
+
+        public double4(double v0, double3 v1)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v1.s2;
+        }
+
+        public double4(double2 v0, double2 v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1.s0;
+            this.s3 = v1.s1;
+        }
+
+        public double4(double3 v0, double v1)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v0.s2;
+            this.s3 = v1;
+        }
+
+        public double4(double v0, double v1, double2 v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2.s0;
+            this.s3 = v2.s1;
+        }
+
+        public double4(double v0, double2 v1, double v2)
+        {
+            this.s0 = v0;
+            this.s1 = v1.s0;
+            this.s2 = v1.s1;
+            this.s3 = v2;
+        }
+
+        public double4(double2 v0, double v1, double v2)
+        {
+            this.s0 = v0.s0;
+            this.s1 = v0.s1;
+            this.s2 = v1;
+            this.s3 = v2;
+        }
+
+        public double4(double v0, double v1, double v2, double v3)
+        {
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
         }
 
         public double x
@@ -21547,6 +29855,574 @@ namespace OpenCl
         {
             get { return this.s3; }
             set { this.s3 = value; }
+        }
+
+        public double2 xx
+        {
+            get { return new double2(this.s0, this.s0); }
+        }
+
+        public double2 xy
+        {
+            get { return new double2(this.s0, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public double2 xz
+        {
+            get { return new double2(this.s0, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public double2 xw
+        {
+            get { return new double2(this.s0, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public double2 yx
+        {
+            get { return new double2(this.s1, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public double2 yy
+        {
+            get { return new double2(this.s1, this.s1); }
+        }
+
+        public double2 yz
+        {
+            get { return new double2(this.s1, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public double2 yw
+        {
+            get { return new double2(this.s1, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public double2 zx
+        {
+            get { return new double2(this.s2, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public double2 zy
+        {
+            get { return new double2(this.s2, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public double2 zz
+        {
+            get { return new double2(this.s2, this.s2); }
+        }
+
+        public double2 zw
+        {
+            get { return new double2(this.s2, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+            }
+        }
+
+        public double2 wx
+        {
+            get { return new double2(this.s3, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+            }
+        }
+
+        public double2 wy
+        {
+            get { return new double2(this.s3, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+            }
+        }
+
+        public double2 wz
+        {
+            get { return new double2(this.s3, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+            }
+        }
+
+        public double2 ww
+        {
+            get { return new double2(this.s3, this.s3); }
+        }
+
+        public double3 xxx
+        {
+            get { return new double3(this.s0, this.s0, this.s0); }
+        }
+
+        public double3 xxy
+        {
+            get { return new double3(this.s0, this.s0, this.s1); }
+        }
+
+        public double3 xxz
+        {
+            get { return new double3(this.s0, this.s0, this.s2); }
+        }
+
+        public double3 xxw
+        {
+            get { return new double3(this.s0, this.s0, this.s3); }
+        }
+
+        public double3 xyx
+        {
+            get { return new double3(this.s0, this.s1, this.s0); }
+        }
+
+        public double3 xyy
+        {
+            get { return new double3(this.s0, this.s1, this.s1); }
+        }
+
+        public double3 xyz
+        {
+            get { return new double3(this.s0, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public double3 xyw
+        {
+            get { return new double3(this.s0, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public double3 xzx
+        {
+            get { return new double3(this.s0, this.s2, this.s0); }
+        }
+
+        public double3 xzy
+        {
+            get { return new double3(this.s0, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public double3 xzz
+        {
+            get { return new double3(this.s0, this.s2, this.s2); }
+        }
+
+        public double3 xzw
+        {
+            get { return new double3(this.s0, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public double3 xwx
+        {
+            get { return new double3(this.s0, this.s3, this.s0); }
+        }
+
+        public double3 xwy
+        {
+            get { return new double3(this.s0, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public double3 xwz
+        {
+            get { return new double3(this.s0, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public double3 xww
+        {
+            get { return new double3(this.s0, this.s3, this.s3); }
+        }
+
+        public double3 yxx
+        {
+            get { return new double3(this.s1, this.s0, this.s0); }
+        }
+
+        public double3 yxy
+        {
+            get { return new double3(this.s1, this.s0, this.s1); }
+        }
+
+        public double3 yxz
+        {
+            get { return new double3(this.s1, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public double3 yxw
+        {
+            get { return new double3(this.s1, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public double3 yyx
+        {
+            get { return new double3(this.s1, this.s1, this.s0); }
+        }
+
+        public double3 yyy
+        {
+            get { return new double3(this.s1, this.s1, this.s1); }
+        }
+
+        public double3 yyz
+        {
+            get { return new double3(this.s1, this.s1, this.s2); }
+        }
+
+        public double3 yyw
+        {
+            get { return new double3(this.s1, this.s1, this.s3); }
+        }
+
+        public double3 yzx
+        {
+            get { return new double3(this.s1, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public double3 yzy
+        {
+            get { return new double3(this.s1, this.s2, this.s1); }
+        }
+
+        public double3 yzz
+        {
+            get { return new double3(this.s1, this.s2, this.s2); }
+        }
+
+        public double3 yzw
+        {
+            get { return new double3(this.s1, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public double3 ywx
+        {
+            get { return new double3(this.s1, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public double3 ywy
+        {
+            get { return new double3(this.s1, this.s3, this.s1); }
+        }
+
+        public double3 ywz
+        {
+            get { return new double3(this.s1, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public double3 yww
+        {
+            get { return new double3(this.s1, this.s3, this.s3); }
+        }
+
+        public double3 zxx
+        {
+            get { return new double3(this.s2, this.s0, this.s0); }
+        }
+
+        public double3 zxy
+        {
+            get { return new double3(this.s2, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public double3 zxz
+        {
+            get { return new double3(this.s2, this.s0, this.s2); }
+        }
+
+        public double3 zxw
+        {
+            get { return new double3(this.s2, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public double3 zyx
+        {
+            get { return new double3(this.s2, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public double3 zyy
+        {
+            get { return new double3(this.s2, this.s1, this.s1); }
+        }
+
+        public double3 zyz
+        {
+            get { return new double3(this.s2, this.s1, this.s2); }
+        }
+
+        public double3 zyw
+        {
+            get { return new double3(this.s2, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+            }
+        }
+
+        public double3 zzx
+        {
+            get { return new double3(this.s2, this.s2, this.s0); }
+        }
+
+        public double3 zzy
+        {
+            get { return new double3(this.s2, this.s2, this.s1); }
+        }
+
+        public double3 zzz
+        {
+            get { return new double3(this.s2, this.s2, this.s2); }
+        }
+
+        public double3 zzw
+        {
+            get { return new double3(this.s2, this.s2, this.s3); }
+        }
+
+        public double3 zwx
+        {
+            get { return new double3(this.s2, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public double3 zwy
+        {
+            get { return new double3(this.s2, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public double3 zwz
+        {
+            get { return new double3(this.s2, this.s3, this.s2); }
+        }
+
+        public double3 zww
+        {
+            get { return new double3(this.s2, this.s3, this.s3); }
+        }
+
+        public double3 wxx
+        {
+            get { return new double3(this.s3, this.s0, this.s0); }
+        }
+
+        public double3 wxy
+        {
+            get { return new double3(this.s3, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public double3 wxz
+        {
+            get { return new double3(this.s3, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public double3 wxw
+        {
+            get { return new double3(this.s3, this.s0, this.s3); }
+        }
+
+        public double3 wyx
+        {
+            get { return new double3(this.s3, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public double3 wyy
+        {
+            get { return new double3(this.s3, this.s1, this.s1); }
+        }
+
+        public double3 wyz
+        {
+            get { return new double3(this.s3, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+            }
+        }
+
+        public double3 wyw
+        {
+            get { return new double3(this.s3, this.s1, this.s3); }
+        }
+
+        public double3 wzx
+        {
+            get { return new double3(this.s3, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+            }
+        }
+
+        public double3 wzy
+        {
+            get { return new double3(this.s3, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+            }
+        }
+
+        public double3 wzz
+        {
+            get { return new double3(this.s3, this.s2, this.s2); }
+        }
+
+        public double3 wzw
+        {
+            get { return new double3(this.s3, this.s2, this.s3); }
+        }
+
+        public double3 wwx
+        {
+            get { return new double3(this.s3, this.s3, this.s0); }
+        }
+
+        public double3 wwy
+        {
+            get { return new double3(this.s3, this.s3, this.s1); }
+        }
+
+        public double3 wwz
+        {
+            get { return new double3(this.s3, this.s3, this.s2); }
+        }
+
+        public double3 www
+        {
+            get { return new double3(this.s3, this.s3, this.s3); }
         }
 
         public double4 xxxx
@@ -21687,6 +30563,12 @@ namespace OpenCl
         public double4 xyzw
         {
             get { return new double4(this.s0, this.s1, this.s2, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public double4 xywx
@@ -21702,6 +30584,12 @@ namespace OpenCl
         public double4 xywz
         {
             get { return new double4(this.s0, this.s1, this.s3, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public double4 xyww
@@ -21747,6 +30635,12 @@ namespace OpenCl
         public double4 xzyw
         {
             get { return new double4(this.s0, this.s2, this.s1, this.s3); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public double4 xzzx
@@ -21777,6 +30671,12 @@ namespace OpenCl
         public double4 xzwy
         {
             get { return new double4(this.s0, this.s2, this.s3, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public double4 xzwz
@@ -21822,6 +30722,12 @@ namespace OpenCl
         public double4 xwyz
         {
             get { return new double4(this.s0, this.s3, this.s1, this.s2); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public double4 xwyw
@@ -21837,6 +30743,12 @@ namespace OpenCl
         public double4 xwzy
         {
             get { return new double4(this.s0, this.s3, this.s2, this.s1); }
+            set {
+                 this.s0 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public double4 xwzz
@@ -21927,6 +30839,12 @@ namespace OpenCl
         public double4 yxzw
         {
             get { return new double4(this.s1, this.s0, this.s2, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public double4 yxwx
@@ -21942,6 +30860,12 @@ namespace OpenCl
         public double4 yxwz
         {
             get { return new double4(this.s1, this.s0, this.s3, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public double4 yxww
@@ -22047,6 +30971,12 @@ namespace OpenCl
         public double4 yzxw
         {
             get { return new double4(this.s1, this.s2, this.s0, this.s3); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public double4 yzyx
@@ -22092,6 +31022,12 @@ namespace OpenCl
         public double4 yzwx
         {
             get { return new double4(this.s1, this.s2, this.s3, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s2 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public double4 yzwy
@@ -22122,6 +31058,12 @@ namespace OpenCl
         public double4 ywxz
         {
             get { return new double4(this.s1, this.s3, this.s0, this.s2); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public double4 ywxw
@@ -22152,6 +31094,12 @@ namespace OpenCl
         public double4 ywzx
         {
             get { return new double4(this.s1, this.s3, this.s2, this.s0); }
+            set {
+                 this.s1 = value.s0;
+                 this.s3 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public double4 ywzy
@@ -22227,6 +31175,12 @@ namespace OpenCl
         public double4 zxyw
         {
             get { return new double4(this.s2, this.s0, this.s1, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public double4 zxzx
@@ -22257,6 +31211,12 @@ namespace OpenCl
         public double4 zxwy
         {
             get { return new double4(this.s2, this.s0, this.s3, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s0 = value.s1;
+                 this.s3 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public double4 zxwz
@@ -22287,6 +31247,12 @@ namespace OpenCl
         public double4 zyxw
         {
             get { return new double4(this.s2, this.s1, this.s0, this.s3); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s3 = value.s3;
+            }
         }
 
         public double4 zyyx
@@ -22332,6 +31298,12 @@ namespace OpenCl
         public double4 zywx
         {
             get { return new double4(this.s2, this.s1, this.s3, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s1 = value.s1;
+                 this.s3 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public double4 zywy
@@ -22437,6 +31409,12 @@ namespace OpenCl
         public double4 zwxy
         {
             get { return new double4(this.s2, this.s3, this.s0, this.s1); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public double4 zwxz
@@ -22452,6 +31430,12 @@ namespace OpenCl
         public double4 zwyx
         {
             get { return new double4(this.s2, this.s3, this.s1, this.s0); }
+            set {
+                 this.s2 = value.s0;
+                 this.s3 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public double4 zwyy
@@ -22542,6 +31526,12 @@ namespace OpenCl
         public double4 wxyz
         {
             get { return new double4(this.s3, this.s0, this.s1, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s1 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public double4 wxyw
@@ -22557,6 +31547,12 @@ namespace OpenCl
         public double4 wxzy
         {
             get { return new double4(this.s3, this.s0, this.s2, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s0 = value.s1;
+                 this.s2 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public double4 wxzz
@@ -22602,6 +31598,12 @@ namespace OpenCl
         public double4 wyxz
         {
             get { return new double4(this.s3, this.s1, this.s0, this.s2); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s0 = value.s2;
+                 this.s2 = value.s3;
+            }
         }
 
         public double4 wyxw
@@ -22632,6 +31634,12 @@ namespace OpenCl
         public double4 wyzx
         {
             get { return new double4(this.s3, this.s1, this.s2, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s1 = value.s1;
+                 this.s2 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public double4 wyzy
@@ -22677,6 +31685,12 @@ namespace OpenCl
         public double4 wzxy
         {
             get { return new double4(this.s3, this.s2, this.s0, this.s1); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s0 = value.s2;
+                 this.s1 = value.s3;
+            }
         }
 
         public double4 wzxz
@@ -22692,6 +31706,12 @@ namespace OpenCl
         public double4 wzyx
         {
             get { return new double4(this.s3, this.s2, this.s1, this.s0); }
+            set {
+                 this.s3 = value.s0;
+                 this.s2 = value.s1;
+                 this.s1 = value.s2;
+                 this.s0 = value.s3;
+            }
         }
 
         public double4 wzyy
@@ -22963,16 +31983,16 @@ namespace OpenCl
             this.s7 = v;
         }
 
-        public double8(double s0, double s1, double s2, double s3, double s4, double s5, double s6, double s7)
+        public double8(double v0, double v1, double v2, double v3, double v4, double v5, double v6, double v7)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
         }
 
         public double this[int index]
@@ -23153,24 +32173,24 @@ namespace OpenCl
             this.sf = v;
         }
 
-        public double16(double s0, double s1, double s2, double s3, double s4, double s5, double s6, double s7, double s8, double s9, double sa, double sb, double sc, double sd, double se, double sf)
+        public double16(double v0, double v1, double v2, double v3, double v4, double v5, double v6, double v7, double v8, double v9, double va, double vb, double vc, double vd, double ve, double vf)
         {
-            this.s0 = s0;
-            this.s1 = s1;
-            this.s2 = s2;
-            this.s3 = s3;
-            this.s4 = s4;
-            this.s5 = s5;
-            this.s6 = s6;
-            this.s7 = s7;
-            this.s8 = s8;
-            this.s9 = s9;
-            this.sa = sa;
-            this.sb = sb;
-            this.sc = sc;
-            this.sd = sd;
-            this.se = se;
-            this.sf = sf;
+            this.s0 = v0;
+            this.s1 = v1;
+            this.s2 = v2;
+            this.s3 = v3;
+            this.s4 = v4;
+            this.s5 = v5;
+            this.s6 = v6;
+            this.s7 = v7;
+            this.s8 = v8;
+            this.s9 = v9;
+            this.sa = va;
+            this.sb = vb;
+            this.sc = vc;
+            this.sd = vd;
+            this.se = ve;
+            this.sf = vf;
         }
 
         public double sA

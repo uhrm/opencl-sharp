@@ -2,6 +2,7 @@ import itertools
 
 vtypes = ['sbyte', 'byte', 'short', 'ushort', 'int', 'uint', 'long', 'ulong', 'float', 'double']
 vranks = [2, 3, 4, 8, 16]
+#vranks = [2, 3, 4]
 
 velems = {2: 'xy', 3: 'xyz', 4: 'xyzw', 8: None, 16: None}
 
@@ -16,6 +17,21 @@ ealias = ['x', 'y', 'z', 'w', None, None, None, None, None, None, 'sA', 'sB', 's
 eoparith = ['+', '-', '*', '/']             # arithmetic operators
 eoprel = ['==', '!=', '<', '<=', '>', '>='] # relational operators (for integer types)
 eopbit = ['&', '|', '^']                    # bitwise operators
+
+def partitions(n, t):
+    """
+    Generate all sequences of `n` positive integers that sum to `t`
+    (see http://stackoverflow.com/a/13990855/1147926).
+    """
+    assert(1 <= n <= t)
+    for c in itertools.combinations(range(1, t), n - 1):
+        def intervals():
+            last = 0
+            for i in c:
+                yield i - last
+                last = i
+            yield t - last
+        yield tuple(intervals())
 
 with open('opencl-sharp/VectorTypes.cs', 'w') as f:
     f.write('using System;\n')
@@ -43,18 +59,36 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
                 f.write('        [FieldOffset(%d)]\n' % (i*esizes[vt]))
                 f.write('        public %s s%x;\n' % (vt, i))
             f.write('\n')
+            #
+            # scalar constructor
+            #
             f.write('        public %s%d(%s v)\n' % (vt, vr, vt))
             f.write('        {\n')
             for i in xrange(vr):
                 f.write('            this.s%x = v;\n' % i)
             f.write('        }\n')
             f.write('\n')
-            f.write('        public %s%d(%s)\n' % (vt, vr, str.join(', ', ('%s s%x' % (vt, i) for i in xrange(vr)))))
-            f.write('        {\n')
-            for i in xrange(vr):
-                f.write('            this.s%x = s%x;\n' % (i, i))
-            f.write('        }\n')
-            f.write('\n')
+            #
+            # vector constructors
+            #
+            for i in xrange(1 if vr<=4 else vr, vr+1):
+                for p in partitions(i, vr):
+                    f.write('        public %s%d(%s)\n' % (vt, vr, str.join(', ', ('%s v%x' % (vt, i) if r==1 else '%s%d v%x' % (vt, r, i) for i,r in enumerate(p)))))
+                    f.write('        {\n')
+                    k = 0
+                    for i, r in enumerate(p):
+                        if r == 1:
+                            f.write('            this.s%x = v%x;\n' % (k, i))
+                            k += 1
+                        else:
+                            for j in xrange(r):
+                                f.write('            this.s%x = v%x.s%x;\n' % (k, i, j))
+                                k += 1
+                    f.write('        }\n')
+                    f.write('\n')
+            #
+            # scalar component accessors (x,y,w,z)
+            #
             if vr <= 4:
                 for i in xrange(vr):
                     f.write('        public %s %s\n' % (vt, ealias[i]))
@@ -63,13 +97,25 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
                     f.write('            set { this.s%x = value; }\n' % i)
                     f.write('        }\n')
                     f.write('\n')
+            #
+            # vector component accessors (x,y,w,z)
+            #
             if vr <= 4:
-                for c in itertools.product(xrange(vr), repeat=vr):
-                    f.write('        public %s%d %s\n' % (vt, vr, str.join('', (ealias[i] for i in c))))
-                    f.write('        {\n')
-                    f.write('            get { return new %s%d(%s); }\n' % (vt, vr, str.join(', ', ('this.s%x' % i for i in c))))
-                    f.write('        }\n')
-                    f.write('\n')
+                for tr in xrange(2,vr+1):
+                    for c in itertools.product(xrange(vr), repeat=tr):
+                        f.write('        public %s%d %s\n' % (vt, tr, str.join('', (ealias[i] for i in c))))
+                        f.write('        {\n')
+                        f.write('            get { return new %s%d(%s); }\n' % (vt, tr, str.join(', ', ('this.s%x' % i for i in c))))
+                        if len(set(c)) == tr:
+                            f.write('            set {\n')
+                            for i in xrange(tr):
+                                f.write('                 this.s%x = value.s%x;\n' % (c[i], i))
+                            f.write('            }\n')
+                        f.write('        }\n')
+                        f.write('\n')
+            #
+            # capitalized component accessors
+            #
             if vr == 16:
                 for i in xrange(10,vr):
                     f.write('        public %s %s\n' % (vt, ealias[i]))
@@ -78,6 +124,9 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
                     f.write('            set { this.s%x = value; }\n' % i)
                     f.write('        }\n')
                     f.write('\n')
+            #
+            # indexer component accessor
+            #
             f.write('        public %s this[int index]\n' % vt)
             f.write('        {\n')
             f.write('            get  {\n')
