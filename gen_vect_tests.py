@@ -287,5 +287,114 @@ for vt in vtypes:
                     f.write('        }\n')
                     f.write('\n')
 
+            if vr <= 4:
+                for tr in xrange(1,vr+1):
+                    tt = "%s%d" % (vt, tr) if tr > 1 else vt
+                    f.write('        [Kernel]\n')
+                    f.write('        private static void test_components%d([Global] %s[] r, [Global] %s%d[] w)\n' % (tr, tt, vt, vr))
+                    f.write('        {\n')
+                    f.write('            %s%d ar = new %s%d(%s);\n' % (vt, vr, vt, vr, str.join(', ', ("(%s)%d" % (vt, i+1) for i in xrange(vr)))))
+                    if tr > 1:
+                        f.write('            %s aw = new %s(%s);\n' % (tt, tt, str.join(', ', ("(%s)%d" % (vt, i+1) for i in xrange(tr)))))
+                    else:
+                        f.write('            %s aw = %s;\n' % (tt, str.join(', ', ("(%s)%d" % (vt, i+1) for i in xrange(tr)))))
+                    rcnt = 0
+                    wcnt = 0
+                    for c in itertools.product(xrange(vr), repeat=tr):
+                        f.write('            r[%d] = ar.%s;\n' % (rcnt, str.join('', (ealias[i] for i in c))))
+                        rcnt = rcnt+1
+                        if len(set(c)) == tr:
+                            f.write('            w[%d].%s = aw;\n' % (wcnt, str.join('', (ealias[i] for i in c))))
+                            wcnt = wcnt+1
+                    f.write('        }\n')
+                    f.write('\n')
+                    f.write('        [Test]\n')
+                    f.write('        public void TestComponentAccessors%d()\n' % tr)
+                    f.write('        {\n')
+                    f.write('            int nr = %d;\n' % rcnt)
+                    f.write('            int nw = %d;\n' % wcnt)
+                    f.write('            %s[] r = new %s[nr];\n' % (tt, tt))
+                    f.write('            %s%d[] w = new %s%d[nw];\n' % (vt, vr, vt, vr))
+                    f.write('\n')
+                    f.write('            // test managed\n')
+                    f.write('            Array.Clear(r, 0, nr);\n')
+                    f.write('            Array.Clear(w, 0, nw);\n')
+                    f.write('            Cl.RunKernel(\n')
+                    f.write('                new int[] { 1 },\n')
+                    f.write('                new int[] { 1 },\n')
+                    f.write('                (Action<%s[],%s%d[]>)test_components%d,\n' % (tt, vt, vr, tr))
+                    f.write('                r, w\n')
+                    f.write('            );\n')
+                    rcnt = 0
+                    wcnt = 0
+                    for c in itertools.product(xrange(vr), repeat=tr):
+                        for k, x in enumerate(c):
+                            if tr > 1:
+                                f.write('            Assert.AreEqual((%s)%d, r[%d].s%x);\n' % (vt, x+1, rcnt, k))
+                            else:
+                                f.write('            Assert.AreEqual((%s)%d, r[%d]);\n' % (vt, x+1, rcnt))
+                        rcnt = rcnt+1
+                        cs = set(c)
+                        if len(set(c)) == tr:
+                            for k, x in enumerate(c):
+                                f.write('            Assert.AreEqual((%s)%d, w[%d].s%x);\n' % (vt, k+1, wcnt, x))
+                            for x in (set(xrange(vr))-set(c)):
+                                f.write('            Assert.AreEqual((%s)0, w[%d].s%x);\n' % (vt, wcnt, x))
+                            wcnt = wcnt+1
+                    f.write('\n')
+                    f.write('            // compile kernel\n')
+                    f.write('            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.Test%s%d", "test_components%d");\n' % (vt.title(), vr, tr))
+                    f.write('\n')
+                    f.write('            // test native\n')
+                    f.write('            Platform platform = Platform.GetPlatformIDs()[0];\n')
+                    f.write('            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);\n')
+                    f.write('            using (var context = Context.CreateContext(platform, devices, null, null))\n')
+                    f.write('            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))\n')
+                    f.write('            {\n')
+                    f.write('                var program = null as Program;\n')
+                    f.write('                var kernel = null as Kernel;\n')
+                    f.write('                var mr = null as Mem<%s>;\n' % tt)
+                    f.write('                var mw = null as Mem<%s%d>;\n' % (vt, vr))
+                    f.write('                try {\n')
+                    f.write('                    program = Program.CreateProgramWithSource(context, new String[] { source });\n')
+                    f.write('                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }\n')
+                    f.write('                    kernel = Kernel.CreateKernel(program, "test_components%d");\n' % tr)
+                    f.write('                    mr = Mem<%s>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<%s>());\n' % (tt, tt))
+                    f.write('                    mw = Mem<%s%d>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<%s%d>());\n' % (vt, vr, vt, vr))
+                    f.write('                    kernel.SetKernelArg(0, (HandleObject)mr);\n')
+                    f.write('                    kernel.SetKernelArg(1, (HandleObject)mw);\n')
+                    f.write('                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);\n')
+                    f.write('                    queue.Finish();\n')
+                    f.write('                    Array.Clear(r, 0, nr);\n')
+                    f.write('                    queue.EnqueueReadBuffer(mr, false, r);\n')
+                    f.write('                    Array.Clear(w, 0, nw);\n')
+                    f.write('                    queue.EnqueueReadBuffer(mw, false, w);\n')
+                    f.write('                    queue.Finish();\n')
+                    f.write('                }\n')
+                    f.write('                finally {\n')
+                    f.write('                    if (mr != null) mr.Dispose();\n')
+                    f.write('                    if (mw != null) mw.Dispose();\n')
+                    f.write('                    if (kernel != null) kernel.Dispose();\n')
+                    f.write('                    if (program != null) program.Dispose();\n')
+                    f.write('                }\n')
+                    f.write('            }\n')
+                    rcnt = 0
+                    wcnt = 0
+                    for c in itertools.product(xrange(vr), repeat=tr):
+                        for k, x in enumerate(c):
+                            if tr > 1:
+                                f.write('            Assert.AreEqual((%s)%d, r[%d].s%x);\n' % (vt, x+1, rcnt, k))
+                            else:
+                                f.write('            Assert.AreEqual((%s)%d, r[%d]);\n' % (vt, x+1, rcnt))
+                        rcnt = rcnt+1
+                        cs = set(c)
+                        if len(set(c)) == tr:
+                            for k, x in enumerate(c):
+                                f.write('            Assert.AreEqual((%s)%d, w[%d].s%x);\n' % (vt, k+1, wcnt, x))
+                            for x in (set(xrange(vr))-set(c)):
+                                f.write('            Assert.AreEqual((%s)0, w[%d].s%x);\n' % (vt, wcnt, x))
+                            wcnt = wcnt+1
+                    f.write('        }\n')
+
             f.write('    }\n')
             f.write('}\n')

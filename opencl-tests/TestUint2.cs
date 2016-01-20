@@ -940,5 +940,175 @@ namespace OpenCl.Tests
             Assert.AreEqual(   4, r[1].s1);
         }
 
+        [Kernel]
+        private static void test_components1([Global] uint[] r, [Global] uint2[] w)
+        {
+            uint2 ar = new uint2((uint)1, (uint)2);
+            uint aw = (uint)1;
+            r[0] = ar.x;
+            w[0].x = aw;
+            r[1] = ar.y;
+            w[1].y = aw;
+        }
+
+        [Test]
+        public void TestComponentAccessors1()
+        {
+            int nr = 2;
+            int nw = 2;
+            uint[] r = new uint[nr];
+            uint2[] w = new uint2[nw];
+
+            // test managed
+            Array.Clear(r, 0, nr);
+            Array.Clear(w, 0, nw);
+            Cl.RunKernel(
+                new int[] { 1 },
+                new int[] { 1 },
+                (Action<uint[],uint2[]>)test_components1,
+                r, w
+            );
+            Assert.AreEqual((uint)1, r[0]);
+            Assert.AreEqual((uint)1, w[0].s0);
+            Assert.AreEqual((uint)0, w[0].s1);
+            Assert.AreEqual((uint)2, r[1]);
+            Assert.AreEqual((uint)1, w[1].s1);
+            Assert.AreEqual((uint)0, w[1].s0);
+
+            // compile kernel
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint2", "test_components1");
+
+            // test native
+            Platform platform = Platform.GetPlatformIDs()[0];
+            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
+            using (var context = Context.CreateContext(platform, devices, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var mr = null as Mem<uint>;
+                var mw = null as Mem<uint2>;
+                try {
+                    program = Program.CreateProgramWithSource(context, new String[] { source });
+                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
+                    kernel = Kernel.CreateKernel(program, "test_components1");
+                    mr = Mem<uint>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<uint>());
+                    mw = Mem<uint2>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<uint2>());
+                    kernel.SetKernelArg(0, (HandleObject)mr);
+                    kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                    queue.Finish();
+                    Array.Clear(r, 0, nr);
+                    queue.EnqueueReadBuffer(mr, false, r);
+                    Array.Clear(w, 0, nw);
+                    queue.EnqueueReadBuffer(mw, false, w);
+                    queue.Finish();
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mw != null) mw.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual((uint)1, r[0]);
+            Assert.AreEqual((uint)1, w[0].s0);
+            Assert.AreEqual((uint)0, w[0].s1);
+            Assert.AreEqual((uint)2, r[1]);
+            Assert.AreEqual((uint)1, w[1].s1);
+            Assert.AreEqual((uint)0, w[1].s0);
+        }
+        [Kernel]
+        private static void test_components2([Global] uint2[] r, [Global] uint2[] w)
+        {
+            uint2 ar = new uint2((uint)1, (uint)2);
+            uint2 aw = new uint2((uint)1, (uint)2);
+            r[0] = ar.xx;
+            r[1] = ar.xy;
+            w[0].xy = aw;
+            r[2] = ar.yx;
+            w[1].yx = aw;
+            r[3] = ar.yy;
+        }
+
+        [Test]
+        public void TestComponentAccessors2()
+        {
+            int nr = 4;
+            int nw = 2;
+            uint2[] r = new uint2[nr];
+            uint2[] w = new uint2[nw];
+
+            // test managed
+            Array.Clear(r, 0, nr);
+            Array.Clear(w, 0, nw);
+            Cl.RunKernel(
+                new int[] { 1 },
+                new int[] { 1 },
+                (Action<uint2[],uint2[]>)test_components2,
+                r, w
+            );
+            Assert.AreEqual((uint)1, r[0].s0);
+            Assert.AreEqual((uint)1, r[0].s1);
+            Assert.AreEqual((uint)1, r[1].s0);
+            Assert.AreEqual((uint)2, r[1].s1);
+            Assert.AreEqual((uint)1, w[0].s0);
+            Assert.AreEqual((uint)2, w[0].s1);
+            Assert.AreEqual((uint)2, r[2].s0);
+            Assert.AreEqual((uint)1, r[2].s1);
+            Assert.AreEqual((uint)1, w[1].s1);
+            Assert.AreEqual((uint)2, w[1].s0);
+            Assert.AreEqual((uint)2, r[3].s0);
+            Assert.AreEqual((uint)2, r[3].s1);
+
+            // compile kernel
+            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint2", "test_components2");
+
+            // test native
+            Platform platform = Platform.GetPlatformIDs()[0];
+            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
+            using (var context = Context.CreateContext(platform, devices, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var mr = null as Mem<uint2>;
+                var mw = null as Mem<uint2>;
+                try {
+                    program = Program.CreateProgramWithSource(context, new String[] { source });
+                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
+                    kernel = Kernel.CreateKernel(program, "test_components2");
+                    mr = Mem<uint2>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<uint2>());
+                    mw = Mem<uint2>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<uint2>());
+                    kernel.SetKernelArg(0, (HandleObject)mr);
+                    kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                    queue.Finish();
+                    Array.Clear(r, 0, nr);
+                    queue.EnqueueReadBuffer(mr, false, r);
+                    Array.Clear(w, 0, nw);
+                    queue.EnqueueReadBuffer(mw, false, w);
+                    queue.Finish();
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mw != null) mw.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual((uint)1, r[0].s0);
+            Assert.AreEqual((uint)1, r[0].s1);
+            Assert.AreEqual((uint)1, r[1].s0);
+            Assert.AreEqual((uint)2, r[1].s1);
+            Assert.AreEqual((uint)1, w[0].s0);
+            Assert.AreEqual((uint)2, w[0].s1);
+            Assert.AreEqual((uint)2, r[2].s0);
+            Assert.AreEqual((uint)1, r[2].s1);
+            Assert.AreEqual((uint)1, w[1].s1);
+            Assert.AreEqual((uint)2, w[1].s0);
+            Assert.AreEqual((uint)2, r[3].s0);
+            Assert.AreEqual((uint)2, r[3].s1);
+        }
     }
 }
