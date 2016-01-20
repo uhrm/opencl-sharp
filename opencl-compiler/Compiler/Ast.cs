@@ -244,6 +244,23 @@ namespace OpenCl.Compiler
         }
     }
 
+    internal class Conv : AstNode
+    {
+        private readonly AstNode val;
+
+        public Conv(Type type, AstNode val) : base(CliType.FromType(type))
+        {
+            this.val = val;
+        }
+
+        protected internal override void Accept(AstVisitor visitor)
+        {
+            visitor.Enter(this);
+            this.val.Accept(visitor);
+            visitor.Exit(this);
+        }
+    }
+
     internal enum BinaryOpCode
     {
         Add,
@@ -448,6 +465,14 @@ namespace OpenCl.Compiler
         }
 
         public virtual void Exit(LocAlloc node)
+        {
+        }
+
+        public virtual void Enter(Conv node)
+        {
+        }
+
+        public virtual void Exit(Conv node)
         {
         }
 

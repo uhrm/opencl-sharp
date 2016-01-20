@@ -128,6 +128,18 @@ namespace OpenCl.Compiler
                 this.builder.Append(")");
             }
 
+            // Conv
+
+            public override void Enter(Conv node)
+            {
+                this.builder.AppendFormat("(({0})(", typeMap[node.CliType.SystemType.FullName]);
+            }
+
+            public override void Exit(Conv node)
+            {
+                this.builder.Append("))");
+            }
+
             // Call
 
             public override void Enter(Call node)
@@ -240,7 +252,9 @@ namespace OpenCl.Compiler
         {
             { "System.Void",     "void" },
 
+            { "System.SByte",    "char" },
             { "System.Int8",     "char" },
+            { "System.Byte",     "uchar" },
             { "System.UInt8",    "uchar" },
             { "System.Int16",    "short" },
             { "System.UInt16",   "ushort" },
@@ -302,7 +316,9 @@ namespace OpenCl.Compiler
             { "OpenCl.double8",  "double8" },
             { "OpenCl.double16", "double16" },
 
+            { "System.SByte[]",    "char*" },
             { "System.Int8[]",     "char*" },
+            { "System.Byte[]",     "uchar*" },
             { "System.UInt8[]",    "uchar*" },
             { "System.Int16[]",    "short*" },
             { "System.UInt16[]",   "ushort*" },
@@ -364,7 +380,9 @@ namespace OpenCl.Compiler
             { "OpenCl.double8[]",  "double8*" },
             { "OpenCl.double16[]", "double16*" },
 
+            { "System.SByte*",    "char*" },
             { "System.Int8*",     "char*" },
+            { "System.Byte*",     "uchar*" },
             { "System.UInt8*",    "uchar*" },
             { "System.Int16*",    "short*" },
             { "System.UInt16*",   "ushort*" },
@@ -887,6 +905,62 @@ namespace OpenCl.Compiler
                     this.builder.AppendLine(";");
                     break;
                 }
+                case Code.Conv_I:
+                case Code.Conv_Ovf_I:
+                case Code.Conv_Ovf_I_Un:
+                    stack.Push(new Conv(typeof(IntPtr), stack.Pop()));
+                    break;
+                case Code.Conv_I1:
+                case Code.Conv_Ovf_I1:
+                case Code.Conv_Ovf_I1_Un:
+                    stack.Push(new Conv(typeof(SByte), stack.Pop()));
+                    break;
+                case Code.Conv_I2:
+                case Code.Conv_Ovf_I2:
+                case Code.Conv_Ovf_I2_Un:
+                    stack.Push(new Conv(typeof(Int16), stack.Pop()));
+                    break;
+                case Code.Conv_I4:
+                case Code.Conv_Ovf_I4:
+                case Code.Conv_Ovf_I4_Un:
+                    stack.Push(new Conv(typeof(Int32), stack.Pop()));
+                    break;
+                case Code.Conv_I8:
+                case Code.Conv_Ovf_I8:
+                case Code.Conv_Ovf_I8_Un:
+                    stack.Push(new Conv(typeof(Int64), stack.Pop()));
+                    break;
+                case Code.Conv_U:
+                case Code.Conv_Ovf_U:
+                case Code.Conv_Ovf_U_Un:
+                    stack.Push(new Conv(typeof(UIntPtr), stack.Pop()));
+                    break;
+                case Code.Conv_U1:
+                case Code.Conv_Ovf_U1:
+                case Code.Conv_Ovf_U1_Un:
+                    stack.Push(new Conv(typeof(Byte), stack.Pop()));
+                    break;
+                case Code.Conv_U2:
+                case Code.Conv_Ovf_U2:
+                case Code.Conv_Ovf_U2_Un:
+                    stack.Push(new Conv(typeof(UInt16), stack.Pop()));
+                    break;
+                case Code.Conv_U4:
+                case Code.Conv_Ovf_U4:
+                case Code.Conv_Ovf_U4_Un:
+                    stack.Push(new Conv(typeof(UInt32), stack.Pop()));
+                    break;
+                case Code.Conv_U8:
+                case Code.Conv_Ovf_U8:
+                case Code.Conv_Ovf_U8_Un:
+                    stack.Push(new Conv(typeof(UInt64), stack.Pop()));
+                    break;
+                case Code.Conv_R4:
+                    stack.Push(new Conv(typeof(Single), stack.Pop()));
+                    break;
+                case Code.Conv_R8:
+                    stack.Push(new Conv(typeof(Double), stack.Pop()));
+                    break;
                 case Code.Add:
                 case Code.Add_Ovf:
                 case Code.Add_Ovf_Un: {
@@ -982,7 +1056,7 @@ namespace OpenCl.Compiler
                             // is compatible with C-style compound literals.
                             this.builder.Append("*(");
                             args[0].Accept(this.printer);
-                            this.builder.AppendFormat(") = ({0}){{ ", tdef.Name);
+                            this.builder.AppendFormat(") = ({0}){{ ", typeMap[tdef.FullName]);
                             for (int i=1; i<nargs; i++) {
                                 if (i > 1) {
                                     this.builder.Append(", ");
