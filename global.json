@@ -1,0 +1,8 @@
+{
+    "projects": [
+        "opencl-sharp",
+        "opencl-compiler",
+        "opencl-tests",
+        "opencl-samples"
+     ]
+}
