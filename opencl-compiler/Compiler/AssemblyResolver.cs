@@ -10,8 +10,11 @@ namespace OpenCl.Compiler
 {
     class DotNetCoreAssemblyResolver : IAssemblyResolver
     {
-        private static readonly string BaseDirectory = System.AppContext.BaseDirectory;
-        private static readonly string RuntimeDirectory = Path.GetDirectoryName(typeof(object).Assembly.Location);
+        private static IReadOnlyList<string> Paths = new string[] {
+            System.AppContext.BaseDirectory,
+            Path.GetDirectoryName(typeof(object).Assembly.Location),
+            Directory.GetCurrentDirectory()
+        };
 
         private readonly Dictionary<string,AssemblyDefinition> libraries;
 
@@ -45,29 +48,19 @@ namespace OpenCl.Compiler
             if (name == null) {
                 throw new ArgumentNullException("name");
             }
-            AssemblyDefinition def;
-            if (!this.libraries.TryGetValue(name.Name, out def)) {
-                var path = Path.Combine(BaseDirectory, $"{name.Name}.dll");
-                if (File.Exists(path)) {
-                    def = AssemblyDefinition.ReadAssembly(path, parameters);
+            if (this.libraries.TryGetValue(name.Name, out AssemblyDefinition def)) {
+                return def;
+            }
+            string module = $"{name.Name}.dll";
+            foreach (var path in Paths) {
+                var filename = Path.Combine(path, module);
+                if (File.Exists(filename)) {
+                    def = AssemblyDefinition.ReadAssembly(filename, parameters);
                     this.libraries.Add(name.Name, def);
-                }
-                else {
-                    path = Path.Combine(RuntimeDirectory, $"{name.Name}.dll");
-                    if (File.Exists(path)) {
-                        def = AssemblyDefinition.ReadAssembly(path, parameters);
-                        this.libraries.Add(name.Name, def);
-                    }
-                    else {
-                        path = $"{name.Name}.dll";
-                        if (File.Exists(path)) {
-                            def = AssemblyDefinition.ReadAssembly(path, parameters);
-                            this.libraries.Add(name.Name, def);
-                        }
-                    }
+                    return def;
                 }
             }
-            return def;
+            throw new AssemblyResolutionException(name);
         }
 
         // IDisposable API
