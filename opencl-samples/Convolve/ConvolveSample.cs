@@ -46,18 +46,19 @@ namespace OpenCl.Samples
                 program.BuildProgram(devices, null, null, null);
             }
             catch (OpenClException ex) {
+                Console.WriteLine("*** Error building kernel 'conv'.");
                 if (ex.ErrorCode == ErrorCode.BuildProgramFailure) {
-                    Console.WriteLine("*** Error building kernel 'conv'.");
                     Console.WriteLine("*** Build log: {0}", program.BuildInfo.GetLog(devices[0]));
                     Console.WriteLine("*** Source code:");
                     Console.WriteLine(source);
                 }
-                throw ex;
+                return;
             }
             var kernel = Kernel.CreateKernel(program, "conv");
             var inputSignalBuffer = Mem<uint>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, inputSignal);
             if (inputSignalBuffer.Size < (uint)(Marshal.SizeOf<uint>()*inputSignal.Length)) {
-                throw new ApplicationException(String.Format("Invalid MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<uint>()*inputSignal.Length, inputSignalBuffer.Size));
+                Console.WriteLine("*** Invalid MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<uint>()*inputSignal.Length, inputSignalBuffer.Size);
+                return;
             }
             var maskBuffer = Mem<uint>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, mask);
             var outputSignalBuffer = Mem<uint>.CreateBuffer(context, MemFlags.WriteOnly, sizeof(uint)*outputSignalHeight*outputSignalWidth);

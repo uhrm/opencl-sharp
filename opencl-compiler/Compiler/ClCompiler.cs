@@ -445,8 +445,6 @@ namespace OpenCl.Compiler
             { "OpenCl.double16*", "double16*" },
         };
 
-        private readonly ModuleDefinition module;
-        private readonly TypeDefinition type;
         private readonly MethodDefinition method;
 
         private readonly StringBuilder builder;
@@ -455,10 +453,8 @@ namespace OpenCl.Compiler
 
         private readonly Dictionary<int,BranchType> labels;
 
-        private ClCompiler(ModuleDefinition module, TypeDefinition type, MethodDefinition method)
+        private ClCompiler(MethodDefinition method)
         {
-            this.module = module;
-            this.type = type;
             this.method = method;
             this.builder = new StringBuilder();
             this.printer = new ClExprVisitor(this.builder);
@@ -740,7 +736,12 @@ namespace OpenCl.Compiler
                     stack.Push(new VarRef(CliType.FromType(loc.VariableType), loc.Index));
                     break;
                 }
-                /*case Code.Ldelem_Any:*/
+                case Code.Ldelem_Any: {
+                    var idx = stack.Pop();
+                    var arr = stack.Pop();
+                    stack.Push(new ElemRef(CliType.FromType(instr.Operand as TypeReference), arr, idx));
+                    break;
+                }
                 case Code.Ldelem_I: {
                     var idx = stack.Pop();
                     var arr = stack.Pop();
@@ -1206,7 +1207,7 @@ namespace OpenCl.Compiler
                     this.builder.AppendLine(";");
                     break;
                 default:
-                    throw new ApplicationException(String.Format("Unsupported opcode: {0}.", instr.OpCode));
+                    throw new CompilerException(String.Format("Unsupported opcode: {0}.", instr.OpCode));
 //                    break;
                 }
             }
@@ -1219,17 +1220,21 @@ namespace OpenCl.Compiler
             EmitBody();
         }
 
-        public static string EmitKernel(string module, string type, string method)
+        public static string EmitKernel(string assembly, string type, string method)
         {
-            ModuleDefinition _module = ModuleDefinition.ReadModule(module);
-            TypeDefinition _type = _module.Types.Single(ti => ti.FullName == type);
-            MethodDefinition _method = _type.Methods.Single(mi => mi.Name == method);
-            return EmitKernel(_module, _type, _method);
+            var resolver = new DotNetCoreAssemblyResolver();
+            using (var _assembly = resolver.Resolve(assembly))
+            using (var _module = _assembly.MainModule) {
+                // ModuleDefinition _module = ModuleDefinition.ReadModule(module, new ReaderParameters { AssemblyResolver = new DotNetCoreAssemblyResolver() });
+                TypeDefinition _type = _module.Types.Single(ti => ti.FullName == type);
+                MethodDefinition _method = _type.Methods.Single(mi => mi.Name == method);
+                return EmitKernel(/*_module, _type,*/ _method);
+            }
         }
 
-        public static string EmitKernel(ModuleDefinition module, TypeDefinition type, MethodDefinition method)
+        public static string EmitKernel(MethodDefinition method)
         {
-            ClCompiler compiler = new ClCompiler(module, type, method);
+            ClCompiler compiler = new ClCompiler(method);
             compiler.Run();
             return compiler.builder.ToString();
         }

@@ -158,6 +158,26 @@ namespace OpenCl
 
         // static factory methods
 
+        public static Context CreateContext(Platform platform, Device device, ContextNotify callback, object userData)
+        {
+            var pty = new ContextProperty[] { new ContextProperty(ContextProperties.Platform, platform.handle), ContextProperty.Zero };
+            var dev = new IntPtr[] { device.handle };
+            var pfn = (ContextNotifyData)null;
+            var pcb = (ContextNotifyInternal)null;
+            var ptr = IntPtr.Zero;
+            if (callback != null) {
+                pfn = new ContextNotifyData(callback, userData);
+                pcb = ContextNotifyData.Callback;
+                ptr = pfn.Handle;
+            }
+            var err = ErrorCode.Success;
+            var ctx = NativeMethods.clCreateContext(pty, 1, dev, pcb, ptr, out err);
+            if (err != ErrorCode.Success) {
+                throw new OpenClException(err);
+            }
+            return new Context(ctx, pfn);
+        }
+
         public static Context CreateContext(Platform platform, Device[] devices, ContextNotify callback, object userData)
         {
             var pty = new ContextProperty[] { new ContextProperty(ContextProperties.Platform, platform.handle), ContextProperty.Zero };

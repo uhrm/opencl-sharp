@@ -42,7 +42,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  48, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_add");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_add");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -121,7 +121,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(18446744073709551608, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_sub");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_sub");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -200,7 +200,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 560, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_mul");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_mul");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -279,7 +279,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_div");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_div");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -358,7 +358,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_eq");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_eq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -438,7 +438,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_neq");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_neq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -518,7 +518,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_lt");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_lt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -598,7 +598,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_le");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_le");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -678,7 +678,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_gt");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_gt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -758,7 +758,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_ge");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_ge");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -838,7 +838,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  20, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_and");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_and");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -918,7 +918,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  28, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_or");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_or");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -998,7 +998,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(   8, r[1].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_ulong4_xor");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_ulong4_xor");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -1098,7 +1098,7 @@ namespace OpenCl.Tests
             Assert.AreEqual((ulong)0, w[3].s2);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_components1");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_components1");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -1118,11 +1118,11 @@ namespace OpenCl.Tests
                     mw = Mem<ulong4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<ulong4>());
                     kernel.SetKernelArg(0, (HandleObject)mr);
                     kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueFillBuffer(mw, default(ulong4));
+                    queue.Finish();
                     queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
                     queue.Finish();
-                    Array.Clear(r, 0, nr);
                     queue.EnqueueReadBuffer(mr, false, r);
-                    Array.Clear(w, 0, nw);
                     queue.EnqueueReadBuffer(mw, false, w);
                     queue.Finish();
                 }
@@ -1288,7 +1288,7 @@ namespace OpenCl.Tests
             Assert.AreEqual((ulong)4, r[15].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_components2");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_components2");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -1308,11 +1308,11 @@ namespace OpenCl.Tests
                     mw = Mem<ulong4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<ulong4>());
                     kernel.SetKernelArg(0, (HandleObject)mr);
                     kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueFillBuffer(mw, default(ulong4));
+                    queue.Finish();
                     queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
                     queue.Finish();
-                    Array.Clear(r, 0, nr);
                     queue.EnqueueReadBuffer(mr, false, r);
-                    Array.Clear(w, 0, nw);
                     queue.EnqueueReadBuffer(mw, false, w);
                     queue.Finish();
                 }
@@ -1806,7 +1806,7 @@ namespace OpenCl.Tests
             Assert.AreEqual((ulong)4, r[63].s2);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_components3");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_components3");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -1826,11 +1826,11 @@ namespace OpenCl.Tests
                     mw = Mem<ulong4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<ulong4>());
                     kernel.SetKernelArg(0, (HandleObject)mr);
                     kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueFillBuffer(mw, default(ulong4));
+                    queue.Finish();
                     queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
                     queue.Finish();
-                    Array.Clear(r, 0, nr);
                     queue.EnqueueReadBuffer(mr, false, r);
-                    Array.Clear(w, 0, nw);
                     queue.EnqueueReadBuffer(mw, false, w);
                     queue.Finish();
                 }
@@ -3556,7 +3556,7 @@ namespace OpenCl.Tests
             Assert.AreEqual((ulong)4, r[255].s3);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUlong4", "test_components4");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong4", "test_components4");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -3576,11 +3576,11 @@ namespace OpenCl.Tests
                     mw = Mem<ulong4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<ulong4>());
                     kernel.SetKernelArg(0, (HandleObject)mr);
                     kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueFillBuffer(mw, default(ulong4));
+                    queue.Finish();
                     queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
                     queue.Finish();
-                    Array.Clear(r, 0, nr);
                     queue.EnqueueReadBuffer(mr, false, r);
-                    Array.Clear(w, 0, nw);
                     queue.EnqueueReadBuffer(mw, false, w);
                     queue.Finish();
                 }

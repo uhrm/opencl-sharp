@@ -159,6 +159,10 @@ namespace OpenCl.Samples
 
         public static void Run()
         {
+            Console.WriteLine("*** Managed:");
+            Console.WriteLine("*** ");
+            RunManaged();
+
             Console.WriteLine("*** Native SPIR-V:");
             Console.WriteLine("*** ");
             var module = new MemoryStream();
@@ -170,13 +174,7 @@ namespace OpenCl.Samples
             {
                 stream.Write(buf, 0, buf.Length);
             }
-
-
             RunNative(buf);
-
-            Console.WriteLine("*** Managed:");
-            Console.WriteLine("*** ");
-            RunManaged();
         }
     }
 }

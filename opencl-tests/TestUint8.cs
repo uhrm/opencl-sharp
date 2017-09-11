@@ -50,7 +50,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  96, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_add");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_add");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -145,7 +145,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(4294967280, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_sub");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_sub");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -240,7 +240,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(2240, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_mul");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_mul");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -335,7 +335,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_div");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_div");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -430,7 +430,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_eq");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_eq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -526,7 +526,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_neq");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_neq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -622,7 +622,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_lt");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_lt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -718,7 +718,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_le");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_le");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -814,7 +814,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_gt");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_gt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -910,7 +910,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_ge");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_ge");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -1006,7 +1006,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  40, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_and");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_and");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -1102,7 +1102,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  56, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_or");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_or");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -1198,7 +1198,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  16, r[1].s7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestUint8", "test_uint8_xor");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_xor");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];

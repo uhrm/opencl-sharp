@@ -236,7 +236,7 @@ namespace OpenCl.Compiler
         {
             protected readonly Func<TypeOpCode,int> rfunc;
 
-            public TypeOpCode(Func<TypeOpCode,int> rfunc)
+            protected TypeOpCode(Func<TypeOpCode,int> rfunc)
             {
                 this.rfunc = rfunc;
             }
@@ -258,7 +258,7 @@ namespace OpenCl.Compiler
 
         private class OpTypeVoid : TypeOpCode
         {
-            public OpTypeVoid(Func<TypeOpCode,int> rfunc) : base(rfunc) { }
+            public OpTypeVoid(Func<TypeOpCode,int> rfunc) : base(rfunc) { rfunc(this); }
 
             public new OpTypeVoid ResultType
             {
@@ -284,12 +284,12 @@ namespace OpenCl.Compiler
 
         private abstract class ScalarTypeOpCode : TypeOpCode
         {
-            public ScalarTypeOpCode(Func<TypeOpCode,int> rfunc) : base(rfunc) { }
+            protected ScalarTypeOpCode(Func<TypeOpCode,int> rfunc) : base(rfunc) { }
         }
 
         private class OpTypeBool : ScalarTypeOpCode
         {
-            public OpTypeBool(Func<TypeOpCode,int> rfunc) : base(rfunc) { }
+            public OpTypeBool(Func<TypeOpCode,int> rfunc) : base(rfunc) { rfunc(this); }
 
             public override void Emit(Stream stream) {
                 stream.WriteShortLE(20);
@@ -310,7 +310,7 @@ namespace OpenCl.Compiler
 
         private abstract class NumericTypeOpCode : ScalarTypeOpCode
         {
-            public NumericTypeOpCode(Func<TypeOpCode,int> rfunc) : base(rfunc) { }
+            protected NumericTypeOpCode(Func<TypeOpCode,int> rfunc) : base(rfunc) { }
 
             public abstract int Width { get; }
         }
@@ -326,6 +326,7 @@ namespace OpenCl.Compiler
             {
                 this.width = width;
                 this.signedness = signedness;
+                rfunc(this);
             }
 
             public override int Width
@@ -370,6 +371,7 @@ namespace OpenCl.Compiler
             public OpTypeFloat(Func<TypeOpCode,int> rfunc, int width) : base(rfunc)
             {
                 this.width = width;
+                rfunc(this);
             }
 
             public override int Width
@@ -413,14 +415,13 @@ namespace OpenCl.Compiler
             private readonly ScalarTypeOpCode componentType;
             private readonly int componentCount;
 
-            public OpTypeVector(Func<TypeOpCode,int> rfunc, int componentCount, ScalarTypeOpCode componentType) : this(rfunc, componentType, componentCount)
-            {
-            }
+            public OpTypeVector(Func<TypeOpCode,int> rfunc, int componentCount, ScalarTypeOpCode componentType) : this(rfunc, componentType, componentCount) { }
 
             private OpTypeVector(Func<TypeOpCode,int> rfunc, ScalarTypeOpCode componentType, int componentCount) : base(rfunc)
             {
                 this.componentType = componentType;
                 this.componentCount = componentCount;
+                rfunc(this);
             }
 
             public ScalarTypeOpCode ComponentType
@@ -475,6 +476,7 @@ namespace OpenCl.Compiler
             {
                 this.columnType = columnType;
                 this.columnCount = columnCount;
+                rfunc(this);
             }
 
             public OpTypeVector ColumnType
@@ -534,6 +536,7 @@ namespace OpenCl.Compiler
             {
                 this.elementType = elementType;
                 this.length = length;
+                rfunc(this);
             }
 
             public TypeOpCode ElementType
@@ -586,6 +589,7 @@ namespace OpenCl.Compiler
             public OpTypeRuntimeArray(Func<TypeOpCode,int> rfunc, TypeOpCode elementType) : base(rfunc)
             {
                 this.elementType = elementType;
+                rfunc(this);
             }
 
             public TypeOpCode ElementType
@@ -624,6 +628,7 @@ namespace OpenCl.Compiler
             public OpTypeStruct(Func<TypeOpCode,int> rfunc, params TypeOpCode[] members) : base(rfunc)
             {
                 this.members = members;
+                rfunc(this);
             }
 
             public IReadOnlyList<TypeOpCode> Member
@@ -712,6 +717,7 @@ namespace OpenCl.Compiler
             public OpTypeOpaque(Func<TypeOpCode,int> rfunc, string name) : base(rfunc)
             {
                 this.name = name;
+                rfunc(this);
             }
 
             public string Name
@@ -748,14 +754,13 @@ namespace OpenCl.Compiler
             private readonly TypeOpCode baseType;
             private readonly StorageClass storage;
 
-            public OpTypePointer(Func<TypeOpCode,int> rfunc, StorageClass storage, TypeOpCode baseType) : this(rfunc, baseType, storage)
-            {
-            }
+            public OpTypePointer(Func<TypeOpCode,int> rfunc, StorageClass storage, TypeOpCode baseType) : this(rfunc, baseType, storage) { }
 
             private OpTypePointer(Func<TypeOpCode,int> rfunc, TypeOpCode baseType, StorageClass storage) : base(rfunc)
             {
                 this.baseType = baseType;
                 this.storage = storage;
+                rfunc(this);
             }
 
             public TypeOpCode BaseType
@@ -807,6 +812,7 @@ namespace OpenCl.Compiler
             {
                 this.result = result;
                 this.parameters = parameters;
+                rfunc(this);
             }
 
             public TypeOpCode ReturnType
@@ -934,20 +940,20 @@ namespace OpenCl.Compiler
 
         private class OpConstant : TypedResultOpCode
         {
-            private readonly Func<OpConstant,int> rfunc;
+            private readonly int rid;
             private readonly NumericTypeOpCode type;
             private readonly object value;
 
             public OpConstant(Func<OpConstant,int> rfunc, NumericTypeOpCode type, object value)
             {
-                this.rfunc = rfunc;
                 this.type = type;
                 this.value = value;
+                this.rid = rfunc(this);
             }
 
             public override int ResultId
             {
-                get { return this.rfunc(this); }
+                get { return this.rid; }
             }
 
             public override TypeOpCode ResultType
@@ -1283,6 +1289,174 @@ namespace OpenCl.Compiler
                 stream.WriteIntLE(this.basePointer.ResultType.ResultId);
                 stream.WriteIntLE(ResultId);
                 stream.WriteIntLE(this.basePointer.ResultId);
+                foreach (var idx in this.index) {
+                    stream.WriteIntLE(idx.ResultId);
+                }
+            }
+        }
+
+        private class OpInBoundsAccessChain : DefaultTypedResultOpCode
+        {
+            private readonly TypedResultOpCode basePointer;
+            private readonly ResultOpCode[] index;
+
+            public OpInBoundsAccessChain(int rid, TypedResultOpCode basePointer, params ResultOpCode[] index) : base(rid)
+            {
+                if (!(basePointer.ResultType is OpTypePointer)) {
+                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected SpirPointerType, found {0}.", basePointer.ResultType.GetType().Name));
+                }
+                if (!((basePointer.ResultType as OpTypePointer).BaseType is CompositeTypeOpCode)) {
+                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected pointer to CompositeTypeOpCode, found pointer to {0}.", (basePointer.ResultType as OpTypePointer).BaseType.GetType().Name));
+                }
+                this.basePointer = basePointer;
+                this.index = index;
+            }
+
+            public override TypeOpCode ResultType
+            {
+                get {
+                    OpTypePointer basePtr = this.basePointer.ResultType as OpTypePointer;
+                    TypeOpCode result = basePtr.BaseType;
+                    foreach (var i in this.index) {
+                        if (result is OpTypeVector) {
+                            result = (result as OpTypeVector).ComponentType;
+                        }
+                        else if (result is OpTypeMatrix) {
+                            result = (result as OpTypeMatrix).ColumnType;
+                        }
+                        else if (result is OpTypeArray) {
+                            result = (result as OpTypeArray).ElementType;
+                        }
+                        else if (result is OpTypeStruct) {
+                            var c = i as OpConstant;
+                            result = (result as OpTypeStruct).GetResultType((int)c.Value);
+                        }
+                    }
+                    return basePtr.Derive(result);
+                }
+            }
+
+            public override void Emit(Stream stream)
+            {
+                stream.WriteShortLE(66);
+                stream.WriteShortLE((short)(4+this.index.Length));
+                stream.WriteIntLE(this.basePointer.ResultType.ResultId);
+                stream.WriteIntLE(ResultId);
+                stream.WriteIntLE(this.basePointer.ResultId);
+                foreach (var idx in this.index) {
+                    stream.WriteIntLE(idx.ResultId);
+                }
+            }
+        }
+
+        private class OpPtrAccessChain : DefaultTypedResultOpCode
+        {
+            private readonly TypedResultOpCode basePointer;
+            private readonly ResultOpCode element;
+            private readonly ResultOpCode[] index;
+
+            public OpPtrAccessChain(int rid, TypedResultOpCode basePointer, TypedResultOpCode element, params ResultOpCode[] index) : base(rid)
+            {
+                if (!(basePointer.ResultType is OpTypePointer)) {
+                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected SpirPointerType, found {0}.", basePointer.ResultType.GetType().Name));
+                }
+                if (!((basePointer.ResultType as OpTypePointer).BaseType is CompositeTypeOpCode)) {
+                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected pointer to CompositeTypeOpCode, found pointer to {0}.", (basePointer.ResultType as OpTypePointer).BaseType.GetType().Name));
+                }
+                this.basePointer = basePointer;
+                this.element = element;
+                this.index = index;
+            }
+
+            public override TypeOpCode ResultType
+            {
+                get {
+                    OpTypePointer basePtr = this.basePointer.ResultType as OpTypePointer;
+                    TypeOpCode result = basePtr.BaseType;
+                    foreach (var i in this.index) {
+                        if (result is OpTypeVector) {
+                            result = (result as OpTypeVector).ComponentType;
+                        }
+                        else if (result is OpTypeMatrix) {
+                            result = (result as OpTypeMatrix).ColumnType;
+                        }
+                        else if (result is OpTypeArray) {
+                            result = (result as OpTypeArray).ElementType;
+                        }
+                        else if (result is OpTypeStruct) {
+                            var c = i as OpConstant;
+                            result = (result as OpTypeStruct).GetResultType((int)c.Value);
+                        }
+                    }
+                    return basePtr.Derive(result);
+                }
+            }
+
+            public override void Emit(Stream stream)
+            {
+                stream.WriteShortLE(67);
+                stream.WriteShortLE((short)(5+this.index.Length));
+                stream.WriteIntLE(this.basePointer.ResultType.ResultId);
+                stream.WriteIntLE(ResultId);
+                stream.WriteIntLE(this.basePointer.ResultId);
+                stream.WriteIntLE(this.element.ResultId);
+                foreach (var idx in this.index) {
+                    stream.WriteIntLE(idx.ResultId);
+                }
+            }
+        }
+
+        private class OpInBoundsPtrAccessChain : DefaultTypedResultOpCode
+        {
+            private readonly TypedResultOpCode basePointer;
+            private readonly ResultOpCode element;
+            private readonly ResultOpCode[] index;
+
+            public OpInBoundsPtrAccessChain(int rid, TypedResultOpCode basePointer, TypedResultOpCode element, params ResultOpCode[] index) : base(rid)
+            {
+                if (!(basePointer.ResultType is OpTypePointer)) {
+                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected SpirPointerType, found {0}.", basePointer.ResultType.GetType().Name));
+                }
+                if (!((basePointer.ResultType as OpTypePointer).BaseType is CompositeTypeOpCode)) {
+                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected pointer to CompositeTypeOpCode, found pointer to {0}.", (basePointer.ResultType as OpTypePointer).BaseType.GetType().Name));
+                }
+                this.basePointer = basePointer;
+                this.element = element;
+                this.index = index;
+            }
+
+            public override TypeOpCode ResultType
+            {
+                get {
+                    OpTypePointer basePtr = this.basePointer.ResultType as OpTypePointer;
+                    TypeOpCode result = basePtr.BaseType;
+                    foreach (var i in this.index) {
+                        if (result is OpTypeVector) {
+                            result = (result as OpTypeVector).ComponentType;
+                        }
+                        else if (result is OpTypeMatrix) {
+                            result = (result as OpTypeMatrix).ColumnType;
+                        }
+                        else if (result is OpTypeArray) {
+                            result = (result as OpTypeArray).ElementType;
+                        }
+                        else if (result is OpTypeStruct) {
+                            var c = i as OpConstant;
+                            result = (result as OpTypeStruct).GetResultType((int)c.Value);
+                        }
+                    }
+                    return basePtr.Derive(result);
+                }
+            }
+
+            public override void Emit(Stream stream)
+            {
+                stream.WriteShortLE(70);
+                stream.WriteShortLE((short)(5+this.index.Length));
+                stream.WriteIntLE(this.basePointer.ResultType.ResultId);
+                stream.WriteIntLE(ResultId);
+                stream.WriteIntLE(this.basePointer.ResultId);
+                stream.WriteIntLE(this.element.ResultId);
                 foreach (var idx in this.index) {
                     stream.WriteIntLE(idx.ResultId);
                 }

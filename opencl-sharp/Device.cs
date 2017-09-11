@@ -427,5 +427,10 @@ namespace OpenCl
             }
             return res;
         }
+
+        internal static IntPtr[] ToIntPtr(Device device)
+        {
+            return new IntPtr[] { device.handle };
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
-using Mono.Cecil;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace OpenCl.Compiler
 {
@@ -358,14 +357,14 @@ namespace OpenCl.Compiler
     {
 //        private readonly MethodReference method;
         private readonly string name;
-        private readonly ReadOnlyCollection<AstNode> args;
+        private readonly IReadOnlyList<AstNode> args;
 
         public Call(CliType type, string name, AstNode[] args) : base(type)
         {
             this.name = name;
             var a = new AstNode[args.Length];
             Array.Copy(args, a, args.Length);
-            this.args = Array.AsReadOnly(a);
+            this.args = a;
         }
 
         public string Name
@@ -373,7 +372,7 @@ namespace OpenCl.Compiler
             get { return this.name; }
         }
 
-        public ReadOnlyCollection<AstNode> Argument
+        public IReadOnlyList<AstNode> Argument
         {
             get { return this.args; }
         }

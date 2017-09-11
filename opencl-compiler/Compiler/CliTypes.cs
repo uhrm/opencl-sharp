@@ -136,7 +136,7 @@ namespace OpenCl.Compiler
                 }
                 break;
             }
-            throw new ArgumentException(String.Format("Incompatible types for addition: {0} and {1}", l, r));
+            throw new ArgumentException($"Incompatible types for addition: {l} and {r}");
         }
 
         public static CliType FromOpSub(CliType l, CliType r) {
@@ -185,7 +185,7 @@ namespace OpenCl.Compiler
                 }
                 break;
             }
-            throw new ArgumentException(String.Format("Incompatible types for subtraction: {0} and {1}", l, r));
+            throw new ArgumentException($"Incompatible types for subtraction: {l} and {r}");
         }
 
         public static CliType FromOpMul(CliType l, CliType r) {
@@ -224,7 +224,7 @@ namespace OpenCl.Compiler
                 }
                 break;
             }
-            throw new ArgumentException(String.Format("Incompatible types for multiplication: {0} and {1}", l, r));
+            throw new ArgumentException($"Incompatible types for multiplication: {l} and {r}");
         }
 
         public static CliType FromOpDiv(CliType l, CliType r) {
@@ -263,7 +263,7 @@ namespace OpenCl.Compiler
                 }
                 break;
             }
-            throw new ArgumentException(String.Format("Incompatible types for division: {0} and {1}", l, r));
+            throw new ArgumentException($"Incompatible types for division: {l} and {r}");
         }
 
         public static CliType FromOpBitwise(CliType l, CliType r) {
@@ -292,7 +292,7 @@ namespace OpenCl.Compiler
                 }
                 break;
             }
-            throw new ArgumentException(String.Format("Incompatible types for bit-wise operation: {0} and {1}", l, r));
+            throw new ArgumentException($"Incompatible types for bit-wise operation: {l} and {r}");
         }
 
         private static readonly Dictionary<Type,CliType> typeMap = new Dictionary<Type,CliType>() {
@@ -314,14 +314,15 @@ namespace OpenCl.Compiler
         {
             CliType result;
             if (!typeMap.TryGetValue(type, out result)) {
-                if (type.IsValueType) {
+                var ti = type.GetTypeInfo();
+                if (ti.IsValueType) {
                     result = new CliValueType(type);
                 }
-                else if (type.IsArray || type.IsPointer) {
+                else if (ti.IsArray || ti.IsPointer) {
                     result = new CliPointerType(type);
                 }
                 else {
-                    throw new ArgumentException(String.Format("Unsupported type '{0}'.", type));
+                    throw new ArgumentException($"Unsupported type '{type}'.");
                 }
             }
             return result;
@@ -355,7 +356,7 @@ namespace OpenCl.Compiler
         public CliPointerType(Type sys) : base(CliTypeCode.Pointer)
         {
             if (!(sys.IsArray || sys.IsPointer)) {
-                throw new ArgumentException(String.Format("Invalid system type: expected array or pointer, found {0}.", sys));
+                throw new ArgumentException($"Invalid system type: expected array or pointer, found {sys}.");
             }
             this.sys = sys;
         }
@@ -379,7 +380,7 @@ namespace OpenCl.Compiler
             var name = Assembly.CreateQualifiedName(def.Module.Assembly.FullName, type.FullName);
             var res = Type.GetType(name);
             if (res == null) {
-                throw new ArgumentException(String.Format("No system type found for '{0}'.", name));
+                throw new ArgumentException($"No system type found for '{type.FullName}'.");
             }
             return res;
         }

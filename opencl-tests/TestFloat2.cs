@@ -38,7 +38,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  24.00000000, r[1].s1, 1e-7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_add");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_add");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -109,7 +109,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  -4.00000000, r[1].s1, 1e-7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_sub");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_sub");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -180,7 +180,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 140.00000000, r[1].s1, 1e-7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_mul");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_mul");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -251,7 +251,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0.71428573, r[1].s1, 1e-7);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_div");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_div");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -322,7 +322,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_eq");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_eq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -394,7 +394,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_neq");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_neq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -466,7 +466,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_lt");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_lt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -538,7 +538,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_le");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_le");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -610,7 +610,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_gt");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_gt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -682,7 +682,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_float2_ge");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_float2_ge");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -760,7 +760,7 @@ namespace OpenCl.Tests
             Assert.AreEqual((float)0, w[1].s0);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_components1");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_components1");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -780,11 +780,11 @@ namespace OpenCl.Tests
                     mw = Mem<float2>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<float2>());
                     kernel.SetKernelArg(0, (HandleObject)mr);
                     kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueFillBuffer(mw, default(float2));
+                    queue.Finish();
                     queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
                     queue.Finish();
-                    Array.Clear(r, 0, nr);
                     queue.EnqueueReadBuffer(mr, false, r);
-                    Array.Clear(w, 0, nw);
                     queue.EnqueueReadBuffer(mw, false, w);
                     queue.Finish();
                 }
@@ -846,7 +846,7 @@ namespace OpenCl.Tests
             Assert.AreEqual((float)2, r[3].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestFloat2", "test_components2");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat2", "test_components2");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -866,11 +866,11 @@ namespace OpenCl.Tests
                     mw = Mem<float2>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<float2>());
                     kernel.SetKernelArg(0, (HandleObject)mr);
                     kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueFillBuffer(mw, default(float2));
+                    queue.Finish();
                     queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
                     queue.Finish();
-                    Array.Clear(r, 0, nr);
                     queue.EnqueueReadBuffer(mr, false, r);
-                    Array.Clear(w, 0, nw);
                     queue.EnqueueReadBuffer(mw, false, w);
                     queue.Finish();
                 }

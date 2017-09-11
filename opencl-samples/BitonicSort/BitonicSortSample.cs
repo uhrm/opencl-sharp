@@ -119,18 +119,19 @@ namespace OpenCl.Samples
                 program.BuildProgram(devices, null, null, null);
             }
             catch (OpenClException ex) {
+                Console.WriteLine("*** Error building kernel 'bitonic_sort'");
                 if (ex.ErrorCode == ErrorCode.BuildProgramFailure) {
-                    Console.WriteLine("*** Error building kernel 'bitonic_sort'");
                     Console.WriteLine("*** Build log: {0}", program.BuildInfo.GetLog(devices[0]));
                     Console.WriteLine("*** Source code:");
                     Console.WriteLine(source);
                 }
-                throw ex;
+                return;
             }
             var kernel = Kernel.CreateKernel(program, "bitonic_sort");
             var dataBuffer = Mem<int>.CreateBuffer(context, MemFlags.ReadWrite | MemFlags.CopyHostPtr, data);
             if (dataBuffer.Size < Marshal.SizeOf<int>()*data.Length) {
-                throw new ApplicationException(String.Format("Invalid MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<int>()*data.Length, dataBuffer.Size));
+                Console.WriteLine("*** Invalid MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<int>()*data.Length, dataBuffer.Size);
+                return;
             }
             var queue = CommandQueue.CreateCommandQueue(context, devices[0]);
 

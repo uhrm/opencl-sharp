@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 
 namespace OpenCl.Samples
 {
-	class MainProgram
-	{
+    class MainProgram
+    {
         private static void ListDevices()
         {
             var platforms = Platform.GetPlatformIDs();
@@ -51,51 +51,55 @@ namespace OpenCl.Samples
         }
 
         public static void Main(string[] args)
-		{
+        {
 
-//			var handle = dlopen("/System/Library/Frameworks/OpenCL.framework/OpenCL", RTLD_LAZY);
-//			if (handle == IntPtr.Zero) {
-//				throw new ApplicationException(Marshal.PtrToStringAnsi(dlerror()));
-//			}
+//          var handle = dlopen("/System/Library/Frameworks/OpenCL.framework/OpenCL", RTLD_LAZY);
+//          if (handle == IntPtr.Zero) {
+//              throw new ApplicationException(Marshal.PtrToStringAnsi(dlerror()));
+//          }
 //
-//			var func = dlsym(handle, "clGetPlatformIDs");
-//			if (func == IntPtr.Zero)  {
-//				throw new ApplicationException(Marshal.PtrToStringAnsi(dlerror()));
-//			}
+//            var func = dlsym(handle, "clGetPlatformIDs");
+//            if (func == IntPtr.Zero)  {
+//                throw new ApplicationException(Marshal.PtrToStringAnsi(dlerror()));
+//            }
 //
-//			dlclose(handle);
+//            dlclose(handle);
 
             ListDevices();
 
-            Console.WriteLine("*** Convolve sample");
+            Console.WriteLine("*** Simple kernel sample");
             Console.WriteLine("*** ");
-            ConvolveSample.Run();
+            SimpleKernelSample.Run();
 
-            Console.WriteLine("*** BitronicSort sample");
-            Console.WriteLine("*** ");
-            BitonicSortSample.Run();
+            // Console.WriteLine("*** Convolve sample");
+            // Console.WriteLine("*** ");
+            // ConvolveSample.Run();
 
-            Console.WriteLine("*** Gemm sample");
-            Console.WriteLine("*** ");
-            GemmSample.Run();
+            // Console.WriteLine("*** BitronicSort sample");
+            // Console.WriteLine("*** ");
+            // BitonicSortSample.Run();
+
+            // Console.WriteLine("*** Gemm sample");
+            // Console.WriteLine("*** ");
+            // GemmSample.Run();
         }
 
-//		private const int RTLD_LAZY = 0x1;
-//		private const int RTLD_NOW = 0x2;
-//		private const int RTLD_LOCAL = 0x4;
-//		private const int RTLD_GLOBAL = 0x8;
+//      private const int RTLD_LAZY = 0x1;
+//      private const int RTLD_NOW = 0x2;
+//      private const int RTLD_LOCAL = 0x4;
+//      private const int RTLD_GLOBAL = 0x8;
 //
-//		[DllImport("dl")]
-//		internal static extern IntPtr dlopen(string name, int flag);
+//      [DllImport("dl")]
+//      internal static extern IntPtr dlopen(string name, int flag);
 //
-//		[DllImport("dl")]
-//		internal static extern IntPtr dlsym(IntPtr handle, string symbol);
+//      [DllImport("dl")]
+//      internal static extern IntPtr dlsym(IntPtr handle, string symbol);
 //
-//		[DllImport("dl")]
-//		internal static extern void dlclose(IntPtr handle);
+//      [DllImport("dl")]
+//      internal static extern void dlclose(IntPtr handle);
 //
-//		[DllImport("dl")]
-//		internal static extern IntPtr dlerror();
+//      [DllImport("dl")]
+//      internal static extern IntPtr dlerror();
 
-	}
+    }
 }

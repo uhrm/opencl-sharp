@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -214,8 +212,6 @@ namespace OpenCl.Compiler
 
         // IL source data
 
-        // private readonly ModuleDefinition module;
-        // private readonly TypeDefinition type;
         private readonly Queue<MethodDefinition> queue;
 
         // SPIR-V target data
@@ -232,10 +228,8 @@ namespace OpenCl.Compiler
 
         // constructor
 
-        private SpirCompiler(/*ModuleDefinition module, TypeDefinition type,*/ params MethodDefinition[] methods)
+        private SpirCompiler(params MethodDefinition[] methods)
         {
-            // this.module = module;
-            // this.type = type;
             this.queue = new Queue<MethodDefinition>(methods);
             this.rcount = 1;
             this.entryPoints = new List<OpEntryPoint>();
@@ -405,12 +399,12 @@ namespace OpenCl.Compiler
         private static readonly Dictionary<Type,Func<SpirCompiler,TypedResultOpCode,ConversionOpCode>> _convert_ops = new Dictionary<Type,Func<SpirCompiler,TypedResultOpCode,ConversionOpCode>>()
         {
             { typeof(sbyte),  (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<sbyte>(), value) },
-            { typeof(short),  (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<sbyte>(), value) },
-            { typeof(int),    (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<sbyte>(), value) },
-            { typeof(long),   (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<sbyte>(), value) },
-            { typeof(IntPtr), (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<sbyte>(), value) },
-            { typeof(float),  (compiler, value) => new OpConvertFToS(compiler.rcount++, compiler.GetTypeOpCode<sbyte>(), value) },
-            { typeof(double), (compiler, value) => new OpConvertFToS(compiler.rcount++, compiler.GetTypeOpCode<sbyte>(), value) }
+            { typeof(short),  (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<short>(), value) },
+            { typeof(int),    (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<int>(), value) },
+            { typeof(long),   (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<long>(), value) },
+            { typeof(IntPtr), (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<IntPtr>(), value) },
+            { typeof(float),  (compiler, value) => new OpConvertFToS(compiler.rcount++, compiler.GetTypeOpCode<float>(), value) },
+            { typeof(double), (compiler, value) => new OpConvertFToS(compiler.rcount++, compiler.GetTypeOpCode<double>(), value) }
         };
 
         private ConversionOpCode GetConversionOpCode(TypedResultOpCode src, Type dst)
@@ -461,8 +455,7 @@ namespace OpenCl.Compiler
                 param[i] = ci;
                 funcdef.Add(ci);
             }
-
-
+            funcdef.Add(new OpLabel(this.rcount++));
 
             var body = method.Body;
             var vars = new TypedResultOpCode[body.Variables.Count];
@@ -491,8 +484,7 @@ namespace OpenCl.Compiler
                 }
             }
 
-
-
+            // convert IL op-codes to SPIR-V op-codes
             var stack = new Stack<TypedResultOpCode>();
             foreach (var instr in code) {
                 // emit label if current instruction is a branching target
@@ -627,7 +619,7 @@ namespace OpenCl.Compiler
                 case Code.Ldelem_R8: {
                     var idx = stack.Pop();
                     var arr = stack.Pop();
-                    var addr = new OpAccessChain(this.rcount++, arr, idx);
+                    var addr = new OpPtrAccessChain(this.rcount++, arr, idx);
                     var elem = new OpLoad(this.rcount++, addr);
                     funcdef.Add(addr);
                     funcdef.Add(elem);
@@ -669,7 +661,7 @@ namespace OpenCl.Compiler
                 case Code.Ldelema: {
                     var idx = stack.Pop();
                     var arr = stack.Pop();
-                    var addr = new OpAccessChain(this.rcount++, arr, idx);
+                    var addr = new OpPtrAccessChain(this.rcount++, arr, idx);
                     funcdef.Add(addr);
                     stack.Push(addr);
                     break;
@@ -710,7 +702,7 @@ namespace OpenCl.Compiler
                     var val = stack.Pop();
                     var idx = stack.Pop();
                     var arr = stack.Pop();
-                    var ptr = new OpAccessChain(this.rcount++, arr, idx);
+                    var ptr = new OpPtrAccessChain(this.rcount++, arr, idx);
                     funcdef.Add(ptr);
                     funcdef.Add(new OpStore(ptr, val));
                     break;
@@ -1541,55 +1533,7 @@ namespace OpenCl.Compiler
 
         private void Emit(Stream output)
         {
-            // serialize all 'function' instructions
-            MemoryStream op_func = new MemoryStream();
-            // functions
-            foreach (var func in this.functions) {
-                foreach (var op in func) {
-                    op.Emit(op_func);
-                }
-            }
-
-            // serialize all 'variable' instructions
-            MemoryStream op_vars = new MemoryStream();
-            // imports
-            foreach (var op in this.imports) {
-                op.Value.Emit(op_vars);
-            }
-            // exports
-            // ...
-            // constants
-            foreach (var op in this.constants.Keys) {
-                op.Emit(op_vars);
-            }
-
-            // serialize all 'declaration' instructions
-            MemoryStream op_decl = new MemoryStream();
-            // capabilities
-            new OpCapability(Capability.Addresses).Emit(op_decl);
-            new OpCapability(Capability.Linkage).Emit(op_decl);
-            new OpCapability(Capability.Kernel).Emit(op_decl);
-            new OpCapability(Capability.Int64).Emit(op_decl);
-            // import OpenCL extended instruction set
-            // see: https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.ExtendedInstructionSet.100.html
-            new OpExtInstImport(this.rcount++, "OpenCL.std").Emit(op_decl);
-            // memory model
-            new OpMemoryModel(AddressingModel.Physical64, MemoryModel.Simple).Emit(op_decl);
-            // entry points
-            foreach (var op in this.entryPoints) {
-                op.Emit(op_decl);
-            }
-            // decorations
-            foreach (var op in this.decorations) {
-                op.Emit(op_decl);
-            }
-            // types
-            for (var i=0; i<this.types_list.Count; i++) {
-                var op = this.types_list[i];
-                op.Emit(op_decl);
-            }
-
-            var bound = this.rcount;
+            var bound = this.rcount+1;
             // SPIR-V magic number
             output.WriteByte(0x03);
             output.WriteByte(0x02);
@@ -1609,15 +1553,45 @@ namespace OpenCl.Compiler
             output.WriteIntLE(bound);
             // reserved (must be zero)
             output.WriteIntLE(0x00);
-            // 'declarations'
-            op_decl.Seek(0, SeekOrigin.Begin);
-            op_decl.CopyTo(output);
-            // 'variables'
-            op_vars.Seek(0, SeekOrigin.Begin);
-            op_vars.CopyTo(output);
-            // 'functions'
-            op_func.Seek(0, SeekOrigin.Begin);
-            op_func.CopyTo(output);
+            // capabilities
+            new OpCapability(Capability.Addresses).Emit(output);
+            new OpCapability(Capability.Linkage).Emit(output);
+            new OpCapability(Capability.Kernel).Emit(output);
+            new OpCapability(Capability.Int64).Emit(output);
+            // import OpenCL extended instruction set
+            // see: https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.ExtendedInstructionSet.100.html
+            new OpExtInstImport(this.rcount++, "OpenCL.std").Emit(output);
+            // memory model
+            new OpMemoryModel(AddressingModel.Physical64, MemoryModel.OpenCL).Emit(output);
+            // entry points
+            foreach (var op in this.entryPoints) {
+                op.Emit(output);
+            }
+            // decorations
+            foreach (var op in this.decorations) {
+                op.Emit(output);
+            }
+            // types
+            for (var i=0; i<this.types_list.Count; i++) {
+                var op = this.types_list[i];
+                op.Emit(output);
+            }
+            // imports
+            foreach (var op in this.imports) {
+                op.Value.Emit(output);
+            }
+            // exports
+            // ...
+            // constants
+            foreach (var op in this.constants.Keys) {
+                op.Emit(output);
+            }
+            // functions
+            foreach (var func in this.functions) {
+                foreach (var op in func) {
+                    op.Emit(output);
+                }
+            }
             // sanity check
             if (bound != this.rcount) {
                 throw new Exception(String.Format("Invalid result ID bound: expected {0}, found {1}", bound, this.rcount));
@@ -1632,11 +1606,12 @@ namespace OpenCl.Compiler
             Emit(output);
         }
 
-        public static void EmitKernel(string module, string type, string method, Stream output)
+        public static void EmitKernel(string assembly, string type, string method, Stream output)
         {
-            using (var _module = ModuleDefinition.ReadModule(module, new ReaderParameters { AssemblyResolver = new SimpleAssemblyResolver() }))
-            {
-                TypeDefinition _type = _module.Types.SingleOrDefault(ti => ti.FullName == type);
+            var resolver = new DotNetCoreAssemblyResolver();
+            using (var _assembly = resolver.Resolve(assembly))
+            using (var _module = _assembly.MainModule) {
+                TypeDefinition _type = _module.Types.Single(ti => ti.FullName == type);
                 if (_type == null) {
                     Console.WriteLine("*** Error: could not find type '{0}'.", type);
                     return;
@@ -1646,13 +1621,13 @@ namespace OpenCl.Compiler
                     Console.WriteLine("*** Error: could not find method '{0}'.", method);
                     return;
                 }
-                EmitKernel(/*_module, _type,*/ _method, output);
+                EmitKernel(_method, output);
             }
         }
 
-        public static void EmitKernel(/*ModuleDefinition module, TypeDefinition type,*/ MethodDefinition method, Stream output)
+        public static void EmitKernel(MethodDefinition method, Stream output)
         {
-            SpirCompiler compiler = new SpirCompiler(/*module, type,*/ method);
+            SpirCompiler compiler = new SpirCompiler(method);
             compiler.Run(output);
         }
     }

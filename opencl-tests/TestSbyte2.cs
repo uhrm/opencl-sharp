@@ -38,7 +38,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  24, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_add");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_add");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -109,7 +109,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  -4, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_sub");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_sub");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -180,7 +180,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-116, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_mul");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_mul");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -251,7 +251,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_div");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_div");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -322,7 +322,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_eq");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_eq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -394,7 +394,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_neq");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_neq");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -466,7 +466,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_lt");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_lt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -538,7 +538,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_le");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_le");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -610,7 +610,7 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_gt");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_gt");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -682,7 +682,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_ge");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_ge");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -754,7 +754,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  10, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_and");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_and");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -826,7 +826,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(  14, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_or");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_or");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -898,7 +898,7 @@ namespace OpenCl.Tests
             Assert.AreEqual(   4, r[1].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_sbyte2_xor");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_sbyte2_xor");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -976,7 +976,7 @@ namespace OpenCl.Tests
             Assert.AreEqual((sbyte)0, w[1].s0);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_components1");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_components1");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -996,11 +996,11 @@ namespace OpenCl.Tests
                     mw = Mem<sbyte2>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<sbyte2>());
                     kernel.SetKernelArg(0, (HandleObject)mr);
                     kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueFillBuffer(mw, default(sbyte2));
+                    queue.Finish();
                     queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
                     queue.Finish();
-                    Array.Clear(r, 0, nr);
                     queue.EnqueueReadBuffer(mr, false, r);
-                    Array.Clear(w, 0, nw);
                     queue.EnqueueReadBuffer(mw, false, w);
                     queue.Finish();
                 }
@@ -1062,7 +1062,7 @@ namespace OpenCl.Tests
             Assert.AreEqual((sbyte)2, r[3].s1);
 
             // compile kernel
-            var source = ClCompiler.EmitKernel("opencl-tests.dll", "OpenCl.Tests.TestSbyte2", "test_components2");
+            var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestSbyte2", "test_components2");
 
             // test native
             Platform platform = Platform.GetPlatformIDs()[0];
@@ -1082,11 +1082,11 @@ namespace OpenCl.Tests
                     mw = Mem<sbyte2>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<sbyte2>());
                     kernel.SetKernelArg(0, (HandleObject)mr);
                     kernel.SetKernelArg(1, (HandleObject)mw);
+                    queue.EnqueueFillBuffer(mw, default(sbyte2));
+                    queue.Finish();
                     queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
                     queue.Finish();
-                    Array.Clear(r, 0, nr);
                     queue.EnqueueReadBuffer(mr, false, r);
-                    Array.Clear(w, 0, nw);
                     queue.EnqueueReadBuffer(mw, false, w);
                     queue.Finish();
                 }

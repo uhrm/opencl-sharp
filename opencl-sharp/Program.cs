@@ -1,5 +1,8 @@
+
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -162,6 +165,23 @@ namespace OpenCl
 
         // Program methods
 
+        public void BuildProgram(Device device, string options, ProgramNotify callback, object userData)
+        {
+            var dev = Device.ToIntPtr(device);
+            var pfn = (ProgramNotifyData)null;
+            var pcb = (ProgramNotifyInternal)null;
+            var ptr = IntPtr.Zero;
+            if (callback != null) {
+                pfn = new ProgramNotifyData(callback, userData);
+                pcb = ProgramNotifyData.Callback;
+                ptr = GCHandle.ToIntPtr(pfn.Handle);
+            }
+            var err = NativeMethods.clBuildProgram(this.handle, (uint)dev.Length, dev, options, pcb, ptr);
+            if (err != ErrorCode.Success) {
+                throw new OpenClException(err);
+            }
+        }
+
         public void BuildProgram(Device[] deviceList, string options, ProgramNotify callback, object userData)
         {
             var dev = Device.ToIntPtr(deviceList);
@@ -183,12 +203,12 @@ namespace OpenCl
 
         protected override void Retain()
         {
-			NativeMethods.clRetainProgram(this.handle);
+            NativeMethods.clRetainProgram(this.handle);
         }
 
-		protected override void Release()
+        protected override void Release()
         {
-			NativeMethods.clReleaseProgram(this.handle);
+            NativeMethods.clReleaseProgram(this.handle);
         }
 
         // static factory methods
@@ -207,6 +227,47 @@ namespace OpenCl
             var handle = NativeMethods.clCreateProgramWithSource(context.handle, (uint)sources.Length, sources, lengths, out error);
             for (var i=0; i<sources.Length; i++) {
                 Marshal.FreeHGlobal(buffers[i]);
+            }
+            if (error != ErrorCode.Success) {
+                throw new OpenClException(error);
+            }
+            return new Program(handle);
+        }
+
+        public static Program CreateProgramWithBinary(Context context, Device device, byte[] binary)
+        {
+            ErrorCode error;
+            var dev = Device.ToIntPtr(device);
+            IntPtr[] lengths = new IntPtr[] { (IntPtr)binary.Length };
+            var handle = IntPtr.Zero;
+            GCHandle hbin = GCHandle.Alloc(binary, GCHandleType.Pinned);
+            try {
+                handle = NativeMethods.clCreateProgramWithBinary(context.handle, 1, dev, lengths, new IntPtr[] { hbin.AddrOfPinnedObject() }, null, out error);
+            } finally {
+                hbin.Free();
+            }
+            if (error != ErrorCode.Success) {
+                throw new OpenClException(error);
+            }
+            return new Program(handle);
+        }
+
+        public static Program CreateProgramWithBinary(Context context, Device[] deviceList, byte[][] binaries)
+        {
+            if (deviceList.Length != binaries.Length) {
+                throw new ArgumentException(String.Format("Invalid number of binaries: expected {0}, found {1}.", deviceList.Length, binaries.Length));
+            }
+            ErrorCode error;
+            var dev = Device.ToIntPtr(deviceList);
+            IntPtr[] lengths = ((IEnumerable<byte[]>)binaries).Select(b => (IntPtr)b.Length).ToArray();
+            var handle = IntPtr.Zero;
+            GCHandle[] hbins = binaries.Select(b => GCHandle.Alloc(b, GCHandleType.Pinned)).ToArray();
+            try {
+                handle = NativeMethods.clCreateProgramWithBinary(context.handle, (uint)deviceList.Length, dev, lengths, hbins.Select(h => h.AddrOfPinnedObject()).ToArray(), null, out error);
+            } finally {
+                foreach (var h in hbins) {
+                    h.Free();
+                }
             }
             if (error != ErrorCode.Success) {
                 throw new OpenClException(error);
