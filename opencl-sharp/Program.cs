@@ -165,6 +165,16 @@ namespace OpenCl
 
         // Program methods
 
+        public void BuildProgram(Device device)
+        {
+            BuildProgram(device, null, null, null);
+        }
+
+        public void BuildProgram(Device device, string options)
+        {
+            BuildProgram(device, options, null, null);
+        }
+
         public void BuildProgram(Device device, string options, ProgramNotify callback, object userData)
         {
             var dev = Device.ToIntPtr(device);
@@ -180,6 +190,16 @@ namespace OpenCl
             if (err != ErrorCode.Success) {
                 throw new OpenClException(err);
             }
+        }
+
+        public void BuildProgram(Device[] deviceList)
+        {
+            BuildProgram(deviceList, null, null, null);
+        }
+
+        public void BuildProgram(Device[] deviceList, string options)
+        {
+            BuildProgram(deviceList, options, null, null);
         }
 
         public void BuildProgram(Device[] deviceList, string options, ProgramNotify callback, object userData)
