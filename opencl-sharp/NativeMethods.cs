@@ -64,7 +64,12 @@ namespace OpenCl
         internal static extern ErrorCode clUnloadCompiler();
 
         [DllImport("OpenCL")]
-        internal static extern IntPtr clCreateProgramWithSource(IntPtr context, uint count, [In] string[] strings, [In] IntPtr[] lengths, out ErrorCode errcodeRet);
+        internal static extern IntPtr clCreateProgramWithSource(
+            IntPtr context,
+            uint count,
+            [In] string[] strings,
+            [In] IntPtr[] lengths,
+            out ErrorCode errcodeRet);
 
         [DllImport("OpenCL")]
         internal static extern IntPtr clCreateProgramWithBinary(
@@ -76,20 +81,27 @@ namespace OpenCl
             [Out] int[] binaryStatus,
             out ErrorCode errcodeRet);
 
-		[DllImport("OpenCL")]
-		internal static extern ErrorCode clRetainProgram(IntPtr program);
+        [DllImport("OpenCL")]
+        internal static extern IntPtr clCreateProgramWithIL(
+            IntPtr context,
+            byte[] binary,
+            IntPtr length,
+            out ErrorCode errcodeRet);
 
-		[DllImport("OpenCL")]
-		internal static extern ErrorCode clReleaseProgram(IntPtr program);
+        [DllImport("OpenCL")]
+        internal static extern ErrorCode clRetainProgram(IntPtr program);
 
-		[DllImport("OpenCL")]
-		internal static extern ErrorCode clBuildProgram(IntPtr program, uint numDevices, IntPtr[] deviceList, string options, ProgramNotifyInternal pfnNotify, IntPtr userData);
+        [DllImport("OpenCL")]
+        internal static extern ErrorCode clReleaseProgram(IntPtr program);
 
-		[DllImport("OpenCL")]
-		internal static extern ErrorCode clGetProgramInfo(IntPtr program, uint paramName, IntPtr paramValueSize, IntPtr paramValue, out IntPtr paramValueSizeRet);
+        [DllImport("OpenCL")]
+        internal static extern ErrorCode clBuildProgram(IntPtr program, uint numDevices, IntPtr[] deviceList, string options, ProgramNotifyInternal pfnNotify, IntPtr userData);
 
-		[DllImport("OpenCL")]
-		internal static extern ErrorCode clGetProgramBuildInfo(IntPtr program, IntPtr device, uint paramName, IntPtr paramValueSize, IntPtr paramValue, out IntPtr paramValueSizeRet);
+        [DllImport("OpenCL")]
+        internal static extern ErrorCode clGetProgramInfo(IntPtr program, uint paramName, IntPtr paramValueSize, IntPtr paramValue, out IntPtr paramValueSizeRet);
+
+        [DllImport("OpenCL")]
+        internal static extern ErrorCode clGetProgramBuildInfo(IntPtr program, IntPtr device, uint paramName, IntPtr paramValueSize, IntPtr paramValue, out IntPtr paramValueSizeRet);
 
         //
         // Kernel

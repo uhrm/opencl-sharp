@@ -295,6 +295,17 @@ namespace OpenCl
             return new Program(handle);
         }
 
+        public static Program CreateProgramWithIL(Context context, byte[] binary)
+        {
+            ErrorCode error;
+            IntPtr length = (IntPtr)binary.Length;
+            var handle = NativeMethods.clCreateProgramWithIL(context.handle, binary, length, out error);
+            if (error != ErrorCode.Success) {
+                throw new OpenClException(error);
+            }
+            return new Program(handle);
+        }
+
         public static Program CreateProgramWithExpression(Context context, Expression[] expressions)
         {
             var n = expressions.Length;
