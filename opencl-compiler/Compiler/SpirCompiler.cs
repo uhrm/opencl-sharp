@@ -13,6 +13,77 @@ namespace OpenCl.Compiler
         // compiles into SPIR-V Format
         // see: https://www.khronos.org/registry/spir-v/specs/1.1/SPIRV.html
 
+        private static readonly Dictionary<string,Func<Func<TypeOpCode,int>,TypeOpCode>> PrimitiveTypes = new Dictionary<string,Func<Func<TypeOpCode,int>,TypeOpCode>>()
+        {
+            { "System.Void",     f => new OpTypeVoid(f) },
+
+            { "System.SByte",    f => new OpTypeInt(f,  8/*, signed*/) },
+            { "System.Int8",     f => new OpTypeInt(f,  8/*, signed*/) },
+            { "System.Byte",     f => new OpTypeInt(f,  8/*, unsigned*/) },
+            { "System.UInt8",    f => new OpTypeInt(f,  8/*, unsigned*/) },
+            { "System.Int16",    f => new OpTypeInt(f, 16/*, signed*/) },
+            { "System.UInt16",   f => new OpTypeInt(f, 16/*, unsigned*/) },
+            { "System.Int32",    f => new OpTypeInt(f, 32/*, signed*/) },
+            { "System.UInt32",   f => new OpTypeInt(f, 32/*, unsigned*/) },
+            { "System.Int64",    f => new OpTypeInt(f, 64/*, signed*/) },
+            { "System.UInt64",   f => new OpTypeInt(f, 64/*, unsigned*/) },
+            { "System.IntPtr",   f => new OpTypeInt(f, 8*Marshal.SizeOf<IntPtr>()/*, signed*/) },
+            { "System.UIntPtr",  f => new OpTypeInt(f, 8*Marshal.SizeOf<UIntPtr>()/*, unsigned*/) },
+            { "System.Single",   f => new OpTypeFloat(f, 32) },
+            { "System.Double",   f => new OpTypeFloat(f, 64) },
+
+            { "OpenCl.sbyte2",   f => new OpTypeVector(f,  2, new OpTypeInt(f,  8/*, signed*/)) },
+            { "OpenCl.sbyte3",   f => new OpTypeVector(f,  3, new OpTypeInt(f,  8/*, signed*/)) },
+            { "OpenCl.sbyte4",   f => new OpTypeVector(f,  4, new OpTypeInt(f,  8/*, signed*/)) },
+            { "OpenCl.sbyte8",   f => new OpTypeVector(f,  8, new OpTypeInt(f,  8/*, signed*/)) },
+            { "OpenCl.sbyte16",  f => new OpTypeVector(f, 16, new OpTypeInt(f,  8/*, signed*/)) },
+            { "OpenCl.byte2",    f => new OpTypeVector(f,  2, new OpTypeInt(f,  8/*, unsigned*/)) },
+            { "OpenCl.byte3",    f => new OpTypeVector(f,  3, new OpTypeInt(f,  8/*, unsigned*/)) },
+            { "OpenCl.byte4",    f => new OpTypeVector(f,  4, new OpTypeInt(f,  8/*, unsigned*/)) },
+            { "OpenCl.byte8",    f => new OpTypeVector(f,  8, new OpTypeInt(f,  8/*, unsigned*/)) },
+            { "OpenCl.byte16",   f => new OpTypeVector(f, 16, new OpTypeInt(f,  8/*, unsigned*/)) },
+            { "OpenCl.short2",   f => new OpTypeVector(f,  2, new OpTypeInt(f, 16/*, signed*/)) },
+            { "OpenCl.short3",   f => new OpTypeVector(f,  3, new OpTypeInt(f, 16/*, signed*/)) },
+            { "OpenCl.short4",   f => new OpTypeVector(f,  4, new OpTypeInt(f, 16/*, signed*/)) },
+            { "OpenCl.short8",   f => new OpTypeVector(f,  8, new OpTypeInt(f, 16/*, signed*/)) },
+            { "OpenCl.short16",  f => new OpTypeVector(f, 16, new OpTypeInt(f, 16/*, signed*/)) },
+            { "OpenCl.ushort2",  f => new OpTypeVector(f,  2, new OpTypeInt(f, 16/*, unsigned*/)) },
+            { "OpenCl.ushort3",  f => new OpTypeVector(f,  3, new OpTypeInt(f, 16/*, unsigned*/)) },
+            { "OpenCl.ushort4",  f => new OpTypeVector(f,  4, new OpTypeInt(f, 16/*, unsigned*/)) },
+            { "OpenCl.ushort8",  f => new OpTypeVector(f,  8, new OpTypeInt(f, 16/*, unsigned*/)) },
+            { "OpenCl.ushort16", f => new OpTypeVector(f, 16, new OpTypeInt(f, 16/*, unsigned*/)) },
+            { "OpenCl.int2",     f => new OpTypeVector(f,  2, new OpTypeInt(f, 32/*, signed*/)) },
+            { "OpenCl.int3",     f => new OpTypeVector(f,  3, new OpTypeInt(f, 32/*, signed*/)) },
+            { "OpenCl.int4",     f => new OpTypeVector(f,  4, new OpTypeInt(f, 32/*, signed*/)) },
+            { "OpenCl.int8",     f => new OpTypeVector(f,  8, new OpTypeInt(f, 32/*, signed*/)) },
+            { "OpenCl.int16",    f => new OpTypeVector(f, 16, new OpTypeInt(f, 32/*, signed*/)) },
+            { "OpenCl.uint2",    f => new OpTypeVector(f,  2, new OpTypeInt(f, 32/*, unsigned*/)) },
+            { "OpenCl.uint3",    f => new OpTypeVector(f,  3, new OpTypeInt(f, 32/*, unsigned*/)) },
+            { "OpenCl.uint4",    f => new OpTypeVector(f,  4, new OpTypeInt(f, 32/*, unsigned*/)) },
+            { "OpenCl.uint8",    f => new OpTypeVector(f,  8, new OpTypeInt(f, 32/*, unsigned*/)) },
+            { "OpenCl.uint16",   f => new OpTypeVector(f, 16, new OpTypeInt(f, 32/*, unsigned*/)) },
+            { "OpenCl.long2",    f => new OpTypeVector(f,  2, new OpTypeInt(f, 64/*, signed*/)) },
+            { "OpenCl.long3",    f => new OpTypeVector(f,  3, new OpTypeInt(f, 64/*, signed*/)) },
+            { "OpenCl.long4",    f => new OpTypeVector(f,  4, new OpTypeInt(f, 64/*, signed*/)) },
+            { "OpenCl.long8",    f => new OpTypeVector(f,  8, new OpTypeInt(f, 64/*, signed*/)) },
+            { "OpenCl.long16",   f => new OpTypeVector(f, 16, new OpTypeInt(f, 64/*, signed*/)) },
+            { "OpenCl.ulong2",   f => new OpTypeVector(f,  2, new OpTypeInt(f, 64/*, unsigned*/)) },
+            { "OpenCl.ulong3",   f => new OpTypeVector(f,  3, new OpTypeInt(f, 64/*, unsigned*/)) },
+            { "OpenCl.ulong4",   f => new OpTypeVector(f,  4, new OpTypeInt(f, 64/*, unsigned*/)) },
+            { "OpenCl.ulong8",   f => new OpTypeVector(f,  8, new OpTypeInt(f, 64/*, unsigned*/)) },
+            { "OpenCl.ulong16",  f => new OpTypeVector(f, 16, new OpTypeInt(f, 64/*, unsigned*/)) },
+            { "OpenCl.float2",   f => new OpTypeVector(f,  2, new OpTypeFloat(f, 32)) },
+            { "OpenCl.float3",   f => new OpTypeVector(f,  3, new OpTypeFloat(f, 32)) },
+            { "OpenCl.float4",   f => new OpTypeVector(f,  4, new OpTypeFloat(f, 32)) },
+            { "OpenCl.float8",   f => new OpTypeVector(f,  8, new OpTypeFloat(f, 32)) },
+            { "OpenCl.float16",  f => new OpTypeVector(f, 16, new OpTypeFloat(f, 32)) },
+            { "OpenCl.double2",  f => new OpTypeVector(f,  2, new OpTypeFloat(f, 64)) },
+            { "OpenCl.double3",  f => new OpTypeVector(f,  3, new OpTypeFloat(f, 64)) },
+            { "OpenCl.double4",  f => new OpTypeVector(f,  4, new OpTypeFloat(f, 64)) },
+            { "OpenCl.double8",  f => new OpTypeVector(f,  8, new OpTypeFloat(f, 64)) },
+            { "OpenCl.double16", f => new OpTypeVector(f, 16, new OpTypeFloat(f, 64)) },
+        };
+
         private static readonly Dictionary<string,string> typeMap = new Dictionary<string,string>()
         {
             { "System.Void",     "void" },
@@ -245,8 +316,7 @@ namespace OpenCl.Compiler
 
         private int SpirTypeIdCallback(TypeOpCode type)
         {
-            int id;
-            if (!this.types.TryGetValue(type, out id)) {
+            if (!this.types.TryGetValue(type, out int id)) {
                 id = this.rcount++;
                 this.types.Add(type, id);
                 this.types_list.Add(type);
@@ -254,72 +324,111 @@ namespace OpenCl.Compiler
             return id;
         }
 
-        private TypeOpCode GetTypeOpCode(String name, StorageClass storage)
+        // private TypeOpCode GetTypeOpCode(String name/*, StorageClass storage*/)
+        // {
+        //     switch (name) {
+        //         case "System.Void":
+        //             return new OpTypeVoid(SpirTypeIdCallback);
+        //         case "System.Int8":
+        //         case "System.SByte":
+        //             return new OpTypeInt(SpirTypeIdCallback, 8);
+        //         case "System.Int16":
+        //             return new OpTypeInt(SpirTypeIdCallback, 16);
+        //         case "System.Int32":
+        //             return new OpTypeInt(SpirTypeIdCallback, 32);
+        //         case "System.Int64":
+        //             return new OpTypeInt(SpirTypeIdCallback, 64);
+        //         case "System.IntPtr":
+        //             return new OpTypeInt(SpirTypeIdCallback, 8*Marshal.SizeOf<IntPtr>());
+        //         case "System.Single":
+        //             return new OpTypeFloat(SpirTypeIdCallback, 32);
+        //         case "System.Double":
+        //             return new OpTypeFloat(SpirTypeIdCallback, 64);
+        //         case "OpenCl.byte2":
+        //             return new OpTypeVector(SpirTypeIdCallback, 2,
+        //                         new OpTypeInt(SpirTypeIdCallback, 8));
+        //         case "OpenCl.int4":
+        //             return new OpTypeVector(SpirTypeIdCallback, 4,
+        //                         new OpTypeInt(SpirTypeIdCallback, 32));
+        //         default:
+        //             throw new CompilerException(String.Format("*** Error: unsupported type '{0}'.", name));
+        //     }
+        // }
+
+        private TypeOpCode GetTypeOpCode(Type type)
         {
-            switch (name) {
-                case "System.Void":
-                    return new OpTypeVoid(SpirTypeIdCallback);
-                case "System.Int8":
-                case "System.SByte":
-                    return new OpTypeInt(SpirTypeIdCallback, 8);
-                case "System.Int16":
-                    return new OpTypeInt(SpirTypeIdCallback, 16);
-                case "System.Int32":
-                    return new OpTypeInt(SpirTypeIdCallback, 32);
-                case "System.Int64":
-                    return new OpTypeInt(SpirTypeIdCallback, 64);
-                case "System.IntPtr":
-                    return new OpTypeInt(SpirTypeIdCallback, 8*Marshal.SizeOf<IntPtr>());
-                case "System.Single":
-                    return new OpTypeFloat(SpirTypeIdCallback, 32);
-                case "System.Double":
-                    return new OpTypeFloat(SpirTypeIdCallback, 64);
-                case "System.Int32[]":
-                    return new OpTypePointer(SpirTypeIdCallback, storage, new OpTypeInt(SpirTypeIdCallback, 32));
-                case "OpenCl.int4[]":
-                    return new OpTypePointer(SpirTypeIdCallback, storage,
-                                new OpTypeVector(SpirTypeIdCallback, 4,
-                                    new OpTypeInt(SpirTypeIdCallback, 32)));
-                default:
-                    throw new CompilerException(String.Format("*** Error: unsupported type '{0}'.", name));
+            return GetTypeOpCode(type, (StorageClass)0);
+        }
+
+        private TypeOpCode GetTypeOpCode(Type type, StorageClass storage)
+        {
+            if (PrimitiveTypes.TryGetValue(type.FullName, out var/*Func<Func<TypeOpCode,int>,TypeOpCode>*/ factory)) {
+                return factory(SpirTypeIdCallback);
+            }
+            else if (type.IsArray || type.IsPointer) {
+                return new OpTypePointer(SpirTypeIdCallback, storage, GetTypeOpCode(type.GetElementType(), storage));
+            }
+            else if (type.IsValueType) {
+                throw new CompilerException($"Struct types are not yet supported: {type.FullName}.");
+            }
+            else {
+                throw new CompilerException($"Unsupported type: {type.FullName}.");
             }
         }
 
         private TypeOpCode GetTypeOpCode<T>()
         {
-            return GetTypeOpCode<T>((StorageClass)0);
+            return GetTypeOpCode(typeof(T));
         }
 
         private TypeOpCode GetTypeOpCode<T>(StorageClass storage)
         {
-            return GetTypeOpCode(typeof(T).FullName, storage);
+            return GetTypeOpCode(typeof(T), storage);
         }
 
-        private TypeOpCode GetTypeOpCode(TypeReference td)
+        private TypeOpCode GetTypeOpCode(TypeReference tr)
         {
-            return GetTypeOpCode(td, StorageClass.Function);
+            return GetTypeOpCode(tr, StorageClass.Function);
         }
 
-        private TypeOpCode GetTypeOpCode(TypeReference td, StorageClass storage)
+        private TypeOpCode GetTypeOpCode(TypeReference tr, StorageClass storage)
         {
-            return GetTypeOpCode(td.FullName, storage);
+            if (PrimitiveTypes.TryGetValue(tr.FullName, out var factory)) {
+                return factory(SpirTypeIdCallback);
+            }
+            if (tr.IsArray || tr.IsPointer) {
+                return new OpTypePointer(SpirTypeIdCallback, storage, GetTypeOpCode(tr.GetElementType()));
+            }
+            else if (tr.IsValueType) {
+                throw new CompilerException($"Struct types are not yet supported: {tr.FullName}.");
+            }
+            else {
+                throw new CompilerException($"Unsupported type: {tr.FullName}.");
+            }
         }
 
-        private TypeOpCode GetTypeOpCode(ParameterReference pd)
+        private TypeOpCode GetTypeOpCode(ParameterReference pr)
         {
-            var global = pd.Resolve().CustomAttributes.Where(ai => ai.AttributeType.FullName == "OpenCl.GlobalAttribute").Count() == 1;
-            return GetTypeOpCode(pd.ParameterType);
+            TypeReference tr = pr.ParameterType;
+            if (tr.IsArray || tr.IsPointer) {
+                var global = pr.Resolve().CustomAttributes.Any(ai => ai.AttributeType.FullName == "OpenCl.GlobalAttribute");
+                var storage = global ? StorageClass.CrossWorkgroup : StorageClass.UniformConstant;
+                return new OpTypePointer(SpirTypeIdCallback, storage, GetTypeOpCode(tr.GetElementType()));
+            }
+            else {
+                return GetTypeOpCode(pr.ParameterType);
+            }
         }
 
-        private TypeOpCode GetTypeOpCode(VariableReference vd)
+        private TypeOpCode GetTypeOpCode(VariableReference vr)
         {
-            return GetTypeOpCode(vd.VariableType);
+            return GetTypeOpCode(vr.VariableType);
         }
 
-        private OpTypeFunction GetTypeOpCode(MethodReference md)
+        private OpTypeFunction GetTypeOpCode(MethodReference mr)
         {
-            var r = GetTypeOpCode(md.ReturnType);
-            var p = md.Parameters
+            var r = GetTypeOpCode(mr.ReturnType);
+            var p = mr.Parameters
                     .Select(pi => GetTypeOpCode(pi))
                     .ToArray();
             return new OpTypeFunction(SpirTypeIdCallback, r, p);
@@ -409,19 +518,17 @@ namespace OpenCl.Compiler
 
         private ConversionOpCode GetConversionOpCode(TypedResultOpCode src, Type dst)
         {
-            Func<SpirCompiler,TypedResultOpCode,ConversionOpCode> factory = null;
-            if (!_convert_ops.TryGetValue(dst, out factory)) {
-                throw new CompilerException(String.Format("Unsupported type conversion: {0} -> {1}.", src.ResultType, dst));
+            if (_convert_ops.TryGetValue(dst, out var /*Func<SpirCompiler,TypedResultOpCode,ConversionOpCode>*/ factory)) {
+                return factory(this, src);
             }
-            return factory(this, src);
+            throw new CompilerException($"Unsupported type conversion: {src.ResultType} -> {dst}.");
         }
 
         // constant helper
 
         private int SpirConstantCallback(OpConstant op)
         {
-            int id;
-            if (!this.constants.TryGetValue(op, out id)) {
+            if (!this.constants.TryGetValue(op, out int id)) {
                 id = this.rcount++;
                 this.constants.Add(op, id);
             }
@@ -430,12 +537,11 @@ namespace OpenCl.Compiler
 
         private string GetMethodName(MethodDefinition mdef)
         {
-            var name =
-                mdef.CustomAttributes
+            return mdef.CustomAttributes
                 .Where(ai => ai.AttributeType.FullName == "OpenCl.ClNameAttribute")
                 .Select((attr, idx) => attr.ConstructorArguments[0].Value as string)
-                .FirstOrDefault();
-            return name != null ? name : mdef.Name;
+                .DefaultIfEmpty(mdef.Name)
+                .First();
         }
 
         private void Parse(MethodDefinition method)
@@ -496,7 +602,7 @@ namespace OpenCl.Compiler
                 {
                 case Code.Nop:
                     // just for the fun of it...
-                    funcdef.Add(new OpNop());
+                    // funcdef.Add(new OpNop());
                     break;
                 case Code.Dup: {
                     stack.Push(stack.Peek());
@@ -845,7 +951,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'add' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'add' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -885,7 +991,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'sub' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'sub' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -925,7 +1031,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'mul' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'mul' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -963,7 +1069,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'div' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'div' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -1001,7 +1107,7 @@ namespace OpenCl.Compiler
                     //     stack.Push(op);
                     // }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'div' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'div' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -1024,7 +1130,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'and' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'and' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -1047,7 +1153,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'or' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'or' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -1070,7 +1176,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'xor' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'xor' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -1093,7 +1199,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'xor' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'shl' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -1116,7 +1222,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'xor' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'shr' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -1139,7 +1245,7 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible types for 'xor' operation: {0} and {1}.", l.ResultType.GetType().Name, r.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible types for 'shr' operation: {l.ResultType.GetType().Name} and {r.ResultType.GetType().Name}.");
                     }
                     break;
                 }
@@ -1154,9 +1260,53 @@ namespace OpenCl.Compiler
                     }
                     switch (name)
                     {
+                    // builtin variables (https://github.com/KhronosGroup/SPIRV-LLVM/blob/khronos/spirv-3.6.1/test/SPIRV/builtin_vars-decorate.ll)
+                    case "OpenCl.Cl.GetWorkDim": {
+                        // __spirv_BuiltInWorkDim = external addrspace(1) global i32
+                        if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
+                            // type of import symbol
+                            var t = new OpTypePointer(SpirTypeIdCallback, StorageClass.UniformConstant,
+                                        new OpTypeInt(SpirTypeIdCallback, 64));
+                            // import symbol
+                            sym = new OpVariable(this.rcount++, t);
+                            this.imports.Add(name, sym);
+                            // import decorations
+                            this.decorations.Add(new OpDecorateBuiltIn(sym, BuiltIn.WorkDim));
+                            this.decorations.Add(new OpDecorateConstant(sym));
+                            this.decorations.Add(new OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.WorkDim));
+                        }
+                        var ld = new OpLoad(this.rcount++, sym);
+                        var op = new OpVectorExtractDynamic(this.rcount++, ld, stack.Pop());
+                        funcdef.Add(ld);
+                        funcdef.Add(op);
+                        stack.Push(op);
+                        break;
+                    }
+                    case "OpenCl.Cl.GetGlobalSize": {
+                        // __spirv_BuiltInGlobalSize = external addrspace(1) global <3 x i32>
+                        if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
+                            // type of import symbol
+                            var t = new OpTypePointer(SpirTypeIdCallback, StorageClass.UniformConstant,
+                                        new OpTypeVector(SpirTypeIdCallback, 3,
+                                            new OpTypeInt(SpirTypeIdCallback, 64)));
+                            // import symbol
+                            sym = new OpVariable(this.rcount++, t);
+                            this.imports.Add(name, sym);
+                            // import decorations
+                            this.decorations.Add(new OpDecorateBuiltIn(sym, BuiltIn.GlobalSize));
+                            this.decorations.Add(new OpDecorateConstant(sym));
+                            this.decorations.Add(new OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.GlobalSize));
+                        }
+                        var ld = new OpLoad(this.rcount++, sym);
+                        var op = new OpVectorExtractDynamic(this.rcount++, ld, stack.Pop());
+                        funcdef.Add(ld);
+                        funcdef.Add(op);
+                        stack.Push(op);
+                        break;
+                    }
                     case "OpenCl.Cl.GetGlobalId": {
-                        TypedResultOpCode sym;
-                        if (!this.imports.TryGetValue(name, out sym)) {
+                        // __spirv_BuiltInGlobalInvocationId = external addrspace(1) global <3 x i32>
+                        if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
                             // type of import symbol
                             var t = new OpTypePointer(SpirTypeIdCallback, StorageClass.UniformConstant,
                                         new OpTypeVector(SpirTypeIdCallback, 3,
@@ -1176,11 +1326,60 @@ namespace OpenCl.Compiler
                         stack.Push(op);
                         break;
                     }
+// @__spirv_BuiltInWorkgroupSize = external addrspace(1) global <3 x i32>
+// @__spirv_BuiltInEnqueuedWorkgroupSize = external addrspace(1) global <3 x i32>
+// @__spirv_BuiltInLocalInvocationId = external addrspace(1) global <3 x i32>
+// @__spirv_BuiltInNumWorkgroups = external addrspace(1) global <3 x i32>
+// @__spirv_BuiltInWorkgroupId = external addrspace(1) global <3 x i32>
+// @__spirv_BuiltInGlobalOffset = external addrspace(1) global <3 x i32>
+// @__spirv_BuiltInGlobalLinearId = external addrspace(1) global i32
+// @__spirv_BuiltInLocalInvocationIndex = external addrspace(1) global i32
+// @__spirv_BuiltInSubgroupSize = external addrspace(1) global i32
+// @__spirv_BuiltInSubgroupMaxSize = external addrspace(1) global i32
+// @__spirv_BuiltInNumSubgroups = external addrspace(1) global i32
+// @__spirv_BuiltInNumEnqueuedSubgroups = external addrspace(1) global i32
+// @__spirv_BuiltInSubgroupId = external addrspace(1) global i32
+// @__spirv_BuiltInSubgroupLocalInvocationId = external addrspace(1) global i32
+                    case "OpenCl.sbyte2.op_Addition":
+                    case "OpenCl.sbyte3.op_Addition":
+                    case "OpenCl.sbyte4.op_Addition":
+                    case "OpenCl.sbyte8.op_Addition":
+                    case "OpenCl.sbyte16.op_Addition":
+                    case "OpenCl.byte2.op_Addition":
+                    case "OpenCl.byte3.op_Addition":
+                    case "OpenCl.byte4.op_Addition":
+                    case "OpenCl.byte8.op_Addition":
+                    case "OpenCl.byte16.op_Addition":
+                    case "OpenCl.short2.op_Addition":
+                    case "OpenCl.short3.op_Addition":
+                    case "OpenCl.short4.op_Addition":
+                    case "OpenCl.short8.op_Addition":
+                    case "OpenCl.short16.op_Addition":
+                    case "OpenCl.ushort2.op_Addition":
+                    case "OpenCl.ushort3.op_Addition":
+                    case "OpenCl.ushort4.op_Addition":
+                    case "OpenCl.ushort8.op_Addition":
+                    case "OpenCl.ushort16.op_Addition":
                     case "OpenCl.int2.op_Addition":
                     case "OpenCl.int3.op_Addition":
                     case "OpenCl.int4.op_Addition":
                     case "OpenCl.int8.op_Addition":
-                    case "OpenCl.int16.op_Addition": {
+                    case "OpenCl.int16.op_Addition":
+                    case "OpenCl.uint2.op_Addition":
+                    case "OpenCl.uint3.op_Addition":
+                    case "OpenCl.uint4.op_Addition":
+                    case "OpenCl.uint8.op_Addition":
+                    case "OpenCl.uint16.op_Addition":
+                    case "OpenCl.long2.op_Addition":
+                    case "OpenCl.long3.op_Addition":
+                    case "OpenCl.long4.op_Addition":
+                    case "OpenCl.long8.op_Addition":
+                    case "OpenCl.long6.op_Addition":
+                    case "OpenCl.ulong2.op_Addition":
+                    case "OpenCl.ulong3.op_Addition":
+                    case "OpenCl.ulong4.op_Addition":
+                    case "OpenCl.ulong8.op_Addition":
+                    case "OpenCl.ulong6.op_Addition": {
                         TypedResultOpCode v = stack.Pop();
                         TypedResultOpCode u = stack.Pop();
                         var op = new OpIAdd(this.rcount++, u, v);
@@ -1189,7 +1388,7 @@ namespace OpenCl.Compiler
                         break;
                     }
                     default:
-                        throw new CompilerException(String.Format("Unsupported call to '{0}'.", name));
+                        throw new CompilerException($"Unsupported call to '{name}'.");
                     }
                 //     var args = new AstNode[nargs];
                 //     for (var i=nargs-1; i>=0; i--) {
@@ -1291,7 +1490,7 @@ namespace OpenCl.Compiler
                 case Code.Brfalse_S: {
                     var arg = stack.Pop();
                     if (!(arg.ResultType is OpTypeInt)) {
-                        throw new CompilerException(String.Format("Incompatible operand for 'brtrue' instruction: {0}.", arg.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operand for 'brtrue' instruction: expected OpTypeInt, found {arg.ResultType.GetType().Name}.");
                     }
                     var zero = new OpConstant(SpirConstantCallback, arg.ResultType as NumericTypeOpCode, 0);
                     var cond = new OpIEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), arg, zero);
@@ -1305,7 +1504,7 @@ namespace OpenCl.Compiler
                 case Code.Brtrue_S: {
                     var arg = stack.Pop();
                     if (!(arg.ResultType is OpTypeInt)) {
-                        throw new CompilerException(String.Format("Incompatible operand for 'brtrue' instruction: {0}.", arg.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operand for 'brtrue' instruction: expected OpTypeInt, found {arg.ResultType.GetType().Name}.");
                     }
                     var zero = new OpConstant(SpirConstantCallback, arg.ResultType as NumericTypeOpCode, 0);
                     var cond = new OpINotEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), arg, zero);
@@ -1327,7 +1526,7 @@ namespace OpenCl.Compiler
                         cond = new OpFOrdEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'beq' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'beq' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1347,7 +1546,7 @@ namespace OpenCl.Compiler
                         cond = new OpFUnordNotEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'beq' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'beq' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1367,7 +1566,7 @@ namespace OpenCl.Compiler
                         cond = new OpFUnordLessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'blt' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'blt' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1387,7 +1586,7 @@ namespace OpenCl.Compiler
                         cond = new OpFUnordLessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'blt' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'blt' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1407,7 +1606,7 @@ namespace OpenCl.Compiler
                         cond = new OpFUnordLessThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'ble' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'ble' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1427,7 +1626,7 @@ namespace OpenCl.Compiler
                         cond = new OpFUnordLessThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'ble' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'ble' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1447,7 +1646,7 @@ namespace OpenCl.Compiler
                         cond = new OpFUnordGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'bgt' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'bgt' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1467,7 +1666,7 @@ namespace OpenCl.Compiler
                         cond = new OpFUnordGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'bgt' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'bgt' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1487,7 +1686,7 @@ namespace OpenCl.Compiler
                         cond = new OpFUnordGreaterThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'bge' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'bge' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1507,7 +1706,7 @@ namespace OpenCl.Compiler
                         cond = new OpFUnordGreaterThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
                     }
                     else {
-                        throw new CompilerException(String.Format("Incompatible operands for 'bge' instruction: {0} and {1}.", u.ResultType.GetType().Name, v.ResultType.GetType().Name));
+                        throw new CompilerException($"Incompatible operands for 'bge' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
                     var lf = new OpLabel(this.rcount++);
@@ -1524,7 +1723,7 @@ namespace OpenCl.Compiler
                     }
                     break;
                 default:
-                    throw new CompilerException(String.Format("Unsupported opcode: {0}.", instr.OpCode));
+                    throw new CompilerException($"Unsupported opcode: {instr.OpCode}.");
                 }
             }
             funcdef.Add(new OpFunctionEnd());
@@ -1572,8 +1771,7 @@ namespace OpenCl.Compiler
                 op.Emit(output);
             }
             // types
-            for (var i=0; i<this.types_list.Count; i++) {
-                var op = this.types_list[i];
+            foreach (var op in this.types_list) {
                 op.Emit(output);
             }
             // imports

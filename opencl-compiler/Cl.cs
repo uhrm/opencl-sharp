@@ -138,7 +138,7 @@ namespace OpenCl
             for (var i=0; i<ndims; i++) {
                 var gi = global_size[i]/local_size[i];
                 if (gi*local_size[i] != global_size[i]) {
-                    throw new ArgumentException(String.Format("Incompatible global and local work size in dimension {0}: {1}/{2}.", i, global_size[i], local_size[i]));
+                    throw new ArgumentException($"Incompatible global and local work size in dimension {i}: {global_size[i]}/{local_size[i]}.");
                 }
                 num_groups[i] = gi;
             }

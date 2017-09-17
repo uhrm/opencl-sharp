@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 
 using Mono.Cecil;
 
@@ -10,7 +8,7 @@ namespace OpenCl.Compiler
 {
     class DotNetCoreAssemblyResolver : IAssemblyResolver
     {
-        private static IReadOnlyList<string> Paths = new string[] {
+        private static readonly IReadOnlyList<string> Paths = new string[] {
             System.AppContext.BaseDirectory,
             Path.GetDirectoryName(typeof(object).Assembly.Location),
             Directory.GetCurrentDirectory()

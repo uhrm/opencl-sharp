@@ -133,6 +133,8 @@ namespace OpenCl.Compiler
 
         private class OpDecorateLinkageAttributes : OpDecorate
         {
+            // name mangling for LLVM-based implementations
+            // see: https://github.com/KhronosGroup/SPIRV-LLVM/blob/khronos/spirv-3.6.1/docs/SPIRVRepresentationInLLVM.rst#id16
             private static Dictionary<BuiltIn,string> symbols = new Dictionary<BuiltIn,string>() {
                 { BuiltIn.GlobalInvocationId, "__spirv_BuiltInGlobalInvocationId" }
             };
@@ -1249,10 +1251,7 @@ namespace OpenCl.Compiler
             public OpAccessChain(int rid, TypedResultOpCode basePointer, params ResultOpCode[] index) : base(rid)
             {
                 if (!(basePointer.ResultType is OpTypePointer)) {
-                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected SpirPointerType, found {0}.", basePointer.ResultType.GetType().Name));
-                }
-                if (!((basePointer.ResultType as OpTypePointer).BaseType is CompositeTypeOpCode)) {
-                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected pointer to CompositeTypeOpCode, found pointer to {0}.", (basePointer.ResultType as OpTypePointer).BaseType.GetType().Name));
+                    throw new ArgumentException($"Invalid type of pointer argument: expected SpirPointerType, found {basePointer.ResultType.GetType().Name}.");
                 }
                 this.basePointer = basePointer;
                 this.index = index;
@@ -1276,6 +1275,9 @@ namespace OpenCl.Compiler
                         else if (result is OpTypeStruct) {
                             var c = i as OpConstant;
                             result = (result as OpTypeStruct).GetResultType((int)c.Value);
+                        }
+                        else {
+                            throw new CompilerException($"Cannot dereference non-composite type {result.ResultType.GetType().Name}.");
                         }
                     }
                     return basePtr.Derive(result);
@@ -1303,10 +1305,7 @@ namespace OpenCl.Compiler
             public OpInBoundsAccessChain(int rid, TypedResultOpCode basePointer, params ResultOpCode[] index) : base(rid)
             {
                 if (!(basePointer.ResultType is OpTypePointer)) {
-                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected SpirPointerType, found {0}.", basePointer.ResultType.GetType().Name));
-                }
-                if (!((basePointer.ResultType as OpTypePointer).BaseType is CompositeTypeOpCode)) {
-                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected pointer to CompositeTypeOpCode, found pointer to {0}.", (basePointer.ResultType as OpTypePointer).BaseType.GetType().Name));
+                    throw new ArgumentException($"Invalid type of pointer argument: expected SpirPointerType, found {basePointer.ResultType.GetType().Name}.");
                 }
                 this.basePointer = basePointer;
                 this.index = index;
@@ -1330,6 +1329,9 @@ namespace OpenCl.Compiler
                         else if (result is OpTypeStruct) {
                             var c = i as OpConstant;
                             result = (result as OpTypeStruct).GetResultType((int)c.Value);
+                        }
+                        else {
+                            throw new CompilerException($"Cannot dereference non-composite type {result.ResultType.GetType().Name}.");
                         }
                     }
                     return basePtr.Derive(result);
@@ -1358,10 +1360,7 @@ namespace OpenCl.Compiler
             public OpPtrAccessChain(int rid, TypedResultOpCode basePointer, TypedResultOpCode element, params ResultOpCode[] index) : base(rid)
             {
                 if (!(basePointer.ResultType is OpTypePointer)) {
-                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected SpirPointerType, found {0}.", basePointer.ResultType.GetType().Name));
-                }
-                if (!((basePointer.ResultType as OpTypePointer).BaseType is CompositeTypeOpCode)) {
-                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected pointer to CompositeTypeOpCode, found pointer to {0}.", (basePointer.ResultType as OpTypePointer).BaseType.GetType().Name));
+                    throw new ArgumentException($"Invalid type of pointer argument: expected SpirPointerType, found {basePointer.ResultType.GetType().Name}.");
                 }
                 this.basePointer = basePointer;
                 this.element = element;
@@ -1386,6 +1385,9 @@ namespace OpenCl.Compiler
                         else if (result is OpTypeStruct) {
                             var c = i as OpConstant;
                             result = (result as OpTypeStruct).GetResultType((int)c.Value);
+                        }
+                        else {
+                            throw new CompilerException($"Cannot dereference non-composite type {result.ResultType.GetType().Name}.");
                         }
                     }
                     return basePtr.Derive(result);
@@ -1415,10 +1417,7 @@ namespace OpenCl.Compiler
             public OpInBoundsPtrAccessChain(int rid, TypedResultOpCode basePointer, TypedResultOpCode element, params ResultOpCode[] index) : base(rid)
             {
                 if (!(basePointer.ResultType is OpTypePointer)) {
-                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected SpirPointerType, found {0}.", basePointer.ResultType.GetType().Name));
-                }
-                if (!((basePointer.ResultType as OpTypePointer).BaseType is CompositeTypeOpCode)) {
-                    throw new ArgumentException(String.Format("Invalid type of pointer argument: expected pointer to CompositeTypeOpCode, found pointer to {0}.", (basePointer.ResultType as OpTypePointer).BaseType.GetType().Name));
+                    throw new ArgumentException($"Invalid type of pointer argument: expected SpirPointerType, found {basePointer.ResultType.GetType().Name}.");
                 }
                 this.basePointer = basePointer;
                 this.element = element;
@@ -1443,6 +1442,9 @@ namespace OpenCl.Compiler
                         else if (result is OpTypeStruct) {
                             var c = i as OpConstant;
                             result = (result as OpTypeStruct).GetResultType((int)c.Value);
+                        }
+                        else {
+                            throw new CompilerException($"Cannot dereference non-composite type {result.ResultType.GetType().Name}.");
                         }
                     }
                     return basePtr.Derive(result);
