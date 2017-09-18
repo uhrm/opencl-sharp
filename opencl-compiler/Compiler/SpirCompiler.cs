@@ -1340,51 +1340,78 @@ namespace OpenCl.Compiler
 // @__spirv_BuiltInNumEnqueuedSubgroups = external addrspace(1) global i32
 // @__spirv_BuiltInSubgroupId = external addrspace(1) global i32
 // @__spirv_BuiltInSubgroupLocalInvocationId = external addrspace(1) global i32
-                    case "OpenCl.sbyte2.op_Addition":
-                    case "OpenCl.sbyte3.op_Addition":
-                    case "OpenCl.sbyte4.op_Addition":
-                    case "OpenCl.sbyte8.op_Addition":
-                    case "OpenCl.sbyte16.op_Addition":
-                    case "OpenCl.byte2.op_Addition":
-                    case "OpenCl.byte3.op_Addition":
-                    case "OpenCl.byte4.op_Addition":
-                    case "OpenCl.byte8.op_Addition":
-                    case "OpenCl.byte16.op_Addition":
-                    case "OpenCl.short2.op_Addition":
-                    case "OpenCl.short3.op_Addition":
-                    case "OpenCl.short4.op_Addition":
-                    case "OpenCl.short8.op_Addition":
-                    case "OpenCl.short16.op_Addition":
-                    case "OpenCl.ushort2.op_Addition":
-                    case "OpenCl.ushort3.op_Addition":
-                    case "OpenCl.ushort4.op_Addition":
-                    case "OpenCl.ushort8.op_Addition":
-                    case "OpenCl.ushort16.op_Addition":
-                    case "OpenCl.int2.op_Addition":
-                    case "OpenCl.int3.op_Addition":
-                    case "OpenCl.int4.op_Addition":
-                    case "OpenCl.int8.op_Addition":
-                    case "OpenCl.int16.op_Addition":
-                    case "OpenCl.uint2.op_Addition":
-                    case "OpenCl.uint3.op_Addition":
-                    case "OpenCl.uint4.op_Addition":
-                    case "OpenCl.uint8.op_Addition":
-                    case "OpenCl.uint16.op_Addition":
-                    case "OpenCl.long2.op_Addition":
-                    case "OpenCl.long3.op_Addition":
-                    case "OpenCl.long4.op_Addition":
-                    case "OpenCl.long8.op_Addition":
-                    case "OpenCl.long6.op_Addition":
-                    case "OpenCl.ulong2.op_Addition":
-                    case "OpenCl.ulong3.op_Addition":
-                    case "OpenCl.ulong4.op_Addition":
-                    case "OpenCl.ulong8.op_Addition":
-                    case "OpenCl.ulong6.op_Addition": {
-                        TypedResultOpCode v = stack.Pop();
-                        TypedResultOpCode u = stack.Pop();
-                        var op = new OpIAdd(this.rcount++, u, v);
-                        funcdef.Add(op);
-                        stack.Push(op);
+                    case string _ when name.EndsWith("op_Addition"): {
+                        TypedResultOpCode b = stack.Pop();
+                        TypedResultOpCode a = stack.Pop();
+                        TypedResultOpCode r;
+                        if (a.ResultType is OpTypeInt || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
+                            r = new OpIAdd(this.rcount++, a, b);
+                        }
+                        else if (a.ResultType is OpTypeFloat || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
+                            r = new OpFAdd(this.rcount++, a, b);
+                        }
+                        else {
+                            throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Addition' call.");
+                        }
+                        funcdef.Add(r);
+                        stack.Push(r);
+                        break;
+                    }
+                    case string _ when name.EndsWith("op_Subtraction"): {
+                        TypedResultOpCode b = stack.Pop();
+                        TypedResultOpCode a = stack.Pop();
+                        TypedResultOpCode r;
+                        if (a.ResultType is OpTypeInt || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
+                            r = new OpISub(this.rcount++, a, b);
+                        }
+                        else if (a.ResultType is OpTypeFloat || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
+                            r = new OpFSub(this.rcount++, a, b);
+                        }
+                        else {
+                            throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Subtraction' call.");
+                        }
+                        funcdef.Add(r);
+                        stack.Push(r);
+                        break;
+                    }
+                    case string _ when name.EndsWith("op_Multiply"): {
+                        TypedResultOpCode b = stack.Pop();
+                        TypedResultOpCode a = stack.Pop();
+                        TypedResultOpCode r;
+                        if (a.ResultType is OpTypeInt || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
+                            r = new OpIMul(this.rcount++, a, b);
+                        }
+                        else if (a.ResultType is OpTypeFloat || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
+                            r = new OpFMul(this.rcount++, a, b);
+                        }
+                        else {
+                            throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Multiply' call.");
+                        }
+                        funcdef.Add(r);
+                        stack.Push(r);
+                        break;
+                    }
+                    case string _ when name.EndsWith("op_Division"): {
+                        TypedResultOpCode b = stack.Pop();
+                        TypedResultOpCode a = stack.Pop();
+                        TypedResultOpCode r;
+                        OpTypeInt t;
+                        if ((t = a.ResultType as OpTypeInt ?? (a.ResultType as OpTypeVector)?.ComponentType as OpTypeInt) != null) {
+                            if (t.Signedness == 0) {
+                                r = new OpUDiv(this.rcount++, a, b);
+                            }
+                            else {
+                                r = new OpSDiv(this.rcount++, a, b);
+                            }
+                        }
+                        else if (a.ResultType is OpTypeFloat || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
+                            r = new OpFDiv(this.rcount++, a, b);
+                        }
+                        else {
+                            throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Division' call.");
+                        }
+                        funcdef.Add(r);
+                        stack.Push(r);
                         break;
                     }
                     default:
