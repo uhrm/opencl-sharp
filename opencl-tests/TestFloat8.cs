@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
 using OpenCl.Compiler;
@@ -16,7 +18,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAdd()
+        public void TestAddManaged()
         {
             float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
             float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
@@ -48,11 +50,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(  72.00000000, r[1].s5, 1e-7);
             Assert.AreEqual(  84.00000000, r[1].s6, 1e-7);
             Assert.AreEqual(  96.00000000, r[1].s7, 1e-7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestAddCl()
+        {
+            float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
+            float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
+            float8[] r = new float8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat8", "test_float8_add");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -103,6 +113,67 @@ namespace OpenCl.Tests
             Assert.AreEqual(  96.00000000, r[1].s7, 1e-7);
         }
 
+        [Test]
+        public void TestAddSpir()
+        {
+            float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
+            float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
+            float8[] r = new float8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat8", "test_float8_add", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<float8>;
+                var mb = null as Mem<float8>;
+                var mr = null as Mem<float8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_float8_add");
+                    ma = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<float8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<float8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  12.00000000, r[0].s0, 1e-7);
+            Assert.AreEqual(  24.00000000, r[0].s1, 1e-7);
+            Assert.AreEqual(  36.00000000, r[0].s2, 1e-7);
+            Assert.AreEqual(  48.00000000, r[0].s3, 1e-7);
+            Assert.AreEqual(  60.00000000, r[0].s4, 1e-7);
+            Assert.AreEqual(  72.00000000, r[0].s5, 1e-7);
+            Assert.AreEqual(  84.00000000, r[0].s6, 1e-7);
+            Assert.AreEqual(  96.00000000, r[0].s7, 1e-7);
+            Assert.AreEqual(  12.00000000, r[1].s0, 1e-7);
+            Assert.AreEqual(  24.00000000, r[1].s1, 1e-7);
+            Assert.AreEqual(  36.00000000, r[1].s2, 1e-7);
+            Assert.AreEqual(  48.00000000, r[1].s3, 1e-7);
+            Assert.AreEqual(  60.00000000, r[1].s4, 1e-7);
+            Assert.AreEqual(  72.00000000, r[1].s5, 1e-7);
+            Assert.AreEqual(  84.00000000, r[1].s6, 1e-7);
+            Assert.AreEqual(  96.00000000, r[1].s7, 1e-7);
+        }
+
         [Kernel]
         private static void test_float8_sub([Global] float8[] a, [Global] float8[] b, [Global] float8[] r)
         {
@@ -111,7 +182,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestSub()
+        public void TestSubManaged()
         {
             float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
             float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
@@ -143,11 +214,19 @@ namespace OpenCl.Tests
             Assert.AreEqual( -12.00000000, r[1].s5, 1e-7);
             Assert.AreEqual( -14.00000000, r[1].s6, 1e-7);
             Assert.AreEqual( -16.00000000, r[1].s7, 1e-7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestSubCl()
+        {
+            float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
+            float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
+            float8[] r = new float8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat8", "test_float8_sub");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -198,6 +277,67 @@ namespace OpenCl.Tests
             Assert.AreEqual( -16.00000000, r[1].s7, 1e-7);
         }
 
+        [Test]
+        public void TestSubSpir()
+        {
+            float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
+            float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
+            float8[] r = new float8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat8", "test_float8_sub", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<float8>;
+                var mb = null as Mem<float8>;
+                var mr = null as Mem<float8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_float8_sub");
+                    ma = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<float8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<float8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   2.00000000, r[0].s0, 1e-7);
+            Assert.AreEqual(   4.00000000, r[0].s1, 1e-7);
+            Assert.AreEqual(   6.00000000, r[0].s2, 1e-7);
+            Assert.AreEqual(   8.00000000, r[0].s3, 1e-7);
+            Assert.AreEqual(  10.00000000, r[0].s4, 1e-7);
+            Assert.AreEqual(  12.00000000, r[0].s5, 1e-7);
+            Assert.AreEqual(  14.00000000, r[0].s6, 1e-7);
+            Assert.AreEqual(  16.00000000, r[0].s7, 1e-7);
+            Assert.AreEqual(  -2.00000000, r[1].s0, 1e-7);
+            Assert.AreEqual(  -4.00000000, r[1].s1, 1e-7);
+            Assert.AreEqual(  -6.00000000, r[1].s2, 1e-7);
+            Assert.AreEqual(  -8.00000000, r[1].s3, 1e-7);
+            Assert.AreEqual( -10.00000000, r[1].s4, 1e-7);
+            Assert.AreEqual( -12.00000000, r[1].s5, 1e-7);
+            Assert.AreEqual( -14.00000000, r[1].s6, 1e-7);
+            Assert.AreEqual( -16.00000000, r[1].s7, 1e-7);
+        }
+
         [Kernel]
         private static void test_float8_mul([Global] float8[] a, [Global] float8[] b, [Global] float8[] r)
         {
@@ -206,7 +346,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestMul()
+        public void TestMulManaged()
         {
             float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
             float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
@@ -238,11 +378,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(1260.00000000, r[1].s5, 1e-7);
             Assert.AreEqual(1715.00000000, r[1].s6, 1e-7);
             Assert.AreEqual(2240.00000000, r[1].s7, 1e-7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestMulCl()
+        {
+            float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
+            float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
+            float8[] r = new float8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat8", "test_float8_mul");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -293,6 +441,67 @@ namespace OpenCl.Tests
             Assert.AreEqual(2240.00000000, r[1].s7, 1e-7);
         }
 
+        [Test]
+        public void TestMulSpir()
+        {
+            float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
+            float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
+            float8[] r = new float8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat8", "test_float8_mul", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<float8>;
+                var mb = null as Mem<float8>;
+                var mr = null as Mem<float8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_float8_mul");
+                    ma = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<float8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<float8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  35.00000000, r[0].s0, 1e-7);
+            Assert.AreEqual( 140.00000000, r[0].s1, 1e-7);
+            Assert.AreEqual( 315.00000000, r[0].s2, 1e-7);
+            Assert.AreEqual( 560.00000000, r[0].s3, 1e-7);
+            Assert.AreEqual( 875.00000000, r[0].s4, 1e-7);
+            Assert.AreEqual(1260.00000000, r[0].s5, 1e-7);
+            Assert.AreEqual(1715.00000000, r[0].s6, 1e-7);
+            Assert.AreEqual(2240.00000000, r[0].s7, 1e-7);
+            Assert.AreEqual(  35.00000000, r[1].s0, 1e-7);
+            Assert.AreEqual( 140.00000000, r[1].s1, 1e-7);
+            Assert.AreEqual( 315.00000000, r[1].s2, 1e-7);
+            Assert.AreEqual( 560.00000000, r[1].s3, 1e-7);
+            Assert.AreEqual( 875.00000000, r[1].s4, 1e-7);
+            Assert.AreEqual(1260.00000000, r[1].s5, 1e-7);
+            Assert.AreEqual(1715.00000000, r[1].s6, 1e-7);
+            Assert.AreEqual(2240.00000000, r[1].s7, 1e-7);
+        }
+
         [Kernel]
         private static void test_float8_div([Global] float8[] a, [Global] float8[] b, [Global] float8[] r)
         {
@@ -301,7 +510,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestDiv()
+        public void TestDivManaged()
         {
             float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
             float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
@@ -333,11 +542,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0.71428573, r[1].s5, 1e-7);
             Assert.AreEqual(   0.71428573, r[1].s6, 1e-7);
             Assert.AreEqual(   0.71428573, r[1].s7, 1e-7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestDivCl()
+        {
+            float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
+            float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
+            float8[] r = new float8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat8", "test_float8_div");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -351,6 +568,67 @@ namespace OpenCl.Tests
                 try {
                     program = Program.CreateProgramWithSource(context, new String[] { source });
                     try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
+                    kernel = Kernel.CreateKernel(program, "test_float8_div");
+                    ma = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<float8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<float8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   1.39999998, r[0].s0, 1e-7);
+            Assert.AreEqual(   1.39999998, r[0].s1, 1e-7);
+            Assert.AreEqual(   1.39999998, r[0].s2, 1e-7);
+            Assert.AreEqual(   1.39999998, r[0].s3, 1e-7);
+            Assert.AreEqual(   1.39999998, r[0].s4, 1e-7);
+            Assert.AreEqual(   1.39999998, r[0].s5, 1e-7);
+            Assert.AreEqual(   1.39999998, r[0].s6, 1e-7);
+            Assert.AreEqual(   1.39999998, r[0].s7, 1e-7);
+            Assert.AreEqual(   0.71428573, r[1].s0, 1e-7);
+            Assert.AreEqual(   0.71428573, r[1].s1, 1e-7);
+            Assert.AreEqual(   0.71428573, r[1].s2, 1e-7);
+            Assert.AreEqual(   0.71428573, r[1].s3, 1e-7);
+            Assert.AreEqual(   0.71428573, r[1].s4, 1e-7);
+            Assert.AreEqual(   0.71428573, r[1].s5, 1e-7);
+            Assert.AreEqual(   0.71428573, r[1].s6, 1e-7);
+            Assert.AreEqual(   0.71428573, r[1].s7, 1e-7);
+        }
+
+        [Test]
+        public void TestDivSpir()
+        {
+            float8[] a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
+            float8[] b = new float8[] { new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40), new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56) };
+            float8[] r = new float8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestFloat8", "test_float8_div", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<float8>;
+                var mb = null as Mem<float8>;
+                var mr = null as Mem<float8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
                     kernel = Kernel.CreateKernel(program, "test_float8_div");
                     ma = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
                     mb = Mem<float8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);

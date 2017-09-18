@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
 using OpenCl.Compiler;
@@ -16,7 +18,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAdd()
+        public void TestAddManaged()
         {
             double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
             double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
@@ -64,11 +66,19 @@ namespace OpenCl.Tests
             Assert.AreEqual( 168.0000000000000000, r[1].sd, 1e-15);
             Assert.AreEqual( 180.0000000000000000, r[1].se, 1e-15);
             Assert.AreEqual( 192.0000000000000000, r[1].sf, 1e-15);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestAddCl()
+        {
+            double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
+            double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
+            double16[] r = new double16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble16", "test_double16_add");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -135,6 +145,83 @@ namespace OpenCl.Tests
             Assert.AreEqual( 192.0000000000000000, r[1].sf, 1e-15);
         }
 
+        [Test]
+        public void TestAddSpir()
+        {
+            double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
+            double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
+            double16[] r = new double16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble16", "test_double16_add", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<double16>;
+                var mb = null as Mem<double16>;
+                var mr = null as Mem<double16>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_double16_add");
+                    ma = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<double16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double16>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  12.0000000000000000, r[0].s0, 1e-15);
+            Assert.AreEqual(  24.0000000000000000, r[0].s1, 1e-15);
+            Assert.AreEqual(  36.0000000000000000, r[0].s2, 1e-15);
+            Assert.AreEqual(  48.0000000000000000, r[0].s3, 1e-15);
+            Assert.AreEqual(  60.0000000000000000, r[0].s4, 1e-15);
+            Assert.AreEqual(  72.0000000000000000, r[0].s5, 1e-15);
+            Assert.AreEqual(  84.0000000000000000, r[0].s6, 1e-15);
+            Assert.AreEqual(  96.0000000000000000, r[0].s7, 1e-15);
+            Assert.AreEqual( 108.0000000000000000, r[0].s8, 1e-15);
+            Assert.AreEqual( 120.0000000000000000, r[0].s9, 1e-15);
+            Assert.AreEqual( 132.0000000000000000, r[0].sa, 1e-15);
+            Assert.AreEqual( 144.0000000000000000, r[0].sb, 1e-15);
+            Assert.AreEqual( 156.0000000000000000, r[0].sc, 1e-15);
+            Assert.AreEqual( 168.0000000000000000, r[0].sd, 1e-15);
+            Assert.AreEqual( 180.0000000000000000, r[0].se, 1e-15);
+            Assert.AreEqual( 192.0000000000000000, r[0].sf, 1e-15);
+            Assert.AreEqual(  12.0000000000000000, r[1].s0, 1e-15);
+            Assert.AreEqual(  24.0000000000000000, r[1].s1, 1e-15);
+            Assert.AreEqual(  36.0000000000000000, r[1].s2, 1e-15);
+            Assert.AreEqual(  48.0000000000000000, r[1].s3, 1e-15);
+            Assert.AreEqual(  60.0000000000000000, r[1].s4, 1e-15);
+            Assert.AreEqual(  72.0000000000000000, r[1].s5, 1e-15);
+            Assert.AreEqual(  84.0000000000000000, r[1].s6, 1e-15);
+            Assert.AreEqual(  96.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual( 108.0000000000000000, r[1].s8, 1e-15);
+            Assert.AreEqual( 120.0000000000000000, r[1].s9, 1e-15);
+            Assert.AreEqual( 132.0000000000000000, r[1].sa, 1e-15);
+            Assert.AreEqual( 144.0000000000000000, r[1].sb, 1e-15);
+            Assert.AreEqual( 156.0000000000000000, r[1].sc, 1e-15);
+            Assert.AreEqual( 168.0000000000000000, r[1].sd, 1e-15);
+            Assert.AreEqual( 180.0000000000000000, r[1].se, 1e-15);
+            Assert.AreEqual( 192.0000000000000000, r[1].sf, 1e-15);
+        }
+
         [Kernel]
         private static void test_double16_sub([Global] double16[] a, [Global] double16[] b, [Global] double16[] r)
         {
@@ -143,7 +230,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestSub()
+        public void TestSubManaged()
         {
             double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
             double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
@@ -191,11 +278,19 @@ namespace OpenCl.Tests
             Assert.AreEqual( -28.0000000000000000, r[1].sd, 1e-15);
             Assert.AreEqual( -30.0000000000000000, r[1].se, 1e-15);
             Assert.AreEqual( -32.0000000000000000, r[1].sf, 1e-15);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestSubCl()
+        {
+            double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
+            double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
+            double16[] r = new double16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble16", "test_double16_sub");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -262,6 +357,83 @@ namespace OpenCl.Tests
             Assert.AreEqual( -32.0000000000000000, r[1].sf, 1e-15);
         }
 
+        [Test]
+        public void TestSubSpir()
+        {
+            double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
+            double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
+            double16[] r = new double16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble16", "test_double16_sub", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<double16>;
+                var mb = null as Mem<double16>;
+                var mr = null as Mem<double16>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_double16_sub");
+                    ma = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<double16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double16>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   2.0000000000000000, r[0].s0, 1e-15);
+            Assert.AreEqual(   4.0000000000000000, r[0].s1, 1e-15);
+            Assert.AreEqual(   6.0000000000000000, r[0].s2, 1e-15);
+            Assert.AreEqual(   8.0000000000000000, r[0].s3, 1e-15);
+            Assert.AreEqual(  10.0000000000000000, r[0].s4, 1e-15);
+            Assert.AreEqual(  12.0000000000000000, r[0].s5, 1e-15);
+            Assert.AreEqual(  14.0000000000000000, r[0].s6, 1e-15);
+            Assert.AreEqual(  16.0000000000000000, r[0].s7, 1e-15);
+            Assert.AreEqual(  18.0000000000000000, r[0].s8, 1e-15);
+            Assert.AreEqual(  20.0000000000000000, r[0].s9, 1e-15);
+            Assert.AreEqual(  22.0000000000000000, r[0].sa, 1e-15);
+            Assert.AreEqual(  24.0000000000000000, r[0].sb, 1e-15);
+            Assert.AreEqual(  26.0000000000000000, r[0].sc, 1e-15);
+            Assert.AreEqual(  28.0000000000000000, r[0].sd, 1e-15);
+            Assert.AreEqual(  30.0000000000000000, r[0].se, 1e-15);
+            Assert.AreEqual(  32.0000000000000000, r[0].sf, 1e-15);
+            Assert.AreEqual(  -2.0000000000000000, r[1].s0, 1e-15);
+            Assert.AreEqual(  -4.0000000000000000, r[1].s1, 1e-15);
+            Assert.AreEqual(  -6.0000000000000000, r[1].s2, 1e-15);
+            Assert.AreEqual(  -8.0000000000000000, r[1].s3, 1e-15);
+            Assert.AreEqual( -10.0000000000000000, r[1].s4, 1e-15);
+            Assert.AreEqual( -12.0000000000000000, r[1].s5, 1e-15);
+            Assert.AreEqual( -14.0000000000000000, r[1].s6, 1e-15);
+            Assert.AreEqual( -16.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual( -18.0000000000000000, r[1].s8, 1e-15);
+            Assert.AreEqual( -20.0000000000000000, r[1].s9, 1e-15);
+            Assert.AreEqual( -22.0000000000000000, r[1].sa, 1e-15);
+            Assert.AreEqual( -24.0000000000000000, r[1].sb, 1e-15);
+            Assert.AreEqual( -26.0000000000000000, r[1].sc, 1e-15);
+            Assert.AreEqual( -28.0000000000000000, r[1].sd, 1e-15);
+            Assert.AreEqual( -30.0000000000000000, r[1].se, 1e-15);
+            Assert.AreEqual( -32.0000000000000000, r[1].sf, 1e-15);
+        }
+
         [Kernel]
         private static void test_double16_mul([Global] double16[] a, [Global] double16[] b, [Global] double16[] r)
         {
@@ -270,7 +442,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestMul()
+        public void TestMulManaged()
         {
             double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
             double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
@@ -318,11 +490,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(6860.0000000000000000, r[1].sd, 1e-15);
             Assert.AreEqual(7875.0000000000000000, r[1].se, 1e-15);
             Assert.AreEqual(8960.0000000000000000, r[1].sf, 1e-15);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestMulCl()
+        {
+            double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
+            double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
+            double16[] r = new double16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble16", "test_double16_mul");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -389,6 +569,83 @@ namespace OpenCl.Tests
             Assert.AreEqual(8960.0000000000000000, r[1].sf, 1e-15);
         }
 
+        [Test]
+        public void TestMulSpir()
+        {
+            double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
+            double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
+            double16[] r = new double16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble16", "test_double16_mul", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<double16>;
+                var mb = null as Mem<double16>;
+                var mr = null as Mem<double16>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_double16_mul");
+                    ma = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<double16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double16>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  35.0000000000000000, r[0].s0, 1e-15);
+            Assert.AreEqual( 140.0000000000000000, r[0].s1, 1e-15);
+            Assert.AreEqual( 315.0000000000000000, r[0].s2, 1e-15);
+            Assert.AreEqual( 560.0000000000000000, r[0].s3, 1e-15);
+            Assert.AreEqual( 875.0000000000000000, r[0].s4, 1e-15);
+            Assert.AreEqual(1260.0000000000000000, r[0].s5, 1e-15);
+            Assert.AreEqual(1715.0000000000000000, r[0].s6, 1e-15);
+            Assert.AreEqual(2240.0000000000000000, r[0].s7, 1e-15);
+            Assert.AreEqual(2835.0000000000000000, r[0].s8, 1e-15);
+            Assert.AreEqual(3500.0000000000000000, r[0].s9, 1e-15);
+            Assert.AreEqual(4235.0000000000000000, r[0].sa, 1e-15);
+            Assert.AreEqual(5040.0000000000000000, r[0].sb, 1e-15);
+            Assert.AreEqual(5915.0000000000000000, r[0].sc, 1e-15);
+            Assert.AreEqual(6860.0000000000000000, r[0].sd, 1e-15);
+            Assert.AreEqual(7875.0000000000000000, r[0].se, 1e-15);
+            Assert.AreEqual(8960.0000000000000000, r[0].sf, 1e-15);
+            Assert.AreEqual(  35.0000000000000000, r[1].s0, 1e-15);
+            Assert.AreEqual( 140.0000000000000000, r[1].s1, 1e-15);
+            Assert.AreEqual( 315.0000000000000000, r[1].s2, 1e-15);
+            Assert.AreEqual( 560.0000000000000000, r[1].s3, 1e-15);
+            Assert.AreEqual( 875.0000000000000000, r[1].s4, 1e-15);
+            Assert.AreEqual(1260.0000000000000000, r[1].s5, 1e-15);
+            Assert.AreEqual(1715.0000000000000000, r[1].s6, 1e-15);
+            Assert.AreEqual(2240.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(2835.0000000000000000, r[1].s8, 1e-15);
+            Assert.AreEqual(3500.0000000000000000, r[1].s9, 1e-15);
+            Assert.AreEqual(4235.0000000000000000, r[1].sa, 1e-15);
+            Assert.AreEqual(5040.0000000000000000, r[1].sb, 1e-15);
+            Assert.AreEqual(5915.0000000000000000, r[1].sc, 1e-15);
+            Assert.AreEqual(6860.0000000000000000, r[1].sd, 1e-15);
+            Assert.AreEqual(7875.0000000000000000, r[1].se, 1e-15);
+            Assert.AreEqual(8960.0000000000000000, r[1].sf, 1e-15);
+        }
+
         [Kernel]
         private static void test_double16_div([Global] double16[] a, [Global] double16[] b, [Global] double16[] r)
         {
@@ -397,7 +654,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestDiv()
+        public void TestDivManaged()
         {
             double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
             double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
@@ -445,11 +702,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0.7142857142857143, r[1].sd, 1e-15);
             Assert.AreEqual(   0.7142857142857143, r[1].se, 1e-15);
             Assert.AreEqual(   0.7142857142857143, r[1].sf, 1e-15);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestDivCl()
+        {
+            double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
+            double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
+            double16[] r = new double16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble16", "test_double16_div");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -463,6 +728,83 @@ namespace OpenCl.Tests
                 try {
                     program = Program.CreateProgramWithSource(context, new String[] { source });
                     try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
+                    kernel = Kernel.CreateKernel(program, "test_double16_div");
+                    ma = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<double16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double16>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   1.3999999999999999, r[0].s0, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s1, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s2, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s3, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s4, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s5, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s6, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s7, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s8, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s9, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].sa, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].sb, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].sc, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].sd, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].se, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].sf, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s0, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s1, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s2, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s3, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s4, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s5, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s6, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s7, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s8, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s9, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].sa, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].sb, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].sc, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].sd, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].se, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].sf, 1e-15);
+        }
+
+        [Test]
+        public void TestDivSpir()
+        {
+            double16[] a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
+            double16[] b = new double16[] { new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80), new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112) };
+            double16[] r = new double16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble16", "test_double16_div", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<double16>;
+                var mb = null as Mem<double16>;
+                var mr = null as Mem<double16>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
                     kernel = Kernel.CreateKernel(program, "test_double16_div");
                     ma = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
                     mb = Mem<double16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);

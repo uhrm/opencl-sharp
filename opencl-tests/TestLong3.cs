@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
 using OpenCl.Compiler;
@@ -16,7 +18,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAdd()
+        public void TestAddManaged()
         {
             long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
             long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
@@ -38,11 +40,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(  12, r[1].s0);
             Assert.AreEqual(  24, r[1].s1);
             Assert.AreEqual(  36, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestAddCl()
+        {
+            long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
+            long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
+            long3[] r = new long3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestLong3", "test_long3_add");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -83,6 +93,57 @@ namespace OpenCl.Tests
             Assert.AreEqual(  36, r[1].s2);
         }
 
+        [Test]
+        public void TestAddSpir()
+        {
+            long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
+            long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
+            long3[] r = new long3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestLong3", "test_long3_add", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<long3>;
+                var mb = null as Mem<long3>;
+                var mr = null as Mem<long3>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_long3_add");
+                    ma = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<long3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long3>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  12, r[0].s0);
+            Assert.AreEqual(  24, r[0].s1);
+            Assert.AreEqual(  36, r[0].s2);
+            Assert.AreEqual(  12, r[1].s0);
+            Assert.AreEqual(  24, r[1].s1);
+            Assert.AreEqual(  36, r[1].s2);
+        }
+
         [Kernel]
         private static void test_long3_sub([Global] long3[] a, [Global] long3[] b, [Global] long3[] r)
         {
@@ -91,7 +152,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestSub()
+        public void TestSubManaged()
         {
             long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
             long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
@@ -113,11 +174,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(  -2, r[1].s0);
             Assert.AreEqual(  -4, r[1].s1);
             Assert.AreEqual(  -6, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestSubCl()
+        {
+            long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
+            long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
+            long3[] r = new long3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestLong3", "test_long3_sub");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -158,6 +227,57 @@ namespace OpenCl.Tests
             Assert.AreEqual(  -6, r[1].s2);
         }
 
+        [Test]
+        public void TestSubSpir()
+        {
+            long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
+            long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
+            long3[] r = new long3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestLong3", "test_long3_sub", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<long3>;
+                var mb = null as Mem<long3>;
+                var mr = null as Mem<long3>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_long3_sub");
+                    ma = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<long3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long3>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   2, r[0].s0);
+            Assert.AreEqual(   4, r[0].s1);
+            Assert.AreEqual(   6, r[0].s2);
+            Assert.AreEqual(  -2, r[1].s0);
+            Assert.AreEqual(  -4, r[1].s1);
+            Assert.AreEqual(  -6, r[1].s2);
+        }
+
         [Kernel]
         private static void test_long3_mul([Global] long3[] a, [Global] long3[] b, [Global] long3[] r)
         {
@@ -166,7 +286,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestMul()
+        public void TestMulManaged()
         {
             long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
             long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
@@ -188,11 +308,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(  35, r[1].s0);
             Assert.AreEqual( 140, r[1].s1);
             Assert.AreEqual( 315, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestMulCl()
+        {
+            long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
+            long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
+            long3[] r = new long3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestLong3", "test_long3_mul");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -233,6 +361,57 @@ namespace OpenCl.Tests
             Assert.AreEqual( 315, r[1].s2);
         }
 
+        [Test]
+        public void TestMulSpir()
+        {
+            long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
+            long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
+            long3[] r = new long3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestLong3", "test_long3_mul", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<long3>;
+                var mb = null as Mem<long3>;
+                var mr = null as Mem<long3>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_long3_mul");
+                    ma = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<long3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long3>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  35, r[0].s0);
+            Assert.AreEqual( 140, r[0].s1);
+            Assert.AreEqual( 315, r[0].s2);
+            Assert.AreEqual(  35, r[1].s0);
+            Assert.AreEqual( 140, r[1].s1);
+            Assert.AreEqual( 315, r[1].s2);
+        }
+
         [Kernel]
         private static void test_long3_div([Global] long3[] a, [Global] long3[] b, [Global] long3[] r)
         {
@@ -241,7 +420,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestDiv()
+        public void TestDivManaged()
         {
             long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
             long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
@@ -263,11 +442,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0, r[1].s0);
             Assert.AreEqual(   0, r[1].s1);
             Assert.AreEqual(   0, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestDivCl()
+        {
+            long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
+            long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
+            long3[] r = new long3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestLong3", "test_long3_div");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -281,6 +468,57 @@ namespace OpenCl.Tests
                 try {
                     program = Program.CreateProgramWithSource(context, new String[] { source });
                     try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
+                    kernel = Kernel.CreateKernel(program, "test_long3_div");
+                    ma = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<long3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long3>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   1, r[0].s0);
+            Assert.AreEqual(   1, r[0].s1);
+            Assert.AreEqual(   1, r[0].s2);
+            Assert.AreEqual(   0, r[1].s0);
+            Assert.AreEqual(   0, r[1].s1);
+            Assert.AreEqual(   0, r[1].s2);
+        }
+
+        [Test]
+        public void TestDivSpir()
+        {
+            long3[] a = new long3[] { new long3((long)   7, (long)  14, (long)  21), new long3((long)   5, (long)  10, (long)  15) };
+            long3[] b = new long3[] { new long3((long)   5, (long)  10, (long)  15), new long3((long)   7, (long)  14, (long)  21) };
+            long3[] r = new long3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestLong3", "test_long3_div", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<long3>;
+                var mb = null as Mem<long3>;
+                var mr = null as Mem<long3>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
                     kernel = Kernel.CreateKernel(program, "test_long3_div");
                     ma = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
                     mb = Mem<long3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);

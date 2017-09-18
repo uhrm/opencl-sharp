@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
 using OpenCl.Compiler;
@@ -16,7 +18,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAdd()
+        public void TestAddManaged()
         {
             double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
             double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
@@ -36,11 +38,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(  24.0000000000000000, r[0].s1, 1e-15);
             Assert.AreEqual(  12.0000000000000000, r[1].s0, 1e-15);
             Assert.AreEqual(  24.0000000000000000, r[1].s1, 1e-15);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestAddCl()
+        {
+            double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
+            double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
+            double2[] r = new double2[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_double2_add");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -79,6 +89,55 @@ namespace OpenCl.Tests
             Assert.AreEqual(  24.0000000000000000, r[1].s1, 1e-15);
         }
 
+        [Test]
+        public void TestAddSpir()
+        {
+            double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
+            double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
+            double2[] r = new double2[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_double2_add", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<double2>;
+                var mb = null as Mem<double2>;
+                var mr = null as Mem<double2>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_double2_add");
+                    ma = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double2>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  12.0000000000000000, r[0].s0, 1e-15);
+            Assert.AreEqual(  24.0000000000000000, r[0].s1, 1e-15);
+            Assert.AreEqual(  12.0000000000000000, r[1].s0, 1e-15);
+            Assert.AreEqual(  24.0000000000000000, r[1].s1, 1e-15);
+        }
+
         [Kernel]
         private static void test_double2_sub([Global] double2[] a, [Global] double2[] b, [Global] double2[] r)
         {
@@ -87,7 +146,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestSub()
+        public void TestSubManaged()
         {
             double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
             double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
@@ -107,11 +166,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(   4.0000000000000000, r[0].s1, 1e-15);
             Assert.AreEqual(  -2.0000000000000000, r[1].s0, 1e-15);
             Assert.AreEqual(  -4.0000000000000000, r[1].s1, 1e-15);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestSubCl()
+        {
+            double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
+            double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
+            double2[] r = new double2[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_double2_sub");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -150,6 +217,55 @@ namespace OpenCl.Tests
             Assert.AreEqual(  -4.0000000000000000, r[1].s1, 1e-15);
         }
 
+        [Test]
+        public void TestSubSpir()
+        {
+            double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
+            double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
+            double2[] r = new double2[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_double2_sub", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<double2>;
+                var mb = null as Mem<double2>;
+                var mr = null as Mem<double2>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_double2_sub");
+                    ma = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double2>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   2.0000000000000000, r[0].s0, 1e-15);
+            Assert.AreEqual(   4.0000000000000000, r[0].s1, 1e-15);
+            Assert.AreEqual(  -2.0000000000000000, r[1].s0, 1e-15);
+            Assert.AreEqual(  -4.0000000000000000, r[1].s1, 1e-15);
+        }
+
         [Kernel]
         private static void test_double2_mul([Global] double2[] a, [Global] double2[] b, [Global] double2[] r)
         {
@@ -158,7 +274,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestMul()
+        public void TestMulManaged()
         {
             double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
             double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
@@ -178,11 +294,19 @@ namespace OpenCl.Tests
             Assert.AreEqual( 140.0000000000000000, r[0].s1, 1e-15);
             Assert.AreEqual(  35.0000000000000000, r[1].s0, 1e-15);
             Assert.AreEqual( 140.0000000000000000, r[1].s1, 1e-15);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestMulCl()
+        {
+            double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
+            double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
+            double2[] r = new double2[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_double2_mul");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -221,6 +345,55 @@ namespace OpenCl.Tests
             Assert.AreEqual( 140.0000000000000000, r[1].s1, 1e-15);
         }
 
+        [Test]
+        public void TestMulSpir()
+        {
+            double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
+            double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
+            double2[] r = new double2[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_double2_mul", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<double2>;
+                var mb = null as Mem<double2>;
+                var mr = null as Mem<double2>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_double2_mul");
+                    ma = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double2>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  35.0000000000000000, r[0].s0, 1e-15);
+            Assert.AreEqual( 140.0000000000000000, r[0].s1, 1e-15);
+            Assert.AreEqual(  35.0000000000000000, r[1].s0, 1e-15);
+            Assert.AreEqual( 140.0000000000000000, r[1].s1, 1e-15);
+        }
+
         [Kernel]
         private static void test_double2_div([Global] double2[] a, [Global] double2[] b, [Global] double2[] r)
         {
@@ -229,7 +402,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestDiv()
+        public void TestDivManaged()
         {
             double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
             double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
@@ -249,11 +422,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(   1.3999999999999999, r[0].s1, 1e-15);
             Assert.AreEqual(   0.7142857142857143, r[1].s0, 1e-15);
             Assert.AreEqual(   0.7142857142857143, r[1].s1, 1e-15);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestDivCl()
+        {
+            double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
+            double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
+            double2[] r = new double2[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_double2_div");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -267,6 +448,55 @@ namespace OpenCl.Tests
                 try {
                     program = Program.CreateProgramWithSource(context, new String[] { source });
                     try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
+                    kernel = Kernel.CreateKernel(program, "test_double2_div");
+                    ma = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double2>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   1.3999999999999999, r[0].s0, 1e-15);
+            Assert.AreEqual(   1.3999999999999999, r[0].s1, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s0, 1e-15);
+            Assert.AreEqual(   0.7142857142857143, r[1].s1, 1e-15);
+        }
+
+        [Test]
+        public void TestDivSpir()
+        {
+            double2[] a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
+            double2[] b = new double2[] { new double2((double)   5, (double)  10), new double2((double)   7, (double)  14) };
+            double2[] r = new double2[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_double2_div", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<double2>;
+                var mb = null as Mem<double2>;
+                var mr = null as Mem<double2>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
                     kernel = Kernel.CreateKernel(program, "test_double2_div");
                     ma = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
                     mb = Mem<double2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);

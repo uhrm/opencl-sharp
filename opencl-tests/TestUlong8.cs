@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
 using OpenCl.Compiler;
@@ -16,7 +18,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAdd()
+        public void TestAddManaged()
         {
             ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
             ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
@@ -48,11 +50,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(  72, r[1].s5);
             Assert.AreEqual(  84, r[1].s6);
             Assert.AreEqual(  96, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestAddCl()
+        {
+            ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
+            ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
+            ulong8[] r = new ulong8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong8", "test_ulong8_add");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -103,6 +113,67 @@ namespace OpenCl.Tests
             Assert.AreEqual(  96, r[1].s7);
         }
 
+        [Test]
+        public void TestAddSpir()
+        {
+            ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
+            ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
+            ulong8[] r = new ulong8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong8", "test_ulong8_add", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<ulong8>;
+                var mb = null as Mem<ulong8>;
+                var mr = null as Mem<ulong8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_ulong8_add");
+                    ma = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<ulong8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<ulong8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  12, r[0].s0);
+            Assert.AreEqual(  24, r[0].s1);
+            Assert.AreEqual(  36, r[0].s2);
+            Assert.AreEqual(  48, r[0].s3);
+            Assert.AreEqual(  60, r[0].s4);
+            Assert.AreEqual(  72, r[0].s5);
+            Assert.AreEqual(  84, r[0].s6);
+            Assert.AreEqual(  96, r[0].s7);
+            Assert.AreEqual(  12, r[1].s0);
+            Assert.AreEqual(  24, r[1].s1);
+            Assert.AreEqual(  36, r[1].s2);
+            Assert.AreEqual(  48, r[1].s3);
+            Assert.AreEqual(  60, r[1].s4);
+            Assert.AreEqual(  72, r[1].s5);
+            Assert.AreEqual(  84, r[1].s6);
+            Assert.AreEqual(  96, r[1].s7);
+        }
+
         [Kernel]
         private static void test_ulong8_sub([Global] ulong8[] a, [Global] ulong8[] b, [Global] ulong8[] r)
         {
@@ -111,7 +182,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestSub()
+        public void TestSubManaged()
         {
             ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
             ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
@@ -143,11 +214,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(18446744073709551604, r[1].s5);
             Assert.AreEqual(18446744073709551602, r[1].s6);
             Assert.AreEqual(18446744073709551600, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestSubCl()
+        {
+            ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
+            ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
+            ulong8[] r = new ulong8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong8", "test_ulong8_sub");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -198,6 +277,67 @@ namespace OpenCl.Tests
             Assert.AreEqual(18446744073709551600, r[1].s7);
         }
 
+        [Test]
+        public void TestSubSpir()
+        {
+            ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
+            ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
+            ulong8[] r = new ulong8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong8", "test_ulong8_sub", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<ulong8>;
+                var mb = null as Mem<ulong8>;
+                var mr = null as Mem<ulong8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_ulong8_sub");
+                    ma = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<ulong8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<ulong8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   2, r[0].s0);
+            Assert.AreEqual(   4, r[0].s1);
+            Assert.AreEqual(   6, r[0].s2);
+            Assert.AreEqual(   8, r[0].s3);
+            Assert.AreEqual(  10, r[0].s4);
+            Assert.AreEqual(  12, r[0].s5);
+            Assert.AreEqual(  14, r[0].s6);
+            Assert.AreEqual(  16, r[0].s7);
+            Assert.AreEqual(18446744073709551614, r[1].s0);
+            Assert.AreEqual(18446744073709551612, r[1].s1);
+            Assert.AreEqual(18446744073709551610, r[1].s2);
+            Assert.AreEqual(18446744073709551608, r[1].s3);
+            Assert.AreEqual(18446744073709551606, r[1].s4);
+            Assert.AreEqual(18446744073709551604, r[1].s5);
+            Assert.AreEqual(18446744073709551602, r[1].s6);
+            Assert.AreEqual(18446744073709551600, r[1].s7);
+        }
+
         [Kernel]
         private static void test_ulong8_mul([Global] ulong8[] a, [Global] ulong8[] b, [Global] ulong8[] r)
         {
@@ -206,7 +346,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestMul()
+        public void TestMulManaged()
         {
             ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
             ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
@@ -238,11 +378,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(1260, r[1].s5);
             Assert.AreEqual(1715, r[1].s6);
             Assert.AreEqual(2240, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestMulCl()
+        {
+            ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
+            ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
+            ulong8[] r = new ulong8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong8", "test_ulong8_mul");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -293,6 +441,67 @@ namespace OpenCl.Tests
             Assert.AreEqual(2240, r[1].s7);
         }
 
+        [Test]
+        public void TestMulSpir()
+        {
+            ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
+            ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
+            ulong8[] r = new ulong8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong8", "test_ulong8_mul", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<ulong8>;
+                var mb = null as Mem<ulong8>;
+                var mr = null as Mem<ulong8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_ulong8_mul");
+                    ma = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<ulong8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<ulong8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  35, r[0].s0);
+            Assert.AreEqual( 140, r[0].s1);
+            Assert.AreEqual( 315, r[0].s2);
+            Assert.AreEqual( 560, r[0].s3);
+            Assert.AreEqual( 875, r[0].s4);
+            Assert.AreEqual(1260, r[0].s5);
+            Assert.AreEqual(1715, r[0].s6);
+            Assert.AreEqual(2240, r[0].s7);
+            Assert.AreEqual(  35, r[1].s0);
+            Assert.AreEqual( 140, r[1].s1);
+            Assert.AreEqual( 315, r[1].s2);
+            Assert.AreEqual( 560, r[1].s3);
+            Assert.AreEqual( 875, r[1].s4);
+            Assert.AreEqual(1260, r[1].s5);
+            Assert.AreEqual(1715, r[1].s6);
+            Assert.AreEqual(2240, r[1].s7);
+        }
+
         [Kernel]
         private static void test_ulong8_div([Global] ulong8[] a, [Global] ulong8[] b, [Global] ulong8[] r)
         {
@@ -301,7 +510,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestDiv()
+        public void TestDivManaged()
         {
             ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
             ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
@@ -333,11 +542,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0, r[1].s5);
             Assert.AreEqual(   0, r[1].s6);
             Assert.AreEqual(   0, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestDivCl()
+        {
+            ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
+            ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
+            ulong8[] r = new ulong8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong8", "test_ulong8_div");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -351,6 +568,67 @@ namespace OpenCl.Tests
                 try {
                     program = Program.CreateProgramWithSource(context, new String[] { source });
                     try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
+                    kernel = Kernel.CreateKernel(program, "test_ulong8_div");
+                    ma = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<ulong8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<ulong8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   1, r[0].s0);
+            Assert.AreEqual(   1, r[0].s1);
+            Assert.AreEqual(   1, r[0].s2);
+            Assert.AreEqual(   1, r[0].s3);
+            Assert.AreEqual(   1, r[0].s4);
+            Assert.AreEqual(   1, r[0].s5);
+            Assert.AreEqual(   1, r[0].s6);
+            Assert.AreEqual(   1, r[0].s7);
+            Assert.AreEqual(   0, r[1].s0);
+            Assert.AreEqual(   0, r[1].s1);
+            Assert.AreEqual(   0, r[1].s2);
+            Assert.AreEqual(   0, r[1].s3);
+            Assert.AreEqual(   0, r[1].s4);
+            Assert.AreEqual(   0, r[1].s5);
+            Assert.AreEqual(   0, r[1].s6);
+            Assert.AreEqual(   0, r[1].s7);
+        }
+
+        [Test]
+        public void TestDivSpir()
+        {
+            ulong8[] a = new ulong8[] { new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56), new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40) };
+            ulong8[] b = new ulong8[] { new ulong8((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40), new ulong8((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56) };
+            ulong8[] r = new ulong8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong8", "test_ulong8_div", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<ulong8>;
+                var mb = null as Mem<ulong8>;
+                var mr = null as Mem<ulong8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
                     kernel = Kernel.CreateKernel(program, "test_ulong8_div");
                     ma = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
                     mb = Mem<ulong8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);

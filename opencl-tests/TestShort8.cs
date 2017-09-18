@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
 using OpenCl.Compiler;
@@ -16,7 +18,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAdd()
+        public void TestAddManaged()
         {
             short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
             short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
@@ -48,11 +50,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(  72, r[1].s5);
             Assert.AreEqual(  84, r[1].s6);
             Assert.AreEqual(  96, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestAddCl()
+        {
+            short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
+            short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
+            short8[] r = new short8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort8", "test_short8_add");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -103,6 +113,67 @@ namespace OpenCl.Tests
             Assert.AreEqual(  96, r[1].s7);
         }
 
+        [Test]
+        public void TestAddSpir()
+        {
+            short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
+            short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
+            short8[] r = new short8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort8", "test_short8_add", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<short8>;
+                var mb = null as Mem<short8>;
+                var mr = null as Mem<short8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_short8_add");
+                    ma = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<short8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  12, r[0].s0);
+            Assert.AreEqual(  24, r[0].s1);
+            Assert.AreEqual(  36, r[0].s2);
+            Assert.AreEqual(  48, r[0].s3);
+            Assert.AreEqual(  60, r[0].s4);
+            Assert.AreEqual(  72, r[0].s5);
+            Assert.AreEqual(  84, r[0].s6);
+            Assert.AreEqual(  96, r[0].s7);
+            Assert.AreEqual(  12, r[1].s0);
+            Assert.AreEqual(  24, r[1].s1);
+            Assert.AreEqual(  36, r[1].s2);
+            Assert.AreEqual(  48, r[1].s3);
+            Assert.AreEqual(  60, r[1].s4);
+            Assert.AreEqual(  72, r[1].s5);
+            Assert.AreEqual(  84, r[1].s6);
+            Assert.AreEqual(  96, r[1].s7);
+        }
+
         [Kernel]
         private static void test_short8_sub([Global] short8[] a, [Global] short8[] b, [Global] short8[] r)
         {
@@ -111,7 +182,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestSub()
+        public void TestSubManaged()
         {
             short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
             short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
@@ -143,11 +214,19 @@ namespace OpenCl.Tests
             Assert.AreEqual( -12, r[1].s5);
             Assert.AreEqual( -14, r[1].s6);
             Assert.AreEqual( -16, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestSubCl()
+        {
+            short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
+            short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
+            short8[] r = new short8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort8", "test_short8_sub");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -198,6 +277,67 @@ namespace OpenCl.Tests
             Assert.AreEqual( -16, r[1].s7);
         }
 
+        [Test]
+        public void TestSubSpir()
+        {
+            short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
+            short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
+            short8[] r = new short8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort8", "test_short8_sub", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<short8>;
+                var mb = null as Mem<short8>;
+                var mr = null as Mem<short8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_short8_sub");
+                    ma = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<short8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   2, r[0].s0);
+            Assert.AreEqual(   4, r[0].s1);
+            Assert.AreEqual(   6, r[0].s2);
+            Assert.AreEqual(   8, r[0].s3);
+            Assert.AreEqual(  10, r[0].s4);
+            Assert.AreEqual(  12, r[0].s5);
+            Assert.AreEqual(  14, r[0].s6);
+            Assert.AreEqual(  16, r[0].s7);
+            Assert.AreEqual(  -2, r[1].s0);
+            Assert.AreEqual(  -4, r[1].s1);
+            Assert.AreEqual(  -6, r[1].s2);
+            Assert.AreEqual(  -8, r[1].s3);
+            Assert.AreEqual( -10, r[1].s4);
+            Assert.AreEqual( -12, r[1].s5);
+            Assert.AreEqual( -14, r[1].s6);
+            Assert.AreEqual( -16, r[1].s7);
+        }
+
         [Kernel]
         private static void test_short8_mul([Global] short8[] a, [Global] short8[] b, [Global] short8[] r)
         {
@@ -206,7 +346,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestMul()
+        public void TestMulManaged()
         {
             short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
             short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
@@ -238,11 +378,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(1260, r[1].s5);
             Assert.AreEqual(1715, r[1].s6);
             Assert.AreEqual(2240, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestMulCl()
+        {
+            short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
+            short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
+            short8[] r = new short8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort8", "test_short8_mul");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -293,6 +441,67 @@ namespace OpenCl.Tests
             Assert.AreEqual(2240, r[1].s7);
         }
 
+        [Test]
+        public void TestMulSpir()
+        {
+            short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
+            short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
+            short8[] r = new short8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort8", "test_short8_mul", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<short8>;
+                var mb = null as Mem<short8>;
+                var mr = null as Mem<short8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_short8_mul");
+                    ma = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<short8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  35, r[0].s0);
+            Assert.AreEqual( 140, r[0].s1);
+            Assert.AreEqual( 315, r[0].s2);
+            Assert.AreEqual( 560, r[0].s3);
+            Assert.AreEqual( 875, r[0].s4);
+            Assert.AreEqual(1260, r[0].s5);
+            Assert.AreEqual(1715, r[0].s6);
+            Assert.AreEqual(2240, r[0].s7);
+            Assert.AreEqual(  35, r[1].s0);
+            Assert.AreEqual( 140, r[1].s1);
+            Assert.AreEqual( 315, r[1].s2);
+            Assert.AreEqual( 560, r[1].s3);
+            Assert.AreEqual( 875, r[1].s4);
+            Assert.AreEqual(1260, r[1].s5);
+            Assert.AreEqual(1715, r[1].s6);
+            Assert.AreEqual(2240, r[1].s7);
+        }
+
         [Kernel]
         private static void test_short8_div([Global] short8[] a, [Global] short8[] b, [Global] short8[] r)
         {
@@ -301,7 +510,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestDiv()
+        public void TestDivManaged()
         {
             short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
             short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
@@ -333,11 +542,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(   0, r[1].s5);
             Assert.AreEqual(   0, r[1].s6);
             Assert.AreEqual(   0, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestDivCl()
+        {
+            short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
+            short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
+            short8[] r = new short8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort8", "test_short8_div");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -351,6 +568,67 @@ namespace OpenCl.Tests
                 try {
                     program = Program.CreateProgramWithSource(context, new String[] { source });
                     try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
+                    kernel = Kernel.CreateKernel(program, "test_short8_div");
+                    ma = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<short8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short8>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   1, r[0].s0);
+            Assert.AreEqual(   1, r[0].s1);
+            Assert.AreEqual(   1, r[0].s2);
+            Assert.AreEqual(   1, r[0].s3);
+            Assert.AreEqual(   1, r[0].s4);
+            Assert.AreEqual(   1, r[0].s5);
+            Assert.AreEqual(   1, r[0].s6);
+            Assert.AreEqual(   1, r[0].s7);
+            Assert.AreEqual(   0, r[1].s0);
+            Assert.AreEqual(   0, r[1].s1);
+            Assert.AreEqual(   0, r[1].s2);
+            Assert.AreEqual(   0, r[1].s3);
+            Assert.AreEqual(   0, r[1].s4);
+            Assert.AreEqual(   0, r[1].s5);
+            Assert.AreEqual(   0, r[1].s6);
+            Assert.AreEqual(   0, r[1].s7);
+        }
+
+        [Test]
+        public void TestDivSpir()
+        {
+            short8[] a = new short8[] { new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56), new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40) };
+            short8[] b = new short8[] { new short8((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40), new short8((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56) };
+            short8[] r = new short8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort8", "test_short8_div", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<short8>;
+                var mb = null as Mem<short8>;
+                var mr = null as Mem<short8>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
                     kernel = Kernel.CreateKernel(program, "test_short8_div");
                     ma = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
                     mb = Mem<short8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);

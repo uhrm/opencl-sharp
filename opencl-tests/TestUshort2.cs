@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using NUnit.Framework;
 using OpenCl.Compiler;
@@ -16,7 +18,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAdd()
+        public void TestAddManaged()
         {
             ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
             ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
@@ -36,11 +38,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(  24, r[0].s1);
             Assert.AreEqual(  12, r[1].s0);
             Assert.AreEqual(  24, r[1].s1);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestAddCl()
+        {
+            ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
+            ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
+            ushort2[] r = new ushort2[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUshort2", "test_ushort2_add");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -79,6 +89,55 @@ namespace OpenCl.Tests
             Assert.AreEqual(  24, r[1].s1);
         }
 
+        [Test]
+        public void TestAddSpir()
+        {
+            ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
+            ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
+            ushort2[] r = new ushort2[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUshort2", "test_ushort2_add", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<ushort2>;
+                var mb = null as Mem<ushort2>;
+                var mr = null as Mem<ushort2>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_ushort2_add");
+                    ma = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<ushort2>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<ushort2>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  12, r[0].s0);
+            Assert.AreEqual(  24, r[0].s1);
+            Assert.AreEqual(  12, r[1].s0);
+            Assert.AreEqual(  24, r[1].s1);
+        }
+
         [Kernel]
         private static void test_ushort2_sub([Global] ushort2[] a, [Global] ushort2[] b, [Global] ushort2[] r)
         {
@@ -87,7 +146,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestSub()
+        public void TestSubManaged()
         {
             ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
             ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
@@ -107,11 +166,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(   4, r[0].s1);
             Assert.AreEqual(65534, r[1].s0);
             Assert.AreEqual(65532, r[1].s1);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestSubCl()
+        {
+            ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
+            ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
+            ushort2[] r = new ushort2[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUshort2", "test_ushort2_sub");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -150,6 +217,55 @@ namespace OpenCl.Tests
             Assert.AreEqual(65532, r[1].s1);
         }
 
+        [Test]
+        public void TestSubSpir()
+        {
+            ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
+            ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
+            ushort2[] r = new ushort2[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUshort2", "test_ushort2_sub", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<ushort2>;
+                var mb = null as Mem<ushort2>;
+                var mr = null as Mem<ushort2>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_ushort2_sub");
+                    ma = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<ushort2>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<ushort2>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   2, r[0].s0);
+            Assert.AreEqual(   4, r[0].s1);
+            Assert.AreEqual(65534, r[1].s0);
+            Assert.AreEqual(65532, r[1].s1);
+        }
+
         [Kernel]
         private static void test_ushort2_mul([Global] ushort2[] a, [Global] ushort2[] b, [Global] ushort2[] r)
         {
@@ -158,7 +274,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestMul()
+        public void TestMulManaged()
         {
             ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
             ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
@@ -178,11 +294,19 @@ namespace OpenCl.Tests
             Assert.AreEqual( 140, r[0].s1);
             Assert.AreEqual(  35, r[1].s0);
             Assert.AreEqual( 140, r[1].s1);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestMulCl()
+        {
+            ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
+            ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
+            ushort2[] r = new ushort2[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUshort2", "test_ushort2_mul");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -221,6 +345,55 @@ namespace OpenCl.Tests
             Assert.AreEqual( 140, r[1].s1);
         }
 
+        [Test]
+        public void TestMulSpir()
+        {
+            ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
+            ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
+            ushort2[] r = new ushort2[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUshort2", "test_ushort2_mul", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<ushort2>;
+                var mb = null as Mem<ushort2>;
+                var mr = null as Mem<ushort2>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
+                    kernel = Kernel.CreateKernel(program, "test_ushort2_mul");
+                    ma = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<ushort2>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<ushort2>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(  35, r[0].s0);
+            Assert.AreEqual( 140, r[0].s1);
+            Assert.AreEqual(  35, r[1].s0);
+            Assert.AreEqual( 140, r[1].s1);
+        }
+
         [Kernel]
         private static void test_ushort2_div([Global] ushort2[] a, [Global] ushort2[] b, [Global] ushort2[] r)
         {
@@ -229,7 +402,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestDiv()
+        public void TestDivManaged()
         {
             ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
             ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
@@ -249,11 +422,19 @@ namespace OpenCl.Tests
             Assert.AreEqual(   1, r[0].s1);
             Assert.AreEqual(   0, r[1].s0);
             Assert.AreEqual(   0, r[1].s1);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestDivCl()
+        {
+            ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
+            ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
+            ushort2[] r = new ushort2[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUshort2", "test_ushort2_div");
 
-            // test native
+            // test Cl kernel
             Platform platform = Platform.GetPlatformIDs()[0];
             Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
             using (var context = Context.CreateContext(platform, devices, null, null))
@@ -267,6 +448,55 @@ namespace OpenCl.Tests
                 try {
                     program = Program.CreateProgramWithSource(context, new String[] { source });
                     try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
+                    kernel = Kernel.CreateKernel(program, "test_ushort2_div");
+                    ma = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
+                    mb = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
+                    mr = Mem<ushort2>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<ushort2>());
+                    kernel.SetKernelArg(0, (HandleObject)ma);
+                    kernel.SetKernelArg(1, (HandleObject)mb);
+                    kernel.SetKernelArg(2, (HandleObject)mr);
+                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                    queue.Finish();
+                    queue.EnqueueReadBuffer(mr, true, r);
+                }
+                finally {
+                    if (mr != null) mr.Dispose();
+                    if (mb != null) mb.Dispose();
+                    if (ma != null) ma.Dispose();
+                    if (kernel != null) kernel.Dispose();
+                    if (program != null) program.Dispose();
+                }
+            }
+            Assert.AreEqual(   1, r[0].s0);
+            Assert.AreEqual(   1, r[0].s1);
+            Assert.AreEqual(   0, r[1].s0);
+            Assert.AreEqual(   0, r[1].s1);
+        }
+
+        [Test]
+        public void TestDivSpir()
+        {
+            ushort2[] a = new ushort2[] { new ushort2((ushort)   7, (ushort)  14), new ushort2((ushort)   5, (ushort)  10) };
+            ushort2[] b = new ushort2[] { new ushort2((ushort)   5, (ushort)  10), new ushort2((ushort)   7, (ushort)  14) };
+            ushort2[] r = new ushort2[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUshort2", "test_ushort2_div", module);
+
+            // test SPIR-V kernel
+            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            using (var context = Context.CreateContext(null, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            {
+                var program = null as Program;
+                var kernel = null as Kernel;
+                var ma = null as Mem<ushort2>;
+                var mb = null as Mem<ushort2>;
+                var mr = null as Mem<ushort2>;
+                try {
+                    program = Program.CreateProgramWithIL(context, module.ToArray());
+                    program.BuildProgram(device);
                     kernel = Kernel.CreateKernel(program, "test_ushort2_div");
                     ma = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
                     mb = Mem<ushort2>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
