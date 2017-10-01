@@ -67,13 +67,13 @@ namespace OpenCl.Samples
 
             ListDevices();
 
-            Console.WriteLine("*** Simple kernel sample");
-            Console.WriteLine("*** ");
-            SimpleKernelSample.Run();
-
-            // Console.WriteLine("*** Convolve sample");
+            // Console.WriteLine("*** Simple kernel sample");
             // Console.WriteLine("*** ");
-            // ConvolveSample.Run();
+            // SimpleKernelSample.Run();
+
+            Console.WriteLine("*** Convolve sample");
+            Console.WriteLine("*** ");
+            ConvolveSample.Run();
 
             // Console.WriteLine("*** BitronicSort sample");
             // Console.WriteLine("*** ");

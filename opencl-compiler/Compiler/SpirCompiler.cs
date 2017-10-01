@@ -13,6 +13,9 @@ namespace OpenCl.Compiler
         // compiles into SPIR-V Format
         // see: https://www.khronos.org/registry/spir-v/specs/1.1/SPIRV.html
 
+        private const int BUILTIN_WIDTH = 32;
+        private const int INTPTR_WIDTH = 32;
+
         private static readonly Dictionary<string,Func<Func<TypeOpCode,int>,TypeOpCode>> PrimitiveTypes = new Dictionary<string,Func<Func<TypeOpCode,int>,TypeOpCode>>()
         {
             { "System.Void",     f => new OpTypeVoid(f) },
@@ -27,8 +30,8 @@ namespace OpenCl.Compiler
             { "System.UInt32",   f => new OpTypeInt(f, 32/*, unsigned*/) },
             { "System.Int64",    f => new OpTypeInt(f, 64/*, signed*/) },
             { "System.UInt64",   f => new OpTypeInt(f, 64/*, unsigned*/) },
-            { "System.IntPtr",   f => new OpTypeInt(f, 8*Marshal.SizeOf<IntPtr>()/*, signed*/) },
-            { "System.UIntPtr",  f => new OpTypeInt(f, 8*Marshal.SizeOf<UIntPtr>()/*, unsigned*/) },
+            { "System.IntPtr",   f => new OpTypeInt(f, INTPTR_WIDTH/*, signed*/) },
+            { "System.UIntPtr",  f => new OpTypeInt(f, INTPTR_WIDTH/*, unsigned*/) },
             { "System.Single",   f => new OpTypeFloat(f, 32) },
             { "System.Double",   f => new OpTypeFloat(f, 64) },
 
@@ -1039,7 +1042,7 @@ namespace OpenCl.Compiler
                         if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
                             // type of import symbol
                             var t = new OpTypePointer(SpirTypeIdCallback, StorageClass.UniformConstant,
-                                        new OpTypeInt(SpirTypeIdCallback, 64));
+                                        new OpTypeInt(SpirTypeIdCallback, BUILTIN_WIDTH));
                             // import symbol
                             sym = new OpVariable(this.rcount++, t);
                             this.imports.Add(name, sym);
@@ -1061,7 +1064,7 @@ namespace OpenCl.Compiler
                             // type of import symbol
                             var t = new OpTypePointer(SpirTypeIdCallback, StorageClass.UniformConstant,
                                         new OpTypeVector(SpirTypeIdCallback, 3,
-                                            new OpTypeInt(SpirTypeIdCallback, 64)));
+                                            new OpTypeInt(SpirTypeIdCallback, BUILTIN_WIDTH)));
                             // import symbol
                             sym = new OpVariable(this.rcount++, t);
                             this.imports.Add(name, sym);
@@ -1083,7 +1086,7 @@ namespace OpenCl.Compiler
                             // type of import symbol
                             var t = new OpTypePointer(SpirTypeIdCallback, StorageClass.UniformConstant,
                                         new OpTypeVector(SpirTypeIdCallback, 3,
-                                            new OpTypeInt(SpirTypeIdCallback, 64)));
+                                            new OpTypeInt(SpirTypeIdCallback, BUILTIN_WIDTH)));
                             // import symbol
                             sym = new OpVariable(this.rcount++, t);
                             this.imports.Add(name, sym);

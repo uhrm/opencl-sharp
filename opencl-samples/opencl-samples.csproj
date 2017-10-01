@@ -5,7 +5,7 @@
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
     <StartupObject>OpenCl.Samples.MainProgram</StartupObject>
-    <StartWorkingDirectory>bin/$(Configuration)/$(TargetFramework)</StartWorkingDirectory>
+    <!--<StartWorkingDirectory>bin/$(Configuration)/$(TargetFramework)</StartWorkingDirectory>-->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 

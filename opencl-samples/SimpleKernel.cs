@@ -41,52 +41,6 @@ namespace OpenCl.Samples
             r[i] = a[i] + b[i];
         }
 
-        private static void RunNative(byte[] module)
-        {
-            var platform = Platform.GetPlatformIDs()[0];
-            var device = Device.GetDeviceIDs(platform, DeviceType.Cpu)[0];
-            var context = Context.CreateContext(platform, device, null, null);
-            var program = Program.CreateProgramWithBinary(context, device, module);
-            try {
-                program.BuildProgram(device, null, null, null);
-            }
-            catch (OpenClException) {
-                Console.WriteLine("*** Error creating kernel 'simple_kernel'");
-                return;
-            }
-            var kernel = Kernel.CreateKernel(program, "simple_kernel");
-            var abuf = Mem<int>.CreateBuffer(context, MemFlags.ReadWrite | MemFlags.CopyHostPtr, a);
-            if (abuf.Size < Marshal.SizeOf<int>()*a.Length) {
-                Console.WriteLine("*** Invalid 'abuf' MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<int>()*a.Length, abuf.Size);
-                return;
-            }
-            var bbuf = Mem<int>.CreateBuffer(context, MemFlags.ReadWrite | MemFlags.CopyHostPtr, b);
-            if (bbuf.Size < Marshal.SizeOf<int>()*b.Length) {
-                Console.WriteLine("*** Invalid 'bbuf' MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<int>()*b.Length, bbuf.Size);
-                return;
-            }
-            var rbuf = Mem<int>.CreateBuffer(context, MemFlags.ReadWrite | MemFlags.CopyHostPtr, len);
-            if (rbuf.Size < Marshal.SizeOf<int>()*len) {
-                Console.WriteLine("*** Invalid 'rbuf' MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<int>()*len, rbuf.Size);
-                return;
-            }
-            var queue = CommandQueue.CreateCommandQueue(context, device);
-
-            kernel.SetKernelArg(0, (HandleObject)abuf);
-            kernel.SetKernelArg(1, (HandleObject)bbuf);
-            kernel.SetKernelArg(2, (HandleObject)rbuf);
-
-            // set work-item dimensions
-            var global_work_size = new int[] { (len+3)/4 }; // number of quad items in input arrays
-            // execute kernel
-            queue.EnqueueNDRangeKernel(kernel, null, global_work_size, null, null);
-
-            var result = new int[len];
-            queue.EnqueueReadBuffer(rbuf, true, result);
-
-            PrintArray(result);
-        }
-
         private static void RunManaged()
         {
             GCHandle gch;
@@ -121,6 +75,52 @@ namespace OpenCl.Samples
             );
 
             PrintArray(rbuf);
+        }
+
+        private static void RunNative(byte[] module)
+        {
+            var platform = Platform.GetPlatformIDs()[0];
+            var device = Device.GetDeviceIDs(platform, DeviceType.Cpu)[0];
+            var context = Context.CreateContext(platform, device, null, null);
+            var program = Program.CreateProgramWithIL(context, module);
+            try {
+                program.BuildProgram(device);
+            }
+            catch (OpenClException) {
+                Console.WriteLine("*** Error creating kernel 'simple_kernel'");
+                return;
+            }
+            var kernel = Kernel.CreateKernel(program, "simple_kernel");
+            var abuf = Mem<int>.CreateBuffer(context, MemFlags.ReadWrite | MemFlags.CopyHostPtr, a);
+            if (abuf.Size < Marshal.SizeOf<int>()*a.Length) {
+                Console.WriteLine("*** Invalid 'abuf' MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<int>()*a.Length, abuf.Size);
+                return;
+            }
+            var bbuf = Mem<int>.CreateBuffer(context, MemFlags.ReadWrite | MemFlags.CopyHostPtr, b);
+            if (bbuf.Size < Marshal.SizeOf<int>()*b.Length) {
+                Console.WriteLine("*** Invalid 'bbuf' MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<int>()*b.Length, bbuf.Size);
+                return;
+            }
+            var rbuf = Mem<int>.CreateBuffer(context, MemFlags.ReadWrite, Marshal.SizeOf<int>()*((len+3) & ~3));
+            if (rbuf.Size < Marshal.SizeOf<int>()*len) {
+                Console.WriteLine("*** Invalid 'rbuf' MemObject size: expected >= {0}, found {1}.", Marshal.SizeOf<int>()*len, rbuf.Size);
+                return;
+            }
+            var queue = CommandQueue.CreateCommandQueue(context, device);
+
+            kernel.SetKernelArg(0, (HandleObject)abuf);
+            kernel.SetKernelArg(1, (HandleObject)bbuf);
+            kernel.SetKernelArg(2, (HandleObject)rbuf);
+
+            // set work-item dimensions
+            var global_work_size = new int[] { (len+3)/4 }; // number of quad items in input arrays
+            // execute kernel
+            queue.EnqueueNDRangeKernel(kernel, null, global_work_size, null, null);
+
+            var result = new int[len];
+            queue.EnqueueReadBuffer(rbuf, true, result);
+
+            PrintArray(result);
         }
 
         private static void PrintArray(int[] data) {
@@ -166,7 +166,7 @@ namespace OpenCl.Samples
             Console.WriteLine("*** Native SPIR-V:");
             Console.WriteLine("*** ");
             var module = new MemoryStream();
-            SpirCompiler.EmitKernel("opencl-samples.dll", "OpenCl.Samples.SimpleKernelSample", "SimpleKernel", module);
+            SpirCompiler.EmitKernel("opencl-samples", "OpenCl.Samples.SimpleKernelSample", "SimpleKernel", module);
 
             var buf = module.ToArray();
 
