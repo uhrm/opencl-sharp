@@ -136,7 +136,23 @@ namespace OpenCl.Compiler
             // name mangling for LLVM-based implementations
             // see: https://github.com/KhronosGroup/SPIRV-LLVM/blob/khronos/spirv-3.6.1/docs/SPIRVRepresentationInLLVM.rst#id16
             private static Dictionary<BuiltIn,string> symbols = new Dictionary<BuiltIn,string>() {
-                { BuiltIn.GlobalInvocationId, "__spirv_BuiltInGlobalInvocationId" }
+                { BuiltIn.WorkDim, "__spirv_BuiltInWorkDim" },
+                { BuiltIn.GlobalSize, "__spirv_BuiltInGlobalSize" },
+                { BuiltIn.GlobalInvocationId, "__spirv_BuiltInGlobalInvocationId" },
+                { BuiltIn.WorkgroupSize, "__spirv_BuiltInWorkgroupSize" },
+                { BuiltIn.EnqueuedWorkgroupSize, "__spirv_BuiltInEnqueuedWorkgroupSize" },
+                { BuiltIn.LocalInvocationId, "__spirv_BuiltInLocalInvocationId" },
+                { BuiltIn.NumWorkgroups, "__spirv_BuiltInNumWorkgroups" },
+                { BuiltIn.WorkgroupId, "__spirv_BuiltInWorkgroupId" },
+                { BuiltIn.GlobalOffset, "__spirv_BuiltInGlobalOffset" },
+                { BuiltIn.GlobalLinearId, "__spirv_BuiltInGlobalLinearId" },
+                { BuiltIn.LocalInvocationIndex, "__spirv_BuiltInLocalInvocationIndex" },
+                { BuiltIn.SubgroupSize, "__spirv_BuiltInSubgroupSize" },
+                { BuiltIn.SubgroupMaxSize, "__spirv_BuiltInSubgroupMaxSize" },
+                { BuiltIn.NumSubgroups, "__spirv_BuiltInNumSubgroups" },
+                { BuiltIn.NumEnqueuedSubgroups, "__spirv_BuiltInNumEnqueuedSubgroups" },
+                { BuiltIn.SubgroupId, "__spirv_BuiltInSubgroupId" },
+                { BuiltIn.SubgroupLocalInvocationId, "__spirv_BuiltInSubgroupLocalInvocationId" }
             };
 
             public readonly LinkageType linkage;
