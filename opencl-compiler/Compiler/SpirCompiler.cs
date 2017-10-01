@@ -602,8 +602,13 @@ namespace OpenCl.Compiler
                 case Code.Conv_Ovf_I:
                 case Code.Conv_Ovf_I_Un: {
                     var arg = stack.Pop();
-                    var op = GetConversionOpCode(arg, typeof(IntPtr));
+                    var op = GetConversionOpCode(arg, typeof(IntPtr)) as TypedResultOpCode;
+                    if ((op.ResultType as OpTypeInt)?.Width == (arg.ResultType as OpTypeInt)?.Width) {
+                        op = arg;
+                    }
+                    else {
                     funcdef.Add(op);
+                    }
                     stack.Push(op);
                     break;
                 }
