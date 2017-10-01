@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -138,7 +138,7 @@ namespace OpenCl.Compiler
             else if (type.IsArray || type.IsPointer) {
                 if (!storage.HasValue) {
                     throw new ArgumentNullException("storage");
-            }
+                }
                 return new OpTypePointer(SpirTypeIdCallback, storage.GetValueOrDefault(), GetTypeOpCode(type.GetElementType()));
             }
             else if (type.IsValueType) {
@@ -289,7 +289,7 @@ namespace OpenCl.Compiler
 
         private ConversionOpCode GetConversionOpCode(TypedResultOpCode src, Type dst)
         {
-            if (_convert_ops.TryGetValue(dst, out var /*Func<SpirCompiler,TypedResultOpCode,ConversionOpCode>*/ factory)) {
+            if (_convert_ops.TryGetValue(dst, out var factory)) {
                 return factory(this, src);
             }
             throw new CompilerException($"Unsupported type conversion: {src.ResultType} -> {dst}.");
@@ -365,8 +365,8 @@ namespace OpenCl.Compiler
             var stack = new Stack<TypedResultOpCode>();
             foreach (var instr in code) {
                 // emit label if current instruction is a branching target
-                if (labels.ContainsKey(instr.Offset)) {
-                    funcdef.Add(labels[instr.Offset]);
+                if (labels.TryGetValue(instr.Offset, out var label)) {
+                    funcdef.Add(label);
                 }
                 // main handler for current instruction
                 switch (instr.OpCode.Code)
@@ -606,7 +606,7 @@ namespace OpenCl.Compiler
                         op = arg;
                     }
                     else {
-                    funcdef.Add(op);
+                        funcdef.Add(op);
                     }
                     stack.Push(op);
                     break;
