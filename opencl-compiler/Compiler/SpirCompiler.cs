@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -788,7 +788,7 @@ namespace OpenCl.Compiler
                     break;
                 }
                 case Code.Stloc_3: {
-                    vars[2] = stack.Pop();
+                    vars[3] = stack.Pop();
                     break;
                 }
                 case Code.Stloc:
