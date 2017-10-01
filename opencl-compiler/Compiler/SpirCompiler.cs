@@ -127,18 +127,16 @@ namespace OpenCl.Compiler
             return id;
         }
 
-        private TypeOpCode GetTypeOpCode(Type type)
+        private TypeOpCode GetTypeOpCode(Type type, StorageClass? storage = null)
         {
-            return GetTypeOpCode(type, (StorageClass)0);
-        }
-
-        private TypeOpCode GetTypeOpCode(Type type, StorageClass storage)
-        {
-            if (PrimitiveTypes.TryGetValue(type.FullName, out var/*Func<Func<TypeOpCode,int>,TypeOpCode>*/ factory)) {
+            if (PrimitiveTypes.TryGetValue(type.FullName, out var factory)) {
                 return factory(SpirTypeIdCallback);
             }
             else if (type.IsArray || type.IsPointer) {
-                return new OpTypePointer(SpirTypeIdCallback, storage, GetTypeOpCode(type.GetElementType(), storage));
+                if (!storage.HasValue) {
+                    throw new ArgumentNullException("storage");
+            }
+                return new OpTypePointer(SpirTypeIdCallback, storage.GetValueOrDefault(), GetTypeOpCode(type.GetElementType()));
             }
             else if (type.IsValueType) {
                 throw new CompilerException($"Struct types are not yet supported: {type.FullName}.");
@@ -158,18 +156,16 @@ namespace OpenCl.Compiler
             return GetTypeOpCode(typeof(T), storage);
         }
 
-        private TypeOpCode GetTypeOpCode(TypeReference tr)
-        {
-            return GetTypeOpCode(tr, StorageClass.Function);
-        }
-
-        private TypeOpCode GetTypeOpCode(TypeReference tr, StorageClass storage)
+        private TypeOpCode GetTypeOpCode(TypeReference tr, StorageClass? storage = null)
         {
             if (PrimitiveTypes.TryGetValue(tr.FullName, out var factory)) {
                 return factory(SpirTypeIdCallback);
             }
             if (tr.IsArray || tr.IsPointer) {
-                return new OpTypePointer(SpirTypeIdCallback, storage, GetTypeOpCode(tr.GetElementType()));
+                if (!storage.HasValue) {
+                    throw new ArgumentNullException("storage");
+                }
+                return new OpTypePointer(SpirTypeIdCallback, storage.GetValueOrDefault(), GetTypeOpCode(tr.GetElementType()));
             }
             else if (tr.IsValueType) {
                 throw new CompilerException($"Struct types are not yet supported: {tr.FullName}.");
