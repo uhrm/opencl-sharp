@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1843,6 +1843,42 @@ namespace OpenCl.Compiler
         private class OpLogicalNot : LogicalUnaryOpCode
         {
             public OpLogicalNot(int rid, OpTypeBool resultType, TypedResultOpCode op) : base(rid, resultType, 168, op) { }
+        }
+
+        private class OpSelect : GenericOpCode
+        {
+            private readonly TypedResultOpCode cond;
+            private readonly TypedResultOpCode op1;
+            private readonly TypedResultOpCode op2;
+
+            public OpSelect(int rid, TypedResultOpCode cond, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, 169)
+            {
+                if (!(cond.ResultType is OpTypeBool)) {
+                    throw new ArgumentException($"Invalid type of 'cond' argument: expected OpTypeBool, found {cond.ResultType.GetType().Name}.");
+                }
+                if (!op1.ResultType.Equals(op2.ResultType)) {
+                    throw new ArgumentException($"Incmopatible select argument types: {op1.ResultType.GetType().Name}, found {op2.ResultType.GetType().Name}.");
+                }
+                this.cond = cond;
+                this.op1 = op1;
+                this.op2 = op2;
+            }
+
+            public override TypeOpCode ResultType
+            {
+                get { return this.op1.ResultType; }
+            }
+
+            public override void Emit(Stream stream)
+            {
+                stream.WriteShortLE(this.code);
+                stream.WriteShortLE(6);
+                stream.WriteIntLE(ResultType.ResultId);
+                stream.WriteIntLE(ResultId);
+                stream.WriteIntLE(this.cond.ResultId);
+                stream.WriteIntLE(this.op1.ResultId);
+                stream.WriteIntLE(this.op2.ResultId);
+            }
         }
 
         private class OpIEqual : LogicalBinaryOpCode

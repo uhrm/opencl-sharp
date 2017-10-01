@@ -1741,6 +1741,56 @@ namespace OpenCl.Compiler
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf});
                     break;
                 }
+                case Code.Ceq: {
+                    var b = stack.Pop();
+                    var a = stack.Pop();
+                    var cmp = new OpIEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    funcdef.Add(cmp);
+                    funcdef.Add(sel);
+                    stack.Push(sel);
+                    break;
+                }
+                case Code.Cgt: {
+                    var b = stack.Pop();
+                    var a = stack.Pop();
+                    var cmp = new OpSGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    funcdef.Add(cmp);
+                    funcdef.Add(sel);
+                    stack.Push(sel);
+                    break;
+                }
+                case Code.Cgt_Un: {
+                    var b = stack.Pop();
+                    var a = stack.Pop();
+                    var cmp = new OpUGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    funcdef.Add(cmp);
+                    funcdef.Add(sel);
+                    stack.Push(sel);
+                    break;
+                }
+                case Code.Clt: {
+                    var b = stack.Pop();
+                    var a = stack.Pop();
+                    var cmp = new OpSLessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    funcdef.Add(cmp);
+                    funcdef.Add(sel);
+                    stack.Push(sel);
+                    break;
+                }
+                case Code.Clt_Un: {
+                    var b = stack.Pop();
+                    var a = stack.Pop();
+                    var cmp = new OpULessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    funcdef.Add(cmp);
+                    funcdef.Add(sel);
+                    stack.Push(sel);
+                    break;
+                }
                 case Code.Ret:
                     if (method.ReturnType.FullName != "System.Void") {
                         funcdef.Add(new OpReturnValue(stack.Pop()));
