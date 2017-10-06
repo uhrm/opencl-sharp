@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace OpenCl
@@ -237,21 +238,17 @@ namespace OpenCl
     internal static class Cl
     {
 
-        internal static T GetInfo<T>(GetInfoDelegate method, IntPtr handle, uint name) where T: struct
+        internal static T GetInfo<T>(GetInfoDelegate method, IntPtr handle, uint name) where T : struct
         {
-            IntPtr size;
-            object result = default(T);
-            var h = GCHandle.Alloc(result, GCHandleType.Pinned);
-            try {
-                ErrorCode error = method(handle, name, (IntPtr)Marshal.SizeOf<T>(), h.AddrOfPinnedObject(), out size);
-                if (error != ErrorCode.Success) {
-                    throw new OpenClException(error);
-                }
+            T val = default(T);
+            ErrorCode error;
+            unsafe {
+                error = method(handle, name, (IntPtr)Marshal.SizeOf<T>(), (IntPtr)Unsafe.AsPointer(ref val), out var size);
             }
-            finally {
-                h.Free();
+            if (error != ErrorCode.Success) {
+                throw new OpenClException(error);
             }
-            return (T)result;
+            return val;
         }
 
         internal static string GetInfoString(GetInfoDelegate method, IntPtr handle, uint name)
@@ -276,39 +273,35 @@ namespace OpenCl
             return result;
         }
 
-        internal static T GetInfoEnum<T>(GetInfoDelegate method, IntPtr handle, uint name) where T: struct
+        internal static T GetInfoEnum<T>(GetInfoDelegate method, IntPtr handle, uint name) where T : struct
         {
-            var type = Enum.GetUnderlyingType(typeof(T));
-            var result = Activator.CreateInstance(type);
-            var size = (IntPtr)Marshal.SizeOf(type);
-            var h = GCHandle.Alloc(result, GCHandleType.Pinned);
-            try {
-                ErrorCode error = method(handle, name, size, h.AddrOfPinnedObject(), out size);
-                if (error != ErrorCode.Success) {
-                    throw new OpenClException(error);
-                }
+            T val = default(T);
+            ErrorCode error;
+            unsafe {
+                error = method(handle, name, (IntPtr)Marshal.SizeOf(Enum.GetUnderlyingType(typeof(T))), (IntPtr)Unsafe.AsPointer(ref val), out var size);
             }
-            finally {
-                h.Free();
-            }
-            return (T)result;
-        }
-
-        internal static T[] GetInfoArray<T>(GetInfoDelegate method, IntPtr handle, uint name) where T: struct
-        {
-            IntPtr size;
-            ErrorCode error = method(handle, name, IntPtr.Zero, IntPtr.Zero, out size);
             if (error != ErrorCode.Success) {
                 throw new OpenClException(error);
             }
-            int count = (int)size/Marshal.SizeOf<T>();
-            if (count*Marshal.SizeOf<T>() < (int)size) {
-                count++;
+            return val;
+        }
+
+        internal static T[] GetInfoArray<T>(GetInfoDelegate method, IntPtr handle, uint name) where T : struct
+        {
+            var elemSize = Marshal.SizeOf<T>();
+            IntPtr arraySize;
+            ErrorCode error = method(handle, name, IntPtr.Zero, IntPtr.Zero, out arraySize);
+            if (error != ErrorCode.Success) {
+                throw new OpenClException(error);
+            }
+            int count = (int)arraySize/elemSize;
+            if (count*elemSize < (int)arraySize) {
+                throw new InvalidOperationException($"Array size is incompatible with managed element size: array size = {arraySize}, sizeof({typeof(T)}) = {elemSize})");
             }
             T[] result = new T[count];
             GCHandle gch = GCHandle.Alloc(result, GCHandleType.Pinned);
             try {
-                error = method(handle, name, (IntPtr)(count*Marshal.SizeOf<T>()), gch.AddrOfPinnedObject(), out size);
+                error = method(handle, name, (IntPtr)(count*elemSize), gch.AddrOfPinnedObject(), out arraySize);
                 if (error != ErrorCode.Success) {
                     throw new OpenClException(error);
                 }
