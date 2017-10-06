@@ -120,7 +120,7 @@ namespace OpenCl
 
         public Device[] Devices
         {
-            get { return Device.FromIntPtr(Cl.GetInfoArray<IntPtr>(NativeMethods.clGetContextInfo, this.handle, CL_CONTEXT_REFERENCE_COUNT)); }
+            get { return Device.FromIntPtr(Cl.GetInfoArray<IntPtr>(NativeMethods.clGetContextInfo, this.handle, CL_CONTEXT_DEVICES)); }
         }
 
         public ContextProperty[] Properties
