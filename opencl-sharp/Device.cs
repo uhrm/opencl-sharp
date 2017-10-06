@@ -303,7 +303,7 @@ namespace OpenCl
         public Platform Platform
         {
             get {
-                var handle = Cl.GetInfo<IntPtr>(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_NAME);
+                var handle = Cl.GetInfo<IntPtr>(NativeMethods.clGetDeviceInfo, this.handle, CL_DEVICE_PLATFORM);
                 return new Platform(handle);
             }
         }
