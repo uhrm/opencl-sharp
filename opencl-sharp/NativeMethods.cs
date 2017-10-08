@@ -408,5 +408,12 @@ namespace OpenCl
         [DllImport("OpenCL")]
         internal static extern ErrorCode clReleaseEvent(IntPtr e);
 
+        //
+        // Extension Functions
+        //
+
+        [DllImport("OpenCL")]
+        internal static extern IntPtr clGetExtensionFunctionAddressForPlatform(IntPtr platform, string name);
+
     }
 }
