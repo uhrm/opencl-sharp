@@ -4,15 +4,10 @@ using System.Runtime.InteropServices;
 
 namespace OpenCl
 {
-    public interface IVectorType
-    {
-        int Rank { get; }
-        int Size { get; }
-    }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct sbyte2: IVectorType, IEquatable<sbyte2>
+    public struct sbyte2 : IEquatable<sbyte2>
     {
         [FieldOffset(0)]
         public sbyte s0;
@@ -105,18 +100,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 2; }
-        }
-
         // IEquatable
 
         public bool Equals(sbyte2 obj)
@@ -142,6 +125,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator sbyte2((sbyte,sbyte) t) => new sbyte2(t.Item1, t.Item2);
+
+        public static implicit operator (sbyte,sbyte)(sbyte2 v) => (v.s0, v.s1);
 
         public static sbyte2 operator +(sbyte2 a, sbyte2 b) => new sbyte2((sbyte)(a.s0+b.s0), (sbyte)(a.s1+b.s1));
 
@@ -178,11 +165,19 @@ namespace OpenCl
         public static sbyte2 operator ++(sbyte2 a) => new sbyte2((sbyte)(a.s0+1), (sbyte)(a.s1+1));
 
         public static sbyte2 operator --(sbyte2 a) => new sbyte2((sbyte)(a.s0-1), (sbyte)(a.s1-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out sbyte s0, out sbyte s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=4)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct sbyte3: IVectorType, IEquatable<sbyte3>
+    public struct sbyte3 : IEquatable<sbyte3>
     {
         [FieldOffset(0)]
         public sbyte s0;
@@ -511,18 +506,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 3; }
-        }
-
         // IEquatable
 
         public bool Equals(sbyte3 obj)
@@ -548,6 +531,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator sbyte3((sbyte,sbyte,sbyte) t) => new sbyte3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (sbyte,sbyte,sbyte)(sbyte3 v) => (v.s0, v.s1, v.s2);
 
         public static sbyte3 operator +(sbyte3 a, sbyte3 b) => new sbyte3((sbyte)(a.s0+b.s0), (sbyte)(a.s1+b.s1), (sbyte)(a.s2+b.s2));
 
@@ -584,11 +571,20 @@ namespace OpenCl
         public static sbyte3 operator ++(sbyte3 a) => new sbyte3((sbyte)(a.s0+1), (sbyte)(a.s1+1), (sbyte)(a.s2+1));
 
         public static sbyte3 operator --(sbyte3 a) => new sbyte3((sbyte)(a.s0-1), (sbyte)(a.s1-1), (sbyte)(a.s2-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out sbyte s0, out sbyte s1, out sbyte s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct sbyte4: IVectorType, IEquatable<sbyte4>
+    public struct sbyte4 : IEquatable<sbyte4>
     {
         [FieldOffset(0)]
         public sbyte s0;
@@ -2725,18 +2721,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 4; }
-        }
-
         // IEquatable
 
         public bool Equals(sbyte4 obj)
@@ -2762,6 +2746,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator sbyte4((sbyte,sbyte,sbyte,sbyte) t) => new sbyte4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (sbyte,sbyte,sbyte,sbyte)(sbyte4 v) => (v.s0, v.s1, v.s2, v.s3);
 
         public static sbyte4 operator +(sbyte4 a, sbyte4 b) => new sbyte4((sbyte)(a.s0+b.s0), (sbyte)(a.s1+b.s1), (sbyte)(a.s2+b.s2), (sbyte)(a.s3+b.s3));
 
@@ -2798,11 +2786,21 @@ namespace OpenCl
         public static sbyte4 operator ++(sbyte4 a) => new sbyte4((sbyte)(a.s0+1), (sbyte)(a.s1+1), (sbyte)(a.s2+1), (sbyte)(a.s3+1));
 
         public static sbyte4 operator --(sbyte4 a) => new sbyte4((sbyte)(a.s0-1), (sbyte)(a.s1-1), (sbyte)(a.s2-1), (sbyte)(a.s3-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out sbyte s0, out sbyte s1, out sbyte s2, out sbyte s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct sbyte8: IVectorType, IEquatable<sbyte8>
+    public struct sbyte8 : IEquatable<sbyte8>
     {
         [FieldOffset(0)]
         public sbyte s0;
@@ -2903,18 +2901,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 8; }
-        }
-
         // IEquatable
 
         public bool Equals(sbyte8 obj)
@@ -2940,6 +2926,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator sbyte8((sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte) t) => new sbyte8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte)(sbyte8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
 
         public static sbyte8 operator +(sbyte8 a, sbyte8 b) => new sbyte8((sbyte)(a.s0+b.s0), (sbyte)(a.s1+b.s1), (sbyte)(a.s2+b.s2), (sbyte)(a.s3+b.s3), (sbyte)(a.s4+b.s4), (sbyte)(a.s5+b.s5), (sbyte)(a.s6+b.s6), (sbyte)(a.s7+b.s7));
 
@@ -2976,11 +2966,25 @@ namespace OpenCl
         public static sbyte8 operator ++(sbyte8 a) => new sbyte8((sbyte)(a.s0+1), (sbyte)(a.s1+1), (sbyte)(a.s2+1), (sbyte)(a.s3+1), (sbyte)(a.s4+1), (sbyte)(a.s5+1), (sbyte)(a.s6+1), (sbyte)(a.s7+1));
 
         public static sbyte8 operator --(sbyte8 a) => new sbyte8((sbyte)(a.s0-1), (sbyte)(a.s1-1), (sbyte)(a.s2-1), (sbyte)(a.s3-1), (sbyte)(a.s4-1), (sbyte)(a.s5-1), (sbyte)(a.s6-1), (sbyte)(a.s7-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out sbyte s0, out sbyte s1, out sbyte s2, out sbyte s3, out sbyte s4, out sbyte s5, out sbyte s6, out sbyte s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct sbyte16: IVectorType, IEquatable<sbyte16>
+    public struct sbyte16 : IEquatable<sbyte16>
     {
         [FieldOffset(0)]
         public sbyte s0;
@@ -3189,18 +3193,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(sbyte16 obj)
@@ -3226,6 +3218,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator sbyte16((sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte) t) => new sbyte16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte,sbyte)(sbyte16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
 
         public static sbyte16 operator +(sbyte16 a, sbyte16 b) => new sbyte16((sbyte)(a.s0+b.s0), (sbyte)(a.s1+b.s1), (sbyte)(a.s2+b.s2), (sbyte)(a.s3+b.s3), (sbyte)(a.s4+b.s4), (sbyte)(a.s5+b.s5), (sbyte)(a.s6+b.s6), (sbyte)(a.s7+b.s7), (sbyte)(a.s8+b.s8), (sbyte)(a.s9+b.s9), (sbyte)(a.sa+b.sa), (sbyte)(a.sb+b.sb), (sbyte)(a.sc+b.sc), (sbyte)(a.sd+b.sd), (sbyte)(a.se+b.se), (sbyte)(a.sf+b.sf));
 
@@ -3262,11 +3258,33 @@ namespace OpenCl
         public static sbyte16 operator ++(sbyte16 a) => new sbyte16((sbyte)(a.s0+1), (sbyte)(a.s1+1), (sbyte)(a.s2+1), (sbyte)(a.s3+1), (sbyte)(a.s4+1), (sbyte)(a.s5+1), (sbyte)(a.s6+1), (sbyte)(a.s7+1), (sbyte)(a.s8+1), (sbyte)(a.s9+1), (sbyte)(a.sa+1), (sbyte)(a.sb+1), (sbyte)(a.sc+1), (sbyte)(a.sd+1), (sbyte)(a.se+1), (sbyte)(a.sf+1));
 
         public static sbyte16 operator --(sbyte16 a) => new sbyte16((sbyte)(a.s0-1), (sbyte)(a.s1-1), (sbyte)(a.s2-1), (sbyte)(a.s3-1), (sbyte)(a.s4-1), (sbyte)(a.s5-1), (sbyte)(a.s6-1), (sbyte)(a.s7-1), (sbyte)(a.s8-1), (sbyte)(a.s9-1), (sbyte)(a.sa-1), (sbyte)(a.sb-1), (sbyte)(a.sc-1), (sbyte)(a.sd-1), (sbyte)(a.se-1), (sbyte)(a.sf-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out sbyte s0, out sbyte s1, out sbyte s2, out sbyte s3, out sbyte s4, out sbyte s5, out sbyte s6, out sbyte s7, out sbyte s8, out sbyte s9, out sbyte sa, out sbyte sb, out sbyte sc, out sbyte sd, out sbyte se, out sbyte sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct byte2: IVectorType, IEquatable<byte2>
+    public struct byte2 : IEquatable<byte2>
     {
         [FieldOffset(0)]
         public byte s0;
@@ -3359,18 +3377,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 2; }
-        }
-
         // IEquatable
 
         public bool Equals(byte2 obj)
@@ -3396,6 +3402,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator byte2((byte,byte) t) => new byte2(t.Item1, t.Item2);
+
+        public static implicit operator (byte,byte)(byte2 v) => (v.s0, v.s1);
 
         public static byte2 operator +(byte2 a, byte2 b) => new byte2((byte)(a.s0+b.s0), (byte)(a.s1+b.s1));
 
@@ -3430,11 +3440,19 @@ namespace OpenCl
         public static byte2 operator ++(byte2 a) => new byte2((byte)(a.s0+1), (byte)(a.s1+1));
 
         public static byte2 operator --(byte2 a) => new byte2((byte)(a.s0-1), (byte)(a.s1-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out byte s0, out byte s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=4)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct byte3: IVectorType, IEquatable<byte3>
+    public struct byte3 : IEquatable<byte3>
     {
         [FieldOffset(0)]
         public byte s0;
@@ -3763,18 +3781,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 3; }
-        }
-
         // IEquatable
 
         public bool Equals(byte3 obj)
@@ -3800,6 +3806,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator byte3((byte,byte,byte) t) => new byte3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (byte,byte,byte)(byte3 v) => (v.s0, v.s1, v.s2);
 
         public static byte3 operator +(byte3 a, byte3 b) => new byte3((byte)(a.s0+b.s0), (byte)(a.s1+b.s1), (byte)(a.s2+b.s2));
 
@@ -3834,11 +3844,20 @@ namespace OpenCl
         public static byte3 operator ++(byte3 a) => new byte3((byte)(a.s0+1), (byte)(a.s1+1), (byte)(a.s2+1));
 
         public static byte3 operator --(byte3 a) => new byte3((byte)(a.s0-1), (byte)(a.s1-1), (byte)(a.s2-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out byte s0, out byte s1, out byte s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct byte4: IVectorType, IEquatable<byte4>
+    public struct byte4 : IEquatable<byte4>
     {
         [FieldOffset(0)]
         public byte s0;
@@ -5975,18 +5994,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 4; }
-        }
-
         // IEquatable
 
         public bool Equals(byte4 obj)
@@ -6012,6 +6019,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator byte4((byte,byte,byte,byte) t) => new byte4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (byte,byte,byte,byte)(byte4 v) => (v.s0, v.s1, v.s2, v.s3);
 
         public static byte4 operator +(byte4 a, byte4 b) => new byte4((byte)(a.s0+b.s0), (byte)(a.s1+b.s1), (byte)(a.s2+b.s2), (byte)(a.s3+b.s3));
 
@@ -6046,11 +6057,21 @@ namespace OpenCl
         public static byte4 operator ++(byte4 a) => new byte4((byte)(a.s0+1), (byte)(a.s1+1), (byte)(a.s2+1), (byte)(a.s3+1));
 
         public static byte4 operator --(byte4 a) => new byte4((byte)(a.s0-1), (byte)(a.s1-1), (byte)(a.s2-1), (byte)(a.s3-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out byte s0, out byte s1, out byte s2, out byte s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct byte8: IVectorType, IEquatable<byte8>
+    public struct byte8 : IEquatable<byte8>
     {
         [FieldOffset(0)]
         public byte s0;
@@ -6151,18 +6172,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 8; }
-        }
-
         // IEquatable
 
         public bool Equals(byte8 obj)
@@ -6188,6 +6197,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator byte8((byte,byte,byte,byte,byte,byte,byte,byte) t) => new byte8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (byte,byte,byte,byte,byte,byte,byte,byte)(byte8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
 
         public static byte8 operator +(byte8 a, byte8 b) => new byte8((byte)(a.s0+b.s0), (byte)(a.s1+b.s1), (byte)(a.s2+b.s2), (byte)(a.s3+b.s3), (byte)(a.s4+b.s4), (byte)(a.s5+b.s5), (byte)(a.s6+b.s6), (byte)(a.s7+b.s7));
 
@@ -6222,11 +6235,25 @@ namespace OpenCl
         public static byte8 operator ++(byte8 a) => new byte8((byte)(a.s0+1), (byte)(a.s1+1), (byte)(a.s2+1), (byte)(a.s3+1), (byte)(a.s4+1), (byte)(a.s5+1), (byte)(a.s6+1), (byte)(a.s7+1));
 
         public static byte8 operator --(byte8 a) => new byte8((byte)(a.s0-1), (byte)(a.s1-1), (byte)(a.s2-1), (byte)(a.s3-1), (byte)(a.s4-1), (byte)(a.s5-1), (byte)(a.s6-1), (byte)(a.s7-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out byte s0, out byte s1, out byte s2, out byte s3, out byte s4, out byte s5, out byte s6, out byte s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct byte16: IVectorType, IEquatable<byte16>
+    public struct byte16 : IEquatable<byte16>
     {
         [FieldOffset(0)]
         public byte s0;
@@ -6435,18 +6462,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(byte16 obj)
@@ -6472,6 +6487,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator byte16((byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte) t) => new byte16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte,byte)(byte16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
 
         public static byte16 operator +(byte16 a, byte16 b) => new byte16((byte)(a.s0+b.s0), (byte)(a.s1+b.s1), (byte)(a.s2+b.s2), (byte)(a.s3+b.s3), (byte)(a.s4+b.s4), (byte)(a.s5+b.s5), (byte)(a.s6+b.s6), (byte)(a.s7+b.s7), (byte)(a.s8+b.s8), (byte)(a.s9+b.s9), (byte)(a.sa+b.sa), (byte)(a.sb+b.sb), (byte)(a.sc+b.sc), (byte)(a.sd+b.sd), (byte)(a.se+b.se), (byte)(a.sf+b.sf));
 
@@ -6506,11 +6525,33 @@ namespace OpenCl
         public static byte16 operator ++(byte16 a) => new byte16((byte)(a.s0+1), (byte)(a.s1+1), (byte)(a.s2+1), (byte)(a.s3+1), (byte)(a.s4+1), (byte)(a.s5+1), (byte)(a.s6+1), (byte)(a.s7+1), (byte)(a.s8+1), (byte)(a.s9+1), (byte)(a.sa+1), (byte)(a.sb+1), (byte)(a.sc+1), (byte)(a.sd+1), (byte)(a.se+1), (byte)(a.sf+1));
 
         public static byte16 operator --(byte16 a) => new byte16((byte)(a.s0-1), (byte)(a.s1-1), (byte)(a.s2-1), (byte)(a.s3-1), (byte)(a.s4-1), (byte)(a.s5-1), (byte)(a.s6-1), (byte)(a.s7-1), (byte)(a.s8-1), (byte)(a.s9-1), (byte)(a.sa-1), (byte)(a.sb-1), (byte)(a.sc-1), (byte)(a.sd-1), (byte)(a.se-1), (byte)(a.sf-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out byte s0, out byte s1, out byte s2, out byte s3, out byte s4, out byte s5, out byte s6, out byte s7, out byte s8, out byte s9, out byte sa, out byte sb, out byte sc, out byte sd, out byte se, out byte sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct short2: IVectorType, IEquatable<short2>
+    public struct short2 : IEquatable<short2>
     {
         [FieldOffset(0)]
         public short s0;
@@ -6603,18 +6644,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 4; }
-        }
-
         // IEquatable
 
         public bool Equals(short2 obj)
@@ -6640,6 +6669,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator short2((short,short) t) => new short2(t.Item1, t.Item2);
+
+        public static implicit operator (short,short)(short2 v) => (v.s0, v.s1);
 
         public static short2 operator +(short2 a, short2 b) => new short2((short)(a.s0+b.s0), (short)(a.s1+b.s1));
 
@@ -6676,11 +6709,19 @@ namespace OpenCl
         public static short2 operator ++(short2 a) => new short2((short)(a.s0+1), (short)(a.s1+1));
 
         public static short2 operator --(short2 a) => new short2((short)(a.s0-1), (short)(a.s1-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out short s0, out short s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=8)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct short3: IVectorType, IEquatable<short3>
+    public struct short3 : IEquatable<short3>
     {
         [FieldOffset(0)]
         public short s0;
@@ -7009,18 +7050,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 6; }
-        }
-
         // IEquatable
 
         public bool Equals(short3 obj)
@@ -7046,6 +7075,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator short3((short,short,short) t) => new short3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (short,short,short)(short3 v) => (v.s0, v.s1, v.s2);
 
         public static short3 operator +(short3 a, short3 b) => new short3((short)(a.s0+b.s0), (short)(a.s1+b.s1), (short)(a.s2+b.s2));
 
@@ -7082,11 +7115,20 @@ namespace OpenCl
         public static short3 operator ++(short3 a) => new short3((short)(a.s0+1), (short)(a.s1+1), (short)(a.s2+1));
 
         public static short3 operator --(short3 a) => new short3((short)(a.s0-1), (short)(a.s1-1), (short)(a.s2-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out short s0, out short s1, out short s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct short4: IVectorType, IEquatable<short4>
+    public struct short4 : IEquatable<short4>
     {
         [FieldOffset(0)]
         public short s0;
@@ -9223,18 +9265,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 8; }
-        }
-
         // IEquatable
 
         public bool Equals(short4 obj)
@@ -9260,6 +9290,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator short4((short,short,short,short) t) => new short4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (short,short,short,short)(short4 v) => (v.s0, v.s1, v.s2, v.s3);
 
         public static short4 operator +(short4 a, short4 b) => new short4((short)(a.s0+b.s0), (short)(a.s1+b.s1), (short)(a.s2+b.s2), (short)(a.s3+b.s3));
 
@@ -9296,11 +9330,21 @@ namespace OpenCl
         public static short4 operator ++(short4 a) => new short4((short)(a.s0+1), (short)(a.s1+1), (short)(a.s2+1), (short)(a.s3+1));
 
         public static short4 operator --(short4 a) => new short4((short)(a.s0-1), (short)(a.s1-1), (short)(a.s2-1), (short)(a.s3-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out short s0, out short s1, out short s2, out short s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct short8: IVectorType, IEquatable<short8>
+    public struct short8 : IEquatable<short8>
     {
         [FieldOffset(0)]
         public short s0;
@@ -9401,18 +9445,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(short8 obj)
@@ -9438,6 +9470,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator short8((short,short,short,short,short,short,short,short) t) => new short8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (short,short,short,short,short,short,short,short)(short8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
 
         public static short8 operator +(short8 a, short8 b) => new short8((short)(a.s0+b.s0), (short)(a.s1+b.s1), (short)(a.s2+b.s2), (short)(a.s3+b.s3), (short)(a.s4+b.s4), (short)(a.s5+b.s5), (short)(a.s6+b.s6), (short)(a.s7+b.s7));
 
@@ -9474,11 +9510,25 @@ namespace OpenCl
         public static short8 operator ++(short8 a) => new short8((short)(a.s0+1), (short)(a.s1+1), (short)(a.s2+1), (short)(a.s3+1), (short)(a.s4+1), (short)(a.s5+1), (short)(a.s6+1), (short)(a.s7+1));
 
         public static short8 operator --(short8 a) => new short8((short)(a.s0-1), (short)(a.s1-1), (short)(a.s2-1), (short)(a.s3-1), (short)(a.s4-1), (short)(a.s5-1), (short)(a.s6-1), (short)(a.s7-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out short s0, out short s1, out short s2, out short s3, out short s4, out short s5, out short s6, out short s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct short16: IVectorType, IEquatable<short16>
+    public struct short16 : IEquatable<short16>
     {
         [FieldOffset(0)]
         public short s0;
@@ -9687,18 +9737,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 32; }
-        }
-
         // IEquatable
 
         public bool Equals(short16 obj)
@@ -9724,6 +9762,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator short16((short,short,short,short,short,short,short,short,short,short,short,short,short,short,short,short) t) => new short16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (short,short,short,short,short,short,short,short,short,short,short,short,short,short,short,short)(short16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
 
         public static short16 operator +(short16 a, short16 b) => new short16((short)(a.s0+b.s0), (short)(a.s1+b.s1), (short)(a.s2+b.s2), (short)(a.s3+b.s3), (short)(a.s4+b.s4), (short)(a.s5+b.s5), (short)(a.s6+b.s6), (short)(a.s7+b.s7), (short)(a.s8+b.s8), (short)(a.s9+b.s9), (short)(a.sa+b.sa), (short)(a.sb+b.sb), (short)(a.sc+b.sc), (short)(a.sd+b.sd), (short)(a.se+b.se), (short)(a.sf+b.sf));
 
@@ -9760,11 +9802,33 @@ namespace OpenCl
         public static short16 operator ++(short16 a) => new short16((short)(a.s0+1), (short)(a.s1+1), (short)(a.s2+1), (short)(a.s3+1), (short)(a.s4+1), (short)(a.s5+1), (short)(a.s6+1), (short)(a.s7+1), (short)(a.s8+1), (short)(a.s9+1), (short)(a.sa+1), (short)(a.sb+1), (short)(a.sc+1), (short)(a.sd+1), (short)(a.se+1), (short)(a.sf+1));
 
         public static short16 operator --(short16 a) => new short16((short)(a.s0-1), (short)(a.s1-1), (short)(a.s2-1), (short)(a.s3-1), (short)(a.s4-1), (short)(a.s5-1), (short)(a.s6-1), (short)(a.s7-1), (short)(a.s8-1), (short)(a.s9-1), (short)(a.sa-1), (short)(a.sb-1), (short)(a.sc-1), (short)(a.sd-1), (short)(a.se-1), (short)(a.sf-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out short s0, out short s1, out short s2, out short s3, out short s4, out short s5, out short s6, out short s7, out short s8, out short s9, out short sa, out short sb, out short sc, out short sd, out short se, out short sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct ushort2: IVectorType, IEquatable<ushort2>
+    public struct ushort2 : IEquatable<ushort2>
     {
         [FieldOffset(0)]
         public ushort s0;
@@ -9857,18 +9921,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 4; }
-        }
-
         // IEquatable
 
         public bool Equals(ushort2 obj)
@@ -9894,6 +9946,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ushort2((ushort,ushort) t) => new ushort2(t.Item1, t.Item2);
+
+        public static implicit operator (ushort,ushort)(ushort2 v) => (v.s0, v.s1);
 
         public static ushort2 operator +(ushort2 a, ushort2 b) => new ushort2((ushort)(a.s0+b.s0), (ushort)(a.s1+b.s1));
 
@@ -9928,11 +9984,19 @@ namespace OpenCl
         public static ushort2 operator ++(ushort2 a) => new ushort2((ushort)(a.s0+1), (ushort)(a.s1+1));
 
         public static ushort2 operator --(ushort2 a) => new ushort2((ushort)(a.s0-1), (ushort)(a.s1-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ushort s0, out ushort s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=8)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct ushort3: IVectorType, IEquatable<ushort3>
+    public struct ushort3 : IEquatable<ushort3>
     {
         [FieldOffset(0)]
         public ushort s0;
@@ -10261,18 +10325,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 6; }
-        }
-
         // IEquatable
 
         public bool Equals(ushort3 obj)
@@ -10298,6 +10350,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ushort3((ushort,ushort,ushort) t) => new ushort3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (ushort,ushort,ushort)(ushort3 v) => (v.s0, v.s1, v.s2);
 
         public static ushort3 operator +(ushort3 a, ushort3 b) => new ushort3((ushort)(a.s0+b.s0), (ushort)(a.s1+b.s1), (ushort)(a.s2+b.s2));
 
@@ -10332,11 +10388,20 @@ namespace OpenCl
         public static ushort3 operator ++(ushort3 a) => new ushort3((ushort)(a.s0+1), (ushort)(a.s1+1), (ushort)(a.s2+1));
 
         public static ushort3 operator --(ushort3 a) => new ushort3((ushort)(a.s0-1), (ushort)(a.s1-1), (ushort)(a.s2-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ushort s0, out ushort s1, out ushort s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct ushort4: IVectorType, IEquatable<ushort4>
+    public struct ushort4 : IEquatable<ushort4>
     {
         [FieldOffset(0)]
         public ushort s0;
@@ -12473,18 +12538,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 8; }
-        }
-
         // IEquatable
 
         public bool Equals(ushort4 obj)
@@ -12510,6 +12563,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ushort4((ushort,ushort,ushort,ushort) t) => new ushort4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (ushort,ushort,ushort,ushort)(ushort4 v) => (v.s0, v.s1, v.s2, v.s3);
 
         public static ushort4 operator +(ushort4 a, ushort4 b) => new ushort4((ushort)(a.s0+b.s0), (ushort)(a.s1+b.s1), (ushort)(a.s2+b.s2), (ushort)(a.s3+b.s3));
 
@@ -12544,11 +12601,21 @@ namespace OpenCl
         public static ushort4 operator ++(ushort4 a) => new ushort4((ushort)(a.s0+1), (ushort)(a.s1+1), (ushort)(a.s2+1), (ushort)(a.s3+1));
 
         public static ushort4 operator --(ushort4 a) => new ushort4((ushort)(a.s0-1), (ushort)(a.s1-1), (ushort)(a.s2-1), (ushort)(a.s3-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ushort s0, out ushort s1, out ushort s2, out ushort s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct ushort8: IVectorType, IEquatable<ushort8>
+    public struct ushort8 : IEquatable<ushort8>
     {
         [FieldOffset(0)]
         public ushort s0;
@@ -12649,18 +12716,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(ushort8 obj)
@@ -12686,6 +12741,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ushort8((ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort) t) => new ushort8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort)(ushort8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
 
         public static ushort8 operator +(ushort8 a, ushort8 b) => new ushort8((ushort)(a.s0+b.s0), (ushort)(a.s1+b.s1), (ushort)(a.s2+b.s2), (ushort)(a.s3+b.s3), (ushort)(a.s4+b.s4), (ushort)(a.s5+b.s5), (ushort)(a.s6+b.s6), (ushort)(a.s7+b.s7));
 
@@ -12720,11 +12779,25 @@ namespace OpenCl
         public static ushort8 operator ++(ushort8 a) => new ushort8((ushort)(a.s0+1), (ushort)(a.s1+1), (ushort)(a.s2+1), (ushort)(a.s3+1), (ushort)(a.s4+1), (ushort)(a.s5+1), (ushort)(a.s6+1), (ushort)(a.s7+1));
 
         public static ushort8 operator --(ushort8 a) => new ushort8((ushort)(a.s0-1), (ushort)(a.s1-1), (ushort)(a.s2-1), (ushort)(a.s3-1), (ushort)(a.s4-1), (ushort)(a.s5-1), (ushort)(a.s6-1), (ushort)(a.s7-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ushort s0, out ushort s1, out ushort s2, out ushort s3, out ushort s4, out ushort s5, out ushort s6, out ushort s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct ushort16: IVectorType, IEquatable<ushort16>
+    public struct ushort16 : IEquatable<ushort16>
     {
         [FieldOffset(0)]
         public ushort s0;
@@ -12933,18 +13006,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 32; }
-        }
-
         // IEquatable
 
         public bool Equals(ushort16 obj)
@@ -12970,6 +13031,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ushort16((ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort) t) => new ushort16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort,ushort)(ushort16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
 
         public static ushort16 operator +(ushort16 a, ushort16 b) => new ushort16((ushort)(a.s0+b.s0), (ushort)(a.s1+b.s1), (ushort)(a.s2+b.s2), (ushort)(a.s3+b.s3), (ushort)(a.s4+b.s4), (ushort)(a.s5+b.s5), (ushort)(a.s6+b.s6), (ushort)(a.s7+b.s7), (ushort)(a.s8+b.s8), (ushort)(a.s9+b.s9), (ushort)(a.sa+b.sa), (ushort)(a.sb+b.sb), (ushort)(a.sc+b.sc), (ushort)(a.sd+b.sd), (ushort)(a.se+b.se), (ushort)(a.sf+b.sf));
 
@@ -13004,11 +13069,33 @@ namespace OpenCl
         public static ushort16 operator ++(ushort16 a) => new ushort16((ushort)(a.s0+1), (ushort)(a.s1+1), (ushort)(a.s2+1), (ushort)(a.s3+1), (ushort)(a.s4+1), (ushort)(a.s5+1), (ushort)(a.s6+1), (ushort)(a.s7+1), (ushort)(a.s8+1), (ushort)(a.s9+1), (ushort)(a.sa+1), (ushort)(a.sb+1), (ushort)(a.sc+1), (ushort)(a.sd+1), (ushort)(a.se+1), (ushort)(a.sf+1));
 
         public static ushort16 operator --(ushort16 a) => new ushort16((ushort)(a.s0-1), (ushort)(a.s1-1), (ushort)(a.s2-1), (ushort)(a.s3-1), (ushort)(a.s4-1), (ushort)(a.s5-1), (ushort)(a.s6-1), (ushort)(a.s7-1), (ushort)(a.s8-1), (ushort)(a.s9-1), (ushort)(a.sa-1), (ushort)(a.sb-1), (ushort)(a.sc-1), (ushort)(a.sd-1), (ushort)(a.se-1), (ushort)(a.sf-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ushort s0, out ushort s1, out ushort s2, out ushort s3, out ushort s4, out ushort s5, out ushort s6, out ushort s7, out ushort s8, out ushort s9, out ushort sa, out ushort sb, out ushort sc, out ushort sd, out ushort se, out ushort sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct int2: IVectorType, IEquatable<int2>
+    public struct int2 : IEquatable<int2>
     {
         [FieldOffset(0)]
         public int s0;
@@ -13101,18 +13188,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 8; }
-        }
-
         // IEquatable
 
         public bool Equals(int2 obj)
@@ -13138,6 +13213,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator int2((int,int) t) => new int2(t.Item1, t.Item2);
+
+        public static implicit operator (int,int)(int2 v) => (v.s0, v.s1);
 
         public static int2 operator +(int2 a, int2 b) => new int2((int)(a.s0+b.s0), (int)(a.s1+b.s1));
 
@@ -13174,11 +13253,19 @@ namespace OpenCl
         public static int2 operator ++(int2 a) => new int2((int)(a.s0+1), (int)(a.s1+1));
 
         public static int2 operator --(int2 a) => new int2((int)(a.s0-1), (int)(a.s1-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out int s0, out int s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=16)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct int3: IVectorType, IEquatable<int3>
+    public struct int3 : IEquatable<int3>
     {
         [FieldOffset(0)]
         public int s0;
@@ -13507,18 +13594,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 12; }
-        }
-
         // IEquatable
 
         public bool Equals(int3 obj)
@@ -13544,6 +13619,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator int3((int,int,int) t) => new int3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (int,int,int)(int3 v) => (v.s0, v.s1, v.s2);
 
         public static int3 operator +(int3 a, int3 b) => new int3((int)(a.s0+b.s0), (int)(a.s1+b.s1), (int)(a.s2+b.s2));
 
@@ -13580,11 +13659,20 @@ namespace OpenCl
         public static int3 operator ++(int3 a) => new int3((int)(a.s0+1), (int)(a.s1+1), (int)(a.s2+1));
 
         public static int3 operator --(int3 a) => new int3((int)(a.s0-1), (int)(a.s1-1), (int)(a.s2-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out int s0, out int s1, out int s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct int4: IVectorType, IEquatable<int4>
+    public struct int4 : IEquatable<int4>
     {
         [FieldOffset(0)]
         public int s0;
@@ -15721,18 +15809,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(int4 obj)
@@ -15758,6 +15834,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator int4((int,int,int,int) t) => new int4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (int,int,int,int)(int4 v) => (v.s0, v.s1, v.s2, v.s3);
 
         public static int4 operator +(int4 a, int4 b) => new int4((int)(a.s0+b.s0), (int)(a.s1+b.s1), (int)(a.s2+b.s2), (int)(a.s3+b.s3));
 
@@ -15794,11 +15874,21 @@ namespace OpenCl
         public static int4 operator ++(int4 a) => new int4((int)(a.s0+1), (int)(a.s1+1), (int)(a.s2+1), (int)(a.s3+1));
 
         public static int4 operator --(int4 a) => new int4((int)(a.s0-1), (int)(a.s1-1), (int)(a.s2-1), (int)(a.s3-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out int s0, out int s1, out int s2, out int s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct int8: IVectorType, IEquatable<int8>
+    public struct int8 : IEquatable<int8>
     {
         [FieldOffset(0)]
         public int s0;
@@ -15899,18 +15989,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 32; }
-        }
-
         // IEquatable
 
         public bool Equals(int8 obj)
@@ -15936,6 +16014,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator int8((int,int,int,int,int,int,int,int) t) => new int8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (int,int,int,int,int,int,int,int)(int8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
 
         public static int8 operator +(int8 a, int8 b) => new int8((int)(a.s0+b.s0), (int)(a.s1+b.s1), (int)(a.s2+b.s2), (int)(a.s3+b.s3), (int)(a.s4+b.s4), (int)(a.s5+b.s5), (int)(a.s6+b.s6), (int)(a.s7+b.s7));
 
@@ -15972,11 +16054,25 @@ namespace OpenCl
         public static int8 operator ++(int8 a) => new int8((int)(a.s0+1), (int)(a.s1+1), (int)(a.s2+1), (int)(a.s3+1), (int)(a.s4+1), (int)(a.s5+1), (int)(a.s6+1), (int)(a.s7+1));
 
         public static int8 operator --(int8 a) => new int8((int)(a.s0-1), (int)(a.s1-1), (int)(a.s2-1), (int)(a.s3-1), (int)(a.s4-1), (int)(a.s5-1), (int)(a.s6-1), (int)(a.s7-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out int s0, out int s1, out int s2, out int s3, out int s4, out int s5, out int s6, out int s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct int16: IVectorType, IEquatable<int16>
+    public struct int16 : IEquatable<int16>
     {
         [FieldOffset(0)]
         public int s0;
@@ -16185,18 +16281,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 64; }
-        }
-
         // IEquatable
 
         public bool Equals(int16 obj)
@@ -16222,6 +16306,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator int16((int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int) t) => new int16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int)(int16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
 
         public static int16 operator +(int16 a, int16 b) => new int16((int)(a.s0+b.s0), (int)(a.s1+b.s1), (int)(a.s2+b.s2), (int)(a.s3+b.s3), (int)(a.s4+b.s4), (int)(a.s5+b.s5), (int)(a.s6+b.s6), (int)(a.s7+b.s7), (int)(a.s8+b.s8), (int)(a.s9+b.s9), (int)(a.sa+b.sa), (int)(a.sb+b.sb), (int)(a.sc+b.sc), (int)(a.sd+b.sd), (int)(a.se+b.se), (int)(a.sf+b.sf));
 
@@ -16258,11 +16346,33 @@ namespace OpenCl
         public static int16 operator ++(int16 a) => new int16((int)(a.s0+1), (int)(a.s1+1), (int)(a.s2+1), (int)(a.s3+1), (int)(a.s4+1), (int)(a.s5+1), (int)(a.s6+1), (int)(a.s7+1), (int)(a.s8+1), (int)(a.s9+1), (int)(a.sa+1), (int)(a.sb+1), (int)(a.sc+1), (int)(a.sd+1), (int)(a.se+1), (int)(a.sf+1));
 
         public static int16 operator --(int16 a) => new int16((int)(a.s0-1), (int)(a.s1-1), (int)(a.s2-1), (int)(a.s3-1), (int)(a.s4-1), (int)(a.s5-1), (int)(a.s6-1), (int)(a.s7-1), (int)(a.s8-1), (int)(a.s9-1), (int)(a.sa-1), (int)(a.sb-1), (int)(a.sc-1), (int)(a.sd-1), (int)(a.se-1), (int)(a.sf-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out int s0, out int s1, out int s2, out int s3, out int s4, out int s5, out int s6, out int s7, out int s8, out int s9, out int sa, out int sb, out int sc, out int sd, out int se, out int sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct uint2: IVectorType, IEquatable<uint2>
+    public struct uint2 : IEquatable<uint2>
     {
         [FieldOffset(0)]
         public uint s0;
@@ -16355,18 +16465,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 8; }
-        }
-
         // IEquatable
 
         public bool Equals(uint2 obj)
@@ -16392,6 +16490,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator uint2((uint,uint) t) => new uint2(t.Item1, t.Item2);
+
+        public static implicit operator (uint,uint)(uint2 v) => (v.s0, v.s1);
 
         public static uint2 operator +(uint2 a, uint2 b) => new uint2((uint)(a.s0+b.s0), (uint)(a.s1+b.s1));
 
@@ -16426,11 +16528,19 @@ namespace OpenCl
         public static uint2 operator ++(uint2 a) => new uint2((uint)(a.s0+1), (uint)(a.s1+1));
 
         public static uint2 operator --(uint2 a) => new uint2((uint)(a.s0-1), (uint)(a.s1-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out uint s0, out uint s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=16)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct uint3: IVectorType, IEquatable<uint3>
+    public struct uint3 : IEquatable<uint3>
     {
         [FieldOffset(0)]
         public uint s0;
@@ -16759,18 +16869,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 12; }
-        }
-
         // IEquatable
 
         public bool Equals(uint3 obj)
@@ -16796,6 +16894,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator uint3((uint,uint,uint) t) => new uint3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (uint,uint,uint)(uint3 v) => (v.s0, v.s1, v.s2);
 
         public static uint3 operator +(uint3 a, uint3 b) => new uint3((uint)(a.s0+b.s0), (uint)(a.s1+b.s1), (uint)(a.s2+b.s2));
 
@@ -16830,11 +16932,20 @@ namespace OpenCl
         public static uint3 operator ++(uint3 a) => new uint3((uint)(a.s0+1), (uint)(a.s1+1), (uint)(a.s2+1));
 
         public static uint3 operator --(uint3 a) => new uint3((uint)(a.s0-1), (uint)(a.s1-1), (uint)(a.s2-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out uint s0, out uint s1, out uint s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct uint4: IVectorType, IEquatable<uint4>
+    public struct uint4 : IEquatable<uint4>
     {
         [FieldOffset(0)]
         public uint s0;
@@ -18971,18 +19082,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(uint4 obj)
@@ -19008,6 +19107,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator uint4((uint,uint,uint,uint) t) => new uint4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (uint,uint,uint,uint)(uint4 v) => (v.s0, v.s1, v.s2, v.s3);
 
         public static uint4 operator +(uint4 a, uint4 b) => new uint4((uint)(a.s0+b.s0), (uint)(a.s1+b.s1), (uint)(a.s2+b.s2), (uint)(a.s3+b.s3));
 
@@ -19042,11 +19145,21 @@ namespace OpenCl
         public static uint4 operator ++(uint4 a) => new uint4((uint)(a.s0+1), (uint)(a.s1+1), (uint)(a.s2+1), (uint)(a.s3+1));
 
         public static uint4 operator --(uint4 a) => new uint4((uint)(a.s0-1), (uint)(a.s1-1), (uint)(a.s2-1), (uint)(a.s3-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out uint s0, out uint s1, out uint s2, out uint s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct uint8: IVectorType, IEquatable<uint8>
+    public struct uint8 : IEquatable<uint8>
     {
         [FieldOffset(0)]
         public uint s0;
@@ -19147,18 +19260,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 32; }
-        }
-
         // IEquatable
 
         public bool Equals(uint8 obj)
@@ -19184,6 +19285,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator uint8((uint,uint,uint,uint,uint,uint,uint,uint) t) => new uint8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (uint,uint,uint,uint,uint,uint,uint,uint)(uint8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
 
         public static uint8 operator +(uint8 a, uint8 b) => new uint8((uint)(a.s0+b.s0), (uint)(a.s1+b.s1), (uint)(a.s2+b.s2), (uint)(a.s3+b.s3), (uint)(a.s4+b.s4), (uint)(a.s5+b.s5), (uint)(a.s6+b.s6), (uint)(a.s7+b.s7));
 
@@ -19218,11 +19323,25 @@ namespace OpenCl
         public static uint8 operator ++(uint8 a) => new uint8((uint)(a.s0+1), (uint)(a.s1+1), (uint)(a.s2+1), (uint)(a.s3+1), (uint)(a.s4+1), (uint)(a.s5+1), (uint)(a.s6+1), (uint)(a.s7+1));
 
         public static uint8 operator --(uint8 a) => new uint8((uint)(a.s0-1), (uint)(a.s1-1), (uint)(a.s2-1), (uint)(a.s3-1), (uint)(a.s4-1), (uint)(a.s5-1), (uint)(a.s6-1), (uint)(a.s7-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out uint s0, out uint s1, out uint s2, out uint s3, out uint s4, out uint s5, out uint s6, out uint s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct uint16: IVectorType, IEquatable<uint16>
+    public struct uint16 : IEquatable<uint16>
     {
         [FieldOffset(0)]
         public uint s0;
@@ -19431,18 +19550,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 64; }
-        }
-
         // IEquatable
 
         public bool Equals(uint16 obj)
@@ -19468,6 +19575,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator uint16((uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint) t) => new uint16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint)(uint16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
 
         public static uint16 operator +(uint16 a, uint16 b) => new uint16((uint)(a.s0+b.s0), (uint)(a.s1+b.s1), (uint)(a.s2+b.s2), (uint)(a.s3+b.s3), (uint)(a.s4+b.s4), (uint)(a.s5+b.s5), (uint)(a.s6+b.s6), (uint)(a.s7+b.s7), (uint)(a.s8+b.s8), (uint)(a.s9+b.s9), (uint)(a.sa+b.sa), (uint)(a.sb+b.sb), (uint)(a.sc+b.sc), (uint)(a.sd+b.sd), (uint)(a.se+b.se), (uint)(a.sf+b.sf));
 
@@ -19502,11 +19613,33 @@ namespace OpenCl
         public static uint16 operator ++(uint16 a) => new uint16((uint)(a.s0+1), (uint)(a.s1+1), (uint)(a.s2+1), (uint)(a.s3+1), (uint)(a.s4+1), (uint)(a.s5+1), (uint)(a.s6+1), (uint)(a.s7+1), (uint)(a.s8+1), (uint)(a.s9+1), (uint)(a.sa+1), (uint)(a.sb+1), (uint)(a.sc+1), (uint)(a.sd+1), (uint)(a.se+1), (uint)(a.sf+1));
 
         public static uint16 operator --(uint16 a) => new uint16((uint)(a.s0-1), (uint)(a.s1-1), (uint)(a.s2-1), (uint)(a.s3-1), (uint)(a.s4-1), (uint)(a.s5-1), (uint)(a.s6-1), (uint)(a.s7-1), (uint)(a.s8-1), (uint)(a.s9-1), (uint)(a.sa-1), (uint)(a.sb-1), (uint)(a.sc-1), (uint)(a.sd-1), (uint)(a.se-1), (uint)(a.sf-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out uint s0, out uint s1, out uint s2, out uint s3, out uint s4, out uint s5, out uint s6, out uint s7, out uint s8, out uint s9, out uint sa, out uint sb, out uint sc, out uint sd, out uint se, out uint sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct long2: IVectorType, IEquatable<long2>
+    public struct long2 : IEquatable<long2>
     {
         [FieldOffset(0)]
         public long s0;
@@ -19599,18 +19732,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(long2 obj)
@@ -19636,6 +19757,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator long2((long,long) t) => new long2(t.Item1, t.Item2);
+
+        public static implicit operator (long,long)(long2 v) => (v.s0, v.s1);
 
         public static long2 operator +(long2 a, long2 b) => new long2((long)(a.s0+b.s0), (long)(a.s1+b.s1));
 
@@ -19672,11 +19797,19 @@ namespace OpenCl
         public static long2 operator ++(long2 a) => new long2((long)(a.s0+1), (long)(a.s1+1));
 
         public static long2 operator --(long2 a) => new long2((long)(a.s0-1), (long)(a.s1-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out long s0, out long s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=32)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct long3: IVectorType, IEquatable<long3>
+    public struct long3 : IEquatable<long3>
     {
         [FieldOffset(0)]
         public long s0;
@@ -20005,18 +20138,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 24; }
-        }
-
         // IEquatable
 
         public bool Equals(long3 obj)
@@ -20042,6 +20163,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator long3((long,long,long) t) => new long3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (long,long,long)(long3 v) => (v.s0, v.s1, v.s2);
 
         public static long3 operator +(long3 a, long3 b) => new long3((long)(a.s0+b.s0), (long)(a.s1+b.s1), (long)(a.s2+b.s2));
 
@@ -20078,11 +20203,20 @@ namespace OpenCl
         public static long3 operator ++(long3 a) => new long3((long)(a.s0+1), (long)(a.s1+1), (long)(a.s2+1));
 
         public static long3 operator --(long3 a) => new long3((long)(a.s0-1), (long)(a.s1-1), (long)(a.s2-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out long s0, out long s1, out long s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct long4: IVectorType, IEquatable<long4>
+    public struct long4 : IEquatable<long4>
     {
         [FieldOffset(0)]
         public long s0;
@@ -22219,18 +22353,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 32; }
-        }
-
         // IEquatable
 
         public bool Equals(long4 obj)
@@ -22256,6 +22378,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator long4((long,long,long,long) t) => new long4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (long,long,long,long)(long4 v) => (v.s0, v.s1, v.s2, v.s3);
 
         public static long4 operator +(long4 a, long4 b) => new long4((long)(a.s0+b.s0), (long)(a.s1+b.s1), (long)(a.s2+b.s2), (long)(a.s3+b.s3));
 
@@ -22292,11 +22418,21 @@ namespace OpenCl
         public static long4 operator ++(long4 a) => new long4((long)(a.s0+1), (long)(a.s1+1), (long)(a.s2+1), (long)(a.s3+1));
 
         public static long4 operator --(long4 a) => new long4((long)(a.s0-1), (long)(a.s1-1), (long)(a.s2-1), (long)(a.s3-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out long s0, out long s1, out long s2, out long s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct long8: IVectorType, IEquatable<long8>
+    public struct long8 : IEquatable<long8>
     {
         [FieldOffset(0)]
         public long s0;
@@ -22397,18 +22533,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 64; }
-        }
-
         // IEquatable
 
         public bool Equals(long8 obj)
@@ -22434,6 +22558,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator long8((long,long,long,long,long,long,long,long) t) => new long8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (long,long,long,long,long,long,long,long)(long8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
 
         public static long8 operator +(long8 a, long8 b) => new long8((long)(a.s0+b.s0), (long)(a.s1+b.s1), (long)(a.s2+b.s2), (long)(a.s3+b.s3), (long)(a.s4+b.s4), (long)(a.s5+b.s5), (long)(a.s6+b.s6), (long)(a.s7+b.s7));
 
@@ -22470,11 +22598,25 @@ namespace OpenCl
         public static long8 operator ++(long8 a) => new long8((long)(a.s0+1), (long)(a.s1+1), (long)(a.s2+1), (long)(a.s3+1), (long)(a.s4+1), (long)(a.s5+1), (long)(a.s6+1), (long)(a.s7+1));
 
         public static long8 operator --(long8 a) => new long8((long)(a.s0-1), (long)(a.s1-1), (long)(a.s2-1), (long)(a.s3-1), (long)(a.s4-1), (long)(a.s5-1), (long)(a.s6-1), (long)(a.s7-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out long s0, out long s1, out long s2, out long s3, out long s4, out long s5, out long s6, out long s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct long16: IVectorType, IEquatable<long16>
+    public struct long16 : IEquatable<long16>
     {
         [FieldOffset(0)]
         public long s0;
@@ -22683,18 +22825,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 128; }
-        }
-
         // IEquatable
 
         public bool Equals(long16 obj)
@@ -22720,6 +22850,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator long16((long,long,long,long,long,long,long,long,long,long,long,long,long,long,long,long) t) => new long16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (long,long,long,long,long,long,long,long,long,long,long,long,long,long,long,long)(long16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
 
         public static long16 operator +(long16 a, long16 b) => new long16((long)(a.s0+b.s0), (long)(a.s1+b.s1), (long)(a.s2+b.s2), (long)(a.s3+b.s3), (long)(a.s4+b.s4), (long)(a.s5+b.s5), (long)(a.s6+b.s6), (long)(a.s7+b.s7), (long)(a.s8+b.s8), (long)(a.s9+b.s9), (long)(a.sa+b.sa), (long)(a.sb+b.sb), (long)(a.sc+b.sc), (long)(a.sd+b.sd), (long)(a.se+b.se), (long)(a.sf+b.sf));
 
@@ -22756,11 +22890,33 @@ namespace OpenCl
         public static long16 operator ++(long16 a) => new long16((long)(a.s0+1), (long)(a.s1+1), (long)(a.s2+1), (long)(a.s3+1), (long)(a.s4+1), (long)(a.s5+1), (long)(a.s6+1), (long)(a.s7+1), (long)(a.s8+1), (long)(a.s9+1), (long)(a.sa+1), (long)(a.sb+1), (long)(a.sc+1), (long)(a.sd+1), (long)(a.se+1), (long)(a.sf+1));
 
         public static long16 operator --(long16 a) => new long16((long)(a.s0-1), (long)(a.s1-1), (long)(a.s2-1), (long)(a.s3-1), (long)(a.s4-1), (long)(a.s5-1), (long)(a.s6-1), (long)(a.s7-1), (long)(a.s8-1), (long)(a.s9-1), (long)(a.sa-1), (long)(a.sb-1), (long)(a.sc-1), (long)(a.sd-1), (long)(a.se-1), (long)(a.sf-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out long s0, out long s1, out long s2, out long s3, out long s4, out long s5, out long s6, out long s7, out long s8, out long s9, out long sa, out long sb, out long sc, out long sd, out long se, out long sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct ulong2: IVectorType, IEquatable<ulong2>
+    public struct ulong2 : IEquatable<ulong2>
     {
         [FieldOffset(0)]
         public ulong s0;
@@ -22853,18 +23009,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(ulong2 obj)
@@ -22890,6 +23034,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ulong2((ulong,ulong) t) => new ulong2(t.Item1, t.Item2);
+
+        public static implicit operator (ulong,ulong)(ulong2 v) => (v.s0, v.s1);
 
         public static ulong2 operator +(ulong2 a, ulong2 b) => new ulong2((ulong)(a.s0+b.s0), (ulong)(a.s1+b.s1));
 
@@ -22924,11 +23072,19 @@ namespace OpenCl
         public static ulong2 operator ++(ulong2 a) => new ulong2((ulong)(a.s0+1), (ulong)(a.s1+1));
 
         public static ulong2 operator --(ulong2 a) => new ulong2((ulong)(a.s0-1), (ulong)(a.s1-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ulong s0, out ulong s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=32)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct ulong3: IVectorType, IEquatable<ulong3>
+    public struct ulong3 : IEquatable<ulong3>
     {
         [FieldOffset(0)]
         public ulong s0;
@@ -23257,18 +23413,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 24; }
-        }
-
         // IEquatable
 
         public bool Equals(ulong3 obj)
@@ -23294,6 +23438,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ulong3((ulong,ulong,ulong) t) => new ulong3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (ulong,ulong,ulong)(ulong3 v) => (v.s0, v.s1, v.s2);
 
         public static ulong3 operator +(ulong3 a, ulong3 b) => new ulong3((ulong)(a.s0+b.s0), (ulong)(a.s1+b.s1), (ulong)(a.s2+b.s2));
 
@@ -23328,11 +23476,20 @@ namespace OpenCl
         public static ulong3 operator ++(ulong3 a) => new ulong3((ulong)(a.s0+1), (ulong)(a.s1+1), (ulong)(a.s2+1));
 
         public static ulong3 operator --(ulong3 a) => new ulong3((ulong)(a.s0-1), (ulong)(a.s1-1), (ulong)(a.s2-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ulong s0, out ulong s1, out ulong s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct ulong4: IVectorType, IEquatable<ulong4>
+    public struct ulong4 : IEquatable<ulong4>
     {
         [FieldOffset(0)]
         public ulong s0;
@@ -25469,18 +25626,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 32; }
-        }
-
         // IEquatable
 
         public bool Equals(ulong4 obj)
@@ -25506,6 +25651,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ulong4((ulong,ulong,ulong,ulong) t) => new ulong4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (ulong,ulong,ulong,ulong)(ulong4 v) => (v.s0, v.s1, v.s2, v.s3);
 
         public static ulong4 operator +(ulong4 a, ulong4 b) => new ulong4((ulong)(a.s0+b.s0), (ulong)(a.s1+b.s1), (ulong)(a.s2+b.s2), (ulong)(a.s3+b.s3));
 
@@ -25540,11 +25689,21 @@ namespace OpenCl
         public static ulong4 operator ++(ulong4 a) => new ulong4((ulong)(a.s0+1), (ulong)(a.s1+1), (ulong)(a.s2+1), (ulong)(a.s3+1));
 
         public static ulong4 operator --(ulong4 a) => new ulong4((ulong)(a.s0-1), (ulong)(a.s1-1), (ulong)(a.s2-1), (ulong)(a.s3-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ulong s0, out ulong s1, out ulong s2, out ulong s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct ulong8: IVectorType, IEquatable<ulong8>
+    public struct ulong8 : IEquatable<ulong8>
     {
         [FieldOffset(0)]
         public ulong s0;
@@ -25645,18 +25804,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 64; }
-        }
-
         // IEquatable
 
         public bool Equals(ulong8 obj)
@@ -25682,6 +25829,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ulong8((ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong) t) => new ulong8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong)(ulong8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
 
         public static ulong8 operator +(ulong8 a, ulong8 b) => new ulong8((ulong)(a.s0+b.s0), (ulong)(a.s1+b.s1), (ulong)(a.s2+b.s2), (ulong)(a.s3+b.s3), (ulong)(a.s4+b.s4), (ulong)(a.s5+b.s5), (ulong)(a.s6+b.s6), (ulong)(a.s7+b.s7));
 
@@ -25716,11 +25867,25 @@ namespace OpenCl
         public static ulong8 operator ++(ulong8 a) => new ulong8((ulong)(a.s0+1), (ulong)(a.s1+1), (ulong)(a.s2+1), (ulong)(a.s3+1), (ulong)(a.s4+1), (ulong)(a.s5+1), (ulong)(a.s6+1), (ulong)(a.s7+1));
 
         public static ulong8 operator --(ulong8 a) => new ulong8((ulong)(a.s0-1), (ulong)(a.s1-1), (ulong)(a.s2-1), (ulong)(a.s3-1), (ulong)(a.s4-1), (ulong)(a.s5-1), (ulong)(a.s6-1), (ulong)(a.s7-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ulong s0, out ulong s1, out ulong s2, out ulong s3, out ulong s4, out ulong s5, out ulong s6, out ulong s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct ulong16: IVectorType, IEquatable<ulong16>
+    public struct ulong16 : IEquatable<ulong16>
     {
         [FieldOffset(0)]
         public ulong s0;
@@ -25929,18 +26094,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 128; }
-        }
-
         // IEquatable
 
         public bool Equals(ulong16 obj)
@@ -25966,6 +26119,10 @@ namespace OpenCl
         }
 
         // Operators
+
+        public static implicit operator ulong16((ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong) t) => new ulong16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong,ulong)(ulong16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
 
         public static ulong16 operator +(ulong16 a, ulong16 b) => new ulong16((ulong)(a.s0+b.s0), (ulong)(a.s1+b.s1), (ulong)(a.s2+b.s2), (ulong)(a.s3+b.s3), (ulong)(a.s4+b.s4), (ulong)(a.s5+b.s5), (ulong)(a.s6+b.s6), (ulong)(a.s7+b.s7), (ulong)(a.s8+b.s8), (ulong)(a.s9+b.s9), (ulong)(a.sa+b.sa), (ulong)(a.sb+b.sb), (ulong)(a.sc+b.sc), (ulong)(a.sd+b.sd), (ulong)(a.se+b.se), (ulong)(a.sf+b.sf));
 
@@ -26000,11 +26157,33 @@ namespace OpenCl
         public static ulong16 operator ++(ulong16 a) => new ulong16((ulong)(a.s0+1), (ulong)(a.s1+1), (ulong)(a.s2+1), (ulong)(a.s3+1), (ulong)(a.s4+1), (ulong)(a.s5+1), (ulong)(a.s6+1), (ulong)(a.s7+1), (ulong)(a.s8+1), (ulong)(a.s9+1), (ulong)(a.sa+1), (ulong)(a.sb+1), (ulong)(a.sc+1), (ulong)(a.sd+1), (ulong)(a.se+1), (ulong)(a.sf+1));
 
         public static ulong16 operator --(ulong16 a) => new ulong16((ulong)(a.s0-1), (ulong)(a.s1-1), (ulong)(a.s2-1), (ulong)(a.s3-1), (ulong)(a.s4-1), (ulong)(a.s5-1), (ulong)(a.s6-1), (ulong)(a.s7-1), (ulong)(a.s8-1), (ulong)(a.s9-1), (ulong)(a.sa-1), (ulong)(a.sb-1), (ulong)(a.sc-1), (ulong)(a.sd-1), (ulong)(a.se-1), (ulong)(a.sf-1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out ulong s0, out ulong s1, out ulong s2, out ulong s3, out ulong s4, out ulong s5, out ulong s6, out ulong s7, out ulong s8, out ulong s9, out ulong sa, out ulong sb, out ulong sc, out ulong sd, out ulong se, out ulong sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct float2: IVectorType, IEquatable<float2>
+    public struct float2 : IEquatable<float2>
     {
         [FieldOffset(0)]
         public float s0;
@@ -26097,18 +26276,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 8; }
-        }
-
         // IEquatable
 
         public bool Equals(float2 obj)
@@ -26135,6 +26302,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator float2((float,float) t) => new float2(t.Item1, t.Item2);
+
+        public static implicit operator (float,float)(float2 v) => (v.s0, v.s1);
+
         public static float2 operator +(float2 a, float2 b) => new float2((float)(a.s0+b.s0), (float)(a.s1+b.s1));
 
         public static float2 operator -(float2 a, float2 b) => new float2((float)(a.s0-b.s0), (float)(a.s1-b.s1));
@@ -26158,11 +26329,19 @@ namespace OpenCl
         public static float2 operator +(float2 a) => a;
 
         public static float2 operator -(float2 a) => new float2((float)(-a.s0), (float)(-a.s1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out float s0, out float s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=16)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct float3: IVectorType, IEquatable<float3>
+    public struct float3 : IEquatable<float3>
     {
         [FieldOffset(0)]
         public float s0;
@@ -26491,18 +26670,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 12; }
-        }
-
         // IEquatable
 
         public bool Equals(float3 obj)
@@ -26529,6 +26696,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator float3((float,float,float) t) => new float3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (float,float,float)(float3 v) => (v.s0, v.s1, v.s2);
+
         public static float3 operator +(float3 a, float3 b) => new float3((float)(a.s0+b.s0), (float)(a.s1+b.s1), (float)(a.s2+b.s2));
 
         public static float3 operator -(float3 a, float3 b) => new float3((float)(a.s0-b.s0), (float)(a.s1-b.s1), (float)(a.s2-b.s2));
@@ -26552,11 +26723,20 @@ namespace OpenCl
         public static float3 operator +(float3 a) => a;
 
         public static float3 operator -(float3 a) => new float3((float)(-a.s0), (float)(-a.s1), (float)(-a.s2));
+
+        // Object deconstruction
+
+        public void Deconstruct(out float s0, out float s1, out float s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct float4: IVectorType, IEquatable<float4>
+    public struct float4 : IEquatable<float4>
     {
         [FieldOffset(0)]
         public float s0;
@@ -28693,18 +28873,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(float4 obj)
@@ -28731,6 +28899,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator float4((float,float,float,float) t) => new float4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (float,float,float,float)(float4 v) => (v.s0, v.s1, v.s2, v.s3);
+
         public static float4 operator +(float4 a, float4 b) => new float4((float)(a.s0+b.s0), (float)(a.s1+b.s1), (float)(a.s2+b.s2), (float)(a.s3+b.s3));
 
         public static float4 operator -(float4 a, float4 b) => new float4((float)(a.s0-b.s0), (float)(a.s1-b.s1), (float)(a.s2-b.s2), (float)(a.s3-b.s3));
@@ -28754,11 +28926,21 @@ namespace OpenCl
         public static float4 operator +(float4 a) => a;
 
         public static float4 operator -(float4 a) => new float4((float)(-a.s0), (float)(-a.s1), (float)(-a.s2), (float)(-a.s3));
+
+        // Object deconstruction
+
+        public void Deconstruct(out float s0, out float s1, out float s2, out float s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct float8: IVectorType, IEquatable<float8>
+    public struct float8 : IEquatable<float8>
     {
         [FieldOffset(0)]
         public float s0;
@@ -28859,18 +29041,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 32; }
-        }
-
         // IEquatable
 
         public bool Equals(float8 obj)
@@ -28897,6 +29067,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator float8((float,float,float,float,float,float,float,float) t) => new float8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (float,float,float,float,float,float,float,float)(float8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
+
         public static float8 operator +(float8 a, float8 b) => new float8((float)(a.s0+b.s0), (float)(a.s1+b.s1), (float)(a.s2+b.s2), (float)(a.s3+b.s3), (float)(a.s4+b.s4), (float)(a.s5+b.s5), (float)(a.s6+b.s6), (float)(a.s7+b.s7));
 
         public static float8 operator -(float8 a, float8 b) => new float8((float)(a.s0-b.s0), (float)(a.s1-b.s1), (float)(a.s2-b.s2), (float)(a.s3-b.s3), (float)(a.s4-b.s4), (float)(a.s5-b.s5), (float)(a.s6-b.s6), (float)(a.s7-b.s7));
@@ -28920,11 +29094,25 @@ namespace OpenCl
         public static float8 operator +(float8 a) => a;
 
         public static float8 operator -(float8 a) => new float8((float)(-a.s0), (float)(-a.s1), (float)(-a.s2), (float)(-a.s3), (float)(-a.s4), (float)(-a.s5), (float)(-a.s6), (float)(-a.s7));
+
+        // Object deconstruction
+
+        public void Deconstruct(out float s0, out float s1, out float s2, out float s3, out float s4, out float s5, out float s6, out float s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct float16: IVectorType, IEquatable<float16>
+    public struct float16 : IEquatable<float16>
     {
         [FieldOffset(0)]
         public float s0;
@@ -29133,18 +29321,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 64; }
-        }
-
         // IEquatable
 
         public bool Equals(float16 obj)
@@ -29171,6 +29347,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator float16((float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float) t) => new float16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float)(float16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
+
         public static float16 operator +(float16 a, float16 b) => new float16((float)(a.s0+b.s0), (float)(a.s1+b.s1), (float)(a.s2+b.s2), (float)(a.s3+b.s3), (float)(a.s4+b.s4), (float)(a.s5+b.s5), (float)(a.s6+b.s6), (float)(a.s7+b.s7), (float)(a.s8+b.s8), (float)(a.s9+b.s9), (float)(a.sa+b.sa), (float)(a.sb+b.sb), (float)(a.sc+b.sc), (float)(a.sd+b.sd), (float)(a.se+b.se), (float)(a.sf+b.sf));
 
         public static float16 operator -(float16 a, float16 b) => new float16((float)(a.s0-b.s0), (float)(a.s1-b.s1), (float)(a.s2-b.s2), (float)(a.s3-b.s3), (float)(a.s4-b.s4), (float)(a.s5-b.s5), (float)(a.s6-b.s6), (float)(a.s7-b.s7), (float)(a.s8-b.s8), (float)(a.s9-b.s9), (float)(a.sa-b.sa), (float)(a.sb-b.sb), (float)(a.sc-b.sc), (float)(a.sd-b.sd), (float)(a.se-b.se), (float)(a.sf-b.sf));
@@ -29194,11 +29374,33 @@ namespace OpenCl
         public static float16 operator +(float16 a) => a;
 
         public static float16 operator -(float16 a) => new float16((float)(-a.s0), (float)(-a.s1), (float)(-a.s2), (float)(-a.s3), (float)(-a.s4), (float)(-a.s5), (float)(-a.s6), (float)(-a.s7), (float)(-a.s8), (float)(-a.s9), (float)(-a.sa), (float)(-a.sb), (float)(-a.sc), (float)(-a.sd), (float)(-a.se), (float)(-a.sf));
+
+        // Object deconstruction
+
+        public void Deconstruct(out float s0, out float s1, out float s2, out float s3, out float s4, out float s5, out float s6, out float s7, out float s8, out float s9, out float sa, out float sb, out float sc, out float sd, out float se, out float sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1})")]
-    public struct double2: IVectorType, IEquatable<double2>
+    public struct double2 : IEquatable<double2>
     {
         [FieldOffset(0)]
         public double s0;
@@ -29291,18 +29493,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 2; }
-        }
-
-        public int Size
-        {
-            get { return 16; }
-        }
-
         // IEquatable
 
         public bool Equals(double2 obj)
@@ -29329,6 +29519,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator double2((double,double) t) => new double2(t.Item1, t.Item2);
+
+        public static implicit operator (double,double)(double2 v) => (v.s0, v.s1);
+
         public static double2 operator +(double2 a, double2 b) => new double2((double)(a.s0+b.s0), (double)(a.s1+b.s1));
 
         public static double2 operator -(double2 a, double2 b) => new double2((double)(a.s0-b.s0), (double)(a.s1-b.s1));
@@ -29352,11 +29546,19 @@ namespace OpenCl
         public static double2 operator +(double2 a) => a;
 
         public static double2 operator -(double2 a) => new double2((double)(-a.s0), (double)(-a.s1));
+
+        // Object deconstruction
+
+        public void Deconstruct(out double s0, out double s1)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size=32)]
     [DebuggerDisplay("({s0},{s1},{s2})")]
-    public struct double3: IVectorType, IEquatable<double3>
+    public struct double3 : IEquatable<double3>
     {
         [FieldOffset(0)]
         public double s0;
@@ -29685,18 +29887,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 3; }
-        }
-
-        public int Size
-        {
-            get { return 24; }
-        }
-
         // IEquatable
 
         public bool Equals(double3 obj)
@@ -29723,6 +29913,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator double3((double,double,double) t) => new double3(t.Item1, t.Item2, t.Item3);
+
+        public static implicit operator (double,double,double)(double3 v) => (v.s0, v.s1, v.s2);
+
         public static double3 operator +(double3 a, double3 b) => new double3((double)(a.s0+b.s0), (double)(a.s1+b.s1), (double)(a.s2+b.s2));
 
         public static double3 operator -(double3 a, double3 b) => new double3((double)(a.s0-b.s0), (double)(a.s1-b.s1), (double)(a.s2-b.s2));
@@ -29746,11 +29940,20 @@ namespace OpenCl
         public static double3 operator +(double3 a) => a;
 
         public static double3 operator -(double3 a) => new double3((double)(-a.s0), (double)(-a.s1), (double)(-a.s2));
+
+        // Object deconstruction
+
+        public void Deconstruct(out double s0, out double s1, out double s2)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3})")]
-    public struct double4: IVectorType, IEquatable<double4>
+    public struct double4 : IEquatable<double4>
     {
         [FieldOffset(0)]
         public double s0;
@@ -31887,18 +32090,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 4; }
-        }
-
-        public int Size
-        {
-            get { return 32; }
-        }
-
         // IEquatable
 
         public bool Equals(double4 obj)
@@ -31925,6 +32116,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator double4((double,double,double,double) t) => new double4(t.Item1, t.Item2, t.Item3, t.Item4);
+
+        public static implicit operator (double,double,double,double)(double4 v) => (v.s0, v.s1, v.s2, v.s3);
+
         public static double4 operator +(double4 a, double4 b) => new double4((double)(a.s0+b.s0), (double)(a.s1+b.s1), (double)(a.s2+b.s2), (double)(a.s3+b.s3));
 
         public static double4 operator -(double4 a, double4 b) => new double4((double)(a.s0-b.s0), (double)(a.s1-b.s1), (double)(a.s2-b.s2), (double)(a.s3-b.s3));
@@ -31948,11 +32143,21 @@ namespace OpenCl
         public static double4 operator +(double4 a) => a;
 
         public static double4 operator -(double4 a) => new double4((double)(-a.s0), (double)(-a.s1), (double)(-a.s2), (double)(-a.s3));
+
+        // Object deconstruction
+
+        public void Deconstruct(out double s0, out double s1, out double s2, out double s3)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7})")]
-    public struct double8: IVectorType, IEquatable<double8>
+    public struct double8 : IEquatable<double8>
     {
         [FieldOffset(0)]
         public double s0;
@@ -32053,18 +32258,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 8; }
-        }
-
-        public int Size
-        {
-            get { return 64; }
-        }
-
         // IEquatable
 
         public bool Equals(double8 obj)
@@ -32091,6 +32284,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator double8((double,double,double,double,double,double,double,double) t) => new double8(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8);
+
+        public static implicit operator (double,double,double,double,double,double,double,double)(double8 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7);
+
         public static double8 operator +(double8 a, double8 b) => new double8((double)(a.s0+b.s0), (double)(a.s1+b.s1), (double)(a.s2+b.s2), (double)(a.s3+b.s3), (double)(a.s4+b.s4), (double)(a.s5+b.s5), (double)(a.s6+b.s6), (double)(a.s7+b.s7));
 
         public static double8 operator -(double8 a, double8 b) => new double8((double)(a.s0-b.s0), (double)(a.s1-b.s1), (double)(a.s2-b.s2), (double)(a.s3-b.s3), (double)(a.s4-b.s4), (double)(a.s5-b.s5), (double)(a.s6-b.s6), (double)(a.s7-b.s7));
@@ -32114,11 +32311,25 @@ namespace OpenCl
         public static double8 operator +(double8 a) => a;
 
         public static double8 operator -(double8 a) => new double8((double)(-a.s0), (double)(-a.s1), (double)(-a.s2), (double)(-a.s3), (double)(-a.s4), (double)(-a.s5), (double)(-a.s6), (double)(-a.s7));
+
+        // Object deconstruction
+
+        public void Deconstruct(out double s0, out double s1, out double s2, out double s3, out double s4, out double s5, out double s6, out double s7)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]
     [DebuggerDisplay("({s0},{s1},{s2},{s3},{s4},{s5},{s6},{s7},{s8},{s9},{sa},{sb},{sc},{sd},{se},{sf})")]
-    public struct double16: IVectorType, IEquatable<double16>
+    public struct double16 : IEquatable<double16>
     {
         [FieldOffset(0)]
         public double s0;
@@ -32327,18 +32538,6 @@ namespace OpenCl
             }
         }
 
-        // IVectorType
-
-        public int Rank
-        {
-            get { return 16; }
-        }
-
-        public int Size
-        {
-            get { return 128; }
-        }
-
         // IEquatable
 
         public bool Equals(double16 obj)
@@ -32365,6 +32564,10 @@ namespace OpenCl
 
         // Operators
 
+        public static implicit operator double16((double,double,double,double,double,double,double,double,double,double,double,double,double,double,double,double) t) => new double16(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5, t.Item6, t.Item7, t.Item8, t.Item9, t.Item10, t.Item11, t.Item12, t.Item13, t.Item14, t.Item15, t.Item16);
+
+        public static implicit operator (double,double,double,double,double,double,double,double,double,double,double,double,double,double,double,double)(double16 v) => (v.s0, v.s1, v.s2, v.s3, v.s4, v.s5, v.s6, v.s7, v.s8, v.s9, v.sa, v.sb, v.sc, v.sd, v.se, v.sf);
+
         public static double16 operator +(double16 a, double16 b) => new double16((double)(a.s0+b.s0), (double)(a.s1+b.s1), (double)(a.s2+b.s2), (double)(a.s3+b.s3), (double)(a.s4+b.s4), (double)(a.s5+b.s5), (double)(a.s6+b.s6), (double)(a.s7+b.s7), (double)(a.s8+b.s8), (double)(a.s9+b.s9), (double)(a.sa+b.sa), (double)(a.sb+b.sb), (double)(a.sc+b.sc), (double)(a.sd+b.sd), (double)(a.se+b.se), (double)(a.sf+b.sf));
 
         public static double16 operator -(double16 a, double16 b) => new double16((double)(a.s0-b.s0), (double)(a.s1-b.s1), (double)(a.s2-b.s2), (double)(a.s3-b.s3), (double)(a.s4-b.s4), (double)(a.s5-b.s5), (double)(a.s6-b.s6), (double)(a.s7-b.s7), (double)(a.s8-b.s8), (double)(a.s9-b.s9), (double)(a.sa-b.sa), (double)(a.sb-b.sb), (double)(a.sc-b.sc), (double)(a.sd-b.sd), (double)(a.se-b.se), (double)(a.sf-b.sf));
@@ -32388,5 +32591,27 @@ namespace OpenCl
         public static double16 operator +(double16 a) => a;
 
         public static double16 operator -(double16 a) => new double16((double)(-a.s0), (double)(-a.s1), (double)(-a.s2), (double)(-a.s3), (double)(-a.s4), (double)(-a.s5), (double)(-a.s6), (double)(-a.s7), (double)(-a.s8), (double)(-a.s9), (double)(-a.sa), (double)(-a.sb), (double)(-a.sc), (double)(-a.sd), (double)(-a.se), (double)(-a.sf));
+
+        // Object deconstruction
+
+        public void Deconstruct(out double s0, out double s1, out double s2, out double s3, out double s4, out double s5, out double s6, out double s7, out double s8, out double s9, out double sa, out double sb, out double sc, out double sd, out double se, out double sf)
+        {
+            s0 = this.s0;
+            s1 = this.s1;
+            s2 = this.s2;
+            s3 = this.s3;
+            s4 = this.s4;
+            s5 = this.s5;
+            s6 = this.s6;
+            s7 = this.s7;
+            s8 = this.s8;
+            s9 = this.s9;
+            sa = this.sa;
+            sb = this.sb;
+            sc = this.sc;
+            sd = this.sd;
+            se = this.se;
+            sf = this.sf;
+        }
     }
 }

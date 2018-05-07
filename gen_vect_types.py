@@ -34,17 +34,17 @@ def partitions(n, t):
         yield tuple(intervals())
 
 with open('opencl-sharp/VectorTypes.cs', 'w') as f:
+    f.write('\n')
+    f.write('//\n')
+    f.write('// GENERATED SOURCE FILE -- DO NOT MODIFY\n')
+    f.write('//\n')
+    f.write('\n')
     f.write('using System;\n')
     f.write('using System.Diagnostics;\n')
     f.write('using System.Runtime.InteropServices;\n')
     f.write('\n')
     f.write('namespace OpenCl\n')
     f.write('{\n')
-    f.write('    public interface IVectorType\n')
-    f.write('    {\n')
-    f.write('        int Rank { get; }\n')
-    f.write('        int Size { get; }\n')
-    f.write('    }\n')
     for vt in vtypes:
         for vr in vranks:
             f.write('\n')
@@ -52,10 +52,10 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
                 f.write('    [StructLayout(LayoutKind.Explicit)]\n')
             else:
                 f.write('    [StructLayout(LayoutKind.Explicit, Size=%d)]\n' % (4*esizes[vt]))
-            f.write('    [DebuggerDisplay("(%s)")]\n' % str.join(',', ('{s%x}' % i for i in xrange(vr))))
-            f.write('    public struct %s%d: IVectorType, IEquatable<%s%d>\n' % (vt, vr, vt, vr))
+            f.write('    [DebuggerDisplay("(%s)")]\n' % str.join(',', ('{s%x}' % i for i in range(vr))))
+            f.write('    public struct %s%d : IEquatable<%s%d>\n' % (vt, vr, vt, vr))
             f.write('    {\n')
-            for i in xrange(vr):
+            for i in range(vr):
                 f.write('        [FieldOffset(%d)]\n' % (i*esizes[vt]))
                 f.write('        public %s s%x;\n' % (vt, i))
             f.write('\n')
@@ -64,14 +64,14 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
             #
             f.write('        public %s%d(%s v)\n' % (vt, vr, vt))
             f.write('        {\n')
-            for i in xrange(vr):
+            for i in range(vr):
                 f.write('            this.s%x = v;\n' % i)
             f.write('        }\n')
             f.write('\n')
             #
             # vector constructors
             #
-            for i in xrange(1 if vr<=4 else vr, vr+1):
+            for i in range(1 if vr<=4 else vr, vr+1):
                 for p in partitions(i, vr):
                     f.write('        public %s%d(%s)\n' % (vt, vr, str.join(', ', ('%s v%x' % (vt, i) if r==1 else '%s%d v%x' % (vt, r, i) for i,r in enumerate(p)))))
                     f.write('        {\n')
@@ -81,7 +81,7 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
                             f.write('            this.s%x = v%x;\n' % (k, i))
                             k += 1
                         else:
-                            for j in xrange(r):
+                            for j in range(r):
                                 f.write('            this.s%x = v%x.s%x;\n' % (k, i, j))
                                 k += 1
                     f.write('        }\n')
@@ -90,7 +90,7 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
             # scalar component accessors (x,y,w,z)
             #
             if vr <= 4:
-                for i in xrange(vr):
+                for i in range(vr):
                     f.write('        public %s %s\n' % (vt, ealias[i]))
                     f.write('        {\n')
                     f.write('            get { return this.s%x; }\n' % i)
@@ -101,14 +101,14 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
             # vector component accessors (x,y,w,z)
             #
             if vr <= 4:
-                for tr in xrange(2,vr+1):
-                    for c in itertools.product(xrange(vr), repeat=tr):
+                for tr in range(2,vr+1):
+                    for c in itertools.product(range(vr), repeat=tr):
                         f.write('        public %s%d %s\n' % (vt, tr, str.join('', (ealias[i] for i in c))))
                         f.write('        {\n')
                         f.write('            get { return new %s%d(%s); }\n' % (vt, tr, str.join(', ', ('this.s%x' % i for i in c))))
                         if len(set(c)) == tr:
                             f.write('            set {\n')
-                            for i in xrange(tr):
+                            for i in range(tr):
                                 f.write('                 this.s%x = value.s%x;\n' % (c[i], i))
                             f.write('            }\n')
                         f.write('        }\n')
@@ -117,7 +117,7 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
             # capitalized component accessors
             #
             if vr == 16:
-                for i in xrange(10,vr):
+                for i in range(10,vr):
                     f.write('        public %s %s\n' % (vt, ealias[i]))
                     f.write('        {\n')
                     f.write('            get { return this.s%x; }\n' % i)
@@ -132,7 +132,7 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
             f.write('            get  {\n')
             f.write('                switch (index)\n')
             f.write('                {\n')
-            for i in xrange(vr):
+            for i in range(vr):
                 f.write('                case %d:\n' % i)
                 f.write('                    return this.s%x;\n' % i)
             f.write('                default:\n')
@@ -142,7 +142,7 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
             f.write('            set {\n')
             f.write('                switch (index)\n')
             f.write('                {\n')
-            for i in xrange(vr):
+            for i in range(vr):
                 f.write('                case %d:\n' % i)
                 f.write('                    this.s%x = value;\n' % i)
                 f.write('                    break;\n')
@@ -152,23 +152,14 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
             f.write('            }\n')
             f.write('        }\n')
             f.write('\n')
-            f.write('        // IVectorType\n')
-            f.write('\n')
-            f.write('        public int Rank\n')
-            f.write('        {\n')
-            f.write('            get { return %d; }\n' % vr)
-            f.write('        }\n')
-            f.write('\n')
-            f.write('        public int Size\n')
-            f.write('        {\n')
-            f.write('            get { return %d; }\n' % (vr*esizes[vt]))
-            f.write('        }\n')
-            f.write('\n')
+            #
+            # IEquatable implementation
+            #
             f.write('        // IEquatable\n')
             f.write('\n')
             f.write('        public bool Equals(%s%d obj)\n' % (vt, vr))
             f.write('        {\n')
-            f.write('            return %s;\n' % str.join(' && ', ('this.s%x == obj.s%x' % (i, i) for i in xrange(vr))))
+            f.write('            return %s;\n' % str.join(' && ', ('this.s%x == obj.s%x' % (i, i) for i in range(vr))))
             f.write('        }\n')
             f.write('\n')
             f.write('        // Object\n')
@@ -180,38 +171,56 @@ with open('opencl-sharp/VectorTypes.cs', 'w') as f:
             f.write('\n')
             f.write('        public override int GetHashCode()\n')
             f.write('        {\n')
-            f.write('            return %s;\n' % str.join(' ^ ', ('this.s%x.GetHashCode()' % i for i in xrange(vr))))
+            f.write('            return %s;\n' % str.join(' ^ ', ('this.s%x.GetHashCode()' % i for i in range(vr))))
             f.write('        }\n')
             f.write('\n')
             f.write('        public override string ToString()\n')
             f.write('        {\n')
-            f.write('            return String.Format("%s", %s);\n' % (str.join(',', ('{%d}' % i for i in xrange(vr))), str.join(', ', ('this.s%x' % i for i in xrange(vr)))))
+            f.write('            return String.Format("%s", %s);\n' % (str.join(',', ('{%d}' % i for i in range(vr))), str.join(', ', ('this.s%x' % i for i in range(vr)))))
             f.write('        }\n')
             f.write('\n')
+            #
+            # operators
+            #
             f.write('        // Operators\n')
+            f.write('\n')
+            f.write('        public static implicit operator %s%d((%s) t) => new %s%d(%s);\n' % (vt, vr, str.join(',', itertools.repeat(vt, vr)), vt, vr, str.join(', ', ('t.Item%d' % (i+1,) for i in range(vr)))))
+            f.write('\n')
+            f.write('        public static implicit operator (%s)(%s%d v) => (%s);\n' % (str.join(',', itertools.repeat(vt, vr)), vt, vr, str.join(', ', ('v.s%x' % (i,) for i in range(vr)))))
             for op in eoparith:
                 f.write('\n')
-                f.write('        public static %s%d operator %s(%s%d a, %s%d b) => new %s%d(%s);\n' % (vt, vr, op, vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(a.s%x%sb.s%x)' % (vt, i, op, i) for i in xrange(vr)))))
+                f.write('        public static %s%d operator %s(%s%d a, %s%d b) => new %s%d(%s);\n' % (vt, vr, op, vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(a.s%x%sb.s%x)' % (vt, i, op, i) for i in range(vr)))))
             for op in eoprel:
                 rt = ecmptype[vt] # element type of result
                 f.write('\n')
-                f.write('        public static %s%d operator %s(%s%d a, %s%d b) => new %s%d(%s);\n' % (rt, vr, op, vt, vr, vt, vr, rt, vr, str.join(', ', ('a.s%x%sb.s%x ? %s : %s' % (i, op, i, emone[rt], ezero[rt]) for i in xrange(vr)))))
+                f.write('        public static %s%d operator %s(%s%d a, %s%d b) => new %s%d(%s);\n' % (rt, vr, op, vt, vr, vt, vr, rt, vr, str.join(', ', ('a.s%x%sb.s%x ? %s : %s' % (i, op, i, emone[rt], ezero[rt]) for i in range(vr)))))
             if vt not in ('float', 'double'):
                 for op in eopbit:
                     f.write('\n')
-                    f.write('        public static %s%d operator %s(%s%d a, %s%d b) => new %s%d(%s);\n' % (vt, vr, op, vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(a.s%x%sb.s%x)' % (vt, i, op, i) for i in xrange(vr)))))
+                    f.write('        public static %s%d operator %s(%s%d a, %s%d b) => new %s%d(%s);\n' % (vt, vr, op, vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(a.s%x%sb.s%x)' % (vt, i, op, i) for i in range(vr)))))
             f.write('\n')
             f.write('        public static %s%d operator +(%s%d a) => a;\n' % (vt, vr, vt, vr))
             if esigned[vt]:
                 f.write('\n')
-                f.write('        public static %s%d operator -(%s%d a) => new %s%d(%s);\n' % (vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(-a.s%x)' % (vt, i) for i in xrange(vr)))))
+                f.write('        public static %s%d operator -(%s%d a) => new %s%d(%s);\n' % (vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(-a.s%x)' % (vt, i) for i in range(vr)))))
             if vt not in ('float', 'double'):
                 f.write('\n')
-                f.write('        public static %s%d operator ~(%s%d a) => new %s%d(%s);\n' % (vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(~a.s%x)' % (vt, i) for i in xrange(vr)))))
+                f.write('        public static %s%d operator ~(%s%d a) => new %s%d(%s);\n' % (vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(~a.s%x)' % (vt, i) for i in range(vr)))))
                 f.write('\n')
-                f.write('        public static %s%d operator ++(%s%d a) => new %s%d(%s);\n' % (vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(a.s%x+1)' % (vt, i) for i in xrange(vr)))))
+                f.write('        public static %s%d operator ++(%s%d a) => new %s%d(%s);\n' % (vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(a.s%x+1)' % (vt, i) for i in range(vr)))))
                 f.write('\n')
-                f.write('        public static %s%d operator --(%s%d a) => new %s%d(%s);\n' % (vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(a.s%x-1)' % (vt, i) for i in xrange(vr)))))
+                f.write('        public static %s%d operator --(%s%d a) => new %s%d(%s);\n' % (vt, vr, vt, vr, vt, vr, str.join(', ', ('(%s)(a.s%x-1)' % (vt, i) for i in range(vr)))))
+            f.write('\n')
+            #
+            # object deconstruction
+            #
+            f.write('        // Object deconstruction\n')
+            f.write('\n')
+            f.write('        public void Deconstruct(%s)\n' % str.join(', ', ('out %s s%x' % (vt, i) for i in range(vr))))
+            f.write('        {\n')
+            for i in range(vr):
+                f.write('            s%x = this.s%x;\n' % (i, i))
+            f.write('        }\n')
             f.write('    }\n')
 
     f.write('}\n')
