@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!--<DefineConstants>CL_KHR_IL_PROGRAM</DefineConstants>-->
   </PropertyGroup>
 
   <PropertyGroup>
