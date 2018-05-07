@@ -1,3 +1,8 @@
+
+//
+// GENERATED SOURCE FILE -- DO NOT MODIFY
+//
+
 using System;
 using System.IO;
 using System.Linq;
@@ -20,9 +25,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestAddManaged()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -71,45 +76,30 @@ namespace OpenCl.Tests
         [Test]
         public void TestAddCl()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_add");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_add"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_add");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(  12, r[0].s0);
             Assert.AreEqual(  24, r[0].s1);
@@ -146,47 +136,33 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAddSpir()
+        public void TestAddSpirV()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_add", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_add"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_short16_add");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(  12, r[0].s0);
             Assert.AreEqual(  24, r[0].s1);
@@ -232,9 +208,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestSubManaged()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -283,45 +259,30 @@ namespace OpenCl.Tests
         [Test]
         public void TestSubCl()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_sub");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_sub"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_sub");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   2, r[0].s0);
             Assert.AreEqual(   4, r[0].s1);
@@ -358,47 +319,33 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestSubSpir()
+        public void TestSubSpirV()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_sub", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_sub"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_short16_sub");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   2, r[0].s0);
             Assert.AreEqual(   4, r[0].s1);
@@ -444,9 +391,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestMulManaged()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -495,45 +442,30 @@ namespace OpenCl.Tests
         [Test]
         public void TestMulCl()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_mul");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_mul"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_mul");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(  35, r[0].s0);
             Assert.AreEqual( 140, r[0].s1);
@@ -570,47 +502,33 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestMulSpir()
+        public void TestMulSpirV()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_mul", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_mul"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_short16_mul");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(  35, r[0].s0);
             Assert.AreEqual( 140, r[0].s1);
@@ -656,9 +574,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestDivManaged()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -707,45 +625,30 @@ namespace OpenCl.Tests
         [Test]
         public void TestDivCl()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_div");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_div"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_div");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   1, r[0].s0);
             Assert.AreEqual(   1, r[0].s1);
@@ -782,47 +685,33 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestDivSpir()
+        public void TestDivSpirV()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_div", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_div"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_short16_div");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   1, r[0].s0);
             Assert.AreEqual(   1, r[0].s1);
@@ -866,11 +755,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestEq()
+        public void TestEqManaged()
         {
-            short16[] a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
-            short16[] b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -914,43 +803,98 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].sd);
             Assert.AreEqual( 0, r[1].se);
             Assert.AreEqual(-1, r[1].sf);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestEqCl()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_eq");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_eq"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_eq");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual( 0, r[0].s0);
+            Assert.AreEqual( 0, r[0].s1);
+            Assert.AreEqual( 0, r[0].s2);
+            Assert.AreEqual( 0, r[0].s3);
+            Assert.AreEqual( 0, r[0].s4);
+            Assert.AreEqual( 0, r[0].s5);
+            Assert.AreEqual( 0, r[0].s6);
+            Assert.AreEqual( 0, r[0].s7);
+            Assert.AreEqual( 0, r[0].s8);
+            Assert.AreEqual( 0, r[0].s9);
+            Assert.AreEqual( 0, r[0].sa);
+            Assert.AreEqual( 0, r[0].sb);
+            Assert.AreEqual( 0, r[0].sc);
+            Assert.AreEqual( 0, r[0].sd);
+            Assert.AreEqual( 0, r[0].se);
+            Assert.AreEqual(-1, r[0].sf);
+            Assert.AreEqual( 0, r[1].s0);
+            Assert.AreEqual( 0, r[1].s1);
+            Assert.AreEqual( 0, r[1].s2);
+            Assert.AreEqual( 0, r[1].s3);
+            Assert.AreEqual( 0, r[1].s4);
+            Assert.AreEqual( 0, r[1].s5);
+            Assert.AreEqual( 0, r[1].s6);
+            Assert.AreEqual( 0, r[1].s7);
+            Assert.AreEqual( 0, r[1].s8);
+            Assert.AreEqual( 0, r[1].s9);
+            Assert.AreEqual( 0, r[1].sa);
+            Assert.AreEqual( 0, r[1].sb);
+            Assert.AreEqual( 0, r[1].sc);
+            Assert.AreEqual( 0, r[1].sd);
+            Assert.AreEqual( 0, r[1].se);
+            Assert.AreEqual(-1, r[1].sf);
+        }
+
+        [Test]
+        public void TestEqSpirV()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_eq", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_eq"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual( 0, r[0].s0);
             Assert.AreEqual( 0, r[0].s1);
@@ -994,11 +938,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestNeq()
+        public void TestNeqManaged()
         {
-            short16[] a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
-            short16[] b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1042,43 +986,98 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].sd);
             Assert.AreEqual(-1, r[1].se);
             Assert.AreEqual( 0, r[1].sf);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestNeqCl()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_neq");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_neq"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_neq");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(-1, r[0].s0);
+            Assert.AreEqual(-1, r[0].s1);
+            Assert.AreEqual(-1, r[0].s2);
+            Assert.AreEqual(-1, r[0].s3);
+            Assert.AreEqual(-1, r[0].s4);
+            Assert.AreEqual(-1, r[0].s5);
+            Assert.AreEqual(-1, r[0].s6);
+            Assert.AreEqual(-1, r[0].s7);
+            Assert.AreEqual(-1, r[0].s8);
+            Assert.AreEqual(-1, r[0].s9);
+            Assert.AreEqual(-1, r[0].sa);
+            Assert.AreEqual(-1, r[0].sb);
+            Assert.AreEqual(-1, r[0].sc);
+            Assert.AreEqual(-1, r[0].sd);
+            Assert.AreEqual(-1, r[0].se);
+            Assert.AreEqual( 0, r[0].sf);
+            Assert.AreEqual(-1, r[1].s0);
+            Assert.AreEqual(-1, r[1].s1);
+            Assert.AreEqual(-1, r[1].s2);
+            Assert.AreEqual(-1, r[1].s3);
+            Assert.AreEqual(-1, r[1].s4);
+            Assert.AreEqual(-1, r[1].s5);
+            Assert.AreEqual(-1, r[1].s6);
+            Assert.AreEqual(-1, r[1].s7);
+            Assert.AreEqual(-1, r[1].s8);
+            Assert.AreEqual(-1, r[1].s9);
+            Assert.AreEqual(-1, r[1].sa);
+            Assert.AreEqual(-1, r[1].sb);
+            Assert.AreEqual(-1, r[1].sc);
+            Assert.AreEqual(-1, r[1].sd);
+            Assert.AreEqual(-1, r[1].se);
+            Assert.AreEqual( 0, r[1].sf);
+        }
+
+        [Test]
+        public void TestNeqSpirV()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_neq", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_neq"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(-1, r[0].s0);
             Assert.AreEqual(-1, r[0].s1);
@@ -1122,11 +1121,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestLt()
+        public void TestLtManaged()
         {
-            short16[] a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
-            short16[] b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1170,43 +1169,98 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].sd);
             Assert.AreEqual(-1, r[1].se);
             Assert.AreEqual( 0, r[1].sf);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestLtCl()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_lt");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_lt"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_lt");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual( 0, r[0].s0);
+            Assert.AreEqual( 0, r[0].s1);
+            Assert.AreEqual( 0, r[0].s2);
+            Assert.AreEqual( 0, r[0].s3);
+            Assert.AreEqual( 0, r[0].s4);
+            Assert.AreEqual( 0, r[0].s5);
+            Assert.AreEqual( 0, r[0].s6);
+            Assert.AreEqual( 0, r[0].s7);
+            Assert.AreEqual( 0, r[0].s8);
+            Assert.AreEqual( 0, r[0].s9);
+            Assert.AreEqual( 0, r[0].sa);
+            Assert.AreEqual( 0, r[0].sb);
+            Assert.AreEqual( 0, r[0].sc);
+            Assert.AreEqual( 0, r[0].sd);
+            Assert.AreEqual( 0, r[0].se);
+            Assert.AreEqual( 0, r[0].sf);
+            Assert.AreEqual(-1, r[1].s0);
+            Assert.AreEqual(-1, r[1].s1);
+            Assert.AreEqual(-1, r[1].s2);
+            Assert.AreEqual(-1, r[1].s3);
+            Assert.AreEqual(-1, r[1].s4);
+            Assert.AreEqual(-1, r[1].s5);
+            Assert.AreEqual(-1, r[1].s6);
+            Assert.AreEqual(-1, r[1].s7);
+            Assert.AreEqual(-1, r[1].s8);
+            Assert.AreEqual(-1, r[1].s9);
+            Assert.AreEqual(-1, r[1].sa);
+            Assert.AreEqual(-1, r[1].sb);
+            Assert.AreEqual(-1, r[1].sc);
+            Assert.AreEqual(-1, r[1].sd);
+            Assert.AreEqual(-1, r[1].se);
+            Assert.AreEqual( 0, r[1].sf);
+        }
+
+        [Test]
+        public void TestLtSpirV()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_lt", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_lt"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual( 0, r[0].s0);
             Assert.AreEqual( 0, r[0].s1);
@@ -1250,11 +1304,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestLe()
+        public void TestLeManaged()
         {
-            short16[] a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
-            short16[] b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1298,43 +1352,98 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].sd);
             Assert.AreEqual(-1, r[1].se);
             Assert.AreEqual(-1, r[1].sf);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestLeCl()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_le");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_le"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_le");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual( 0, r[0].s0);
+            Assert.AreEqual( 0, r[0].s1);
+            Assert.AreEqual( 0, r[0].s2);
+            Assert.AreEqual( 0, r[0].s3);
+            Assert.AreEqual( 0, r[0].s4);
+            Assert.AreEqual( 0, r[0].s5);
+            Assert.AreEqual( 0, r[0].s6);
+            Assert.AreEqual( 0, r[0].s7);
+            Assert.AreEqual( 0, r[0].s8);
+            Assert.AreEqual( 0, r[0].s9);
+            Assert.AreEqual( 0, r[0].sa);
+            Assert.AreEqual( 0, r[0].sb);
+            Assert.AreEqual( 0, r[0].sc);
+            Assert.AreEqual( 0, r[0].sd);
+            Assert.AreEqual( 0, r[0].se);
+            Assert.AreEqual(-1, r[0].sf);
+            Assert.AreEqual(-1, r[1].s0);
+            Assert.AreEqual(-1, r[1].s1);
+            Assert.AreEqual(-1, r[1].s2);
+            Assert.AreEqual(-1, r[1].s3);
+            Assert.AreEqual(-1, r[1].s4);
+            Assert.AreEqual(-1, r[1].s5);
+            Assert.AreEqual(-1, r[1].s6);
+            Assert.AreEqual(-1, r[1].s7);
+            Assert.AreEqual(-1, r[1].s8);
+            Assert.AreEqual(-1, r[1].s9);
+            Assert.AreEqual(-1, r[1].sa);
+            Assert.AreEqual(-1, r[1].sb);
+            Assert.AreEqual(-1, r[1].sc);
+            Assert.AreEqual(-1, r[1].sd);
+            Assert.AreEqual(-1, r[1].se);
+            Assert.AreEqual(-1, r[1].sf);
+        }
+
+        [Test]
+        public void TestLeSpirV()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_le", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_le"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual( 0, r[0].s0);
             Assert.AreEqual( 0, r[0].s1);
@@ -1378,11 +1487,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestGt()
+        public void TestGtManaged()
         {
-            short16[] a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
-            short16[] b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1426,43 +1535,98 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].sd);
             Assert.AreEqual( 0, r[1].se);
             Assert.AreEqual( 0, r[1].sf);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestGtCl()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_gt");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_gt"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_gt");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(-1, r[0].s0);
+            Assert.AreEqual(-1, r[0].s1);
+            Assert.AreEqual(-1, r[0].s2);
+            Assert.AreEqual(-1, r[0].s3);
+            Assert.AreEqual(-1, r[0].s4);
+            Assert.AreEqual(-1, r[0].s5);
+            Assert.AreEqual(-1, r[0].s6);
+            Assert.AreEqual(-1, r[0].s7);
+            Assert.AreEqual(-1, r[0].s8);
+            Assert.AreEqual(-1, r[0].s9);
+            Assert.AreEqual(-1, r[0].sa);
+            Assert.AreEqual(-1, r[0].sb);
+            Assert.AreEqual(-1, r[0].sc);
+            Assert.AreEqual(-1, r[0].sd);
+            Assert.AreEqual(-1, r[0].se);
+            Assert.AreEqual( 0, r[0].sf);
+            Assert.AreEqual( 0, r[1].s0);
+            Assert.AreEqual( 0, r[1].s1);
+            Assert.AreEqual( 0, r[1].s2);
+            Assert.AreEqual( 0, r[1].s3);
+            Assert.AreEqual( 0, r[1].s4);
+            Assert.AreEqual( 0, r[1].s5);
+            Assert.AreEqual( 0, r[1].s6);
+            Assert.AreEqual( 0, r[1].s7);
+            Assert.AreEqual( 0, r[1].s8);
+            Assert.AreEqual( 0, r[1].s9);
+            Assert.AreEqual( 0, r[1].sa);
+            Assert.AreEqual( 0, r[1].sb);
+            Assert.AreEqual( 0, r[1].sc);
+            Assert.AreEqual( 0, r[1].sd);
+            Assert.AreEqual( 0, r[1].se);
+            Assert.AreEqual( 0, r[1].sf);
+        }
+
+        [Test]
+        public void TestGtSpirV()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_gt", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_gt"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(-1, r[0].s0);
             Assert.AreEqual(-1, r[0].s1);
@@ -1506,11 +1670,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestGe()
+        public void TestGeManaged()
         {
-            short16[] a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
-            short16[] b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1554,43 +1718,98 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].sd);
             Assert.AreEqual( 0, r[1].se);
             Assert.AreEqual(-1, r[1].sf);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestGeCl()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_ge");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_ge"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_ge");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(-1, r[0].s0);
+            Assert.AreEqual(-1, r[0].s1);
+            Assert.AreEqual(-1, r[0].s2);
+            Assert.AreEqual(-1, r[0].s3);
+            Assert.AreEqual(-1, r[0].s4);
+            Assert.AreEqual(-1, r[0].s5);
+            Assert.AreEqual(-1, r[0].s6);
+            Assert.AreEqual(-1, r[0].s7);
+            Assert.AreEqual(-1, r[0].s8);
+            Assert.AreEqual(-1, r[0].s9);
+            Assert.AreEqual(-1, r[0].sa);
+            Assert.AreEqual(-1, r[0].sb);
+            Assert.AreEqual(-1, r[0].sc);
+            Assert.AreEqual(-1, r[0].sd);
+            Assert.AreEqual(-1, r[0].se);
+            Assert.AreEqual(-1, r[0].sf);
+            Assert.AreEqual( 0, r[1].s0);
+            Assert.AreEqual( 0, r[1].s1);
+            Assert.AreEqual( 0, r[1].s2);
+            Assert.AreEqual( 0, r[1].s3);
+            Assert.AreEqual( 0, r[1].s4);
+            Assert.AreEqual( 0, r[1].s5);
+            Assert.AreEqual( 0, r[1].s6);
+            Assert.AreEqual( 0, r[1].s7);
+            Assert.AreEqual( 0, r[1].s8);
+            Assert.AreEqual( 0, r[1].s9);
+            Assert.AreEqual( 0, r[1].sa);
+            Assert.AreEqual( 0, r[1].sb);
+            Assert.AreEqual( 0, r[1].sc);
+            Assert.AreEqual( 0, r[1].sd);
+            Assert.AreEqual( 0, r[1].se);
+            Assert.AreEqual(-1, r[1].sf);
+        }
+
+        [Test]
+        public void TestGeSpirV()
+        {
+            var a = new short16[] { new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15), new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15) };
+            var b = new short16[] { new short16((short)   0, (short)   1, (short)   2, (short)   3, (short)   4, (short)   5, (short)   6, (short)   7, (short)   8, (short)   9, (short)  10, (short)  11, (short)  12, (short)  13, (short)  14, (short)  15), new short16((short)  30, (short)  29, (short)  28, (short)  27, (short)  26, (short)  25, (short)  24, (short)  23, (short)  22, (short)  21, (short)  20, (short)  19, (short)  18, (short)  17, (short)  16, (short)  15) };
+            var r = new short16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_ge", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_ge"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(-1, r[0].s0);
             Assert.AreEqual(-1, r[0].s1);
@@ -1634,11 +1853,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAnd()
+        public void TestAndManaged()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1682,43 +1901,35 @@ namespace OpenCl.Tests
             Assert.AreEqual(  66, r[1].sd);
             Assert.AreEqual(  73, r[1].se);
             Assert.AreEqual(  80, r[1].sf);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestAndCl()
+        {
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_and");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_and"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_and");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   5, r[0].s0);
             Assert.AreEqual(  10, r[0].s1);
@@ -1762,11 +1973,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestOr()
+        public void TestOrManaged()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1810,43 +2021,35 @@ namespace OpenCl.Tests
             Assert.AreEqual( 102, r[1].sd);
             Assert.AreEqual( 107, r[1].se);
             Assert.AreEqual( 112, r[1].sf);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestOrCl()
+        {
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_or");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_or"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_or");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   7, r[0].s0);
             Assert.AreEqual(  14, r[0].s1);
@@ -1890,11 +2093,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestXor()
+        public void TestXorManaged()
         {
-            short16[] a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
-            short16[] b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
-            short16[] r = new short16[2];
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1938,43 +2141,35 @@ namespace OpenCl.Tests
             Assert.AreEqual(  36, r[1].sd);
             Assert.AreEqual(  34, r[1].se);
             Assert.AreEqual(  32, r[1].sf);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestXorCl()
+        {
+            var a = new short16[] { new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112), new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80) };
+            var b = new short16[] { new short16((short)   5, (short)  10, (short)  15, (short)  20, (short)  25, (short)  30, (short)  35, (short)  40, (short)  45, (short)  50, (short)  55, (short)  60, (short)  65, (short)  70, (short)  75, (short)  80), new short16((short)   7, (short)  14, (short)  21, (short)  28, (short)  35, (short)  42, (short)  49, (short)  56, (short)  63, (short)  70, (short)  77, (short)  84, (short)  91, (short)  98, (short) 105, (short) 112) };
+            var r = new short16[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestShort16", "test_short16_xor");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_short16_xor"))
+            using (var ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<short16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<short16>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<short16>;
-                var mb = null as Mem<short16>;
-                var mr = null as Mem<short16>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_short16_xor");
-                    ma = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<short16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<short16>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<short16>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   2, r[0].s0);
             Assert.AreEqual(   4, r[0].s1);

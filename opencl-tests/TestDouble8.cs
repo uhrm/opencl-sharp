@@ -1,3 +1,8 @@
+
+//
+// GENERATED SOURCE FILE -- DO NOT MODIFY
+//
+
 using System;
 using System.IO;
 using System.Linq;
@@ -20,9 +25,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestAddManaged()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -34,144 +39,115 @@ namespace OpenCl.Tests
                 b,
                 r
             );
-            Assert.AreEqual(  12.0000000000000000, r[0].s0, 1e-15);
-            Assert.AreEqual(  24.0000000000000000, r[0].s1, 1e-15);
-            Assert.AreEqual(  36.0000000000000000, r[0].s2, 1e-15);
-            Assert.AreEqual(  48.0000000000000000, r[0].s3, 1e-15);
-            Assert.AreEqual(  60.0000000000000000, r[0].s4, 1e-15);
-            Assert.AreEqual(  72.0000000000000000, r[0].s5, 1e-15);
-            Assert.AreEqual(  84.0000000000000000, r[0].s6, 1e-15);
-            Assert.AreEqual(  96.0000000000000000, r[0].s7, 1e-15);
-            Assert.AreEqual(  12.0000000000000000, r[1].s0, 1e-15);
-            Assert.AreEqual(  24.0000000000000000, r[1].s1, 1e-15);
-            Assert.AreEqual(  36.0000000000000000, r[1].s2, 1e-15);
-            Assert.AreEqual(  48.0000000000000000, r[1].s3, 1e-15);
-            Assert.AreEqual(  60.0000000000000000, r[1].s4, 1e-15);
-            Assert.AreEqual(  72.0000000000000000, r[1].s5, 1e-15);
-            Assert.AreEqual(  84.0000000000000000, r[1].s6, 1e-15);
-            Assert.AreEqual(  96.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(1.2000000000000000e+01, r[0].s0, 1.2000000000000001e-14);
+            Assert.AreEqual(2.4000000000000000e+01, r[0].s1, 2.4000000000000002e-14);
+            Assert.AreEqual(3.6000000000000000e+01, r[0].s2, 3.6000000000000004e-14);
+            Assert.AreEqual(4.8000000000000000e+01, r[0].s3, 4.8000000000000004e-14);
+            Assert.AreEqual(6.0000000000000000e+01, r[0].s4, 6.0000000000000009e-14);
+            Assert.AreEqual(7.2000000000000000e+01, r[0].s5, 7.2000000000000009e-14);
+            Assert.AreEqual(8.4000000000000000e+01, r[0].s6, 8.4000000000000008e-14);
+            Assert.AreEqual(9.6000000000000000e+01, r[0].s7, 9.6000000000000007e-14);
+            Assert.AreEqual(1.2000000000000000e+01, r[1].s0, 1.2000000000000001e-14);
+            Assert.AreEqual(2.4000000000000000e+01, r[1].s1, 2.4000000000000002e-14);
+            Assert.AreEqual(3.6000000000000000e+01, r[1].s2, 3.6000000000000004e-14);
+            Assert.AreEqual(4.8000000000000000e+01, r[1].s3, 4.8000000000000004e-14);
+            Assert.AreEqual(6.0000000000000000e+01, r[1].s4, 6.0000000000000009e-14);
+            Assert.AreEqual(7.2000000000000000e+01, r[1].s5, 7.2000000000000009e-14);
+            Assert.AreEqual(8.4000000000000000e+01, r[1].s6, 8.4000000000000008e-14);
+            Assert.AreEqual(9.6000000000000000e+01, r[1].s7, 9.6000000000000007e-14);
         }
 
         [Test]
         public void TestAddCl()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_add");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_add"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<double8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<double8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<double8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_add");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<double8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
-            Assert.AreEqual(  12.0000000000000000, r[0].s0, 1e-15);
-            Assert.AreEqual(  24.0000000000000000, r[0].s1, 1e-15);
-            Assert.AreEqual(  36.0000000000000000, r[0].s2, 1e-15);
-            Assert.AreEqual(  48.0000000000000000, r[0].s3, 1e-15);
-            Assert.AreEqual(  60.0000000000000000, r[0].s4, 1e-15);
-            Assert.AreEqual(  72.0000000000000000, r[0].s5, 1e-15);
-            Assert.AreEqual(  84.0000000000000000, r[0].s6, 1e-15);
-            Assert.AreEqual(  96.0000000000000000, r[0].s7, 1e-15);
-            Assert.AreEqual(  12.0000000000000000, r[1].s0, 1e-15);
-            Assert.AreEqual(  24.0000000000000000, r[1].s1, 1e-15);
-            Assert.AreEqual(  36.0000000000000000, r[1].s2, 1e-15);
-            Assert.AreEqual(  48.0000000000000000, r[1].s3, 1e-15);
-            Assert.AreEqual(  60.0000000000000000, r[1].s4, 1e-15);
-            Assert.AreEqual(  72.0000000000000000, r[1].s5, 1e-15);
-            Assert.AreEqual(  84.0000000000000000, r[1].s6, 1e-15);
-            Assert.AreEqual(  96.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(1.2000000000000000e+01, r[0].s0, 1.2000000000000001e-14);
+            Assert.AreEqual(2.4000000000000000e+01, r[0].s1, 2.4000000000000002e-14);
+            Assert.AreEqual(3.6000000000000000e+01, r[0].s2, 3.6000000000000004e-14);
+            Assert.AreEqual(4.8000000000000000e+01, r[0].s3, 4.8000000000000004e-14);
+            Assert.AreEqual(6.0000000000000000e+01, r[0].s4, 6.0000000000000009e-14);
+            Assert.AreEqual(7.2000000000000000e+01, r[0].s5, 7.2000000000000009e-14);
+            Assert.AreEqual(8.4000000000000000e+01, r[0].s6, 8.4000000000000008e-14);
+            Assert.AreEqual(9.6000000000000000e+01, r[0].s7, 9.6000000000000007e-14);
+            Assert.AreEqual(1.2000000000000000e+01, r[1].s0, 1.2000000000000001e-14);
+            Assert.AreEqual(2.4000000000000000e+01, r[1].s1, 2.4000000000000002e-14);
+            Assert.AreEqual(3.6000000000000000e+01, r[1].s2, 3.6000000000000004e-14);
+            Assert.AreEqual(4.8000000000000000e+01, r[1].s3, 4.8000000000000004e-14);
+            Assert.AreEqual(6.0000000000000000e+01, r[1].s4, 6.0000000000000009e-14);
+            Assert.AreEqual(7.2000000000000000e+01, r[1].s5, 7.2000000000000009e-14);
+            Assert.AreEqual(8.4000000000000000e+01, r[1].s6, 8.4000000000000008e-14);
+            Assert.AreEqual(9.6000000000000000e+01, r[1].s7, 9.6000000000000007e-14);
         }
 
         [Test]
-        public void TestAddSpir()
+        public void TestAddSpirV()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_add", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_add"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<double8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<double8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<double8>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_double8_add");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<double8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
-            Assert.AreEqual(  12.0000000000000000, r[0].s0, 1e-15);
-            Assert.AreEqual(  24.0000000000000000, r[0].s1, 1e-15);
-            Assert.AreEqual(  36.0000000000000000, r[0].s2, 1e-15);
-            Assert.AreEqual(  48.0000000000000000, r[0].s3, 1e-15);
-            Assert.AreEqual(  60.0000000000000000, r[0].s4, 1e-15);
-            Assert.AreEqual(  72.0000000000000000, r[0].s5, 1e-15);
-            Assert.AreEqual(  84.0000000000000000, r[0].s6, 1e-15);
-            Assert.AreEqual(  96.0000000000000000, r[0].s7, 1e-15);
-            Assert.AreEqual(  12.0000000000000000, r[1].s0, 1e-15);
-            Assert.AreEqual(  24.0000000000000000, r[1].s1, 1e-15);
-            Assert.AreEqual(  36.0000000000000000, r[1].s2, 1e-15);
-            Assert.AreEqual(  48.0000000000000000, r[1].s3, 1e-15);
-            Assert.AreEqual(  60.0000000000000000, r[1].s4, 1e-15);
-            Assert.AreEqual(  72.0000000000000000, r[1].s5, 1e-15);
-            Assert.AreEqual(  84.0000000000000000, r[1].s6, 1e-15);
-            Assert.AreEqual(  96.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(1.2000000000000000e+01, r[0].s0, 1.2000000000000001e-14);
+            Assert.AreEqual(2.4000000000000000e+01, r[0].s1, 2.4000000000000002e-14);
+            Assert.AreEqual(3.6000000000000000e+01, r[0].s2, 3.6000000000000004e-14);
+            Assert.AreEqual(4.8000000000000000e+01, r[0].s3, 4.8000000000000004e-14);
+            Assert.AreEqual(6.0000000000000000e+01, r[0].s4, 6.0000000000000009e-14);
+            Assert.AreEqual(7.2000000000000000e+01, r[0].s5, 7.2000000000000009e-14);
+            Assert.AreEqual(8.4000000000000000e+01, r[0].s6, 8.4000000000000008e-14);
+            Assert.AreEqual(9.6000000000000000e+01, r[0].s7, 9.6000000000000007e-14);
+            Assert.AreEqual(1.2000000000000000e+01, r[1].s0, 1.2000000000000001e-14);
+            Assert.AreEqual(2.4000000000000000e+01, r[1].s1, 2.4000000000000002e-14);
+            Assert.AreEqual(3.6000000000000000e+01, r[1].s2, 3.6000000000000004e-14);
+            Assert.AreEqual(4.8000000000000000e+01, r[1].s3, 4.8000000000000004e-14);
+            Assert.AreEqual(6.0000000000000000e+01, r[1].s4, 6.0000000000000009e-14);
+            Assert.AreEqual(7.2000000000000000e+01, r[1].s5, 7.2000000000000009e-14);
+            Assert.AreEqual(8.4000000000000000e+01, r[1].s6, 8.4000000000000008e-14);
+            Assert.AreEqual(9.6000000000000000e+01, r[1].s7, 9.6000000000000007e-14);
         }
 
         [Kernel]
@@ -184,9 +160,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestSubManaged()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -198,144 +174,115 @@ namespace OpenCl.Tests
                 b,
                 r
             );
-            Assert.AreEqual(   2.0000000000000000, r[0].s0, 1e-15);
-            Assert.AreEqual(   4.0000000000000000, r[0].s1, 1e-15);
-            Assert.AreEqual(   6.0000000000000000, r[0].s2, 1e-15);
-            Assert.AreEqual(   8.0000000000000000, r[0].s3, 1e-15);
-            Assert.AreEqual(  10.0000000000000000, r[0].s4, 1e-15);
-            Assert.AreEqual(  12.0000000000000000, r[0].s5, 1e-15);
-            Assert.AreEqual(  14.0000000000000000, r[0].s6, 1e-15);
-            Assert.AreEqual(  16.0000000000000000, r[0].s7, 1e-15);
-            Assert.AreEqual(  -2.0000000000000000, r[1].s0, 1e-15);
-            Assert.AreEqual(  -4.0000000000000000, r[1].s1, 1e-15);
-            Assert.AreEqual(  -6.0000000000000000, r[1].s2, 1e-15);
-            Assert.AreEqual(  -8.0000000000000000, r[1].s3, 1e-15);
-            Assert.AreEqual( -10.0000000000000000, r[1].s4, 1e-15);
-            Assert.AreEqual( -12.0000000000000000, r[1].s5, 1e-15);
-            Assert.AreEqual( -14.0000000000000000, r[1].s6, 1e-15);
-            Assert.AreEqual( -16.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(2.0000000000000000e+00, r[0].s0, 2.0000000000000002e-15);
+            Assert.AreEqual(4.0000000000000000e+00, r[0].s1, 4.0000000000000003e-15);
+            Assert.AreEqual(6.0000000000000000e+00, r[0].s2, 6.0000000000000005e-15);
+            Assert.AreEqual(8.0000000000000000e+00, r[0].s3, 8.0000000000000006e-15);
+            Assert.AreEqual(1.0000000000000000e+01, r[0].s4, 1.0000000000000002e-14);
+            Assert.AreEqual(1.2000000000000000e+01, r[0].s5, 1.2000000000000001e-14);
+            Assert.AreEqual(1.4000000000000000e+01, r[0].s6, 1.4000000000000000e-14);
+            Assert.AreEqual(1.6000000000000000e+01, r[0].s7, 1.6000000000000001e-14);
+            Assert.AreEqual(-2.0000000000000000e+00, r[1].s0, 2.0000000000000002e-15);
+            Assert.AreEqual(-4.0000000000000000e+00, r[1].s1, 4.0000000000000003e-15);
+            Assert.AreEqual(-6.0000000000000000e+00, r[1].s2, 6.0000000000000005e-15);
+            Assert.AreEqual(-8.0000000000000000e+00, r[1].s3, 8.0000000000000006e-15);
+            Assert.AreEqual(-1.0000000000000000e+01, r[1].s4, 1.0000000000000002e-14);
+            Assert.AreEqual(-1.2000000000000000e+01, r[1].s5, 1.2000000000000001e-14);
+            Assert.AreEqual(-1.4000000000000000e+01, r[1].s6, 1.4000000000000000e-14);
+            Assert.AreEqual(-1.6000000000000000e+01, r[1].s7, 1.6000000000000001e-14);
         }
 
         [Test]
         public void TestSubCl()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_sub");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_sub"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<double8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<double8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<double8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_sub");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<double8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
-            Assert.AreEqual(   2.0000000000000000, r[0].s0, 1e-15);
-            Assert.AreEqual(   4.0000000000000000, r[0].s1, 1e-15);
-            Assert.AreEqual(   6.0000000000000000, r[0].s2, 1e-15);
-            Assert.AreEqual(   8.0000000000000000, r[0].s3, 1e-15);
-            Assert.AreEqual(  10.0000000000000000, r[0].s4, 1e-15);
-            Assert.AreEqual(  12.0000000000000000, r[0].s5, 1e-15);
-            Assert.AreEqual(  14.0000000000000000, r[0].s6, 1e-15);
-            Assert.AreEqual(  16.0000000000000000, r[0].s7, 1e-15);
-            Assert.AreEqual(  -2.0000000000000000, r[1].s0, 1e-15);
-            Assert.AreEqual(  -4.0000000000000000, r[1].s1, 1e-15);
-            Assert.AreEqual(  -6.0000000000000000, r[1].s2, 1e-15);
-            Assert.AreEqual(  -8.0000000000000000, r[1].s3, 1e-15);
-            Assert.AreEqual( -10.0000000000000000, r[1].s4, 1e-15);
-            Assert.AreEqual( -12.0000000000000000, r[1].s5, 1e-15);
-            Assert.AreEqual( -14.0000000000000000, r[1].s6, 1e-15);
-            Assert.AreEqual( -16.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(2.0000000000000000e+00, r[0].s0, 2.0000000000000002e-15);
+            Assert.AreEqual(4.0000000000000000e+00, r[0].s1, 4.0000000000000003e-15);
+            Assert.AreEqual(6.0000000000000000e+00, r[0].s2, 6.0000000000000005e-15);
+            Assert.AreEqual(8.0000000000000000e+00, r[0].s3, 8.0000000000000006e-15);
+            Assert.AreEqual(1.0000000000000000e+01, r[0].s4, 1.0000000000000002e-14);
+            Assert.AreEqual(1.2000000000000000e+01, r[0].s5, 1.2000000000000001e-14);
+            Assert.AreEqual(1.4000000000000000e+01, r[0].s6, 1.4000000000000000e-14);
+            Assert.AreEqual(1.6000000000000000e+01, r[0].s7, 1.6000000000000001e-14);
+            Assert.AreEqual(-2.0000000000000000e+00, r[1].s0, 2.0000000000000002e-15);
+            Assert.AreEqual(-4.0000000000000000e+00, r[1].s1, 4.0000000000000003e-15);
+            Assert.AreEqual(-6.0000000000000000e+00, r[1].s2, 6.0000000000000005e-15);
+            Assert.AreEqual(-8.0000000000000000e+00, r[1].s3, 8.0000000000000006e-15);
+            Assert.AreEqual(-1.0000000000000000e+01, r[1].s4, 1.0000000000000002e-14);
+            Assert.AreEqual(-1.2000000000000000e+01, r[1].s5, 1.2000000000000001e-14);
+            Assert.AreEqual(-1.4000000000000000e+01, r[1].s6, 1.4000000000000000e-14);
+            Assert.AreEqual(-1.6000000000000000e+01, r[1].s7, 1.6000000000000001e-14);
         }
 
         [Test]
-        public void TestSubSpir()
+        public void TestSubSpirV()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_sub", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_sub"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<double8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<double8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<double8>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_double8_sub");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<double8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
-            Assert.AreEqual(   2.0000000000000000, r[0].s0, 1e-15);
-            Assert.AreEqual(   4.0000000000000000, r[0].s1, 1e-15);
-            Assert.AreEqual(   6.0000000000000000, r[0].s2, 1e-15);
-            Assert.AreEqual(   8.0000000000000000, r[0].s3, 1e-15);
-            Assert.AreEqual(  10.0000000000000000, r[0].s4, 1e-15);
-            Assert.AreEqual(  12.0000000000000000, r[0].s5, 1e-15);
-            Assert.AreEqual(  14.0000000000000000, r[0].s6, 1e-15);
-            Assert.AreEqual(  16.0000000000000000, r[0].s7, 1e-15);
-            Assert.AreEqual(  -2.0000000000000000, r[1].s0, 1e-15);
-            Assert.AreEqual(  -4.0000000000000000, r[1].s1, 1e-15);
-            Assert.AreEqual(  -6.0000000000000000, r[1].s2, 1e-15);
-            Assert.AreEqual(  -8.0000000000000000, r[1].s3, 1e-15);
-            Assert.AreEqual( -10.0000000000000000, r[1].s4, 1e-15);
-            Assert.AreEqual( -12.0000000000000000, r[1].s5, 1e-15);
-            Assert.AreEqual( -14.0000000000000000, r[1].s6, 1e-15);
-            Assert.AreEqual( -16.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(2.0000000000000000e+00, r[0].s0, 2.0000000000000002e-15);
+            Assert.AreEqual(4.0000000000000000e+00, r[0].s1, 4.0000000000000003e-15);
+            Assert.AreEqual(6.0000000000000000e+00, r[0].s2, 6.0000000000000005e-15);
+            Assert.AreEqual(8.0000000000000000e+00, r[0].s3, 8.0000000000000006e-15);
+            Assert.AreEqual(1.0000000000000000e+01, r[0].s4, 1.0000000000000002e-14);
+            Assert.AreEqual(1.2000000000000000e+01, r[0].s5, 1.2000000000000001e-14);
+            Assert.AreEqual(1.4000000000000000e+01, r[0].s6, 1.4000000000000000e-14);
+            Assert.AreEqual(1.6000000000000000e+01, r[0].s7, 1.6000000000000001e-14);
+            Assert.AreEqual(-2.0000000000000000e+00, r[1].s0, 2.0000000000000002e-15);
+            Assert.AreEqual(-4.0000000000000000e+00, r[1].s1, 4.0000000000000003e-15);
+            Assert.AreEqual(-6.0000000000000000e+00, r[1].s2, 6.0000000000000005e-15);
+            Assert.AreEqual(-8.0000000000000000e+00, r[1].s3, 8.0000000000000006e-15);
+            Assert.AreEqual(-1.0000000000000000e+01, r[1].s4, 1.0000000000000002e-14);
+            Assert.AreEqual(-1.2000000000000000e+01, r[1].s5, 1.2000000000000001e-14);
+            Assert.AreEqual(-1.4000000000000000e+01, r[1].s6, 1.4000000000000000e-14);
+            Assert.AreEqual(-1.6000000000000000e+01, r[1].s7, 1.6000000000000001e-14);
         }
 
         [Kernel]
@@ -348,9 +295,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestMulManaged()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -362,144 +309,115 @@ namespace OpenCl.Tests
                 b,
                 r
             );
-            Assert.AreEqual(  35.0000000000000000, r[0].s0, 1e-15);
-            Assert.AreEqual( 140.0000000000000000, r[0].s1, 1e-15);
-            Assert.AreEqual( 315.0000000000000000, r[0].s2, 1e-15);
-            Assert.AreEqual( 560.0000000000000000, r[0].s3, 1e-15);
-            Assert.AreEqual( 875.0000000000000000, r[0].s4, 1e-15);
-            Assert.AreEqual(1260.0000000000000000, r[0].s5, 1e-15);
-            Assert.AreEqual(1715.0000000000000000, r[0].s6, 1e-15);
-            Assert.AreEqual(2240.0000000000000000, r[0].s7, 1e-15);
-            Assert.AreEqual(  35.0000000000000000, r[1].s0, 1e-15);
-            Assert.AreEqual( 140.0000000000000000, r[1].s1, 1e-15);
-            Assert.AreEqual( 315.0000000000000000, r[1].s2, 1e-15);
-            Assert.AreEqual( 560.0000000000000000, r[1].s3, 1e-15);
-            Assert.AreEqual( 875.0000000000000000, r[1].s4, 1e-15);
-            Assert.AreEqual(1260.0000000000000000, r[1].s5, 1e-15);
-            Assert.AreEqual(1715.0000000000000000, r[1].s6, 1e-15);
-            Assert.AreEqual(2240.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(3.5000000000000000e+01, r[0].s0, 3.5000000000000002e-14);
+            Assert.AreEqual(1.4000000000000000e+02, r[0].s1, 1.4000000000000001e-13);
+            Assert.AreEqual(3.1500000000000000e+02, r[0].s2, 3.1500000000000002e-13);
+            Assert.AreEqual(5.6000000000000000e+02, r[0].s3, 5.6000000000000004e-13);
+            Assert.AreEqual(8.7500000000000000e+02, r[0].s4, 8.7500000000000011e-13);
+            Assert.AreEqual(1.2600000000000000e+03, r[0].s5, 1.2600000000000001e-12);
+            Assert.AreEqual(1.7150000000000000e+03, r[0].s6, 1.7150000000000001e-12);
+            Assert.AreEqual(2.2400000000000000e+03, r[0].s7, 2.2400000000000001e-12);
+            Assert.AreEqual(3.5000000000000000e+01, r[1].s0, 3.5000000000000002e-14);
+            Assert.AreEqual(1.4000000000000000e+02, r[1].s1, 1.4000000000000001e-13);
+            Assert.AreEqual(3.1500000000000000e+02, r[1].s2, 3.1500000000000002e-13);
+            Assert.AreEqual(5.6000000000000000e+02, r[1].s3, 5.6000000000000004e-13);
+            Assert.AreEqual(8.7500000000000000e+02, r[1].s4, 8.7500000000000011e-13);
+            Assert.AreEqual(1.2600000000000000e+03, r[1].s5, 1.2600000000000001e-12);
+            Assert.AreEqual(1.7150000000000000e+03, r[1].s6, 1.7150000000000001e-12);
+            Assert.AreEqual(2.2400000000000000e+03, r[1].s7, 2.2400000000000001e-12);
         }
 
         [Test]
         public void TestMulCl()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_mul");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_mul"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<double8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<double8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<double8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_mul");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<double8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
-            Assert.AreEqual(  35.0000000000000000, r[0].s0, 1e-15);
-            Assert.AreEqual( 140.0000000000000000, r[0].s1, 1e-15);
-            Assert.AreEqual( 315.0000000000000000, r[0].s2, 1e-15);
-            Assert.AreEqual( 560.0000000000000000, r[0].s3, 1e-15);
-            Assert.AreEqual( 875.0000000000000000, r[0].s4, 1e-15);
-            Assert.AreEqual(1260.0000000000000000, r[0].s5, 1e-15);
-            Assert.AreEqual(1715.0000000000000000, r[0].s6, 1e-15);
-            Assert.AreEqual(2240.0000000000000000, r[0].s7, 1e-15);
-            Assert.AreEqual(  35.0000000000000000, r[1].s0, 1e-15);
-            Assert.AreEqual( 140.0000000000000000, r[1].s1, 1e-15);
-            Assert.AreEqual( 315.0000000000000000, r[1].s2, 1e-15);
-            Assert.AreEqual( 560.0000000000000000, r[1].s3, 1e-15);
-            Assert.AreEqual( 875.0000000000000000, r[1].s4, 1e-15);
-            Assert.AreEqual(1260.0000000000000000, r[1].s5, 1e-15);
-            Assert.AreEqual(1715.0000000000000000, r[1].s6, 1e-15);
-            Assert.AreEqual(2240.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(3.5000000000000000e+01, r[0].s0, 3.5000000000000002e-14);
+            Assert.AreEqual(1.4000000000000000e+02, r[0].s1, 1.4000000000000001e-13);
+            Assert.AreEqual(3.1500000000000000e+02, r[0].s2, 3.1500000000000002e-13);
+            Assert.AreEqual(5.6000000000000000e+02, r[0].s3, 5.6000000000000004e-13);
+            Assert.AreEqual(8.7500000000000000e+02, r[0].s4, 8.7500000000000011e-13);
+            Assert.AreEqual(1.2600000000000000e+03, r[0].s5, 1.2600000000000001e-12);
+            Assert.AreEqual(1.7150000000000000e+03, r[0].s6, 1.7150000000000001e-12);
+            Assert.AreEqual(2.2400000000000000e+03, r[0].s7, 2.2400000000000001e-12);
+            Assert.AreEqual(3.5000000000000000e+01, r[1].s0, 3.5000000000000002e-14);
+            Assert.AreEqual(1.4000000000000000e+02, r[1].s1, 1.4000000000000001e-13);
+            Assert.AreEqual(3.1500000000000000e+02, r[1].s2, 3.1500000000000002e-13);
+            Assert.AreEqual(5.6000000000000000e+02, r[1].s3, 5.6000000000000004e-13);
+            Assert.AreEqual(8.7500000000000000e+02, r[1].s4, 8.7500000000000011e-13);
+            Assert.AreEqual(1.2600000000000000e+03, r[1].s5, 1.2600000000000001e-12);
+            Assert.AreEqual(1.7150000000000000e+03, r[1].s6, 1.7150000000000001e-12);
+            Assert.AreEqual(2.2400000000000000e+03, r[1].s7, 2.2400000000000001e-12);
         }
 
         [Test]
-        public void TestMulSpir()
+        public void TestMulSpirV()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_mul", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_mul"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<double8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<double8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<double8>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_double8_mul");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<double8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
-            Assert.AreEqual(  35.0000000000000000, r[0].s0, 1e-15);
-            Assert.AreEqual( 140.0000000000000000, r[0].s1, 1e-15);
-            Assert.AreEqual( 315.0000000000000000, r[0].s2, 1e-15);
-            Assert.AreEqual( 560.0000000000000000, r[0].s3, 1e-15);
-            Assert.AreEqual( 875.0000000000000000, r[0].s4, 1e-15);
-            Assert.AreEqual(1260.0000000000000000, r[0].s5, 1e-15);
-            Assert.AreEqual(1715.0000000000000000, r[0].s6, 1e-15);
-            Assert.AreEqual(2240.0000000000000000, r[0].s7, 1e-15);
-            Assert.AreEqual(  35.0000000000000000, r[1].s0, 1e-15);
-            Assert.AreEqual( 140.0000000000000000, r[1].s1, 1e-15);
-            Assert.AreEqual( 315.0000000000000000, r[1].s2, 1e-15);
-            Assert.AreEqual( 560.0000000000000000, r[1].s3, 1e-15);
-            Assert.AreEqual( 875.0000000000000000, r[1].s4, 1e-15);
-            Assert.AreEqual(1260.0000000000000000, r[1].s5, 1e-15);
-            Assert.AreEqual(1715.0000000000000000, r[1].s6, 1e-15);
-            Assert.AreEqual(2240.0000000000000000, r[1].s7, 1e-15);
+            Assert.AreEqual(3.5000000000000000e+01, r[0].s0, 3.5000000000000002e-14);
+            Assert.AreEqual(1.4000000000000000e+02, r[0].s1, 1.4000000000000001e-13);
+            Assert.AreEqual(3.1500000000000000e+02, r[0].s2, 3.1500000000000002e-13);
+            Assert.AreEqual(5.6000000000000000e+02, r[0].s3, 5.6000000000000004e-13);
+            Assert.AreEqual(8.7500000000000000e+02, r[0].s4, 8.7500000000000011e-13);
+            Assert.AreEqual(1.2600000000000000e+03, r[0].s5, 1.2600000000000001e-12);
+            Assert.AreEqual(1.7150000000000000e+03, r[0].s6, 1.7150000000000001e-12);
+            Assert.AreEqual(2.2400000000000000e+03, r[0].s7, 2.2400000000000001e-12);
+            Assert.AreEqual(3.5000000000000000e+01, r[1].s0, 3.5000000000000002e-14);
+            Assert.AreEqual(1.4000000000000000e+02, r[1].s1, 1.4000000000000001e-13);
+            Assert.AreEqual(3.1500000000000000e+02, r[1].s2, 3.1500000000000002e-13);
+            Assert.AreEqual(5.6000000000000000e+02, r[1].s3, 5.6000000000000004e-13);
+            Assert.AreEqual(8.7500000000000000e+02, r[1].s4, 8.7500000000000011e-13);
+            Assert.AreEqual(1.2600000000000000e+03, r[1].s5, 1.2600000000000001e-12);
+            Assert.AreEqual(1.7150000000000000e+03, r[1].s6, 1.7150000000000001e-12);
+            Assert.AreEqual(2.2400000000000000e+03, r[1].s7, 2.2400000000000001e-12);
         }
 
         [Kernel]
@@ -512,9 +430,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestDivManaged()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -526,144 +444,115 @@ namespace OpenCl.Tests
                 b,
                 r
             );
-            Assert.AreEqual(   1.3999999999999999, r[0].s0, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s1, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s2, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s3, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s4, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s5, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s6, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s7, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s0, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s1, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s2, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s3, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s4, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s5, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s6, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s7, 1e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s0, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s1, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s2, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s3, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s4, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s5, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s6, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s7, 1.4000000000000001e-15);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s0, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s1, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s2, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s3, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s4, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s5, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s6, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s7, 7.1428571428571436e-16);
         }
 
         [Test]
         public void TestDivCl()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_div");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_div"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<double8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<double8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<double8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_div");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<double8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
-            Assert.AreEqual(   1.3999999999999999, r[0].s0, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s1, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s2, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s3, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s4, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s5, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s6, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s7, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s0, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s1, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s2, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s3, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s4, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s5, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s6, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s7, 1e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s0, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s1, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s2, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s3, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s4, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s5, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s6, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s7, 1.4000000000000001e-15);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s0, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s1, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s2, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s3, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s4, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s5, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s6, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s7, 7.1428571428571436e-16);
         }
 
         [Test]
-        public void TestDivSpir()
+        public void TestDivSpirV()
         {
-            double8[] a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
-            double8[] b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
-            double8[] r = new double8[2];
+            var a = new double8[] { new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56), new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40) };
+            var b = new double8[] { new double8((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40), new double8((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56) };
+            var r = new double8[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_div", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_div"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<double8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<double8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<double8>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_double8_div");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<double8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<double8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
-            Assert.AreEqual(   1.3999999999999999, r[0].s0, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s1, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s2, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s3, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s4, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s5, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s6, 1e-15);
-            Assert.AreEqual(   1.3999999999999999, r[0].s7, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s0, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s1, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s2, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s3, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s4, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s5, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s6, 1e-15);
-            Assert.AreEqual(   0.7142857142857143, r[1].s7, 1e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s0, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s1, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s2, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s3, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s4, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s5, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s6, 1.4000000000000001e-15);
+            Assert.AreEqual(1.3999999999999999e+00, r[0].s7, 1.4000000000000001e-15);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s0, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s1, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s2, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s3, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s4, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s5, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s6, 7.1428571428571436e-16);
+            Assert.AreEqual(7.1428571428571430e-01, r[1].s7, 7.1428571428571436e-16);
         }
 
         [Kernel]
@@ -674,11 +563,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestEq()
+        public void TestEqManaged()
         {
-            double8[] a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
-            double8[] b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
-            long8[] r = new long8[2];
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -706,43 +595,82 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s5);
             Assert.AreEqual( 0, r[1].s6);
             Assert.AreEqual(-1, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestEqCl()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_eq");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_eq"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<long8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_eq");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<long8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual( 0, r[0].s0);
+            Assert.AreEqual( 0, r[0].s1);
+            Assert.AreEqual( 0, r[0].s2);
+            Assert.AreEqual( 0, r[0].s3);
+            Assert.AreEqual( 0, r[0].s4);
+            Assert.AreEqual( 0, r[0].s5);
+            Assert.AreEqual( 0, r[0].s6);
+            Assert.AreEqual(-1, r[0].s7);
+            Assert.AreEqual( 0, r[1].s0);
+            Assert.AreEqual( 0, r[1].s1);
+            Assert.AreEqual( 0, r[1].s2);
+            Assert.AreEqual( 0, r[1].s3);
+            Assert.AreEqual( 0, r[1].s4);
+            Assert.AreEqual( 0, r[1].s5);
+            Assert.AreEqual( 0, r[1].s6);
+            Assert.AreEqual(-1, r[1].s7);
+        }
+
+        [Test]
+        public void TestEqSpirV()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_eq", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_eq"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual( 0, r[0].s0);
             Assert.AreEqual( 0, r[0].s1);
@@ -770,11 +698,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestNeq()
+        public void TestNeqManaged()
         {
-            double8[] a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
-            double8[] b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
-            long8[] r = new long8[2];
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -802,43 +730,82 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s5);
             Assert.AreEqual(-1, r[1].s6);
             Assert.AreEqual( 0, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestNeqCl()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_neq");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_neq"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<long8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_neq");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<long8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(-1, r[0].s0);
+            Assert.AreEqual(-1, r[0].s1);
+            Assert.AreEqual(-1, r[0].s2);
+            Assert.AreEqual(-1, r[0].s3);
+            Assert.AreEqual(-1, r[0].s4);
+            Assert.AreEqual(-1, r[0].s5);
+            Assert.AreEqual(-1, r[0].s6);
+            Assert.AreEqual( 0, r[0].s7);
+            Assert.AreEqual(-1, r[1].s0);
+            Assert.AreEqual(-1, r[1].s1);
+            Assert.AreEqual(-1, r[1].s2);
+            Assert.AreEqual(-1, r[1].s3);
+            Assert.AreEqual(-1, r[1].s4);
+            Assert.AreEqual(-1, r[1].s5);
+            Assert.AreEqual(-1, r[1].s6);
+            Assert.AreEqual( 0, r[1].s7);
+        }
+
+        [Test]
+        public void TestNeqSpirV()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_neq", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_neq"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(-1, r[0].s0);
             Assert.AreEqual(-1, r[0].s1);
@@ -866,11 +833,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestLt()
+        public void TestLtManaged()
         {
-            double8[] a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
-            double8[] b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
-            long8[] r = new long8[2];
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -898,43 +865,82 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s5);
             Assert.AreEqual(-1, r[1].s6);
             Assert.AreEqual( 0, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestLtCl()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_lt");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_lt"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<long8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_lt");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<long8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual( 0, r[0].s0);
+            Assert.AreEqual( 0, r[0].s1);
+            Assert.AreEqual( 0, r[0].s2);
+            Assert.AreEqual( 0, r[0].s3);
+            Assert.AreEqual( 0, r[0].s4);
+            Assert.AreEqual( 0, r[0].s5);
+            Assert.AreEqual( 0, r[0].s6);
+            Assert.AreEqual( 0, r[0].s7);
+            Assert.AreEqual(-1, r[1].s0);
+            Assert.AreEqual(-1, r[1].s1);
+            Assert.AreEqual(-1, r[1].s2);
+            Assert.AreEqual(-1, r[1].s3);
+            Assert.AreEqual(-1, r[1].s4);
+            Assert.AreEqual(-1, r[1].s5);
+            Assert.AreEqual(-1, r[1].s6);
+            Assert.AreEqual( 0, r[1].s7);
+        }
+
+        [Test]
+        public void TestLtSpirV()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_lt", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_lt"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual( 0, r[0].s0);
             Assert.AreEqual( 0, r[0].s1);
@@ -962,11 +968,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestLe()
+        public void TestLeManaged()
         {
-            double8[] a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
-            double8[] b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
-            long8[] r = new long8[2];
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -994,43 +1000,82 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s5);
             Assert.AreEqual(-1, r[1].s6);
             Assert.AreEqual(-1, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestLeCl()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_le");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_le"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<long8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_le");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<long8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual( 0, r[0].s0);
+            Assert.AreEqual( 0, r[0].s1);
+            Assert.AreEqual( 0, r[0].s2);
+            Assert.AreEqual( 0, r[0].s3);
+            Assert.AreEqual( 0, r[0].s4);
+            Assert.AreEqual( 0, r[0].s5);
+            Assert.AreEqual( 0, r[0].s6);
+            Assert.AreEqual(-1, r[0].s7);
+            Assert.AreEqual(-1, r[1].s0);
+            Assert.AreEqual(-1, r[1].s1);
+            Assert.AreEqual(-1, r[1].s2);
+            Assert.AreEqual(-1, r[1].s3);
+            Assert.AreEqual(-1, r[1].s4);
+            Assert.AreEqual(-1, r[1].s5);
+            Assert.AreEqual(-1, r[1].s6);
+            Assert.AreEqual(-1, r[1].s7);
+        }
+
+        [Test]
+        public void TestLeSpirV()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_le", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_le"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual( 0, r[0].s0);
             Assert.AreEqual( 0, r[0].s1);
@@ -1058,11 +1103,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestGt()
+        public void TestGtManaged()
         {
-            double8[] a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
-            double8[] b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
-            long8[] r = new long8[2];
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1090,43 +1135,82 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s5);
             Assert.AreEqual( 0, r[1].s6);
             Assert.AreEqual( 0, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestGtCl()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_gt");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_gt"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<long8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_gt");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<long8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(-1, r[0].s0);
+            Assert.AreEqual(-1, r[0].s1);
+            Assert.AreEqual(-1, r[0].s2);
+            Assert.AreEqual(-1, r[0].s3);
+            Assert.AreEqual(-1, r[0].s4);
+            Assert.AreEqual(-1, r[0].s5);
+            Assert.AreEqual(-1, r[0].s6);
+            Assert.AreEqual( 0, r[0].s7);
+            Assert.AreEqual( 0, r[1].s0);
+            Assert.AreEqual( 0, r[1].s1);
+            Assert.AreEqual( 0, r[1].s2);
+            Assert.AreEqual( 0, r[1].s3);
+            Assert.AreEqual( 0, r[1].s4);
+            Assert.AreEqual( 0, r[1].s5);
+            Assert.AreEqual( 0, r[1].s6);
+            Assert.AreEqual( 0, r[1].s7);
+        }
+
+        [Test]
+        public void TestGtSpirV()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_gt", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_gt"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(-1, r[0].s0);
             Assert.AreEqual(-1, r[0].s1);
@@ -1154,11 +1238,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestGe()
+        public void TestGeManaged()
         {
-            double8[] a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
-            double8[] b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
-            long8[] r = new long8[2];
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1186,43 +1270,82 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s5);
             Assert.AreEqual( 0, r[1].s6);
             Assert.AreEqual(-1, r[1].s7);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestGeCl()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_ge");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_ge"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<double8>;
-                var mb = null as Mem<double8>;
-                var mr = null as Mem<long8>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_double8_ge");
-                    ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<long8>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<long8>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(-1, r[0].s0);
+            Assert.AreEqual(-1, r[0].s1);
+            Assert.AreEqual(-1, r[0].s2);
+            Assert.AreEqual(-1, r[0].s3);
+            Assert.AreEqual(-1, r[0].s4);
+            Assert.AreEqual(-1, r[0].s5);
+            Assert.AreEqual(-1, r[0].s6);
+            Assert.AreEqual(-1, r[0].s7);
+            Assert.AreEqual( 0, r[1].s0);
+            Assert.AreEqual( 0, r[1].s1);
+            Assert.AreEqual( 0, r[1].s2);
+            Assert.AreEqual( 0, r[1].s3);
+            Assert.AreEqual( 0, r[1].s4);
+            Assert.AreEqual( 0, r[1].s5);
+            Assert.AreEqual( 0, r[1].s6);
+            Assert.AreEqual(-1, r[1].s7);
+        }
+
+        [Test]
+        public void TestGeSpirV()
+        {
+            var a = new double8[] { new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7), new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7) };
+            var b = new double8[] { new double8((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7), new double8((double)  14, (double)  13, (double)  12, (double)  11, (double)  10, (double)   9, (double)   8, (double)   7) };
+            var r = new long8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble8", "test_double8_ge", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_double8_ge"))
+            using (var ma = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<double8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<long8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<long8>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(-1, r[0].s0);
             Assert.AreEqual(-1, r[0].s1);

@@ -1,3 +1,8 @@
+
+//
+// GENERATED SOURCE FILE -- DO NOT MODIFY
+//
+
 using System;
 using System.IO;
 using System.Linq;
@@ -20,9 +25,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestAddManaged()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -45,45 +50,30 @@ namespace OpenCl.Tests
         [Test]
         public void TestAddCl()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_add");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_add"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_add");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(  12, r[0].s0);
             Assert.AreEqual(  24, r[0].s1);
@@ -94,47 +84,33 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAddSpir()
+        public void TestAddSpirV()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_add", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_add"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_int3_add");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(  12, r[0].s0);
             Assert.AreEqual(  24, r[0].s1);
@@ -154,9 +130,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestSubManaged()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -179,45 +155,30 @@ namespace OpenCl.Tests
         [Test]
         public void TestSubCl()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_sub");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_sub"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_sub");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   2, r[0].s0);
             Assert.AreEqual(   4, r[0].s1);
@@ -228,47 +189,33 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestSubSpir()
+        public void TestSubSpirV()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_sub", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_sub"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_int3_sub");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   2, r[0].s0);
             Assert.AreEqual(   4, r[0].s1);
@@ -288,9 +235,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestMulManaged()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -313,45 +260,30 @@ namespace OpenCl.Tests
         [Test]
         public void TestMulCl()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_mul");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_mul"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_mul");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(  35, r[0].s0);
             Assert.AreEqual( 140, r[0].s1);
@@ -362,47 +294,33 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestMulSpir()
+        public void TestMulSpirV()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_mul", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_mul"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_int3_mul");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(  35, r[0].s0);
             Assert.AreEqual( 140, r[0].s1);
@@ -422,9 +340,9 @@ namespace OpenCl.Tests
         [Test]
         public void TestDivManaged()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -447,45 +365,30 @@ namespace OpenCl.Tests
         [Test]
         public void TestDivCl()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_div");
 
             // test Cl kernel
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_div"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_div");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   1, r[0].s0);
             Assert.AreEqual(   1, r[0].s1);
@@ -496,47 +399,33 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestDivSpir()
+        public void TestDivSpirV()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // compile SPIR-V kernel
             var module = new MemoryStream();
             SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_div", module);
 
             // test SPIR-V kernel
-            Device device = Device.GetDeviceIDs(null, DeviceType.All).First();
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             using (var context = Context.CreateContext(null, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_div"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithIL(context, module.ToArray());
-                    program.BuildProgram(device);
-                    kernel = Kernel.CreateKernel(program, "test_int3_div");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   1, r[0].s0);
             Assert.AreEqual(   1, r[0].s1);
@@ -554,11 +443,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestEq()
+        public void TestEqManaged()
         {
-            int3[] a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
-            int3[] b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -576,43 +465,72 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s0);
             Assert.AreEqual( 0, r[1].s1);
             Assert.AreEqual(-1, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestEqCl()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_eq");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_eq"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_eq");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual( 0, r[0].s0);
+            Assert.AreEqual( 0, r[0].s1);
+            Assert.AreEqual(-1, r[0].s2);
+            Assert.AreEqual( 0, r[1].s0);
+            Assert.AreEqual( 0, r[1].s1);
+            Assert.AreEqual(-1, r[1].s2);
+        }
+
+        [Test]
+        public void TestEqSpirV()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_eq", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_eq"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual( 0, r[0].s0);
             Assert.AreEqual( 0, r[0].s1);
@@ -630,11 +548,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestNeq()
+        public void TestNeqManaged()
         {
-            int3[] a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
-            int3[] b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -652,43 +570,72 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s0);
             Assert.AreEqual(-1, r[1].s1);
             Assert.AreEqual( 0, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestNeqCl()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_neq");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_neq"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_neq");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(-1, r[0].s0);
+            Assert.AreEqual(-1, r[0].s1);
+            Assert.AreEqual( 0, r[0].s2);
+            Assert.AreEqual(-1, r[1].s0);
+            Assert.AreEqual(-1, r[1].s1);
+            Assert.AreEqual( 0, r[1].s2);
+        }
+
+        [Test]
+        public void TestNeqSpirV()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_neq", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_neq"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(-1, r[0].s0);
             Assert.AreEqual(-1, r[0].s1);
@@ -706,11 +653,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestLt()
+        public void TestLtManaged()
         {
-            int3[] a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
-            int3[] b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -728,43 +675,72 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s0);
             Assert.AreEqual(-1, r[1].s1);
             Assert.AreEqual( 0, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestLtCl()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_lt");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_lt"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_lt");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual( 0, r[0].s0);
+            Assert.AreEqual( 0, r[0].s1);
+            Assert.AreEqual( 0, r[0].s2);
+            Assert.AreEqual(-1, r[1].s0);
+            Assert.AreEqual(-1, r[1].s1);
+            Assert.AreEqual( 0, r[1].s2);
+        }
+
+        [Test]
+        public void TestLtSpirV()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_lt", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_lt"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual( 0, r[0].s0);
             Assert.AreEqual( 0, r[0].s1);
@@ -782,11 +758,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestLe()
+        public void TestLeManaged()
         {
-            int3[] a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
-            int3[] b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -804,43 +780,72 @@ namespace OpenCl.Tests
             Assert.AreEqual(-1, r[1].s0);
             Assert.AreEqual(-1, r[1].s1);
             Assert.AreEqual(-1, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestLeCl()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_le");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_le"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_le");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual( 0, r[0].s0);
+            Assert.AreEqual( 0, r[0].s1);
+            Assert.AreEqual(-1, r[0].s2);
+            Assert.AreEqual(-1, r[1].s0);
+            Assert.AreEqual(-1, r[1].s1);
+            Assert.AreEqual(-1, r[1].s2);
+        }
+
+        [Test]
+        public void TestLeSpirV()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_le", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_le"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual( 0, r[0].s0);
             Assert.AreEqual( 0, r[0].s1);
@@ -858,11 +863,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestGt()
+        public void TestGtManaged()
         {
-            int3[] a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
-            int3[] b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -880,43 +885,72 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s0);
             Assert.AreEqual( 0, r[1].s1);
             Assert.AreEqual( 0, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestGtCl()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_gt");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_gt"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_gt");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(-1, r[0].s0);
+            Assert.AreEqual(-1, r[0].s1);
+            Assert.AreEqual( 0, r[0].s2);
+            Assert.AreEqual( 0, r[1].s0);
+            Assert.AreEqual( 0, r[1].s1);
+            Assert.AreEqual( 0, r[1].s2);
+        }
+
+        [Test]
+        public void TestGtSpirV()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_gt", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_gt"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(-1, r[0].s0);
             Assert.AreEqual(-1, r[0].s1);
@@ -934,11 +968,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestGe()
+        public void TestGeManaged()
         {
-            int3[] a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
-            int3[] b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -956,43 +990,72 @@ namespace OpenCl.Tests
             Assert.AreEqual( 0, r[1].s0);
             Assert.AreEqual( 0, r[1].s1);
             Assert.AreEqual(-1, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestGeCl()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_ge");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_ge"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_ge");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(-1, r[0].s0);
+            Assert.AreEqual(-1, r[0].s1);
+            Assert.AreEqual(-1, r[0].s2);
+            Assert.AreEqual( 0, r[1].s0);
+            Assert.AreEqual( 0, r[1].s1);
+            Assert.AreEqual(-1, r[1].s2);
+        }
+
+        [Test]
+        public void TestGeSpirV()
+        {
+            var a = new int3[] { new int3((int)   4, (int)   3, (int)   2), new int3((int)   0, (int)   1, (int)   2) };
+            var b = new int3[] { new int3((int)   0, (int)   1, (int)   2), new int3((int)   4, (int)   3, (int)   2) };
+            var r = new int3[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_ge", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_ge"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(-1, r[0].s0);
             Assert.AreEqual(-1, r[0].s1);
@@ -1010,11 +1073,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestAnd()
+        public void TestAndManaged()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1032,43 +1095,35 @@ namespace OpenCl.Tests
             Assert.AreEqual(   5, r[1].s0);
             Assert.AreEqual(  10, r[1].s1);
             Assert.AreEqual(   5, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestAndCl()
+        {
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_and");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_and"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_and");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   5, r[0].s0);
             Assert.AreEqual(  10, r[0].s1);
@@ -1086,11 +1141,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestOr()
+        public void TestOrManaged()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1108,43 +1163,35 @@ namespace OpenCl.Tests
             Assert.AreEqual(   7, r[1].s0);
             Assert.AreEqual(  14, r[1].s1);
             Assert.AreEqual(  31, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestOrCl()
+        {
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_or");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_or"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_or");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   7, r[0].s0);
             Assert.AreEqual(  14, r[0].s1);
@@ -1162,11 +1209,11 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestXor()
+        public void TestXorManaged()
         {
-            int3[] a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
-            int3[] b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
-            int3[] r = new int3[2];
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
 
             // test managed
             Array.Clear(r, 0, 2);
@@ -1184,43 +1231,35 @@ namespace OpenCl.Tests
             Assert.AreEqual(   2, r[1].s0);
             Assert.AreEqual(   4, r[1].s1);
             Assert.AreEqual(  26, r[1].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestXorCl()
+        {
+            var a = new int3[] { new int3((int)   7, (int)  14, (int)  21), new int3((int)   5, (int)  10, (int)  15) };
+            var b = new int3[] { new int3((int)   5, (int)  10, (int)  15), new int3((int)   7, (int)  14, (int)  21) };
+            var r = new int3[2];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_int3_xor");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_int3_xor"))
+            using (var ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var ma = null as Mem<int3>;
-                var mb = null as Mem<int3>;
-                var mr = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_int3_xor");
-                    ma = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a);
-                    mb = Mem<int3>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b);
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, 2*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)ma);
-                    kernel.SetKernelArg(1, (HandleObject)mb);
-                    kernel.SetKernelArg(2, (HandleObject)mr);
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
-                    queue.Finish();
-                    Array.Clear(r, 0, 2);
-                    queue.EnqueueReadBuffer(mr, true, r);
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mb != null) mb.Dispose();
-                    if (ma != null) ma.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
             }
             Assert.AreEqual(   2, r[0].s0);
             Assert.AreEqual(   4, r[0].s1);
@@ -1233,8 +1272,8 @@ namespace OpenCl.Tests
         [Kernel]
         private static void test_components1([Global] int[] r, [Global] int3[] w)
         {
-            int3 ar = new int3((int)1, (int)2, (int)3);
-            int aw = (int)1;
+            var ar = new int3((int)1, (int)2, (int)3);
+            var aw = (int)1;
             r[0] = ar.x;
             w[0].x = aw;
             r[1] = ar.y;
@@ -1244,12 +1283,12 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestComponentAccessors1()
+        public void TestComponentAccessors1Managed()
         {
-            int nr = 3;
-            int nw = 3;
-            int[] r = new int[nr];
-            int3[] w = new int3[nw];
+            var nr = 3;
+            var nw = 3;
+            var r = new int[nr];
+            var w = new int3[nw];
 
             // test managed
             Array.Clear(r, 0, nr);
@@ -1272,42 +1311,38 @@ namespace OpenCl.Tests
             Assert.AreEqual((int)1, w[2].s2);
             Assert.AreEqual((int)0, w[2].s0);
             Assert.AreEqual((int)0, w[2].s1);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestComponentAccessors1Cl()
+        {
+            var nr = 3;
+            var nw = 3;
+            var r = new int[nr];
+            var w = new int3[nw];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_components1");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components1"))
+            using (var mr = Mem<int>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<int>()))
+            using (var mw = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var mr = null as Mem<int>;
-                var mw = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_components1");
-                    mr = Mem<int>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<int>());
-                    mw = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)mr);
-                    kernel.SetKernelArg(1, (HandleObject)mw);
-                    queue.EnqueueFillBuffer(mw, default(int3));
-                    queue.Finish();
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, false, r);
-                    queue.EnqueueReadBuffer(mw, false, w);
-                    queue.Finish();
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mw != null) mw.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(int3));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
             }
             Assert.AreEqual((int)1, r[0]);
             Assert.AreEqual((int)1, w[0].s0);
@@ -1325,8 +1360,8 @@ namespace OpenCl.Tests
         [Kernel]
         private static void test_components2([Global] int2[] r, [Global] int3[] w)
         {
-            int3 ar = new int3((int)1, (int)2, (int)3);
-            int2 aw = new int2((int)1, (int)2);
+            var ar = new int3((int)1, (int)2, (int)3);
+            var aw = new int2((int)1, (int)2);
             r[0] = ar.xx;
             r[1] = ar.xy;
             w[0].xy = aw;
@@ -1345,12 +1380,12 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestComponentAccessors2()
+        public void TestComponentAccessors2Managed()
         {
-            int nr = 9;
-            int nw = 6;
-            int2[] r = new int2[nr];
-            int3[] w = new int3[nw];
+            var nr = 9;
+            var nw = 6;
+            var r = new int2[nr];
+            var w = new int3[nw];
 
             // test managed
             Array.Clear(r, 0, nr);
@@ -1397,42 +1432,38 @@ namespace OpenCl.Tests
             Assert.AreEqual((int)0, w[5].s0);
             Assert.AreEqual((int)3, r[8].s0);
             Assert.AreEqual((int)3, r[8].s1);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestComponentAccessors2Cl()
+        {
+            var nr = 9;
+            var nw = 6;
+            var r = new int2[nr];
+            var w = new int3[nw];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_components2");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components2"))
+            using (var mr = Mem<int2>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<int2>()))
+            using (var mw = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var mr = null as Mem<int2>;
-                var mw = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_components2");
-                    mr = Mem<int2>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<int2>());
-                    mw = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)mr);
-                    kernel.SetKernelArg(1, (HandleObject)mw);
-                    queue.EnqueueFillBuffer(mw, default(int3));
-                    queue.Finish();
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, false, r);
-                    queue.EnqueueReadBuffer(mw, false, w);
-                    queue.Finish();
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mw != null) mw.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(int3));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
             }
             Assert.AreEqual((int)1, r[0].s0);
             Assert.AreEqual((int)1, r[0].s1);
@@ -1474,8 +1505,8 @@ namespace OpenCl.Tests
         [Kernel]
         private static void test_components3([Global] int3[] r, [Global] int3[] w)
         {
-            int3 ar = new int3((int)1, (int)2, (int)3);
-            int3 aw = new int3((int)1, (int)2, (int)3);
+            var ar = new int3((int)1, (int)2, (int)3);
+            var aw = new int3((int)1, (int)2, (int)3);
             r[0] = ar.xxx;
             r[1] = ar.xxy;
             r[2] = ar.xxz;
@@ -1512,12 +1543,12 @@ namespace OpenCl.Tests
         }
 
         [Test]
-        public void TestComponentAccessors3()
+        public void TestComponentAccessors3Managed()
         {
-            int nr = 27;
-            int nw = 6;
-            int3[] r = new int3[nr];
-            int3[] w = new int3[nw];
+            var nr = 27;
+            var nw = 6;
+            var r = new int3[nr];
+            var w = new int3[nw];
 
             // test managed
             Array.Clear(r, 0, nr);
@@ -1627,42 +1658,38 @@ namespace OpenCl.Tests
             Assert.AreEqual((int)3, r[26].s0);
             Assert.AreEqual((int)3, r[26].s1);
             Assert.AreEqual((int)3, r[26].s2);
+        }
 
-            // compile kernel
+        [Test]
+        public void TestComponentAccessors3Cl()
+        {
+            var nr = 27;
+            var nw = 6;
+            var r = new int3[nr];
+            var w = new int3[nw];
+
+            // compile Cl kernel
             var source = ClCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestInt3", "test_components3");
 
-            // test native
-            Platform platform = Platform.GetPlatformIDs()[0];
-            Device[] devices = Device.GetDeviceIDs(platform, DeviceType.Cpu);
-            using (var context = Context.CreateContext(platform, devices, null, null))
-            using (var queue = CommandQueue.CreateCommandQueue(context, devices[0]))
+            // test Cl kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components3"))
+            using (var mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<int3>()))
+            using (var mw = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<int3>()))
             {
-                var program = null as Program;
-                var kernel = null as Kernel;
-                var mr = null as Mem<int3>;
-                var mw = null as Mem<int3>;
-                try {
-                    program = Program.CreateProgramWithSource(context, new String[] { source });
-                    try { program.BuildProgram(devices, null, null, null); } catch (OpenClException ex) { Console.WriteLine(source); throw ex; }
-                    kernel = Kernel.CreateKernel(program, "test_components3");
-                    mr = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<int3>());
-                    mw = Mem<int3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<int3>());
-                    kernel.SetKernelArg(0, (HandleObject)mr);
-                    kernel.SetKernelArg(1, (HandleObject)mw);
-                    queue.EnqueueFillBuffer(mw, default(int3));
-                    queue.Finish();
-                    queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
-                    queue.Finish();
-                    queue.EnqueueReadBuffer(mr, false, r);
-                    queue.EnqueueReadBuffer(mw, false, w);
-                    queue.Finish();
-                }
-                finally {
-                    if (mr != null) mr.Dispose();
-                    if (mw != null) mw.Dispose();
-                    if (kernel != null) kernel.Dispose();
-                    if (program != null) program.Dispose();
-                }
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(int3));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
             }
             Assert.AreEqual((int)1, r[0].s0);
             Assert.AreEqual((int)1, r[0].s1);
