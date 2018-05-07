@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -338,12 +339,12 @@ namespace OpenCl.Compiler
             private readonly int width;
             private readonly int signedness;
 
-            public OpTypeInt(Func<TypeOpCode,int> rfunc, int width) : this(rfunc, width, 0) { }
+            public OpTypeInt(Func<TypeOpCode,int> rfunc, int width) : this(rfunc, width, 1) { }
 
             public OpTypeInt(Func<TypeOpCode,int> rfunc, int width, int signedness) : base(rfunc)
             {
                 this.width = width;
-                this.signedness = signedness;
+                this.signedness = signedness != 0 ? 1 : 0;
                 rfunc(this);
             }
 
@@ -910,13 +911,25 @@ namespace OpenCl.Compiler
             }
         }
 
-        private class OpConstantTrue : DefaultTypedResultOpCode
+        private abstract class ConstOpCode : TypedResultOpCode
         {
-            private OpTypeBool type;
+        }
 
-            public OpConstantTrue(int rid, OpTypeBool type) : base(rid)
+        private class OpConstantTrue : ConstOpCode
+        {
+            private readonly int rid;
+
+            private readonly OpTypeBool type;
+
+            public OpConstantTrue(Func<ConstOpCode,int> rfunc, OpTypeBool type)
             {
                 this.type = type;
+                this.rid = rfunc(this);
+            }
+
+            public override int ResultId
+            {
+                get { return this.rid; }
             }
 
             public override TypeOpCode ResultType
@@ -931,15 +944,33 @@ namespace OpenCl.Compiler
                 stream.WriteIntLE(this.type.ResultId);
                 stream.WriteIntLE(ResultId);
             }
+
+            public override bool Equals(object obj)
+            {
+                return obj is OpConstantTrue;
+            }
+            
+            public override int GetHashCode()
+            {
+                return 0x074147fc;
+            }
         }
 
-        private class OpConstantFalse : DefaultTypedResultOpCode
+        private class OpConstantFalse : ConstOpCode
         {
+            private readonly int rid;
+
             private OpTypeBool type;
 
-            public OpConstantFalse(int rid, OpTypeBool type) : base(rid)
+            public OpConstantFalse(Func<ConstOpCode,int> rfunc, OpTypeBool type)
             {
                 this.type = type;
+                this.rid = rfunc(this);
+            }
+
+            public override int ResultId
+            {
+                get { return this.rid; }
             }
 
             public override TypeOpCode ResultType
@@ -954,15 +985,25 @@ namespace OpenCl.Compiler
                 stream.WriteIntLE(this.type.ResultId);
                 stream.WriteIntLE(ResultId);
             }
+
+            public override bool Equals(object obj)
+            {
+                return obj is OpConstantFalse;
+            }
+            
+            public override int GetHashCode()
+            {
+                return 0x074147cf;
+            }
         }
 
-        private class OpConstant : TypedResultOpCode
+        private class OpConstant : ConstOpCode
         {
             private readonly int rid;
             private readonly NumericTypeOpCode type;
             private readonly object value;
 
-            public OpConstant(Func<OpConstant,int> rfunc, NumericTypeOpCode type, object value)
+            public OpConstant(Func<ConstOpCode,int> rfunc, NumericTypeOpCode type, object value)
             {
                 this.type = type;
                 this.value = value;
@@ -993,16 +1034,36 @@ namespace OpenCl.Compiler
                 if (this.type is OpTypeInt) {
                     switch (this.type.Width) {
                     case 8:
-                        stream.WriteByteLE((sbyte)this.value);
+                        if ((this.type as OpTypeInt).Signedness == 1) {
+                            stream.WriteByteLE(Convert.ToSByte(this.value));
+                        }
+                        else {
+                            stream.WriteByteLE(Convert.ToByte(this.value));
+                        }
                         break;
                     case 16:
-                        stream.WriteShortLE((short)this.value);
+                        if ((this.type as OpTypeInt).Signedness == 1) {
+                            stream.WriteShortLE(Convert.ToInt16(this.value));
+                        }
+                        else {
+                            stream.WriteShortLE(Convert.ToUInt16(this.value));
+                        }
                         break;
                     case 32:
-                        stream.WriteIntLE((int)this.value);
+                        if ((this.type as OpTypeInt).Signedness == 1) {
+                            stream.WriteIntLE(Convert.ToInt32(this.value));
+                        }
+                        else {
+                            stream.WriteIntLE(Convert.ToUInt32(this.value));
+                        }
                         break;
                     case 64:
-                        stream.WriteLongLE((long)this.value);
+                        if ((this.type as OpTypeInt).Signedness == 1) {
+                            stream.WriteLongLE(Convert.ToInt64(this.value));
+                        }
+                        else {
+                            stream.WriteLongLE(Convert.ToUInt64(this.value));
+                        }
                         break;
                     default:
                         throw new CompilerException(String.Format("Unsupported integer width: {0} (expected width 8, 16, 32, or 64)", this.type.Width));
@@ -1011,10 +1072,10 @@ namespace OpenCl.Compiler
                 else {
                     switch (this.type.Width) {
                     case 32:
-                        stream.WriteFloatLE((float)this.value);
+                        stream.WriteFloatLE(Convert.ToSingle(this.value));
                         break;
                     case 64:
-                        stream.WriteDoubleLE((double)this.value);
+                        stream.WriteDoubleLE(Convert.ToDouble(this.value));
                         break;
                     default:
                         throw new CompilerException(String.Format("Unsupported floating point width: {0} (expected width 32 or 64)", this.type.Width));
@@ -1031,6 +1092,110 @@ namespace OpenCl.Compiler
             public override int GetHashCode()
             {
                 return 0x074147fc ^ 0x54cb7d94*this.type.GetHashCode() ^ 0x46339fcb*this.value.GetHashCode();
+            }
+        }
+
+        private class OpConstantComposite : ConstOpCode
+        {
+            private readonly int rid;
+
+            private readonly CompositeTypeOpCode resultType;
+
+            private readonly OpConstant[] members;
+
+            public OpConstantComposite(Func<ConstOpCode,int> rfunc, CompositeTypeOpCode resultType, params OpConstant[] members)
+            {
+                if (resultType is OpTypeVector) {
+                    int n = (resultType as OpTypeVector).ComponentCount;
+                    if (members.Length != n) {
+                        throw new ArgumentException($"Invalid number of members: expected {n}, found {members.Length}.");
+                    }
+                    for (var i=0; i<n; i++) {
+                        var t = (resultType as OpTypeVector).GetResultType(i);
+                        if (!t.Equals(members[i].ResultType)) {
+                        throw new ArgumentException($"Invalid type of member {i}: expected {t}, found {members[i].ResultType}.");
+                        }
+                    }
+                }
+                else if (resultType is OpTypeMatrix) {
+                    int n = (resultType as OpTypeMatrix).ColumnCount;
+                    if (members.Length != n) {
+                        throw new ArgumentException($"Invalid number of members: expected {n}, found {members.Length}.");
+                    }
+                    for (var i=0; i<n; i++) {
+                        var t = (resultType as OpTypeMatrix).GetResultType(i);
+                        if (!t.Equals(members[i].ResultType)) {
+                        throw new ArgumentException($"Invalid type of member {i}: expected {t}, found {members[i].ResultType}.");
+                        }
+                    }
+                }
+                else if (resultType is OpTypeArray) {
+                    int n = (resultType as OpTypeArray).Length;
+                    if (members.Length != n) {
+                        throw new ArgumentException($"Invalid number of members: expected {n}, found {members.Length}.");
+                    }
+                    var t = (resultType as OpTypeArray).ElementType;
+                    for (var i=0; i<n; i++) {
+                        if (!t.Equals(members[i].ResultType)) {
+                        throw new ArgumentException($"Invalid type of member {i}: expected {t}, found {members[i].ResultType}.");
+                        }
+                    }
+                }
+                else if (resultType is OpTypeStruct) {
+                    var m = (resultType as OpTypeStruct).Member;
+                    if (members.Length != m.Count) {
+                        throw new ArgumentException($"Invalid number of members: expected {m.Count}, found {members.Length}.");
+                    }
+                    for (var i=0; i<m.Count; i++) {
+                        var ti = m[i].ResultType;
+                        if (!ti.Equals(members[i].ResultType)) {
+                        throw new ArgumentException($"Invalid type of member {i}: expected {ti}, found {members[i].ResultType}.");
+                        }
+                    }
+                }
+                else {
+                    throw new ArgumentException($"Result type {resultType.ResultType} is non-composite.");
+                }
+                this.resultType = resultType;
+                this.members = members;
+                this.rid = rfunc(this);
+            }
+
+            public override int ResultId
+            {
+                get { return this.rid; }
+            }
+
+            public override TypeOpCode ResultType
+            {
+                get { return this.resultType; }
+            }
+
+            public IReadOnlyList<OpConstant> Member
+            {
+                get { return this.members; }
+            }
+
+            public override void Emit(Stream stream)
+            {
+                stream.WriteShortLE(44);
+                stream.WriteShortLE((short)(3+this.members.Length));
+                stream.WriteIntLE(this.resultType.ResultId);
+                stream.WriteIntLE(ResultId);
+                foreach (var m in this.members) {
+                    stream.WriteIntLE(m.ResultId);
+                }
+            }
+
+            public override bool Equals(object obj)
+            {
+                var c = obj as OpConstantComposite;
+                return c != null && this.resultType.Equals(c.resultType) && ((IStructuralEquatable)this.members).Equals(c.members, StructuralComparisons.StructuralEqualityComparer);
+            }
+            
+            public override int GetHashCode()
+            {
+                return 0x074147fc ^ 0x54cb7d94*this.resultType.GetHashCode() ^ 0x46339fcb*((IStructuralEquatable)this.members).GetHashCode(StructuralComparisons.StructuralEqualityComparer);
             }
         }
 
@@ -1758,11 +1923,14 @@ namespace OpenCl.Compiler
 
         private abstract class LogicalUnaryOpCode : GenericOpCode
         {
-            private readonly OpTypeBool resultType;
+            private readonly TypeOpCode resultType;
             private readonly TypedResultOpCode operand;
 
-            public LogicalUnaryOpCode(int rid, OpTypeBool resultType, short code, TypedResultOpCode operand) : base(rid, code)
+            public LogicalUnaryOpCode(int rid, TypeOpCode resultType, short code, TypedResultOpCode operand) : base(rid, code)
             {
+                if (!((operand.ResultType is ScalarTypeOpCode && resultType is OpTypeBool) || (operand.ResultType is OpTypeVector && (resultType as OpTypeVector)?.ComponentType is OpTypeBool))) {
+                    throw new ArgumentException($"Incompatible result type {resultType.GetType().Name} for operands {operand.ResultType.GetType().Name}");
+                }
                 this.resultType = resultType;
                 this.operand = operand;
             }
@@ -1784,12 +1952,18 @@ namespace OpenCl.Compiler
 
         private abstract class LogicalBinaryOpCode : GenericOpCode
         {
-            private readonly OpTypeBool resultType;
+            private readonly TypeOpCode resultType;
             private readonly TypedResultOpCode op1;
             private readonly TypedResultOpCode op2;
 
-            public LogicalBinaryOpCode(int rid, OpTypeBool resultType, short code, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, code)
+            public LogicalBinaryOpCode(int rid, TypeOpCode resultType, short code, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, code)
             {
+                if (!op1.ResultType.Equals(op2.ResultType)) {
+                    throw new ArgumentException($"Incompatible types: {op1.ResultType.GetType().Name} and {op2.ResultType.GetType().Name}");
+                }
+                if (!((op1.ResultType is ScalarTypeOpCode && resultType is OpTypeBool) || (op1.ResultType is OpTypeVector && (resultType as OpTypeVector)?.ComponentType is OpTypeBool))) {
+                    throw new ArgumentException($"Incompatible result type {resultType.GetType().Name} for operands {op1.ResultType.GetType().Name}");
+                }
                 this.resultType = resultType;
                 this.op1 = op1;
                 this.op2 = op2;
@@ -1813,52 +1987,52 @@ namespace OpenCl.Compiler
 
         private class OpIsNan : LogicalUnaryOpCode
         {
-            public OpIsNan(int rid, OpTypeBool resultType, TypedResultOpCode op) : base(rid, resultType, 156, op) { }
+            public OpIsNan(int rid, TypeOpCode resultType, TypedResultOpCode op) : base(rid, resultType, 156, op) { }
         }
 
         private class OpIsInf : LogicalUnaryOpCode
         {
-            public OpIsInf(int rid, OpTypeBool resultType, TypedResultOpCode op) : base(rid, resultType, 157, op) { }
+            public OpIsInf(int rid, TypeOpCode resultType, TypedResultOpCode op) : base(rid, resultType, 157, op) { }
         }
 
         private class OpIsFinite : LogicalUnaryOpCode
         {
-            public OpIsFinite(int rid, OpTypeBool resultType, TypedResultOpCode op) : base(rid, resultType, 158, op) { }
+            public OpIsFinite(int rid, TypeOpCode resultType, TypedResultOpCode op) : base(rid, resultType, 158, op) { }
         }
 
         private class OpIsNormal : LogicalUnaryOpCode
         {
-            public OpIsNormal(int rid, OpTypeBool resultType, TypedResultOpCode op) : base(rid, resultType, 159, op) { }
+            public OpIsNormal(int rid, TypeOpCode resultType, TypedResultOpCode op) : base(rid, resultType, 159, op) { }
         }
 
         private class OpLessOrGreater : LogicalBinaryOpCode
         {
-            public OpLessOrGreater(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 161, op1, op2) { }
+            public OpLessOrGreater(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 161, op1, op2) { }
         }
 
         private class OpLogicalEqual : LogicalBinaryOpCode
         {
-            public OpLogicalEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 164, op1, op2) { }
+            public OpLogicalEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 164, op1, op2) { }
         }
 
         private class OpLogicalNotEqual : LogicalBinaryOpCode
         {
-            public OpLogicalNotEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 165, op1, op2) { }
+            public OpLogicalNotEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 165, op1, op2) { }
         }
 
         private class OpLogicalOr : LogicalBinaryOpCode
         {
-            public OpLogicalOr(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 166, op1, op2) { }
+            public OpLogicalOr(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 166, op1, op2) { }
         }
 
         private class OpLogicalAnd : LogicalBinaryOpCode
         {
-            public OpLogicalAnd(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 167, op1, op2) { }
+            public OpLogicalAnd(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 167, op1, op2) { }
         }
 
         private class OpLogicalNot : LogicalUnaryOpCode
         {
-            public OpLogicalNot(int rid, OpTypeBool resultType, TypedResultOpCode op) : base(rid, resultType, 168, op) { }
+            public OpLogicalNot(int rid, TypeOpCode resultType, TypedResultOpCode op) : base(rid, resultType, 168, op) { }
         }
 
         private class OpSelect : GenericOpCode
@@ -1869,11 +2043,11 @@ namespace OpenCl.Compiler
 
             public OpSelect(int rid, TypedResultOpCode cond, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, 169)
             {
-                if (!(cond.ResultType is OpTypeBool)) {
-                    throw new ArgumentException($"Invalid type of 'cond' argument: expected OpTypeBool, found {cond.ResultType.GetType().Name}.");
+                if (!(cond.ResultType is OpTypeBool) && !((cond.ResultType as OpTypeVector)?.ComponentType is OpTypeBool)) {
+                    throw new ArgumentException($"Invalid type of 'cond' argument {cond.ResultType}.");
                 }
                 if (!op1.ResultType.Equals(op2.ResultType)) {
-                    throw new ArgumentException($"Incmopatible select argument types: {op1.ResultType.GetType().Name}, found {op2.ResultType.GetType().Name}.");
+                    throw new ArgumentException($"Incompatible select argument types: {op1.ResultType.GetType().Name}, found {op2.ResultType.GetType().Name}.");
                 }
                 this.cond = cond;
                 this.op1 = op1;
@@ -1899,112 +2073,112 @@ namespace OpenCl.Compiler
 
         private class OpIEqual : LogicalBinaryOpCode
         {
-            public OpIEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 170, op1, op2) { }
+            public OpIEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 170, op1, op2) { }
         }
 
         private class OpINotEqual : LogicalBinaryOpCode
         {
-            public OpINotEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 171, op1, op2) { }
+            public OpINotEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 171, op1, op2) { }
         }
 
         private class OpUGreaterThan : LogicalBinaryOpCode
         {
-            public OpUGreaterThan(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 172, op1, op2) { }
+            public OpUGreaterThan(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 172, op1, op2) { }
         }
 
         private class OpSGreaterThan : LogicalBinaryOpCode
         {
-            public OpSGreaterThan(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 173, op1, op2) { }
+            public OpSGreaterThan(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 173, op1, op2) { }
         }
 
         private class OpUGreaterThanEqual : LogicalBinaryOpCode
         {
-            public OpUGreaterThanEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 174, op1, op2) { }
+            public OpUGreaterThanEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 174, op1, op2) { }
         }
 
         private class OpSGreaterThanEqual : LogicalBinaryOpCode
         {
-            public OpSGreaterThanEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 175, op1, op2) { }
+            public OpSGreaterThanEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 175, op1, op2) { }
         }
 
         private class OpULessThan : LogicalBinaryOpCode
         {
-            public OpULessThan(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 176, op1, op2) { }
+            public OpULessThan(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 176, op1, op2) { }
         }
 
         private class OpSLessThan : LogicalBinaryOpCode
         {
-            public OpSLessThan(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 177, op1, op2) { }
+            public OpSLessThan(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 177, op1, op2) { }
         }
 
         private class OpULessThanEqual : LogicalBinaryOpCode
         {
-            public OpULessThanEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 178, op1, op2) { }
+            public OpULessThanEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 178, op1, op2) { }
         }
 
         private class OpSLessThanEqual : LogicalBinaryOpCode
         {
-            public OpSLessThanEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 179, op1, op2) { }
+            public OpSLessThanEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 179, op1, op2) { }
         }
 
         private class OpFOrdEqual : LogicalBinaryOpCode
         {
-            public OpFOrdEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 180, op1, op2) { }
+            public OpFOrdEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 180, op1, op2) { }
         }
 
         private class OpFUnordEqual : LogicalBinaryOpCode
         {
-            public OpFUnordEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 181, op1, op2) { }
+            public OpFUnordEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 181, op1, op2) { }
         }
 
         private class OpFOrdNotEqual : LogicalBinaryOpCode
         {
-            public OpFOrdNotEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 182, op1, op2) { }
+            public OpFOrdNotEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 182, op1, op2) { }
         }
 
         private class OpFUnordNotEqual : LogicalBinaryOpCode
         {
-            public OpFUnordNotEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 183, op1, op2) { }
+            public OpFUnordNotEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 183, op1, op2) { }
         }
 
         private class OpFOrdLessThan : LogicalBinaryOpCode
         {
-            public OpFOrdLessThan(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 184, op1, op2) { }
+            public OpFOrdLessThan(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 184, op1, op2) { }
         }
 
         private class OpFUnordLessThan : LogicalBinaryOpCode
         {
-            public OpFUnordLessThan(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 185, op1, op2) { }
+            public OpFUnordLessThan(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 185, op1, op2) { }
         }
 
         private class OpFOrdGreaterThan : LogicalBinaryOpCode
         {
-            public OpFOrdGreaterThan(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 186, op1, op2) { }
+            public OpFOrdGreaterThan(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 186, op1, op2) { }
         }
 
         private class OpFUnordGreaterThan : LogicalBinaryOpCode
         {
-            public OpFUnordGreaterThan(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 187, op1, op2) { }
+            public OpFUnordGreaterThan(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 187, op1, op2) { }
         }
 
         private class OpFOrdLessThanEqual : LogicalBinaryOpCode
         {
-            public OpFOrdLessThanEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 188, op1, op2) { }
+            public OpFOrdLessThanEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 188, op1, op2) { }
         }
 
         private class OpFUnordLessThanEqual : LogicalBinaryOpCode
         {
-            public OpFUnordLessThanEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 189, op1, op2) { }
+            public OpFUnordLessThanEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 189, op1, op2) { }
         }
 
         private class OpFOrdGreaterThanEqual : LogicalBinaryOpCode
         {
-            public OpFOrdGreaterThanEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 190, op1, op2) { }
+            public OpFOrdGreaterThanEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 190, op1, op2) { }
         }
 
         private class OpFUnordGreaterThanEqual : LogicalBinaryOpCode
         {
-            public OpFUnordGreaterThanEqual(int rid, OpTypeBool resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 191, op1, op2) { }
+            public OpFUnordGreaterThanEqual(int rid, TypeOpCode resultType, TypedResultOpCode op1, TypedResultOpCode op2) : base(rid, resultType, 191, op1, op2) { }
         }
 
         // bitwise operations
@@ -2136,7 +2310,25 @@ namespace OpenCl.Compiler
             stream.Write(buf, 0, buf.Length);
         }
 
+        public static void WriteByteLE(this Stream stream, byte value)
+        {
+            var buf = BitConverter.GetBytes(value);
+            if (!BitConverter.IsLittleEndian) {
+                Array.Reverse(buf);
+            }
+            stream.Write(buf, 0, buf.Length);
+        }
+
         public static void WriteShortLE(this Stream stream, short value)
+        {
+            var buf = BitConverter.GetBytes(value);
+            if (!BitConverter.IsLittleEndian) {
+                Array.Reverse(buf);
+            }
+            stream.Write(buf, 0, buf.Length);
+        }
+
+        public static void WriteShortLE(this Stream stream, ushort value)
         {
             var buf = BitConverter.GetBytes(value);
             if (!BitConverter.IsLittleEndian) {
@@ -2154,7 +2346,25 @@ namespace OpenCl.Compiler
             stream.Write(buf, 0, buf.Length);
         }
 
+        public static void WriteIntLE(this Stream stream, uint value)
+        {
+            var buf = BitConverter.GetBytes(value);
+            if (!BitConverter.IsLittleEndian) {
+                Array.Reverse(buf);
+            }
+            stream.Write(buf, 0, buf.Length);
+        }
+
         public static void WriteLongLE(this Stream stream, long value)
+        {
+            var buf = BitConverter.GetBytes(value);
+            if (!BitConverter.IsLittleEndian) {
+                Array.Reverse(buf);
+            }
+            stream.Write(buf, 0, buf.Length);
+        }
+
+        public static void WriteLongLE(this Stream stream, ulong value)
         {
             var buf = BitConverter.GetBytes(value);
             if (!BitConverter.IsLittleEndian) {
