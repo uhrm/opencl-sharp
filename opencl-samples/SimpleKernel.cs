@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Reflection;
@@ -79,8 +80,8 @@ namespace OpenCl.Samples
 
         private static void RunNative(byte[] module)
         {
-            var platform = Platform.GetPlatformIDs()[0];
-            var device = Device.GetDeviceIDs(platform, DeviceType.Cpu)[0];
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
             var context = Context.CreateContext(platform, device, null, null);
             var program = Program.CreateProgramWithIL(context, module);
             try {
