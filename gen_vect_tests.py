@@ -58,6 +58,9 @@ for vt in vtypes:
             f.write('    [TestFixture]\n')
             f.write('    public class Test%s%d\n' % (vt.title(), vr))
             f.write('    {\n')
+            #
+            # arithmetic operators
+            #
             for opsym, optxt, oplbd in eoparith[vt]:
                 f.write('        [Kernel]\n')
                 f.write('        private static void test_%s%d_%s([Global] %s%d[] a, [Global] %s%d[] b, [Global] %s%d[] r)\n' % (vt, vr, optxt, vt, vr, vt, vr, vt, vr))
@@ -180,6 +183,9 @@ for vt in vtypes:
                             f.write('            Assert.AreEqual(%.16e, r[%d].s%x, %.16e);\n' % (v, i, j, 1e-15*abs(v)))
                 f.write('        }\n')
                 f.write('\n')
+            #
+            # relational operators
+            #
             for opsym, optxt, oplbd in eoprel:
                 rt = ecmptype[vt]
                 f.write('        [Kernel]\n')
@@ -282,6 +288,9 @@ for vt in vtypes:
                         f.write('            Assert.AreEqual(%2d, r[%d].s%x);\n' % (-1 if r else 0, i, j))
                 f.write('        }\n')
                 f.write('\n')
+            #
+            # bitwise operators
+            #
             if vt not in ('float', 'double'):
                 for opsym, optxt, oplbd in eopbit:
                     f.write('        [Kernel]\n')
@@ -359,7 +368,9 @@ for vt in vtypes:
                                 f.write('            Assert.AreEqual(%21.16f, r[%d].s%x, 1e-15);\n' % (ectype[vt](r).value, i, j))
                     f.write('        }\n')
                     f.write('\n')
-
+            #
+            # component accessors
+            #
             if vr <= 4:
                 for tr in range(1,vr+1):
                     tt = "%s%d" % (vt, tr) if tr > 1 else vt
