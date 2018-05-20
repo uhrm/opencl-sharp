@@ -1034,42 +1034,42 @@ namespace OpenCl.Compiler
             if (this.type is OpTypeInt) {
                 switch (this.type.Width) {
                 case 8:
-                    if ((this.type as OpTypeInt).Signedness == 1) {
-                        stream.WriteByteLE(Convert.ToSByte(this.value));
-                    }
-                    else {
-                        stream.WriteByteLE(Convert.ToByte(this.value));
-                    }
+                    // if ((this.type as OpTypeInt).Signedness == 1) {
+                    stream.WriteIntLE(Convert.ToSByte(this.value));
+                    // }
+                    // else {
+                    //     stream.WriteByteLE(Convert.ToByte(this.value));
+                    // }
                     break;
                 case 16:
-                    if ((this.type as OpTypeInt).Signedness == 1) {
-                        stream.WriteShortLE(Convert.ToInt16(this.value));
-                    }
-                    else {
-                        stream.WriteShortLE(Convert.ToUInt16(this.value));
-                    }
+                    // if ((this.type as OpTypeInt).Signedness == 1) {
+                    stream.WriteIntLE(Convert.ToInt16(this.value));
+                    // }
+                    // else {
+                    //     stream.WriteShortLE(Convert.ToUInt16(this.value));
+                    // }
                     break;
                 case 32:
-                    if ((this.type as OpTypeInt).Signedness == 1) {
-                        stream.WriteIntLE(Convert.ToInt32(this.value));
-                    }
-                    else {
-                        stream.WriteIntLE(Convert.ToUInt32(this.value));
-                    }
+                    // if ((this.type as OpTypeInt).Signedness == 1) {
+                    stream.WriteIntLE(Convert.ToInt32(this.value));
+                    // }
+                    // else {
+                    //     stream.WriteIntLE(Convert.ToUInt32(this.value));
+                    // }
                     break;
                 case 64:
-                    if ((this.type as OpTypeInt).Signedness == 1) {
-                        stream.WriteLongLE(Convert.ToInt64(this.value));
-                    }
-                    else {
-                        stream.WriteLongLE(Convert.ToUInt64(this.value));
-                    }
+                    // if ((this.type as OpTypeInt).Signedness == 1) {
+                    stream.WriteLongLE(Convert.ToInt64(this.value));
+                    // }
+                    // else {
+                    //     stream.WriteLongLE(Convert.ToUInt64(this.value));
+                    // }
                     break;
                 default:
                     throw new CompilerException($"Unsupported integer width: {this.type.Width} (expected width 8, 16, 32, or 64)");
                 }
             }
-            else {
+            else if (this.type is OpTypeFloat) {
                 switch (this.type.Width) {
                 case 32:
                     stream.WriteFloatLE(Convert.ToSingle(this.value));
@@ -1080,6 +1080,9 @@ namespace OpenCl.Compiler
                 default:
                     throw new CompilerException($"Unsupported floating point width: {this.type.Width} (expected width 32 or 64)");
                 }
+            }
+            else {
+                throw new CompilerException($"Unsupported constant type: '{this.type.GetType().Name}'.");
             }
         }
 

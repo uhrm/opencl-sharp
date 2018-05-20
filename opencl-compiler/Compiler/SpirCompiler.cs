@@ -1835,6 +1835,7 @@ namespace OpenCl.Compiler
             OpCapability(Capability.Addresses).Emit(output);
             OpCapability(Capability.Linkage).Emit(output);
             OpCapability(Capability.Kernel).Emit(output);
+            OpCapability(Capability.Int16).Emit(output);
             OpCapability(Capability.Int64).Emit(output);
             // import OpenCL extended instruction set
             // see: https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.ExtendedInstructionSet.100.html
@@ -1850,7 +1851,7 @@ namespace OpenCl.Compiler
                 op.Emit(output);
             }
             // types
-            foreach (var op in this.types.ToList().OrderBy(kv => kv.Value).Select(kv => kv.Key)) {
+            foreach (var op in this.types.OrderBy(kv => kv.Value).Select(kv => kv.Key)) {
                 op.Emit(output);
             }
             // imports
@@ -1860,7 +1861,7 @@ namespace OpenCl.Compiler
             // exports
             // ...
             // constants
-            foreach (var op in this.constants.ToList().OrderBy(kv => kv.Value).Select(kv => kv.Key)) {
+            foreach (var op in this.constants.OrderBy(kv => kv.Value).Select(kv => kv.Key)) {
                 op.Emit(output);
             }
             // functions
