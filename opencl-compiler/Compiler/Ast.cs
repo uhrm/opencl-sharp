@@ -260,39 +260,39 @@ namespace OpenCl.Compiler
         }
     }
 
-    internal enum BinaryOpCode
-    {
-        Add,
-        Sub,
-        Mul,
-        Div,
-        And,
-        Or,
-        Xor,
-        Shl,
-        Shr,
-        Eq,
-        Neq,
-        Lt,
-        Le,
-        Gt,
-        Ge,
-    }
-
     internal class BinaryOp : AstNode
     {
-        private readonly BinaryOpCode code;
+        internal enum OpCode
+        {
+            Add,
+            Sub,
+            Mul,
+            Div,
+            And,
+            Or,
+            Xor,
+            Shl,
+            Shr,
+            Eq,
+            Neq,
+            Lt,
+            Le,
+            Gt,
+            Ge,
+        }
+
+        private readonly OpCode code;
         private readonly AstNode left;
         private readonly AstNode rght;
 
-        public BinaryOp(CliType type, BinaryOpCode code, AstNode left, AstNode rght) : base(type)
+        public BinaryOp(CliType type, OpCode code, AstNode left, AstNode rght) : base(type)
         {
             this.code = code;
             this.left = left;
             this.rght = rght;
         }
 
-        public BinaryOpCode Code
+        public OpCode Code
         {
             get { return this.code; }
         }
@@ -318,24 +318,24 @@ namespace OpenCl.Compiler
         }
     }
 
-    internal enum UnaryOpCode
+    internal class UnaryOp : AstNode
+    {
+    internal enum OpCode
     {
         Neg,
         Not,
     }
 
-    internal class UnaryOp : AstNode
-    {
-        private readonly UnaryOpCode code;
+        private readonly OpCode code;
         private readonly AstNode node;
 
-        public UnaryOp(UnaryOpCode code, AstNode node) : base(node.CliType)
+        public UnaryOp(OpCode code, AstNode node) : base(node.CliType)
         {
             this.code = code;
             this.node = node;
         }
 
-        public UnaryOpCode Code
+        public OpCode Code
         {
             get { return this.code; }
         }

@@ -16,75 +16,75 @@ namespace OpenCl.Compiler
         private const int BUILTIN_WIDTH = 32;
         private const int INTPTR_WIDTH = 32;
 
-        private static readonly Dictionary<string,Func<Func<TypeOpCode,int>,TypeOpCode>> PrimitiveTypes = new Dictionary<string,Func<Func<TypeOpCode,int>,TypeOpCode>>()
+        private static readonly Dictionary<string,Func<SpirCompiler,TypeOpCode>> PrimitiveTypes = new Dictionary<string,Func<SpirCompiler,TypeOpCode>>()
         {
-            { "System.Void",     f => new OpTypeVoid(f) },
+            { "System.Void",     c => c.OpTypeVoid() },
 
-            { "System.SByte",    f => new OpTypeInt(f,  8/*, signed*/) },
-            { "System.Int8",     f => new OpTypeInt(f,  8/*, signed*/) },
-            { "System.Byte",     f => new OpTypeInt(f,  8/*, unsigned*/) },
-            { "System.UInt8",    f => new OpTypeInt(f,  8/*, unsigned*/) },
-            { "System.Int16",    f => new OpTypeInt(f, 16/*, signed*/) },
-            { "System.UInt16",   f => new OpTypeInt(f, 16/*, unsigned*/) },
-            { "System.Int32",    f => new OpTypeInt(f, 32/*, signed*/) },
-            { "System.UInt32",   f => new OpTypeInt(f, 32/*, unsigned*/) },
-            { "System.Int64",    f => new OpTypeInt(f, 64/*, signed*/) },
-            { "System.UInt64",   f => new OpTypeInt(f, 64/*, unsigned*/) },
-            { "System.IntPtr",   f => new OpTypeInt(f, INTPTR_WIDTH/*, signed*/) },
-            { "System.UIntPtr",  f => new OpTypeInt(f, INTPTR_WIDTH/*, unsigned*/) },
-            { "System.Single",   f => new OpTypeFloat(f, 32) },
-            { "System.Double",   f => new OpTypeFloat(f, 64) },
+            { "System.SByte",    c => c.OpTypeInt( 8/*, signed*/) },
+            { "System.Int8",     c => c.OpTypeInt( 8/*, signed*/) },
+            { "System.Byte",     c => c.OpTypeInt( 8/*, unsigned*/) },
+            { "System.UInt8",    c => c.OpTypeInt( 8/*, unsigned*/) },
+            { "System.Int16",    c => c.OpTypeInt(16/*, signed*/) },
+            { "System.UInt16",   c => c.OpTypeInt(16/*, unsigned*/) },
+            { "System.Int32",    c => c.OpTypeInt(32/*, signed*/) },
+            { "System.UInt32",   c => c.OpTypeInt(32/*, unsigned*/) },
+            { "System.Int64",    c => c.OpTypeInt(64/*, signed*/) },
+            { "System.UInt64",   c => c.OpTypeInt(64/*, unsigned*/) },
+            { "System.IntPtr",   c => c.OpTypeInt(INTPTR_WIDTH/*, signed*/) },
+            { "System.UIntPtr",  c => c.OpTypeInt(INTPTR_WIDTH/*, unsigned*/) },
+            { "System.Single",   c => c.OpTypeFloat(32) },
+            { "System.Double",   c => c.OpTypeFloat(64) },
 
-            { "OpenCl.sbyte2",   f => new OpTypeVector(f,  2, new OpTypeInt(f,  8/*, signed*/)) },
-            { "OpenCl.sbyte3",   f => new OpTypeVector(f,  3, new OpTypeInt(f,  8/*, signed*/)) },
-            { "OpenCl.sbyte4",   f => new OpTypeVector(f,  4, new OpTypeInt(f,  8/*, signed*/)) },
-            { "OpenCl.sbyte8",   f => new OpTypeVector(f,  8, new OpTypeInt(f,  8/*, signed*/)) },
-            { "OpenCl.sbyte16",  f => new OpTypeVector(f, 16, new OpTypeInt(f,  8/*, signed*/)) },
-            { "OpenCl.byte2",    f => new OpTypeVector(f,  2, new OpTypeInt(f,  8/*, unsigned*/)) },
-            { "OpenCl.byte3",    f => new OpTypeVector(f,  3, new OpTypeInt(f,  8/*, unsigned*/)) },
-            { "OpenCl.byte4",    f => new OpTypeVector(f,  4, new OpTypeInt(f,  8/*, unsigned*/)) },
-            { "OpenCl.byte8",    f => new OpTypeVector(f,  8, new OpTypeInt(f,  8/*, unsigned*/)) },
-            { "OpenCl.byte16",   f => new OpTypeVector(f, 16, new OpTypeInt(f,  8/*, unsigned*/)) },
-            { "OpenCl.short2",   f => new OpTypeVector(f,  2, new OpTypeInt(f, 16/*, signed*/)) },
-            { "OpenCl.short3",   f => new OpTypeVector(f,  3, new OpTypeInt(f, 16/*, signed*/)) },
-            { "OpenCl.short4",   f => new OpTypeVector(f,  4, new OpTypeInt(f, 16/*, signed*/)) },
-            { "OpenCl.short8",   f => new OpTypeVector(f,  8, new OpTypeInt(f, 16/*, signed*/)) },
-            { "OpenCl.short16",  f => new OpTypeVector(f, 16, new OpTypeInt(f, 16/*, signed*/)) },
-            { "OpenCl.ushort2",  f => new OpTypeVector(f,  2, new OpTypeInt(f, 16/*, unsigned*/)) },
-            { "OpenCl.ushort3",  f => new OpTypeVector(f,  3, new OpTypeInt(f, 16/*, unsigned*/)) },
-            { "OpenCl.ushort4",  f => new OpTypeVector(f,  4, new OpTypeInt(f, 16/*, unsigned*/)) },
-            { "OpenCl.ushort8",  f => new OpTypeVector(f,  8, new OpTypeInt(f, 16/*, unsigned*/)) },
-            { "OpenCl.ushort16", f => new OpTypeVector(f, 16, new OpTypeInt(f, 16/*, unsigned*/)) },
-            { "OpenCl.int2",     f => new OpTypeVector(f,  2, new OpTypeInt(f, 32/*, signed*/)) },
-            { "OpenCl.int3",     f => new OpTypeVector(f,  3, new OpTypeInt(f, 32/*, signed*/)) },
-            { "OpenCl.int4",     f => new OpTypeVector(f,  4, new OpTypeInt(f, 32/*, signed*/)) },
-            { "OpenCl.int8",     f => new OpTypeVector(f,  8, new OpTypeInt(f, 32/*, signed*/)) },
-            { "OpenCl.int16",    f => new OpTypeVector(f, 16, new OpTypeInt(f, 32/*, signed*/)) },
-            { "OpenCl.uint2",    f => new OpTypeVector(f,  2, new OpTypeInt(f, 32/*, unsigned*/)) },
-            { "OpenCl.uint3",    f => new OpTypeVector(f,  3, new OpTypeInt(f, 32/*, unsigned*/)) },
-            { "OpenCl.uint4",    f => new OpTypeVector(f,  4, new OpTypeInt(f, 32/*, unsigned*/)) },
-            { "OpenCl.uint8",    f => new OpTypeVector(f,  8, new OpTypeInt(f, 32/*, unsigned*/)) },
-            { "OpenCl.uint16",   f => new OpTypeVector(f, 16, new OpTypeInt(f, 32/*, unsigned*/)) },
-            { "OpenCl.long2",    f => new OpTypeVector(f,  2, new OpTypeInt(f, 64/*, signed*/)) },
-            { "OpenCl.long3",    f => new OpTypeVector(f,  3, new OpTypeInt(f, 64/*, signed*/)) },
-            { "OpenCl.long4",    f => new OpTypeVector(f,  4, new OpTypeInt(f, 64/*, signed*/)) },
-            { "OpenCl.long8",    f => new OpTypeVector(f,  8, new OpTypeInt(f, 64/*, signed*/)) },
-            { "OpenCl.long16",   f => new OpTypeVector(f, 16, new OpTypeInt(f, 64/*, signed*/)) },
-            { "OpenCl.ulong2",   f => new OpTypeVector(f,  2, new OpTypeInt(f, 64/*, unsigned*/)) },
-            { "OpenCl.ulong3",   f => new OpTypeVector(f,  3, new OpTypeInt(f, 64/*, unsigned*/)) },
-            { "OpenCl.ulong4",   f => new OpTypeVector(f,  4, new OpTypeInt(f, 64/*, unsigned*/)) },
-            { "OpenCl.ulong8",   f => new OpTypeVector(f,  8, new OpTypeInt(f, 64/*, unsigned*/)) },
-            { "OpenCl.ulong16",  f => new OpTypeVector(f, 16, new OpTypeInt(f, 64/*, unsigned*/)) },
-            { "OpenCl.float2",   f => new OpTypeVector(f,  2, new OpTypeFloat(f, 32)) },
-            { "OpenCl.float3",   f => new OpTypeVector(f,  3, new OpTypeFloat(f, 32)) },
-            { "OpenCl.float4",   f => new OpTypeVector(f,  4, new OpTypeFloat(f, 32)) },
-            { "OpenCl.float8",   f => new OpTypeVector(f,  8, new OpTypeFloat(f, 32)) },
-            { "OpenCl.float16",  f => new OpTypeVector(f, 16, new OpTypeFloat(f, 32)) },
-            { "OpenCl.double2",  f => new OpTypeVector(f,  2, new OpTypeFloat(f, 64)) },
-            { "OpenCl.double3",  f => new OpTypeVector(f,  3, new OpTypeFloat(f, 64)) },
-            { "OpenCl.double4",  f => new OpTypeVector(f,  4, new OpTypeFloat(f, 64)) },
-            { "OpenCl.double8",  f => new OpTypeVector(f,  8, new OpTypeFloat(f, 64)) },
-            { "OpenCl.double16", f => new OpTypeVector(f, 16, new OpTypeFloat(f, 64)) },
+            { "OpenCl.sbyte2",   c => c.OpTypeVector( 2, c.OpTypeInt(8/*, signed*/)) },
+            { "OpenCl.sbyte3",   c => c.OpTypeVector( 3, c.OpTypeInt( 8/*, signed*/)) },
+            { "OpenCl.sbyte4",   c => c.OpTypeVector( 4, c.OpTypeInt( 8/*, signed*/)) },
+            { "OpenCl.sbyte8",   c => c.OpTypeVector( 8, c.OpTypeInt( 8/*, signed*/)) },
+            { "OpenCl.sbyte16",  c => c.OpTypeVector(16, c.OpTypeInt( 8/*, signed*/)) },
+            { "OpenCl.byte2",    c => c.OpTypeVector( 2, c.OpTypeInt( 8/*, unsigned*/)) },
+            { "OpenCl.byte3",    c => c.OpTypeVector( 3, c.OpTypeInt( 8/*, unsigned*/)) },
+            { "OpenCl.byte4",    c => c.OpTypeVector( 4, c.OpTypeInt( 8/*, unsigned*/)) },
+            { "OpenCl.byte8",    c => c.OpTypeVector( 8, c.OpTypeInt( 8/*, unsigned*/)) },
+            { "OpenCl.byte16",   c => c.OpTypeVector(16, c.OpTypeInt( 8/*, unsigned*/)) },
+            { "OpenCl.short2",   c => c.OpTypeVector( 2, c.OpTypeInt(16/*, signed*/)) },
+            { "OpenCl.short3",   c => c.OpTypeVector( 3, c.OpTypeInt(16/*, signed*/)) },
+            { "OpenCl.short4",   c => c.OpTypeVector( 4, c.OpTypeInt(16/*, signed*/)) },
+            { "OpenCl.short8",   c => c.OpTypeVector( 8, c.OpTypeInt(16/*, signed*/)) },
+            { "OpenCl.short16",  c => c.OpTypeVector(16, c.OpTypeInt(16/*, signed*/)) },
+            { "OpenCl.ushort2",  c => c.OpTypeVector( 2, c.OpTypeInt(16/*, unsigned*/)) },
+            { "OpenCl.ushort3",  c => c.OpTypeVector( 3, c.OpTypeInt(16/*, unsigned*/)) },
+            { "OpenCl.ushort4",  c => c.OpTypeVector( 4, c.OpTypeInt(16/*, unsigned*/)) },
+            { "OpenCl.ushort8",  c => c.OpTypeVector( 8, c.OpTypeInt(16/*, unsigned*/)) },
+            { "OpenCl.ushort16", c => c.OpTypeVector(16, c.OpTypeInt(16/*, unsigned*/)) },
+            { "OpenCl.int2",     c => c.OpTypeVector( 2, c.OpTypeInt(32/*, signed*/)) },
+            { "OpenCl.int3",     c => c.OpTypeVector( 3, c.OpTypeInt(32/*, signed*/)) },
+            { "OpenCl.int4",     c => c.OpTypeVector( 4, c.OpTypeInt(32/*, signed*/)) },
+            { "OpenCl.int8",     c => c.OpTypeVector( 8, c.OpTypeInt(32/*, signed*/)) },
+            { "OpenCl.int16",    c => c.OpTypeVector(16, c.OpTypeInt(32/*, signed*/)) },
+            { "OpenCl.uint2",    c => c.OpTypeVector( 2, c.OpTypeInt(32/*, unsigned*/)) },
+            { "OpenCl.uint3",    c => c.OpTypeVector( 3, c.OpTypeInt(32/*, unsigned*/)) },
+            { "OpenCl.uint4",    c => c.OpTypeVector( 4, c.OpTypeInt(32/*, unsigned*/)) },
+            { "OpenCl.uint8",    c => c.OpTypeVector( 8, c.OpTypeInt(32/*, unsigned*/)) },
+            { "OpenCl.uint16",   c => c.OpTypeVector(16, c.OpTypeInt(32/*, unsigned*/)) },
+            { "OpenCl.long2",    c => c.OpTypeVector( 2, c.OpTypeInt(64/*, signed*/)) },
+            { "OpenCl.long3",    c => c.OpTypeVector( 3, c.OpTypeInt(64/*, signed*/)) },
+            { "OpenCl.long4",    c => c.OpTypeVector( 4, c.OpTypeInt(64/*, signed*/)) },
+            { "OpenCl.long8",    c => c.OpTypeVector( 8, c.OpTypeInt(64/*, signed*/)) },
+            { "OpenCl.long16",   c => c.OpTypeVector(16, c.OpTypeInt(64/*, signed*/)) },
+            { "OpenCl.ulong2",   c => c.OpTypeVector( 2, c.OpTypeInt(64/*, unsigned*/)) },
+            { "OpenCl.ulong3",   c => c.OpTypeVector( 3, c.OpTypeInt(64/*, unsigned*/)) },
+            { "OpenCl.ulong4",   c => c.OpTypeVector( 4, c.OpTypeInt(64/*, unsigned*/)) },
+            { "OpenCl.ulong8",   c => c.OpTypeVector( 8, c.OpTypeInt(64/*, unsigned*/)) },
+            { "OpenCl.ulong16",  c => c.OpTypeVector(16, c.OpTypeInt(64/*, unsigned*/)) },
+            { "OpenCl.float2",   c => c.OpTypeVector( 2, c.OpTypeFloat(32)) },
+            { "OpenCl.float3",   c => c.OpTypeVector( 3, c.OpTypeFloat(32)) },
+            { "OpenCl.float4",   c => c.OpTypeVector( 4, c.OpTypeFloat(32)) },
+            { "OpenCl.float8",   c => c.OpTypeVector( 8, c.OpTypeFloat(32)) },
+            { "OpenCl.float16",  c => c.OpTypeVector(16, c.OpTypeFloat(32)) },
+            { "OpenCl.double2",  c => c.OpTypeVector( 2, c.OpTypeFloat(64)) },
+            { "OpenCl.double3",  c => c.OpTypeVector( 3, c.OpTypeFloat(64)) },
+            { "OpenCl.double4",  c => c.OpTypeVector( 4, c.OpTypeFloat(64)) },
+            { "OpenCl.double8",  c => c.OpTypeVector( 8, c.OpTypeFloat(64)) },
+            { "OpenCl.double16", c => c.OpTypeVector(16, c.OpTypeFloat(64)) },
         };
 
         // IL source data
@@ -98,7 +98,6 @@ namespace OpenCl.Compiler
         private List<OpEntryPoint> entryPoints;
         private List<OpDecorate> decorations;
         private Dictionary<TypeOpCode,int> types;
-        private List<TypeOpCode> types_list;
         private Dictionary<string,TypedResultOpCode> imports;
         private Dictionary<ConstOpCode,int> constants;
         private List<List<SpirOpCode>> functions;
@@ -112,7 +111,6 @@ namespace OpenCl.Compiler
             this.entryPoints = new List<OpEntryPoint>();
             this.decorations = new List<OpDecorate>();
             this.types = new Dictionary<TypeOpCode,int>();
-            this.types_list = new List<TypeOpCode>();
             this.imports = new Dictionary<String,TypedResultOpCode>();
             this.constants = new Dictionary<ConstOpCode,int>();
             this.functions = new List<List<SpirOpCode>>();
@@ -120,26 +118,39 @@ namespace OpenCl.Compiler
 
         // type helpers
 
-        private int SpirTypeIdCallback(TypeOpCode type)
+        // private int SpirTypeIdCallback(TypeOpCode type)
+        // {
+        //     if (!this.types.TryGetValue(type, out int id)) {
+        //         id = this.rcount++;
+        //         this.types.Add(type, id);
+        //         this.types_list.Add(type);
+        //     }
+        //     return id;
+        // }
+
+        private void RegisterTypeOpCode(TypeOpCode op)
         {
-            if (!this.types.TryGetValue(type, out int id)) {
-                id = this.rcount++;
-                this.types.Add(type, id);
-                this.types_list.Add(type);
+            if (!this.types.ContainsKey(op)) {
+                var id = this.rcount++;
+                this.types.Add(op, id);
             }
-            return id;
+        }
+
+        internal int TypeResultId(TypeOpCode op)
+        {
+            return this.types[op];
         }
 
         private TypeOpCode GetTypeOpCode(Type type, StorageClass? storage = null)
         {
             if (PrimitiveTypes.TryGetValue(type.FullName, out var factory)) {
-                return factory(SpirTypeIdCallback);
+                return factory(this);
             }
             else if (type.IsArray || type.IsPointer) {
                 if (!storage.HasValue) {
                     throw new ArgumentNullException("storage");
                 }
-                return new OpTypePointer(SpirTypeIdCallback, storage.GetValueOrDefault(), GetTypeOpCode(type.GetElementType()));
+                return OpTypePointer(storage.GetValueOrDefault(), GetTypeOpCode(type.GetElementType()));
             }
             else if (type.IsValueType) {
                 throw new CompilerException($"Struct types are not yet supported: {type.FullName}.");
@@ -162,13 +173,13 @@ namespace OpenCl.Compiler
         private TypeOpCode GetTypeOpCode(TypeReference tr, StorageClass? storage = null)
         {
             if (PrimitiveTypes.TryGetValue(tr.FullName, out var factory)) {
-                return factory(SpirTypeIdCallback);
+                return factory(this);
             }
             if (tr.IsArray || tr.IsPointer) {
                 if (!storage.HasValue) {
                     throw new ArgumentNullException("storage");
                 }
-                return new OpTypePointer(SpirTypeIdCallback, storage.GetValueOrDefault(), GetTypeOpCode(tr.GetElementType()));
+                return OpTypePointer(storage.GetValueOrDefault(), GetTypeOpCode(tr.GetElementType()));
             }
             else if (tr.IsValueType) {
                 throw new CompilerException($"Struct types are not yet supported: {tr.FullName}.");
@@ -184,7 +195,7 @@ namespace OpenCl.Compiler
             if (tr.IsArray || tr.IsPointer) {
                 var global = pr.Resolve().CustomAttributes.Any(ai => ai.AttributeType.FullName == "OpenCl.GlobalAttribute");
                 var storage = global ? StorageClass.CrossWorkgroup : StorageClass.UniformConstant;
-                return new OpTypePointer(SpirTypeIdCallback, storage, GetTypeOpCode(tr.GetElementType()));
+                return OpTypePointer(storage, GetTypeOpCode(tr.GetElementType()));
             }
             else {
                 return GetTypeOpCode(pr.ParameterType);
@@ -202,18 +213,18 @@ namespace OpenCl.Compiler
             var p = mr.Parameters
                     .Select(pi => GetTypeOpCode(pi))
                     .ToArray();
-            return new OpTypeFunction(SpirTypeIdCallback, r, p);
+            return OpTypeFunction(r, p);
         }
 
         private static readonly Dictionary<Type,Func<SpirCompiler,TypedResultOpCode,ConversionOpCode>> _convert_ops = new Dictionary<Type,Func<SpirCompiler,TypedResultOpCode,ConversionOpCode>>()
         {
-            { typeof(sbyte),  (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<sbyte>(), value) },
-            { typeof(short),  (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<short>(), value) },
-            { typeof(int),    (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<int>(), value) },
-            { typeof(long),   (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<long>(), value) },
-            { typeof(IntPtr), (compiler, value) => new OpSConvert(compiler.rcount++, compiler.GetTypeOpCode<IntPtr>(), value) },
-            { typeof(float),  (compiler, value) => new OpConvertFToS(compiler.rcount++, compiler.GetTypeOpCode<float>(), value) },
-            { typeof(double), (compiler, value) => new OpConvertFToS(compiler.rcount++, compiler.GetTypeOpCode<double>(), value) }
+            { typeof(sbyte),  (compiler, value) => compiler.OpSConvert(compiler.GetTypeOpCode<sbyte>(), value) },
+            { typeof(short),  (compiler, value) => compiler.OpSConvert(compiler.GetTypeOpCode<short>(), value) },
+            { typeof(int),    (compiler, value) => compiler.OpSConvert(compiler.GetTypeOpCode<int>(), value) },
+            { typeof(long),   (compiler, value) => compiler.OpSConvert(compiler.GetTypeOpCode<long>(), value) },
+            { typeof(IntPtr), (compiler, value) => compiler.OpSConvert(compiler.GetTypeOpCode<IntPtr>(), value) },
+            { typeof(float),  (compiler, value) => compiler.OpConvertFToS(compiler.GetTypeOpCode<float>(), value) },
+            { typeof(double), (compiler, value) => compiler.OpConvertFToS(compiler.GetTypeOpCode<double>(), value) }
         };
 
         private ConversionOpCode GetConversionOpCode(TypedResultOpCode src, Type dst)
@@ -226,13 +237,26 @@ namespace OpenCl.Compiler
 
         // constant helper
 
-        private int SpirConstantCallback(ConstOpCode op)
+        // private int SpirConstantCallback(ConstOpCode op)
+        // {
+        //     if (!this.constants.TryGetValue(op, out int id)) {
+        //         id = this.rcount++;
+        //         this.constants.Add(op, id);
+        //     }
+        //     return id;
+        // }
+
+        private void RegisterConstOpCode(ConstOpCode op)
         {
-            if (!this.constants.TryGetValue(op, out int id)) {
-                id = this.rcount++;
+            if (!this.constants.ContainsKey(op)) {
+                var id = this.rcount++;
                 this.constants.Add(op, id);
             }
-            return id;
+        }
+
+        internal int ConstResultId(ConstOpCode op)
+        {
+            return this.constants[op];
         }
 
         private string GetMethodName(MethodDefinition mdef)
@@ -247,7 +271,7 @@ namespace OpenCl.Compiler
         private void Parse(MethodDefinition method)
         {
             var functionType = GetTypeOpCode(method);
-            OpFunction function = new OpFunction(this.rcount++, functionType);
+            OpFunction function = OpFunction(functionType);
             if (method.CustomAttributes.SingleOrDefault(ai => ai.AttributeType.FullName == "OpenCl.KernelAttribute") != null) {
                 this.entryPoints.Add(new OpEntryPoint(ExecutionModel.Kernel, function, GetMethodName(method)));
             }
@@ -257,11 +281,11 @@ namespace OpenCl.Compiler
             var param = new OpFunctionParameter[nparams];
             for (var i=0; i<nparams; i++) {
                 var pi = method.Parameters[i];
-                var ci = new OpFunctionParameter(this.rcount++, GetTypeOpCode(pi));
+                var ci = OpFunctionParameter(GetTypeOpCode(pi));
                 param[i] = ci;
                 funcdef.Add(ci);
             }
-            funcdef.Add(new OpLabel(this.rcount++));
+            funcdef.Add(OpLabel());
 
             var body = method.Body;
             var vars = new TypedResultOpCode[body.Variables.Count];
@@ -281,7 +305,7 @@ namespace OpenCl.Compiler
                     case OperandType.ShortInlineBrTarget:
                     case OperandType.InlineBrTarget: {
                         var target = (instr.Operand as Instruction).Offset;
-                        var label = new OpLabel(this.rcount++);
+                        var label = OpLabel();
                         labels.Add(target, label);
                         break;
                     }
@@ -302,70 +326,70 @@ namespace OpenCl.Compiler
                 {
                 case Code.Nop:
                     // just for the fun of it...
-                    // funcdef.Add(new OpNop());
+                    // funcdef.Add(OpNop());
                     break;
                 case Code.Dup: {
                     stack.Push(stack.Peek());
                     break;
                 }
                 case Code.Ldc_I4_0: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), 0));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), 0));
                     break;
                 }
                 case Code.Ldc_I4_1: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), 1));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), 1));
                     break;
                 }
                 case Code.Ldc_I4_2: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), 2));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), 2));
                     break;
                 }
                 case Code.Ldc_I4_3: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), 3));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), 3));
                     break;
                 }
                 case Code.Ldc_I4_4: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), 4));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), 4));
                     break;
                 }
                 case Code.Ldc_I4_5: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), 5));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), 5));
                     break;
                 }
                 case Code.Ldc_I4_6: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), 6));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), 6));
                     break;
                 }
                 case Code.Ldc_I4_7: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), 7));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), 7));
                     break;
                 }
                 case Code.Ldc_I4_8: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), 8));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), 8));
                     break;
                 }
                 case Code.Ldc_I4_M1: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), -1));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), -1));
                     break;
                 }
                 case Code.Ldc_I4: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), (int)instr.Operand));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), (int)instr.Operand));
                     break;
                 }
                 case Code.Ldc_I4_S: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<int>(), (sbyte)instr.Operand));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<int>(), (sbyte)instr.Operand));
                     break;
                 }
                 case Code.Ldc_I8: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<long>(), (long)instr.Operand));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<long>(), (long)instr.Operand));
                     break;
                 }
                 case Code.Ldc_R4: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<float>(), (float)instr.Operand));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<float>(), (float)instr.Operand));
                     break;
                 }
                 case Code.Ldc_R8: {
-                    stack.Push(new OpConstant(SpirConstantCallback, (NumericTypeOpCode)GetTypeOpCode<double>(), (double)instr.Operand));
+                    stack.Push(OpConstant((NumericTypeOpCode)GetTypeOpCode<double>(), (double)instr.Operand));
                     break;
                 }
                 case Code.Ldarg_0: {
@@ -425,8 +449,8 @@ namespace OpenCl.Compiler
                 case Code.Ldelem_R8: {
                     var idx = stack.Pop();
                     var arr = stack.Pop();
-                    var addr = new OpPtrAccessChain(this.rcount++, arr, idx);
-                    var elem = new OpLoad(this.rcount++, addr);
+                    var addr = OpPtrAccessChain(arr, idx);
+                    var elem = OpLoad(addr);
                     funcdef.Add(addr);
                     funcdef.Add(elem);
                     stack.Push(elem);
@@ -441,7 +465,7 @@ namespace OpenCl.Compiler
                 case Code.Ldind_R8:
                 case Code.Ldobj: {
                     var addr = stack.Pop();
-                    var elem = new OpLoad(this.rcount++, addr);
+                    var elem = OpLoad(addr);
                     funcdef.Add(elem);
                     stack.Push(elem);
                     break;
@@ -449,25 +473,25 @@ namespace OpenCl.Compiler
                 case Code.Ldarga:
                 case Code.Ldarga_S: {
                     var arg = instr.Operand as ParameterDefinition;
-                    var ptr = new OpVariable(this.rcount++, new OpTypePointer(SpirTypeIdCallback, StorageClass.Function, GetTypeOpCode(arg)));
+                    var ptr = OpVariable(OpTypePointer(StorageClass.Function, GetTypeOpCode(arg)));
                     funcdef.Add(ptr);
                     stack.Push(ptr);
-                    funcdef.Add(new OpStore(ptr, param[arg.Index]));
+                    funcdef.Add(OpStore(ptr, param[arg.Index]));
                     break;
                 }
                 case Code.Ldloca:
                 case Code.Ldloca_S: {
                     var loc = instr.Operand as VariableDefinition;
-                    var ptr = new OpVariable(this.rcount++, new OpTypePointer(SpirTypeIdCallback, StorageClass.Function, GetTypeOpCode(loc)));
+                    var ptr = OpVariable(OpTypePointer(StorageClass.Function, GetTypeOpCode(loc)));
                     funcdef.Add(ptr);
                     stack.Push(ptr);
-                    funcdef.Add(new OpStore(ptr, vars[loc.Index]));
+                    funcdef.Add(OpStore(ptr, vars[loc.Index]));
                     break;
                 }
                 case Code.Ldelema: {
                     var idx = stack.Pop();
                     var arr = stack.Pop();
-                    var addr = new OpPtrAccessChain(this.rcount++, arr, idx);
+                    var addr = OpPtrAccessChain(arr, idx);
                     funcdef.Add(addr);
                     stack.Push(addr);
                     break;
@@ -508,9 +532,9 @@ namespace OpenCl.Compiler
                     var val = stack.Pop();
                     var idx = stack.Pop();
                     var arr = stack.Pop();
-                    var ptr = new OpPtrAccessChain(this.rcount++, arr, idx);
+                    var ptr = OpPtrAccessChain(arr, idx);
                     funcdef.Add(ptr);
-                    funcdef.Add(new OpStore(ptr, val));
+                    funcdef.Add(OpStore(ptr, val));
                     break;
                 }
                 case Code.Stind_I:
@@ -523,7 +547,7 @@ namespace OpenCl.Compiler
                 case Code.Stobj: {
                     var val = stack.Pop();
                     var ptr = stack.Pop();
-                    funcdef.Add(new OpStore(ptr, val));
+                    funcdef.Add(OpStore(ptr, val));
                     break;
                 }
                 case Code.Conv_I:
@@ -629,14 +653,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpIAdd(this.rcount++, l, r);
+                        var op = OpIAdd(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -644,14 +668,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeFloat;
                         var tr = r.ResultType as OpTypeFloat;
                         if (tl.Width < tr.Width) {
-                            l = new OpFConvert(this.rcount++, tr, l);
+                            l = OpFConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpFConvert(this.rcount++, tl, r);
+                            r = OpFConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpFAdd(this.rcount++, l, r);
+                        var op = OpFAdd(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -669,14 +693,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpISub(this.rcount++, l, r);
+                        var op = OpISub(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -684,14 +708,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeFloat;
                         var tr = r.ResultType as OpTypeFloat;
                         if (tl.Width < tr.Width) {
-                            l = new OpFConvert(this.rcount++, tr, l);
+                            l = OpFConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpFConvert(this.rcount++, tl, r);
+                            r = OpFConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpFSub(this.rcount++, l, r);
+                        var op = OpFSub(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -709,14 +733,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpIMul(this.rcount++, l, r);
+                        var op = OpIMul(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -724,14 +748,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeFloat;
                         var tr = r.ResultType as OpTypeFloat;
                         if (tl.Width < tr.Width) {
-                            l = new OpFConvert(this.rcount++, tr, l);
+                            l = OpFConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpFConvert(this.rcount++, tl, r);
+                            r = OpFConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpFMul(this.rcount++, l, r);
+                        var op = OpFMul(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -747,14 +771,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpSDiv(this.rcount++, l, r);
+                        var op = OpSDiv(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -762,14 +786,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeFloat;
                         var tr = r.ResultType as OpTypeFloat;
                         if (tl.Width < tr.Width) {
-                            l = new OpFConvert(this.rcount++, tr, l);
+                            l = OpFConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpFConvert(this.rcount++, tl, r);
+                            r = OpFConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpFDiv(this.rcount++, l, r);
+                        var op = OpFDiv(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -785,14 +809,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpUConvert(this.rcount++, tr, l);
+                            l = OpUConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpUConvert(this.rcount++, tl, r);
+                            r = OpUConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpUDiv(this.rcount++, l, r);
+                        var op = OpUDiv(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -800,14 +824,14 @@ namespace OpenCl.Compiler
                     //     var tl = l.ResultType as OpTypeFloat;
                     //     var tr = r.ResultType as OpTypeFloat;
                     //     if (tl.Width < tr.Width) {
-                    //         l = new OpFConvert(this.rcount++, tr, l);
+                    //         l = OpFConvert(tr, l);
                     //         funcdef.Add(l);
                     //     }
                     //     else if (tr.Width < tl.Width) {
-                    //         r = new OpFConvert(this.rcount++, tl, r);
+                    //         r = OpFConvert(tl, r);
                     //         funcdef.Add(r);
                     //     }
-                    //     var op = new OpFDiv(this.rcount++, l, r);
+                    //     var op = OpFDiv(l, r);
                     //     funcdef.Add(op);
                     //     stack.Push(op);
                     // }
@@ -823,14 +847,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpBitwiseAnd(this.rcount++, l, r);
+                        var op = OpBitwiseAnd(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -846,14 +870,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpBitwiseOr(this.rcount++, l, r);
+                        var op = OpBitwiseOr(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -869,14 +893,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpBitwiseXor(this.rcount++, l, r);
+                        var op = OpBitwiseXor(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -892,14 +916,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpShiftLeftLogical(this.rcount++, l, r);
+                        var op = OpShiftLeftLogical(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -915,14 +939,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpShiftRightArithmetic(this.rcount++, l, r);
+                        var op = OpShiftRightArithmetic(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -938,14 +962,14 @@ namespace OpenCl.Compiler
                         var tl = l.ResultType as OpTypeInt;
                         var tr = r.ResultType as OpTypeInt;
                         if (tl.Width < tr.Width) {
-                            l = new OpSConvert(this.rcount++, tr, l);
+                            l = OpSConvert(tr, l);
                             funcdef.Add(l);
                         }
                         else if (tr.Width < tl.Width) {
-                            r = new OpSConvert(this.rcount++, tl, r);
+                            r = OpSConvert(tl, r);
                             funcdef.Add(r);
                         }
-                        var op = new OpShiftRightLogical(this.rcount++, l, r);
+                        var op = OpShiftRightLogical(l, r);
                         funcdef.Add(op);
                         stack.Push(op);
                     }
@@ -970,18 +994,17 @@ namespace OpenCl.Compiler
                         // __spirv_BuiltInWorkDim = external addrspace(1) global i32
                         if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
                             // type of import symbol
-                            var t = new OpTypePointer(SpirTypeIdCallback, StorageClass.UniformConstant,
-                                        new OpTypeInt(SpirTypeIdCallback, BUILTIN_WIDTH));
+                            var t = OpTypePointer(StorageClass.UniformConstant, OpTypeInt(BUILTIN_WIDTH));
                             // import symbol
-                            sym = new OpVariable(this.rcount++, t);
+                            sym = OpVariable(t);
                             this.imports.Add(name, sym);
                             // import decorations
-                            this.decorations.Add(new OpDecorateBuiltIn(sym, BuiltIn.WorkDim));
-                            this.decorations.Add(new OpDecorateConstant(sym));
-                            this.decorations.Add(new OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.WorkDim));
+                            this.decorations.Add(OpDecorateBuiltIn(sym, BuiltIn.WorkDim));
+                            this.decorations.Add(OpDecorateConstant(sym));
+                            this.decorations.Add(OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.WorkDim));
                         }
-                        var ld = new OpLoad(this.rcount++, sym);
-                        var op = new OpVectorExtractDynamic(this.rcount++, ld, stack.Pop());
+                        var ld = OpLoad(sym);
+                        var op = OpVectorExtractDynamic(ld, stack.Pop());
                         funcdef.Add(ld);
                         funcdef.Add(op);
                         stack.Push(op);
@@ -991,19 +1014,17 @@ namespace OpenCl.Compiler
                         // __spirv_BuiltInGlobalSize = external addrspace(1) global <3 x i32>
                         if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
                             // type of import symbol
-                            var t = new OpTypePointer(SpirTypeIdCallback, StorageClass.UniformConstant,
-                                        new OpTypeVector(SpirTypeIdCallback, 3,
-                                            new OpTypeInt(SpirTypeIdCallback, BUILTIN_WIDTH)));
+                            var t = OpTypePointer(StorageClass.UniformConstant, OpTypeVector(3, OpTypeInt(BUILTIN_WIDTH)));
                             // import symbol
-                            sym = new OpVariable(this.rcount++, t);
+                            sym = OpVariable(t);
                             this.imports.Add(name, sym);
                             // import decorations
-                            this.decorations.Add(new OpDecorateBuiltIn(sym, BuiltIn.GlobalSize));
-                            this.decorations.Add(new OpDecorateConstant(sym));
-                            this.decorations.Add(new OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.GlobalSize));
+                            this.decorations.Add(OpDecorateBuiltIn(sym, BuiltIn.GlobalSize));
+                            this.decorations.Add(OpDecorateConstant(sym));
+                            this.decorations.Add(OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.GlobalSize));
                         }
-                        var ld = new OpLoad(this.rcount++, sym);
-                        var op = new OpVectorExtractDynamic(this.rcount++, ld, stack.Pop());
+                        var ld = OpLoad(sym);
+                        var op = OpVectorExtractDynamic(ld, stack.Pop());
                         funcdef.Add(ld);
                         funcdef.Add(op);
                         stack.Push(op);
@@ -1013,19 +1034,17 @@ namespace OpenCl.Compiler
                         // __spirv_BuiltInGlobalInvocationId = external addrspace(1) global <3 x i32>
                         if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
                             // type of import symbol
-                            var t = new OpTypePointer(SpirTypeIdCallback, StorageClass.UniformConstant,
-                                        new OpTypeVector(SpirTypeIdCallback, 3,
-                                            new OpTypeInt(SpirTypeIdCallback, BUILTIN_WIDTH)));
+                            var t = OpTypePointer(StorageClass.UniformConstant, OpTypeVector(3, OpTypeInt(BUILTIN_WIDTH)));
                             // import symbol
-                            sym = new OpVariable(this.rcount++, t);
+                            sym = OpVariable(t);
                             this.imports.Add(name, sym);
                             // import decorations
-                            this.decorations.Add(new OpDecorateBuiltIn(sym, BuiltIn.GlobalInvocationId));
-                            this.decorations.Add(new OpDecorateConstant(sym));
-                            this.decorations.Add(new OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.GlobalInvocationId));
+                            this.decorations.Add(OpDecorateBuiltIn(sym, BuiltIn.GlobalInvocationId));
+                            this.decorations.Add(OpDecorateConstant(sym));
+                            this.decorations.Add(OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.GlobalInvocationId));
                         }
-                        var ld = new OpLoad(this.rcount++, sym);
-                        var op = new OpVectorExtractDynamic(this.rcount++, ld, stack.Pop());
+                        var ld = OpLoad(sym);
+                        var op = OpVectorExtractDynamic(ld, stack.Pop());
                         funcdef.Add(ld);
                         funcdef.Add(op);
                         stack.Push(op);
@@ -1050,10 +1069,10 @@ namespace OpenCl.Compiler
                         TypedResultOpCode a = stack.Pop();
                         TypedResultOpCode r;
                         if (a.ResultType is OpTypeInt || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
-                            r = new OpIAdd(this.rcount++, a, b);
+                            r = OpIAdd(a, b);
                         }
                         else if (a.ResultType is OpTypeFloat || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
-                            r = new OpFAdd(this.rcount++, a, b);
+                            r = OpFAdd(a, b);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Addition' call.");
@@ -1067,10 +1086,10 @@ namespace OpenCl.Compiler
                         TypedResultOpCode a = stack.Pop();
                         TypedResultOpCode r;
                         if (a.ResultType is OpTypeInt || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
-                            r = new OpISub(this.rcount++, a, b);
+                            r = OpISub(a, b);
                         }
                         else if (a.ResultType is OpTypeFloat || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
-                            r = new OpFSub(this.rcount++, a, b);
+                            r = OpFSub(a, b);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Subtraction' call.");
@@ -1084,10 +1103,10 @@ namespace OpenCl.Compiler
                         TypedResultOpCode a = stack.Pop();
                         TypedResultOpCode r;
                         if (a.ResultType is OpTypeInt || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
-                            r = new OpIMul(this.rcount++, a, b);
+                            r = OpIMul(a, b);
                         }
                         else if (a.ResultType is OpTypeFloat || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
-                            r = new OpFMul(this.rcount++, a, b);
+                            r = OpFMul(a, b);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Multiply' call.");
@@ -1103,14 +1122,14 @@ namespace OpenCl.Compiler
                         OpTypeInt t;
                         if ((t = a.ResultType as OpTypeInt ?? (a.ResultType as OpTypeVector)?.ComponentType as OpTypeInt) != null) {
                             if (t.Signedness == 0) {
-                                r = new OpUDiv(this.rcount++, a, b);
+                                r = OpUDiv(a, b);
                             }
                             else {
-                                r = new OpSDiv(this.rcount++, a, b);
+                                r = OpSDiv(a, b);
                             }
                         }
                         else if (a.ResultType is OpTypeFloat || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
-                            r = new OpFDiv(this.rcount++, a, b);
+                            r = OpFDiv(a, b);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Division' call.");
@@ -1126,29 +1145,29 @@ namespace OpenCl.Compiler
                         TypedResultOpCode sel;
                         if (a.ResultType is OpTypeInt) {
                             var width = (a.ResultType as OpTypeInt).Width;
-                            cmp = new OpIEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            cmp = OpIEqual(OpTypeBool(), a, b);
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeInt).Width;
-                            cmp = new OpIEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeBool(SpirTypeIdCallback)), a, b);
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            cmp = OpIEqual(OpTypeVector(size, OpTypeBool()), a, b);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else if (a.ResultType is OpTypeFloat) {
                             var width = (a.ResultType as OpTypeFloat).Width;
-                            cmp = new OpFOrdEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            cmp = OpFOrdEqual(OpTypeBool(), a, b);
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeFloat).Width;
-                            cmp = new OpFOrdEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeBool(SpirTypeIdCallback)), a, b);
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            cmp = OpFOrdEqual(OpTypeVector(size, OpTypeBool()), a, b);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Equality' call.");
@@ -1165,29 +1184,29 @@ namespace OpenCl.Compiler
                         TypedResultOpCode sel;
                         if (a.ResultType is OpTypeInt) {
                             var width = (a.ResultType as OpTypeInt).Width;
-                            cmp = new OpINotEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            cmp = OpINotEqual(OpTypeBool(), a, b);
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeInt).Width;
-                            cmp = new OpINotEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeBool(SpirTypeIdCallback)), a, b);
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            cmp = OpINotEqual(OpTypeVector(size, OpTypeBool()), a, b);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else if (a.ResultType is OpTypeFloat) {
                             var width = (a.ResultType as OpTypeFloat).Width;
-                            cmp = new OpFUnordNotEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            cmp = OpFUnordNotEqual(OpTypeBool(), a, b);
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeFloat).Width;
-                            cmp = new OpFUnordNotEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeBool(SpirTypeIdCallback)), a, b);
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            cmp = OpFUnordNotEqual(OpTypeVector(size, OpTypeBool()), a, b);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_Inequality' call.");
@@ -1206,38 +1225,38 @@ namespace OpenCl.Compiler
                         if ((t = a.ResultType as OpTypeInt) != null) {
                             var width = (a.ResultType as OpTypeInt).Width;
                             if (t.Signedness == 0) {
-                                cmp = new OpULessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                                cmp = OpULessThan(OpTypeBool(), a, b);
                             }
                             else {
-                                cmp = new OpSLessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                                cmp = OpSLessThan(OpTypeBool(), a, b);
                             }
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((t = (a.ResultType as OpTypeVector)?.ComponentType as OpTypeInt) != null) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeInt).Width;
                             if (t.Signedness == 0) {
-                                cmp = new OpULessThan(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
+                                cmp =  OpULessThan(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
                             }
                             else {
-                                cmp = new OpSLessThan(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
+                                cmp = OpSLessThan(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
                             }
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else if (a.ResultType is OpTypeFloat) {
                             var width = (a.ResultType as OpTypeFloat).Width;
-                            cmp = new OpFOrdLessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            cmp = OpFOrdLessThan(OpTypeBool(), a, b);
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeFloat).Width;
-                            cmp = new OpFOrdLessThan(this.rcount++, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeBool(SpirTypeIdCallback)), a, b);
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            cmp = OpFOrdLessThan(OpTypeVector(size, OpTypeBool()), a, b);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_LessThan' call.");
@@ -1256,38 +1275,38 @@ namespace OpenCl.Compiler
                         if ((t = a.ResultType as OpTypeInt) != null) {
                             var width = (a.ResultType as OpTypeInt).Width;
                             if (t.Signedness == 0) {
-                                cmp = new OpULessThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                                cmp = OpULessThanEqual(OpTypeBool(), a, b);
                             }
                             else {
-                                cmp = new OpSLessThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                                cmp = OpSLessThanEqual(OpTypeBool(), a, b);
                             }
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((t = (a.ResultType as OpTypeVector)?.ComponentType as OpTypeInt) != null) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeInt).Width;
                             if (t.Signedness == 0) {
-                                cmp = new OpULessThanEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
+                                cmp = OpULessThanEqual(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
                             }
                             else {
-                                cmp = new OpSLessThanEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
+                                cmp = OpSLessThanEqual(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
                             }
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else if (a.ResultType is OpTypeFloat) {
                             var width = (a.ResultType as OpTypeFloat).Width;
-                            cmp = new OpFOrdLessThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            cmp = OpFOrdLessThanEqual(OpTypeBool(), a, b);
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeFloat).Width;
-                            cmp = new OpFOrdLessThanEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeBool(SpirTypeIdCallback)), a, b);
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            cmp = OpFOrdLessThanEqual(OpTypeVector(size, OpTypeBool()), a, b);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_LessThanOrEqual' call.");
@@ -1306,38 +1325,38 @@ namespace OpenCl.Compiler
                         if ((t = a.ResultType as OpTypeInt) != null) {
                             var width = (a.ResultType as OpTypeInt).Width;
                             if (t.Signedness == 0) {
-                                cmp = new OpUGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                                cmp = OpUGreaterThan(OpTypeBool(), a, b);
                             }
                             else {
-                                cmp = new OpSGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                                cmp = OpSGreaterThan(OpTypeBool(), a, b);
                             }
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((t = (a.ResultType as OpTypeVector)?.ComponentType as OpTypeInt) != null) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeInt).Width;
                             if (t.Signedness == 0) {
-                                cmp = new OpUGreaterThan(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
+                                cmp = OpUGreaterThan(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
                             }
                             else {
-                                cmp = new OpSGreaterThan(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
+                                cmp = OpSGreaterThan(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
                             }
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else if (a.ResultType is OpTypeFloat) {
                             var width = (a.ResultType as OpTypeFloat).Width;
-                            cmp = new OpFOrdGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            cmp = OpFOrdGreaterThan(OpTypeBool(), a, b);
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeFloat).Width;
-                            cmp = new OpFOrdGreaterThan(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            cmp = OpFOrdGreaterThan(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_GreaterThan' call.");
@@ -1356,38 +1375,38 @@ namespace OpenCl.Compiler
                         if ((t = a.ResultType as OpTypeInt) != null) {
                             var width = (a.ResultType as OpTypeInt).Width;
                             if (t.Signedness == 0) {
-                                cmp = new OpUGreaterThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                                cmp = OpUGreaterThanEqual(OpTypeBool(), a, b);
                             }
                             else {
-                                cmp = new OpSGreaterThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
+                                cmp = OpSGreaterThanEqual(OpTypeBool(), a, b);
                             }
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((t = (a.ResultType as OpTypeVector)?.ComponentType as OpTypeInt) != null) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeInt).Width;
                             if (t.Signedness == 0) {
-                                cmp = new OpUGreaterThanEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
+                                cmp = OpUGreaterThanEqual(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
                             }
                             else {
-                                cmp = new OpSGreaterThanEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
+                                cmp = OpSGreaterThanEqual(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
                             }
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else if (a.ResultType is OpTypeFloat) {
                             var width = (a.ResultType as OpTypeFloat).Width;
-                            cmp = new OpFOrdGreaterThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                            sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), 0));
+                            cmp = OpFOrdGreaterThanEqual(OpTypeBool(), a, b);
+                            sel = OpSelect(cmp, OpConstant(OpTypeInt(width), -1), OpConstant(OpTypeInt(width), 0));
                         }
                         else if ((a.ResultType as OpTypeVector)?.ComponentType is OpTypeFloat) {
                             var size = (a.ResultType as OpTypeVector).ComponentCount;
                             var width = ((a.ResultType as OpTypeVector).ComponentType as OpTypeFloat).Width;
-                            cmp = new OpFOrdGreaterThanEqual(this.rcount++, new OpTypeVector(SpirTypeIdCallback, (a.ResultType as OpTypeVector).ComponentCount, new OpTypeBool(SpirTypeIdCallback)), a, b);
-                            var m = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width), -1), size).ToArray());
-                            var z = new OpConstantComposite(SpirConstantCallback, new OpTypeVector(SpirTypeIdCallback, size, new OpTypeInt(SpirTypeIdCallback, width)), Enumerable.Repeat<OpConstant>(new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, width),  0), size).ToArray());
-                            sel = new OpSelect(this.rcount++, cmp, m, z);
+                            cmp = OpFOrdGreaterThanEqual(OpTypeVector((a.ResultType as OpTypeVector).ComponentCount, OpTypeBool()), a, b);
+                            var m = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width), -1), size).ToArray());
+                            var z = OpConstantComposite(OpTypeVector(size, OpTypeInt(width)), Enumerable.Repeat<OpConstant>(OpConstant(OpTypeInt(width),  0), size).ToArray());
+                            sel = OpSelect(cmp, m, z);
                         }
                         else {
                             throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_GreaterThanOrEqual' call.");
@@ -1502,10 +1521,10 @@ namespace OpenCl.Compiler
                     if (!(arg.ResultType is OpTypeInt)) {
                         throw new CompilerException($"Incompatible operand for 'brtrue' instruction: expected OpTypeInt, found {arg.ResultType.GetType().Name}.");
                     }
-                    var zero = new OpConstant(SpirConstantCallback, arg.ResultType as NumericTypeOpCode, 0);
-                    var cond = new OpIEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), arg, zero);
+                    var zero = OpConstant(arg.ResultType as NumericTypeOpCode, 0);
+                    var cond = OpIEqual(OpTypeBool(), arg, zero);
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1516,10 +1535,10 @@ namespace OpenCl.Compiler
                     if (!(arg.ResultType is OpTypeInt)) {
                         throw new CompilerException($"Incompatible operand for 'brtrue' instruction: expected OpTypeInt, found {arg.ResultType.GetType().Name}.");
                     }
-                    var zero = new OpConstant(SpirConstantCallback, arg.ResultType as NumericTypeOpCode, 0);
-                    var cond = new OpINotEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), arg, zero);
+                    var zero = OpConstant(arg.ResultType as NumericTypeOpCode, 0);
+                    var cond = OpINotEqual(OpTypeBool(), arg, zero);
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1530,16 +1549,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpIEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpIEqual(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFOrdEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFOrdEqual(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'beq' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1550,16 +1569,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpINotEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpINotEqual(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFUnordNotEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFUnordNotEqual(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'beq' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1570,16 +1589,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpSLessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpSLessThan(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFUnordLessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFUnordLessThan(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'blt' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1590,16 +1609,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpULessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpULessThan(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFUnordLessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFUnordLessThan(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'blt' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1610,16 +1629,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpSLessThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpSLessThanEqual(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFUnordLessThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFUnordLessThanEqual(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'ble' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1630,16 +1649,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpULessThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpULessThanEqual(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFUnordLessThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFUnordLessThanEqual(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'ble' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1650,16 +1669,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpSGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpSGreaterThan(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFUnordGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFUnordGreaterThan(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'bgt' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1670,16 +1689,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpUGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpUGreaterThan(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFUnordGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFUnordGreaterThan(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'bgt' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1690,16 +1709,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpSGreaterThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpSGreaterThanEqual(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFUnordGreaterThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFUnordGreaterThanEqual(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'bge' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1710,16 +1729,16 @@ namespace OpenCl.Compiler
                     var u = stack.Pop();
                     var cond = (TypedResultOpCode)null;
                     if (u.ResultType is OpTypeInt && v.ResultType is OpTypeInt) {
-                        cond = new OpUGreaterThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpUGreaterThanEqual(OpTypeBool(), u, v);
                     }
                     else if (u.ResultType is OpTypeFloat && v.ResultType is OpTypeFloat) {
-                        cond = new OpFUnordGreaterThanEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), u, v);
+                        cond = OpFUnordGreaterThanEqual(OpTypeBool(), u, v);
                     }
                     else {
                         throw new CompilerException($"Incompatible operands for 'bge' instruction: {u.ResultType.GetType().Name} and {v.ResultType.GetType().Name}.");
                     }
                     var lt = labels[(instr.Operand as Instruction).Offset];
-                    var lf = new OpLabel(this.rcount++);
+                    var lf = OpLabel();
                     var br = new OpBranchConditional(cond, lt, lf);
                     funcdef.AddRange(new SpirOpCode[] { cond, br, lf });
                     break;
@@ -1727,8 +1746,8 @@ namespace OpenCl.Compiler
                 case Code.Ceq: {
                     var b = stack.Pop();
                     var a = stack.Pop();
-                    var cmp = new OpIEqual(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    var cmp = OpIEqual(OpTypeBool(), a, b);
+                    var sel = OpSelect(cmp, OpConstant(OpTypeInt(32), 1), OpConstant(OpTypeInt(32), 0));
                     funcdef.Add(cmp);
                     funcdef.Add(sel);
                     stack.Push(sel);
@@ -1737,8 +1756,8 @@ namespace OpenCl.Compiler
                 case Code.Cgt: {
                     var b = stack.Pop();
                     var a = stack.Pop();
-                    var cmp = new OpSGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    var cmp = OpSGreaterThan(OpTypeBool(), a, b);
+                    var sel = OpSelect(cmp, OpConstant(OpTypeInt(32), 1), OpConstant(OpTypeInt(32), 0));
                     funcdef.Add(cmp);
                     funcdef.Add(sel);
                     stack.Push(sel);
@@ -1747,8 +1766,8 @@ namespace OpenCl.Compiler
                 case Code.Cgt_Un: {
                     var b = stack.Pop();
                     var a = stack.Pop();
-                    var cmp = new OpUGreaterThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    var cmp = OpUGreaterThan(OpTypeBool(), a, b);
+                    var sel = OpSelect(cmp, OpConstant(OpTypeInt(32), 1), OpConstant(OpTypeInt(32), 0));
                     funcdef.Add(cmp);
                     funcdef.Add(sel);
                     stack.Push(sel);
@@ -1757,8 +1776,8 @@ namespace OpenCl.Compiler
                 case Code.Clt: {
                     var b = stack.Pop();
                     var a = stack.Pop();
-                    var cmp = new OpSLessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    var cmp = OpSLessThan(OpTypeBool(), a, b);
+                    var sel = OpSelect(cmp, OpConstant(OpTypeInt(32), 1), OpConstant(OpTypeInt(32), 0));
                     funcdef.Add(cmp);
                     funcdef.Add(sel);
                     stack.Push(sel);
@@ -1767,8 +1786,8 @@ namespace OpenCl.Compiler
                 case Code.Clt_Un: {
                     var b = stack.Pop();
                     var a = stack.Pop();
-                    var cmp = new OpULessThan(this.rcount++, new OpTypeBool(SpirTypeIdCallback), a, b);
-                    var sel = new OpSelect(this.rcount++, cmp, new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 1), new OpConstant(SpirConstantCallback, new OpTypeInt(SpirTypeIdCallback, 32), 0));
+                    var cmp = OpULessThan(OpTypeBool(), a, b);
+                    var sel = OpSelect(cmp, OpConstant(OpTypeInt(32), 1), OpConstant(OpTypeInt(32), 0));
                     funcdef.Add(cmp);
                     funcdef.Add(sel);
                     stack.Push(sel);
@@ -1813,15 +1832,15 @@ namespace OpenCl.Compiler
             // reserved (must be zero)
             output.WriteIntLE(0x00);
             // capabilities
-            new OpCapability(Capability.Addresses).Emit(output);
-            new OpCapability(Capability.Linkage).Emit(output);
-            new OpCapability(Capability.Kernel).Emit(output);
-            new OpCapability(Capability.Int64).Emit(output);
+            OpCapability(Capability.Addresses).Emit(output);
+            OpCapability(Capability.Linkage).Emit(output);
+            OpCapability(Capability.Kernel).Emit(output);
+            OpCapability(Capability.Int64).Emit(output);
             // import OpenCL extended instruction set
             // see: https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.ExtendedInstructionSet.100.html
-            new OpExtInstImport(this.rcount++, "OpenCL.std").Emit(output);
+            OpExtInstImport("OpenCL.std").Emit(output);
             // memory model
-            new OpMemoryModel(AddressingModel.Physical64, MemoryModel.OpenCL).Emit(output);
+            OpMemoryModel(AddressingModel.Physical64, MemoryModel.OpenCL).Emit(output);
             // entry points
             foreach (var op in this.entryPoints) {
                 op.Emit(output);
@@ -1831,7 +1850,7 @@ namespace OpenCl.Compiler
                 op.Emit(output);
             }
             // types
-            foreach (var op in this.types_list) {
+            foreach (var op in this.types.ToList().OrderBy(kv => kv.Value).Select(kv => kv.Key)) {
                 op.Emit(output);
             }
             // imports
@@ -1841,7 +1860,7 @@ namespace OpenCl.Compiler
             // exports
             // ...
             // constants
-            foreach (var op in this.constants.Keys) {
+            foreach (var op in this.constants.ToList().OrderBy(kv => kv.Value).Select(kv => kv.Key)) {
                 op.Emit(output);
             }
             // functions

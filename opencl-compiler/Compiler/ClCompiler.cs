@@ -171,49 +171,49 @@ namespace OpenCl.Compiler
                 var op = String.Empty;
                 switch (node.Code)
                 {
-                case BinaryOpCode.Add:
+                case BinaryOp.OpCode.Add:
                     op = "+";
                     break;
-                case BinaryOpCode.Sub:
+                case BinaryOp.OpCode.Sub:
                     op = "-";
                     break;
-                case BinaryOpCode.Mul:
+                case BinaryOp.OpCode.Mul:
                     op = "*";
                     break;
-                case BinaryOpCode.Div:
+                case BinaryOp.OpCode.Div:
                     op = "/";
                     break;
-                case BinaryOpCode.And:
+                case BinaryOp.OpCode.And:
                     op = "&";
                     break;
-                case BinaryOpCode.Or:
+                case BinaryOp.OpCode.Or:
                     op = "|";
                     break;
-                case BinaryOpCode.Xor:
+                case BinaryOp.OpCode.Xor:
                     op = "^";
                     break;
-                case BinaryOpCode.Shl:
+                case BinaryOp.OpCode.Shl:
                     op = "<<";
                     break;
-                case BinaryOpCode.Shr:
+                case BinaryOp.OpCode.Shr:
                     op = ">>";
                     break;
-                case BinaryOpCode.Eq:
+                case BinaryOp.OpCode.Eq:
                     op = "==";
                     break;
-                case BinaryOpCode.Neq:
+                case BinaryOp.OpCode.Neq:
                     op = "!=";
                     break;
-                case BinaryOpCode.Lt:
+                case BinaryOp.OpCode.Lt:
                     op = "<";
                     break;
-                case BinaryOpCode.Le:
+                case BinaryOp.OpCode.Le:
                     op = "<=";
                     break;
-                case BinaryOpCode.Gt:
+                case BinaryOp.OpCode.Gt:
                     op = ">";
                     break;
-                case BinaryOpCode.Ge:
+                case BinaryOp.OpCode.Ge:
                     op = ">=";
                     break;
                 }
@@ -232,10 +232,10 @@ namespace OpenCl.Compiler
                 var op = String.Empty;
                 switch (node.Code)
                 {
-                case UnaryOpCode.Neg:
+                case UnaryOp.OpCode.Neg:
                     op = "-";
                     break;
-                case UnaryOpCode.Not:
+                case UnaryOp.OpCode.Not:
                     op = "~";
                     break;
                 }
@@ -971,9 +971,9 @@ namespace OpenCl.Compiler
                     if (l.CliType is CliPointerType) {
                         var e = (l.CliType as CliPointerType).Element;
                         var s = Marshal.SizeOf(e);
-                        r = new BinaryOp(r.CliType, BinaryOpCode.Div, r, new Const<int> (r.CliType, s));
+                        r = new BinaryOp(r.CliType, BinaryOp.OpCode.Div, r, new Const<int> (r.CliType, s));
                     }
-                    stack.Push(new BinaryOp(t, BinaryOpCode.Add, l, r));
+                    stack.Push(new BinaryOp(t, BinaryOp.OpCode.Add, l, r));
                     break;
                 }
                 case Code.Sub:
@@ -982,7 +982,7 @@ namespace OpenCl.Compiler
                     var r = stack.Pop();
                     var l = stack.Pop();
                     var t = CliType.FromOpSub(l.CliType, r.CliType);
-                    stack.Push(new BinaryOp(t, BinaryOpCode.Sub, l, r));
+                    stack.Push(new BinaryOp(t, BinaryOp.OpCode.Sub, l, r));
                     break;
                 }
                 case Code.Mul:
@@ -991,7 +991,7 @@ namespace OpenCl.Compiler
                     var r = stack.Pop();
                     var l = stack.Pop();
                     var t = CliType.FromOpMul(l.CliType, r.CliType);
-                    stack.Push(new BinaryOp(t, BinaryOpCode.Mul, l, r));
+                    stack.Push(new BinaryOp(t, BinaryOp.OpCode.Mul, l, r));
                     break;
                 }
                 case Code.Div:
@@ -999,35 +999,35 @@ namespace OpenCl.Compiler
                     var r = stack.Pop();
                     var l = stack.Pop();
                     var t = CliType.FromOpDiv(l.CliType, r.CliType);
-                    stack.Push(new BinaryOp(t, BinaryOpCode.Div, l, r));
+                    stack.Push(new BinaryOp(t, BinaryOp.OpCode.Div, l, r));
                     break;
                 }
                 case Code.And: {
                     var r = stack.Pop();
                     var l = stack.Pop();
                     var t = CliType.FromOpBitwise(l.CliType, r.CliType);
-                    stack.Push(new BinaryOp(t, BinaryOpCode.And, l, r));
+                    stack.Push(new BinaryOp(t, BinaryOp.OpCode.And, l, r));
                     break;
                 }
                 case Code.Or: {
                     var r = stack.Pop();
                     var l = stack.Pop();
                     var t = CliType.FromOpBitwise(l.CliType, r.CliType);
-                    stack.Push(new BinaryOp(t, BinaryOpCode.Or, l, r));
+                    stack.Push(new BinaryOp(t, BinaryOp.OpCode.Or, l, r));
                     break;
                 }
                 case Code.Xor: {
                     var r = stack.Pop();
                     var l = stack.Pop();
                     var t = CliType.FromOpBitwise(l.CliType, r.CliType);
-                    stack.Push(new BinaryOp(t, BinaryOpCode.Xor, l, r));
+                    stack.Push(new BinaryOp(t, BinaryOp.OpCode.Xor, l, r));
                     break;
                 }
                 case Code.Shl: {
                     var r = stack.Pop();
                     var l = stack.Pop();
                     var t = CliType.FromOpBitwise(l.CliType, r.CliType);
-                    stack.Push(new BinaryOp(t, BinaryOpCode.Shl, l, r));
+                    stack.Push(new BinaryOp(t, BinaryOp.OpCode.Shl, l, r));
                     break;
                 }
                 case Code.Shr:
@@ -1035,7 +1035,7 @@ namespace OpenCl.Compiler
                     var r = stack.Pop();
                     var l = stack.Pop();
                     var t = CliType.FromOpBitwise(l.CliType, r.CliType);
-                    stack.Push(new BinaryOp(t, BinaryOpCode.Shr, l, r));
+                    stack.Push(new BinaryOp(t, BinaryOp.OpCode.Shr, l, r));
                     break;
                 }
                 case Code.Call: {
@@ -1072,46 +1072,46 @@ namespace OpenCl.Compiler
                         switch (name)
                         {
                         case "op_Addition":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Add, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Add, args[0], args[1]));
                             break;
                         case "op_Subtraction":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Sub, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Sub, args[0], args[1]));
                             break;
                         case "op_Multiply":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Mul, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Mul, args[0], args[1]));
                             break;
                         case "op_Division":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Div, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Div, args[0], args[1]));
                             break;
                         case "op_Equality":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Eq, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Eq, args[0], args[1]));
                             break;
                         case "op_Inequality":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Neq, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Neq, args[0], args[1]));
                             break;
                         case "op_LessThan":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Lt, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Lt, args[0], args[1]));
                             break;
                         case "op_LessThanOrEqual":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Le, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Le, args[0], args[1]));
                             break;
                         case "op_GreaterThan":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Gt, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Gt, args[0], args[1]));
                             break;
                         case "op_GreaterThanOrEqual":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Ge, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Ge, args[0], args[1]));
                             break;
                         case "op_BitwiseAnd":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.And, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.And, args[0], args[1]));
                             break;
                         case "op_BitwiseOr":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Or, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Or, args[0], args[1]));
                             break;
                         case "op_ExclusiveOr":
-                            stack.Push(new BinaryOp(rtype, BinaryOpCode.Xor, args[0], args[1]));
+                            stack.Push(new BinaryOp(rtype, BinaryOp.OpCode.Xor, args[0], args[1]));
                             break;
                         case "op_OnesComplement":
-                            stack.Push(new UnaryOp(UnaryOpCode.Not, args[0]));
+                            stack.Push(new UnaryOp(UnaryOp.OpCode.Not, args[0]));
                             break;
                         default:
                             if (mdef.HasThis && name.StartsWith("get_")) {
