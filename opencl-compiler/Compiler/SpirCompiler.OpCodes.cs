@@ -2252,7 +2252,15 @@ namespace OpenCl.Compiler
         }
     }
 
-    class OpBranch : SpirOpCode
+    abstract class TerminationOpCode : SpirOpCode
+    {
+    }
+
+    abstract class BranchOpCode : TerminationOpCode
+    {
+    }
+
+    class OpBranch : BranchOpCode
     {
         private readonly OpLabel label;
 
@@ -2269,7 +2277,7 @@ namespace OpenCl.Compiler
         }
     }
 
-    class OpBranchConditional : SpirOpCode
+    class OpBranchConditional : BranchOpCode
     {
         private readonly TypedResultOpCode condition;
         private readonly OpLabel trueLabel;
@@ -2292,7 +2300,11 @@ namespace OpenCl.Compiler
         }
     }
 
-    class OpReturn : SpirOpCode
+    // TODO: OpSwitch (251)  [to extend BranchOpCode]
+
+    // TODO: OpKill (252)  [to extend TerminationOpCode]
+
+    class OpReturn : BranchOpCode
     {
         public override void Emit(Stream stream)
         {
@@ -2301,7 +2313,7 @@ namespace OpenCl.Compiler
         }
     }
 
-    class OpReturnValue : SpirOpCode
+    class OpReturnValue : BranchOpCode
     {
         private readonly TypedResultOpCode value;
 
@@ -2317,6 +2329,8 @@ namespace OpenCl.Compiler
             stream.WriteIntLE(this.value.ResultId);
         }
     }
+
+    // TODO: OpUnreachable (255)  [to extend TerminationOpCode]
 
     static class StreamExtensions
     {

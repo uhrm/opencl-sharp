@@ -319,6 +319,11 @@ namespace OpenCl.Compiler
             foreach (var instr in code) {
                 // emit label if current instruction is a branching target
                 if (labels.TryGetValue(instr.Offset, out var label)) {
+                    if (!(funcdef.Last() is BranchOpCode)) {
+                        // note: SPIR-V does not allow fall-through to next control flow block
+                        // (see SPIR-V specification §2.2.4 and §2.16.1)
+                        funcdef.Add(OpBranch(label));
+                    }
                     funcdef.Add(label);
                 }
                 // main handler for current instruction
