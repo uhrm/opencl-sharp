@@ -23,6 +23,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAddManaged()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -58,6 +59,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAddCl()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -104,6 +106,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestAddSpirV()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -158,6 +161,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestSubManaged()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -193,6 +197,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestSubCl()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -239,6 +244,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestSubSpirV()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -293,6 +299,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestMulManaged()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -328,6 +335,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestMulCl()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -374,6 +382,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestMulSpirV()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -428,6 +437,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestDivManaged()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -463,6 +473,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestDivCl()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -509,6 +520,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestDivSpirV()
         {
             var a = new float8[] { new float8((float)   7, (float)  14, (float)  21, (float)  28, (float)  35, (float)  42, (float)  49, (float)  56), new float8((float)   5, (float)  10, (float)  15, (float)  20, (float)  25, (float)  30, (float)  35, (float)  40) };
@@ -563,6 +575,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestEqManaged()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -598,6 +611,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestEqCl()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -644,6 +658,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestEqSpirV()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -698,6 +713,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestNeqManaged()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -733,6 +749,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestNeqCl()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -779,6 +796,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestNeqSpirV()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -833,6 +851,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLtManaged()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -868,6 +887,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLtCl()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -914,6 +934,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLtSpirV()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -968,6 +989,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLeManaged()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -1003,6 +1025,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLeCl()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -1049,6 +1072,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLeSpirV()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -1103,6 +1127,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGtManaged()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -1138,6 +1163,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGtCl()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -1184,6 +1210,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGtSpirV()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -1238,6 +1265,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGeManaged()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -1273,6 +1301,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGeCl()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };
@@ -1319,6 +1348,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGeSpirV()
         {
             var a = new float8[] { new float8((float)  14, (float)  13, (float)  12, (float)  11, (float)  10, (float)   9, (float)   8, (float)   7), new float8((float)   0, (float)   1, (float)   2, (float)   3, (float)   4, (float)   5, (float)   6, (float)   7) };

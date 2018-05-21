@@ -23,6 +23,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAddManaged()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -58,6 +59,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAddCl()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -104,6 +106,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestAddSpirV()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -158,6 +161,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestSubManaged()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -193,6 +197,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestSubCl()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -239,6 +244,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestSubSpirV()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -293,6 +299,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestMulManaged()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -328,6 +335,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestMulCl()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -374,6 +382,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestMulSpirV()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -428,6 +437,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestDivManaged()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -463,6 +473,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestDivCl()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -509,6 +520,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestDivSpirV()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -563,6 +575,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestEqManaged()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -598,6 +611,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestEqCl()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -644,6 +658,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestEqSpirV()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -698,6 +713,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestNeqManaged()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -733,6 +749,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestNeqCl()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -779,6 +796,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestNeqSpirV()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -833,6 +851,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLtManaged()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -868,6 +887,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLtCl()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -914,6 +934,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLtSpirV()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -968,6 +989,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLeManaged()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -1003,6 +1025,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLeCl()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -1049,6 +1072,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLeSpirV()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -1103,6 +1127,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGtManaged()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -1138,6 +1163,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGtCl()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -1184,6 +1210,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGtSpirV()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -1238,6 +1265,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGeManaged()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -1273,6 +1301,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGeCl()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -1319,6 +1348,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGeSpirV()
         {
             var a = new uint8[] { new uint8((uint)  14, (uint)  13, (uint)  12, (uint)  11, (uint)  10, (uint)   9, (uint)   8, (uint)   7), new uint8((uint)   0, (uint)   1, (uint)   2, (uint)   3, (uint)   4, (uint)   5, (uint)   6, (uint)   7) };
@@ -1373,6 +1403,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAndManaged()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -1408,6 +1439,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAndCl()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -1453,6 +1485,54 @@ namespace OpenCl.Tests
             Assert.AreEqual(  40, r[1].s7);
         }
 
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestAndSpirV()
+        {
+            var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
+            var b = new uint8[] { new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40), new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56) };
+            var r = new uint8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_and", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_uint8_and"))
+            using (var ma = Mem<uint8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<uint8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<uint8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<uint8>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   5, r[0].s0);
+            Assert.AreEqual(  10, r[0].s1);
+            Assert.AreEqual(   5, r[0].s2);
+            Assert.AreEqual(  20, r[0].s3);
+            Assert.AreEqual(   1, r[0].s4);
+            Assert.AreEqual(  10, r[0].s5);
+            Assert.AreEqual(  33, r[0].s6);
+            Assert.AreEqual(  40, r[0].s7);
+            Assert.AreEqual(   5, r[1].s0);
+            Assert.AreEqual(  10, r[1].s1);
+            Assert.AreEqual(   5, r[1].s2);
+            Assert.AreEqual(  20, r[1].s3);
+            Assert.AreEqual(   1, r[1].s4);
+            Assert.AreEqual(  10, r[1].s5);
+            Assert.AreEqual(  33, r[1].s6);
+            Assert.AreEqual(  40, r[1].s7);
+        }
+
         [Kernel]
         private static void test_uint8_or([Global] uint8[] a, [Global] uint8[] b, [Global] uint8[] r)
         {
@@ -1461,6 +1541,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestOrManaged()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -1496,6 +1577,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestOrCl()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -1541,6 +1623,54 @@ namespace OpenCl.Tests
             Assert.AreEqual(  56, r[1].s7);
         }
 
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestOrSpirV()
+        {
+            var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
+            var b = new uint8[] { new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40), new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56) };
+            var r = new uint8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_or", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_uint8_or"))
+            using (var ma = Mem<uint8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<uint8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<uint8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<uint8>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   7, r[0].s0);
+            Assert.AreEqual(  14, r[0].s1);
+            Assert.AreEqual(  31, r[0].s2);
+            Assert.AreEqual(  28, r[0].s3);
+            Assert.AreEqual(  59, r[0].s4);
+            Assert.AreEqual(  62, r[0].s5);
+            Assert.AreEqual(  51, r[0].s6);
+            Assert.AreEqual(  56, r[0].s7);
+            Assert.AreEqual(   7, r[1].s0);
+            Assert.AreEqual(  14, r[1].s1);
+            Assert.AreEqual(  31, r[1].s2);
+            Assert.AreEqual(  28, r[1].s3);
+            Assert.AreEqual(  59, r[1].s4);
+            Assert.AreEqual(  62, r[1].s5);
+            Assert.AreEqual(  51, r[1].s6);
+            Assert.AreEqual(  56, r[1].s7);
+        }
+
         [Kernel]
         private static void test_uint8_xor([Global] uint8[] a, [Global] uint8[] b, [Global] uint8[] r)
         {
@@ -1549,6 +1679,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestXorManaged()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -1584,6 +1715,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestXorCl()
         {
             var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
@@ -1599,6 +1731,54 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_uint8_xor"))
+            using (var ma = Mem<uint8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<uint8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<uint8>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<uint8>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   2, r[0].s0);
+            Assert.AreEqual(   4, r[0].s1);
+            Assert.AreEqual(  26, r[0].s2);
+            Assert.AreEqual(   8, r[0].s3);
+            Assert.AreEqual(  58, r[0].s4);
+            Assert.AreEqual(  52, r[0].s5);
+            Assert.AreEqual(  18, r[0].s6);
+            Assert.AreEqual(  16, r[0].s7);
+            Assert.AreEqual(   2, r[1].s0);
+            Assert.AreEqual(   4, r[1].s1);
+            Assert.AreEqual(  26, r[1].s2);
+            Assert.AreEqual(   8, r[1].s3);
+            Assert.AreEqual(  58, r[1].s4);
+            Assert.AreEqual(  52, r[1].s5);
+            Assert.AreEqual(  18, r[1].s6);
+            Assert.AreEqual(  16, r[1].s7);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestXorSpirV()
+        {
+            var a = new uint8[] { new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56), new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40) };
+            var b = new uint8[] { new uint8((uint)   5, (uint)  10, (uint)  15, (uint)  20, (uint)  25, (uint)  30, (uint)  35, (uint)  40), new uint8((uint)   7, (uint)  14, (uint)  21, (uint)  28, (uint)  35, (uint)  42, (uint)  49, (uint)  56) };
+            var r = new uint8[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUint8", "test_uint8_xor", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_uint8_xor"))
             using (var ma = Mem<uint8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
             using (var mb = Mem<uint8>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))

@@ -23,6 +23,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAddManaged()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -48,6 +49,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAddCl()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -84,6 +86,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestAddSpirV()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -128,6 +131,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestSubManaged()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -153,6 +157,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestSubCl()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -189,6 +194,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestSubSpirV()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -233,6 +239,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestMulManaged()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -258,6 +265,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestMulCl()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -294,6 +302,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestMulSpirV()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -338,6 +347,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestDivManaged()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -363,6 +373,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestDivCl()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -399,6 +410,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestDivSpirV()
         {
             var a = new double3[] { new double3((double)   7, (double)  14, (double)  21), new double3((double)   5, (double)  10, (double)  15) };
@@ -443,6 +455,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestEqManaged()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -468,6 +481,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestEqCl()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -504,6 +518,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestEqSpirV()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -548,6 +563,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestNeqManaged()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -573,6 +589,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestNeqCl()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -609,6 +626,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestNeqSpirV()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -653,6 +671,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLtManaged()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -678,6 +697,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLtCl()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -714,6 +734,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLtSpirV()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -758,6 +779,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLeManaged()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -783,6 +805,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLeCl()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -819,6 +842,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLeSpirV()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -863,6 +887,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGtManaged()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -888,6 +913,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGtCl()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -924,6 +950,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGtSpirV()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -968,6 +995,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGeManaged()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -993,6 +1021,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGeCl()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -1029,6 +1058,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGeSpirV()
         {
             var a = new double3[] { new double3((double)   4, (double)   3, (double)   2), new double3((double)   0, (double)   1, (double)   2) };
@@ -1079,6 +1109,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestComponentAccessors1Managed()
         {
             var nr = 3;
@@ -1110,6 +1141,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestComponentAccessors1Cl()
         {
             var nr = 3;
@@ -1126,6 +1158,54 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components1"))
+            using (var mr = Mem<double>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<double>()))
+            using (var mw = Mem<double3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<double3>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(double3));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
+            }
+            Assert.AreEqual((double)1, r[0]);
+            Assert.AreEqual((double)1, w[0].s0);
+            Assert.AreEqual((double)0, w[0].s1);
+            Assert.AreEqual((double)0, w[0].s2);
+            Assert.AreEqual((double)2, r[1]);
+            Assert.AreEqual((double)1, w[1].s1);
+            Assert.AreEqual((double)0, w[1].s0);
+            Assert.AreEqual((double)0, w[1].s2);
+            Assert.AreEqual((double)3, r[2]);
+            Assert.AreEqual((double)1, w[2].s2);
+            Assert.AreEqual((double)0, w[2].s0);
+            Assert.AreEqual((double)0, w[2].s1);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        [Ignore("Handling component accessors not implemented in SPIR-V compiler.")]
+        public void TestComponentAccessors1SpirV()
+        {
+            var nr = 3;
+            var nw = 3;
+            var r = new double[nr];
+            var w = new double3[nw];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble3", "test_components1", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_components1"))
             using (var mr = Mem<double>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<double>()))
             using (var mw = Mem<double3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<double3>()))
@@ -1176,6 +1256,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestComponentAccessors2Managed()
         {
             var nr = 9;
@@ -1231,6 +1312,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestComponentAccessors2Cl()
         {
             var nr = 9;
@@ -1247,6 +1329,78 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components2"))
+            using (var mr = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<double2>()))
+            using (var mw = Mem<double3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<double3>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(double3));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
+            }
+            Assert.AreEqual((double)1, r[0].s0);
+            Assert.AreEqual((double)1, r[0].s1);
+            Assert.AreEqual((double)1, r[1].s0);
+            Assert.AreEqual((double)2, r[1].s1);
+            Assert.AreEqual((double)1, w[0].s0);
+            Assert.AreEqual((double)2, w[0].s1);
+            Assert.AreEqual((double)0, w[0].s2);
+            Assert.AreEqual((double)1, r[2].s0);
+            Assert.AreEqual((double)3, r[2].s1);
+            Assert.AreEqual((double)1, w[1].s0);
+            Assert.AreEqual((double)2, w[1].s2);
+            Assert.AreEqual((double)0, w[1].s1);
+            Assert.AreEqual((double)2, r[3].s0);
+            Assert.AreEqual((double)1, r[3].s1);
+            Assert.AreEqual((double)1, w[2].s1);
+            Assert.AreEqual((double)2, w[2].s0);
+            Assert.AreEqual((double)0, w[2].s2);
+            Assert.AreEqual((double)2, r[4].s0);
+            Assert.AreEqual((double)2, r[4].s1);
+            Assert.AreEqual((double)2, r[5].s0);
+            Assert.AreEqual((double)3, r[5].s1);
+            Assert.AreEqual((double)1, w[3].s1);
+            Assert.AreEqual((double)2, w[3].s2);
+            Assert.AreEqual((double)0, w[3].s0);
+            Assert.AreEqual((double)3, r[6].s0);
+            Assert.AreEqual((double)1, r[6].s1);
+            Assert.AreEqual((double)1, w[4].s2);
+            Assert.AreEqual((double)2, w[4].s0);
+            Assert.AreEqual((double)0, w[4].s1);
+            Assert.AreEqual((double)3, r[7].s0);
+            Assert.AreEqual((double)2, r[7].s1);
+            Assert.AreEqual((double)1, w[5].s2);
+            Assert.AreEqual((double)2, w[5].s1);
+            Assert.AreEqual((double)0, w[5].s0);
+            Assert.AreEqual((double)3, r[8].s0);
+            Assert.AreEqual((double)3, r[8].s1);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        [Ignore("Handling component accessors not implemented in SPIR-V compiler.")]
+        public void TestComponentAccessors2SpirV()
+        {
+            var nr = 9;
+            var nw = 6;
+            var r = new double2[nr];
+            var w = new double3[nw];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble3", "test_components2", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_components2"))
             using (var mr = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<double2>()))
             using (var mw = Mem<double3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<double3>()))
@@ -1339,6 +1493,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestComponentAccessors3Managed()
         {
             var nr = 27;
@@ -1457,6 +1612,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestComponentAccessors3Cl()
         {
             var nr = 27;
@@ -1473,6 +1629,141 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components3"))
+            using (var mr = Mem<double3>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<double3>()))
+            using (var mw = Mem<double3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<double3>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(double3));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
+            }
+            Assert.AreEqual((double)1, r[0].s0);
+            Assert.AreEqual((double)1, r[0].s1);
+            Assert.AreEqual((double)1, r[0].s2);
+            Assert.AreEqual((double)1, r[1].s0);
+            Assert.AreEqual((double)1, r[1].s1);
+            Assert.AreEqual((double)2, r[1].s2);
+            Assert.AreEqual((double)1, r[2].s0);
+            Assert.AreEqual((double)1, r[2].s1);
+            Assert.AreEqual((double)3, r[2].s2);
+            Assert.AreEqual((double)1, r[3].s0);
+            Assert.AreEqual((double)2, r[3].s1);
+            Assert.AreEqual((double)1, r[3].s2);
+            Assert.AreEqual((double)1, r[4].s0);
+            Assert.AreEqual((double)2, r[4].s1);
+            Assert.AreEqual((double)2, r[4].s2);
+            Assert.AreEqual((double)1, r[5].s0);
+            Assert.AreEqual((double)2, r[5].s1);
+            Assert.AreEqual((double)3, r[5].s2);
+            Assert.AreEqual((double)1, w[0].s0);
+            Assert.AreEqual((double)2, w[0].s1);
+            Assert.AreEqual((double)3, w[0].s2);
+            Assert.AreEqual((double)1, r[6].s0);
+            Assert.AreEqual((double)3, r[6].s1);
+            Assert.AreEqual((double)1, r[6].s2);
+            Assert.AreEqual((double)1, r[7].s0);
+            Assert.AreEqual((double)3, r[7].s1);
+            Assert.AreEqual((double)2, r[7].s2);
+            Assert.AreEqual((double)1, w[1].s0);
+            Assert.AreEqual((double)2, w[1].s2);
+            Assert.AreEqual((double)3, w[1].s1);
+            Assert.AreEqual((double)1, r[8].s0);
+            Assert.AreEqual((double)3, r[8].s1);
+            Assert.AreEqual((double)3, r[8].s2);
+            Assert.AreEqual((double)2, r[9].s0);
+            Assert.AreEqual((double)1, r[9].s1);
+            Assert.AreEqual((double)1, r[9].s2);
+            Assert.AreEqual((double)2, r[10].s0);
+            Assert.AreEqual((double)1, r[10].s1);
+            Assert.AreEqual((double)2, r[10].s2);
+            Assert.AreEqual((double)2, r[11].s0);
+            Assert.AreEqual((double)1, r[11].s1);
+            Assert.AreEqual((double)3, r[11].s2);
+            Assert.AreEqual((double)1, w[2].s1);
+            Assert.AreEqual((double)2, w[2].s0);
+            Assert.AreEqual((double)3, w[2].s2);
+            Assert.AreEqual((double)2, r[12].s0);
+            Assert.AreEqual((double)2, r[12].s1);
+            Assert.AreEqual((double)1, r[12].s2);
+            Assert.AreEqual((double)2, r[13].s0);
+            Assert.AreEqual((double)2, r[13].s1);
+            Assert.AreEqual((double)2, r[13].s2);
+            Assert.AreEqual((double)2, r[14].s0);
+            Assert.AreEqual((double)2, r[14].s1);
+            Assert.AreEqual((double)3, r[14].s2);
+            Assert.AreEqual((double)2, r[15].s0);
+            Assert.AreEqual((double)3, r[15].s1);
+            Assert.AreEqual((double)1, r[15].s2);
+            Assert.AreEqual((double)1, w[3].s1);
+            Assert.AreEqual((double)2, w[3].s2);
+            Assert.AreEqual((double)3, w[3].s0);
+            Assert.AreEqual((double)2, r[16].s0);
+            Assert.AreEqual((double)3, r[16].s1);
+            Assert.AreEqual((double)2, r[16].s2);
+            Assert.AreEqual((double)2, r[17].s0);
+            Assert.AreEqual((double)3, r[17].s1);
+            Assert.AreEqual((double)3, r[17].s2);
+            Assert.AreEqual((double)3, r[18].s0);
+            Assert.AreEqual((double)1, r[18].s1);
+            Assert.AreEqual((double)1, r[18].s2);
+            Assert.AreEqual((double)3, r[19].s0);
+            Assert.AreEqual((double)1, r[19].s1);
+            Assert.AreEqual((double)2, r[19].s2);
+            Assert.AreEqual((double)1, w[4].s2);
+            Assert.AreEqual((double)2, w[4].s0);
+            Assert.AreEqual((double)3, w[4].s1);
+            Assert.AreEqual((double)3, r[20].s0);
+            Assert.AreEqual((double)1, r[20].s1);
+            Assert.AreEqual((double)3, r[20].s2);
+            Assert.AreEqual((double)3, r[21].s0);
+            Assert.AreEqual((double)2, r[21].s1);
+            Assert.AreEqual((double)1, r[21].s2);
+            Assert.AreEqual((double)1, w[5].s2);
+            Assert.AreEqual((double)2, w[5].s1);
+            Assert.AreEqual((double)3, w[5].s0);
+            Assert.AreEqual((double)3, r[22].s0);
+            Assert.AreEqual((double)2, r[22].s1);
+            Assert.AreEqual((double)2, r[22].s2);
+            Assert.AreEqual((double)3, r[23].s0);
+            Assert.AreEqual((double)2, r[23].s1);
+            Assert.AreEqual((double)3, r[23].s2);
+            Assert.AreEqual((double)3, r[24].s0);
+            Assert.AreEqual((double)3, r[24].s1);
+            Assert.AreEqual((double)1, r[24].s2);
+            Assert.AreEqual((double)3, r[25].s0);
+            Assert.AreEqual((double)3, r[25].s1);
+            Assert.AreEqual((double)2, r[25].s2);
+            Assert.AreEqual((double)3, r[26].s0);
+            Assert.AreEqual((double)3, r[26].s1);
+            Assert.AreEqual((double)3, r[26].s2);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        [Ignore("Handling component accessors not implemented in SPIR-V compiler.")]
+        public void TestComponentAccessors3SpirV()
+        {
+            var nr = 27;
+            var nw = 6;
+            var r = new double3[nr];
+            var w = new double3[nw];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble3", "test_components3", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_components3"))
             using (var mr = Mem<double3>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<double3>()))
             using (var mw = Mem<double3>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<double3>()))

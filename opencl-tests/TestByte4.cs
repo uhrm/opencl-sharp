@@ -23,6 +23,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAddManaged()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -50,6 +51,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAddCl()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -88,6 +90,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestAddSpirV()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -134,6 +137,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestSubManaged()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -161,6 +165,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestSubCl()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -199,6 +204,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestSubSpirV()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -245,6 +251,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestMulManaged()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -272,6 +279,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestMulCl()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -310,6 +318,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestMulSpirV()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -356,6 +365,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestDivManaged()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -383,6 +393,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestDivCl()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -421,6 +432,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestDivSpirV()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -467,6 +479,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestEqManaged()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -494,6 +507,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestEqCl()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -532,6 +546,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestEqSpirV()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -578,6 +593,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestNeqManaged()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -605,6 +621,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestNeqCl()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -643,6 +660,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestNeqSpirV()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -689,6 +707,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLtManaged()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -716,6 +735,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLtCl()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -754,6 +774,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLtSpirV()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -800,6 +821,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLeManaged()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -827,6 +849,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLeCl()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -865,6 +888,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLeSpirV()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -911,6 +935,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGtManaged()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -938,6 +963,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGtCl()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -976,6 +1002,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGtSpirV()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -1022,6 +1049,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGeManaged()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -1049,6 +1077,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGeCl()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -1087,6 +1116,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGeSpirV()
         {
             var a = new byte4[] { new byte4((byte)   6, (byte)   5, (byte)   4, (byte)   3), new byte4((byte)   0, (byte)   1, (byte)   2, (byte)   3) };
@@ -1133,6 +1163,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAndManaged()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -1160,6 +1191,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAndCl()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -1197,6 +1229,46 @@ namespace OpenCl.Tests
             Assert.AreEqual(  20, r[1].s3);
         }
 
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestAndSpirV()
+        {
+            var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
+            var b = new byte4[] { new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20), new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28) };
+            var r = new byte4[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte4", "test_byte4_and", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_byte4_and"))
+            using (var ma = Mem<byte4>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<byte4>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<byte4>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<byte4>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   5, r[0].s0);
+            Assert.AreEqual(  10, r[0].s1);
+            Assert.AreEqual(   5, r[0].s2);
+            Assert.AreEqual(  20, r[0].s3);
+            Assert.AreEqual(   5, r[1].s0);
+            Assert.AreEqual(  10, r[1].s1);
+            Assert.AreEqual(   5, r[1].s2);
+            Assert.AreEqual(  20, r[1].s3);
+        }
+
         [Kernel]
         private static void test_byte4_or([Global] byte4[] a, [Global] byte4[] b, [Global] byte4[] r)
         {
@@ -1205,6 +1277,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestOrManaged()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -1232,6 +1305,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestOrCl()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -1269,6 +1343,46 @@ namespace OpenCl.Tests
             Assert.AreEqual(  28, r[1].s3);
         }
 
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestOrSpirV()
+        {
+            var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
+            var b = new byte4[] { new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20), new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28) };
+            var r = new byte4[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte4", "test_byte4_or", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_byte4_or"))
+            using (var ma = Mem<byte4>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<byte4>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<byte4>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<byte4>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   7, r[0].s0);
+            Assert.AreEqual(  14, r[0].s1);
+            Assert.AreEqual(  31, r[0].s2);
+            Assert.AreEqual(  28, r[0].s3);
+            Assert.AreEqual(   7, r[1].s0);
+            Assert.AreEqual(  14, r[1].s1);
+            Assert.AreEqual(  31, r[1].s2);
+            Assert.AreEqual(  28, r[1].s3);
+        }
+
         [Kernel]
         private static void test_byte4_xor([Global] byte4[] a, [Global] byte4[] b, [Global] byte4[] r)
         {
@@ -1277,6 +1391,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestXorManaged()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -1304,6 +1419,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestXorCl()
         {
             var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
@@ -1319,6 +1435,46 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_byte4_xor"))
+            using (var ma = Mem<byte4>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<byte4>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<byte4>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<byte4>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   2, r[0].s0);
+            Assert.AreEqual(   4, r[0].s1);
+            Assert.AreEqual(  26, r[0].s2);
+            Assert.AreEqual(   8, r[0].s3);
+            Assert.AreEqual(   2, r[1].s0);
+            Assert.AreEqual(   4, r[1].s1);
+            Assert.AreEqual(  26, r[1].s2);
+            Assert.AreEqual(   8, r[1].s3);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestXorSpirV()
+        {
+            var a = new byte4[] { new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28), new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20) };
+            var b = new byte4[] { new byte4((byte)   5, (byte)  10, (byte)  15, (byte)  20), new byte4((byte)   7, (byte)  14, (byte)  21, (byte)  28) };
+            var r = new byte4[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte4", "test_byte4_xor", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_byte4_xor"))
             using (var ma = Mem<byte4>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
             using (var mb = Mem<byte4>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
@@ -1357,6 +1513,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestComponentAccessors1Managed()
         {
             var nr = 4;
@@ -1396,6 +1553,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestComponentAccessors1Cl()
         {
             var nr = 4;
@@ -1412,6 +1570,62 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components1"))
+            using (var mr = Mem<byte>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<byte>()))
+            using (var mw = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<byte4>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(byte4));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
+            }
+            Assert.AreEqual((byte)1, r[0]);
+            Assert.AreEqual((byte)1, w[0].s0);
+            Assert.AreEqual((byte)0, w[0].s1);
+            Assert.AreEqual((byte)0, w[0].s2);
+            Assert.AreEqual((byte)0, w[0].s3);
+            Assert.AreEqual((byte)2, r[1]);
+            Assert.AreEqual((byte)1, w[1].s1);
+            Assert.AreEqual((byte)0, w[1].s0);
+            Assert.AreEqual((byte)0, w[1].s2);
+            Assert.AreEqual((byte)0, w[1].s3);
+            Assert.AreEqual((byte)3, r[2]);
+            Assert.AreEqual((byte)1, w[2].s2);
+            Assert.AreEqual((byte)0, w[2].s0);
+            Assert.AreEqual((byte)0, w[2].s1);
+            Assert.AreEqual((byte)0, w[2].s3);
+            Assert.AreEqual((byte)4, r[3]);
+            Assert.AreEqual((byte)1, w[3].s3);
+            Assert.AreEqual((byte)0, w[3].s0);
+            Assert.AreEqual((byte)0, w[3].s1);
+            Assert.AreEqual((byte)0, w[3].s2);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        [Ignore("Handling component accessors not implemented in SPIR-V compiler.")]
+        public void TestComponentAccessors1SpirV()
+        {
+            var nr = 4;
+            var nw = 4;
+            var r = new byte[nr];
+            var w = new byte4[nw];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte4", "test_components1", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_components1"))
             using (var mr = Mem<byte>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<byte>()))
             using (var mw = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<byte4>()))
@@ -1483,6 +1697,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestComponentAccessors2Managed()
         {
             var nr = 16;
@@ -1582,6 +1797,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestComponentAccessors2Cl()
         {
             var nr = 16;
@@ -1598,6 +1814,122 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components2"))
+            using (var mr = Mem<byte2>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<byte2>()))
+            using (var mw = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<byte4>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(byte4));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
+            }
+            Assert.AreEqual((byte)1, r[0].s0);
+            Assert.AreEqual((byte)1, r[0].s1);
+            Assert.AreEqual((byte)1, r[1].s0);
+            Assert.AreEqual((byte)2, r[1].s1);
+            Assert.AreEqual((byte)1, w[0].s0);
+            Assert.AreEqual((byte)2, w[0].s1);
+            Assert.AreEqual((byte)0, w[0].s2);
+            Assert.AreEqual((byte)0, w[0].s3);
+            Assert.AreEqual((byte)1, r[2].s0);
+            Assert.AreEqual((byte)3, r[2].s1);
+            Assert.AreEqual((byte)1, w[1].s0);
+            Assert.AreEqual((byte)2, w[1].s2);
+            Assert.AreEqual((byte)0, w[1].s1);
+            Assert.AreEqual((byte)0, w[1].s3);
+            Assert.AreEqual((byte)1, r[3].s0);
+            Assert.AreEqual((byte)4, r[3].s1);
+            Assert.AreEqual((byte)1, w[2].s0);
+            Assert.AreEqual((byte)2, w[2].s3);
+            Assert.AreEqual((byte)0, w[2].s1);
+            Assert.AreEqual((byte)0, w[2].s2);
+            Assert.AreEqual((byte)2, r[4].s0);
+            Assert.AreEqual((byte)1, r[4].s1);
+            Assert.AreEqual((byte)1, w[3].s1);
+            Assert.AreEqual((byte)2, w[3].s0);
+            Assert.AreEqual((byte)0, w[3].s2);
+            Assert.AreEqual((byte)0, w[3].s3);
+            Assert.AreEqual((byte)2, r[5].s0);
+            Assert.AreEqual((byte)2, r[5].s1);
+            Assert.AreEqual((byte)2, r[6].s0);
+            Assert.AreEqual((byte)3, r[6].s1);
+            Assert.AreEqual((byte)1, w[4].s1);
+            Assert.AreEqual((byte)2, w[4].s2);
+            Assert.AreEqual((byte)0, w[4].s0);
+            Assert.AreEqual((byte)0, w[4].s3);
+            Assert.AreEqual((byte)2, r[7].s0);
+            Assert.AreEqual((byte)4, r[7].s1);
+            Assert.AreEqual((byte)1, w[5].s1);
+            Assert.AreEqual((byte)2, w[5].s3);
+            Assert.AreEqual((byte)0, w[5].s0);
+            Assert.AreEqual((byte)0, w[5].s2);
+            Assert.AreEqual((byte)3, r[8].s0);
+            Assert.AreEqual((byte)1, r[8].s1);
+            Assert.AreEqual((byte)1, w[6].s2);
+            Assert.AreEqual((byte)2, w[6].s0);
+            Assert.AreEqual((byte)0, w[6].s1);
+            Assert.AreEqual((byte)0, w[6].s3);
+            Assert.AreEqual((byte)3, r[9].s0);
+            Assert.AreEqual((byte)2, r[9].s1);
+            Assert.AreEqual((byte)1, w[7].s2);
+            Assert.AreEqual((byte)2, w[7].s1);
+            Assert.AreEqual((byte)0, w[7].s0);
+            Assert.AreEqual((byte)0, w[7].s3);
+            Assert.AreEqual((byte)3, r[10].s0);
+            Assert.AreEqual((byte)3, r[10].s1);
+            Assert.AreEqual((byte)3, r[11].s0);
+            Assert.AreEqual((byte)4, r[11].s1);
+            Assert.AreEqual((byte)1, w[8].s2);
+            Assert.AreEqual((byte)2, w[8].s3);
+            Assert.AreEqual((byte)0, w[8].s0);
+            Assert.AreEqual((byte)0, w[8].s1);
+            Assert.AreEqual((byte)4, r[12].s0);
+            Assert.AreEqual((byte)1, r[12].s1);
+            Assert.AreEqual((byte)1, w[9].s3);
+            Assert.AreEqual((byte)2, w[9].s0);
+            Assert.AreEqual((byte)0, w[9].s1);
+            Assert.AreEqual((byte)0, w[9].s2);
+            Assert.AreEqual((byte)4, r[13].s0);
+            Assert.AreEqual((byte)2, r[13].s1);
+            Assert.AreEqual((byte)1, w[10].s3);
+            Assert.AreEqual((byte)2, w[10].s1);
+            Assert.AreEqual((byte)0, w[10].s0);
+            Assert.AreEqual((byte)0, w[10].s2);
+            Assert.AreEqual((byte)4, r[14].s0);
+            Assert.AreEqual((byte)3, r[14].s1);
+            Assert.AreEqual((byte)1, w[11].s3);
+            Assert.AreEqual((byte)2, w[11].s2);
+            Assert.AreEqual((byte)0, w[11].s0);
+            Assert.AreEqual((byte)0, w[11].s1);
+            Assert.AreEqual((byte)4, r[15].s0);
+            Assert.AreEqual((byte)4, r[15].s1);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        [Ignore("Handling component accessors not implemented in SPIR-V compiler.")]
+        public void TestComponentAccessors2SpirV()
+        {
+            var nr = 16;
+            var nw = 12;
+            var r = new byte2[nr];
+            var w = new byte4[nw];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte4", "test_components2", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_components2"))
             using (var mr = Mem<byte2>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<byte2>()))
             using (var mw = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<byte4>()))
@@ -1789,6 +2121,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestComponentAccessors3Managed()
         {
             var nr = 64;
@@ -2096,6 +2429,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestComponentAccessors3Cl()
         {
             var nr = 64;
@@ -2112,6 +2446,330 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components3"))
+            using (var mr = Mem<byte3>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<byte3>()))
+            using (var mw = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<byte4>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(byte4));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
+            }
+            Assert.AreEqual((byte)1, r[0].s0);
+            Assert.AreEqual((byte)1, r[0].s1);
+            Assert.AreEqual((byte)1, r[0].s2);
+            Assert.AreEqual((byte)1, r[1].s0);
+            Assert.AreEqual((byte)1, r[1].s1);
+            Assert.AreEqual((byte)2, r[1].s2);
+            Assert.AreEqual((byte)1, r[2].s0);
+            Assert.AreEqual((byte)1, r[2].s1);
+            Assert.AreEqual((byte)3, r[2].s2);
+            Assert.AreEqual((byte)1, r[3].s0);
+            Assert.AreEqual((byte)1, r[3].s1);
+            Assert.AreEqual((byte)4, r[3].s2);
+            Assert.AreEqual((byte)1, r[4].s0);
+            Assert.AreEqual((byte)2, r[4].s1);
+            Assert.AreEqual((byte)1, r[4].s2);
+            Assert.AreEqual((byte)1, r[5].s0);
+            Assert.AreEqual((byte)2, r[5].s1);
+            Assert.AreEqual((byte)2, r[5].s2);
+            Assert.AreEqual((byte)1, r[6].s0);
+            Assert.AreEqual((byte)2, r[6].s1);
+            Assert.AreEqual((byte)3, r[6].s2);
+            Assert.AreEqual((byte)1, w[0].s0);
+            Assert.AreEqual((byte)2, w[0].s1);
+            Assert.AreEqual((byte)3, w[0].s2);
+            Assert.AreEqual((byte)0, w[0].s3);
+            Assert.AreEqual((byte)1, r[7].s0);
+            Assert.AreEqual((byte)2, r[7].s1);
+            Assert.AreEqual((byte)4, r[7].s2);
+            Assert.AreEqual((byte)1, w[1].s0);
+            Assert.AreEqual((byte)2, w[1].s1);
+            Assert.AreEqual((byte)3, w[1].s3);
+            Assert.AreEqual((byte)0, w[1].s2);
+            Assert.AreEqual((byte)1, r[8].s0);
+            Assert.AreEqual((byte)3, r[8].s1);
+            Assert.AreEqual((byte)1, r[8].s2);
+            Assert.AreEqual((byte)1, r[9].s0);
+            Assert.AreEqual((byte)3, r[9].s1);
+            Assert.AreEqual((byte)2, r[9].s2);
+            Assert.AreEqual((byte)1, w[2].s0);
+            Assert.AreEqual((byte)2, w[2].s2);
+            Assert.AreEqual((byte)3, w[2].s1);
+            Assert.AreEqual((byte)0, w[2].s3);
+            Assert.AreEqual((byte)1, r[10].s0);
+            Assert.AreEqual((byte)3, r[10].s1);
+            Assert.AreEqual((byte)3, r[10].s2);
+            Assert.AreEqual((byte)1, r[11].s0);
+            Assert.AreEqual((byte)3, r[11].s1);
+            Assert.AreEqual((byte)4, r[11].s2);
+            Assert.AreEqual((byte)1, w[3].s0);
+            Assert.AreEqual((byte)2, w[3].s2);
+            Assert.AreEqual((byte)3, w[3].s3);
+            Assert.AreEqual((byte)0, w[3].s1);
+            Assert.AreEqual((byte)1, r[12].s0);
+            Assert.AreEqual((byte)4, r[12].s1);
+            Assert.AreEqual((byte)1, r[12].s2);
+            Assert.AreEqual((byte)1, r[13].s0);
+            Assert.AreEqual((byte)4, r[13].s1);
+            Assert.AreEqual((byte)2, r[13].s2);
+            Assert.AreEqual((byte)1, w[4].s0);
+            Assert.AreEqual((byte)2, w[4].s3);
+            Assert.AreEqual((byte)3, w[4].s1);
+            Assert.AreEqual((byte)0, w[4].s2);
+            Assert.AreEqual((byte)1, r[14].s0);
+            Assert.AreEqual((byte)4, r[14].s1);
+            Assert.AreEqual((byte)3, r[14].s2);
+            Assert.AreEqual((byte)1, w[5].s0);
+            Assert.AreEqual((byte)2, w[5].s3);
+            Assert.AreEqual((byte)3, w[5].s2);
+            Assert.AreEqual((byte)0, w[5].s1);
+            Assert.AreEqual((byte)1, r[15].s0);
+            Assert.AreEqual((byte)4, r[15].s1);
+            Assert.AreEqual((byte)4, r[15].s2);
+            Assert.AreEqual((byte)2, r[16].s0);
+            Assert.AreEqual((byte)1, r[16].s1);
+            Assert.AreEqual((byte)1, r[16].s2);
+            Assert.AreEqual((byte)2, r[17].s0);
+            Assert.AreEqual((byte)1, r[17].s1);
+            Assert.AreEqual((byte)2, r[17].s2);
+            Assert.AreEqual((byte)2, r[18].s0);
+            Assert.AreEqual((byte)1, r[18].s1);
+            Assert.AreEqual((byte)3, r[18].s2);
+            Assert.AreEqual((byte)1, w[6].s1);
+            Assert.AreEqual((byte)2, w[6].s0);
+            Assert.AreEqual((byte)3, w[6].s2);
+            Assert.AreEqual((byte)0, w[6].s3);
+            Assert.AreEqual((byte)2, r[19].s0);
+            Assert.AreEqual((byte)1, r[19].s1);
+            Assert.AreEqual((byte)4, r[19].s2);
+            Assert.AreEqual((byte)1, w[7].s1);
+            Assert.AreEqual((byte)2, w[7].s0);
+            Assert.AreEqual((byte)3, w[7].s3);
+            Assert.AreEqual((byte)0, w[7].s2);
+            Assert.AreEqual((byte)2, r[20].s0);
+            Assert.AreEqual((byte)2, r[20].s1);
+            Assert.AreEqual((byte)1, r[20].s2);
+            Assert.AreEqual((byte)2, r[21].s0);
+            Assert.AreEqual((byte)2, r[21].s1);
+            Assert.AreEqual((byte)2, r[21].s2);
+            Assert.AreEqual((byte)2, r[22].s0);
+            Assert.AreEqual((byte)2, r[22].s1);
+            Assert.AreEqual((byte)3, r[22].s2);
+            Assert.AreEqual((byte)2, r[23].s0);
+            Assert.AreEqual((byte)2, r[23].s1);
+            Assert.AreEqual((byte)4, r[23].s2);
+            Assert.AreEqual((byte)2, r[24].s0);
+            Assert.AreEqual((byte)3, r[24].s1);
+            Assert.AreEqual((byte)1, r[24].s2);
+            Assert.AreEqual((byte)1, w[8].s1);
+            Assert.AreEqual((byte)2, w[8].s2);
+            Assert.AreEqual((byte)3, w[8].s0);
+            Assert.AreEqual((byte)0, w[8].s3);
+            Assert.AreEqual((byte)2, r[25].s0);
+            Assert.AreEqual((byte)3, r[25].s1);
+            Assert.AreEqual((byte)2, r[25].s2);
+            Assert.AreEqual((byte)2, r[26].s0);
+            Assert.AreEqual((byte)3, r[26].s1);
+            Assert.AreEqual((byte)3, r[26].s2);
+            Assert.AreEqual((byte)2, r[27].s0);
+            Assert.AreEqual((byte)3, r[27].s1);
+            Assert.AreEqual((byte)4, r[27].s2);
+            Assert.AreEqual((byte)1, w[9].s1);
+            Assert.AreEqual((byte)2, w[9].s2);
+            Assert.AreEqual((byte)3, w[9].s3);
+            Assert.AreEqual((byte)0, w[9].s0);
+            Assert.AreEqual((byte)2, r[28].s0);
+            Assert.AreEqual((byte)4, r[28].s1);
+            Assert.AreEqual((byte)1, r[28].s2);
+            Assert.AreEqual((byte)1, w[10].s1);
+            Assert.AreEqual((byte)2, w[10].s3);
+            Assert.AreEqual((byte)3, w[10].s0);
+            Assert.AreEqual((byte)0, w[10].s2);
+            Assert.AreEqual((byte)2, r[29].s0);
+            Assert.AreEqual((byte)4, r[29].s1);
+            Assert.AreEqual((byte)2, r[29].s2);
+            Assert.AreEqual((byte)2, r[30].s0);
+            Assert.AreEqual((byte)4, r[30].s1);
+            Assert.AreEqual((byte)3, r[30].s2);
+            Assert.AreEqual((byte)1, w[11].s1);
+            Assert.AreEqual((byte)2, w[11].s3);
+            Assert.AreEqual((byte)3, w[11].s2);
+            Assert.AreEqual((byte)0, w[11].s0);
+            Assert.AreEqual((byte)2, r[31].s0);
+            Assert.AreEqual((byte)4, r[31].s1);
+            Assert.AreEqual((byte)4, r[31].s2);
+            Assert.AreEqual((byte)3, r[32].s0);
+            Assert.AreEqual((byte)1, r[32].s1);
+            Assert.AreEqual((byte)1, r[32].s2);
+            Assert.AreEqual((byte)3, r[33].s0);
+            Assert.AreEqual((byte)1, r[33].s1);
+            Assert.AreEqual((byte)2, r[33].s2);
+            Assert.AreEqual((byte)1, w[12].s2);
+            Assert.AreEqual((byte)2, w[12].s0);
+            Assert.AreEqual((byte)3, w[12].s1);
+            Assert.AreEqual((byte)0, w[12].s3);
+            Assert.AreEqual((byte)3, r[34].s0);
+            Assert.AreEqual((byte)1, r[34].s1);
+            Assert.AreEqual((byte)3, r[34].s2);
+            Assert.AreEqual((byte)3, r[35].s0);
+            Assert.AreEqual((byte)1, r[35].s1);
+            Assert.AreEqual((byte)4, r[35].s2);
+            Assert.AreEqual((byte)1, w[13].s2);
+            Assert.AreEqual((byte)2, w[13].s0);
+            Assert.AreEqual((byte)3, w[13].s3);
+            Assert.AreEqual((byte)0, w[13].s1);
+            Assert.AreEqual((byte)3, r[36].s0);
+            Assert.AreEqual((byte)2, r[36].s1);
+            Assert.AreEqual((byte)1, r[36].s2);
+            Assert.AreEqual((byte)1, w[14].s2);
+            Assert.AreEqual((byte)2, w[14].s1);
+            Assert.AreEqual((byte)3, w[14].s0);
+            Assert.AreEqual((byte)0, w[14].s3);
+            Assert.AreEqual((byte)3, r[37].s0);
+            Assert.AreEqual((byte)2, r[37].s1);
+            Assert.AreEqual((byte)2, r[37].s2);
+            Assert.AreEqual((byte)3, r[38].s0);
+            Assert.AreEqual((byte)2, r[38].s1);
+            Assert.AreEqual((byte)3, r[38].s2);
+            Assert.AreEqual((byte)3, r[39].s0);
+            Assert.AreEqual((byte)2, r[39].s1);
+            Assert.AreEqual((byte)4, r[39].s2);
+            Assert.AreEqual((byte)1, w[15].s2);
+            Assert.AreEqual((byte)2, w[15].s1);
+            Assert.AreEqual((byte)3, w[15].s3);
+            Assert.AreEqual((byte)0, w[15].s0);
+            Assert.AreEqual((byte)3, r[40].s0);
+            Assert.AreEqual((byte)3, r[40].s1);
+            Assert.AreEqual((byte)1, r[40].s2);
+            Assert.AreEqual((byte)3, r[41].s0);
+            Assert.AreEqual((byte)3, r[41].s1);
+            Assert.AreEqual((byte)2, r[41].s2);
+            Assert.AreEqual((byte)3, r[42].s0);
+            Assert.AreEqual((byte)3, r[42].s1);
+            Assert.AreEqual((byte)3, r[42].s2);
+            Assert.AreEqual((byte)3, r[43].s0);
+            Assert.AreEqual((byte)3, r[43].s1);
+            Assert.AreEqual((byte)4, r[43].s2);
+            Assert.AreEqual((byte)3, r[44].s0);
+            Assert.AreEqual((byte)4, r[44].s1);
+            Assert.AreEqual((byte)1, r[44].s2);
+            Assert.AreEqual((byte)1, w[16].s2);
+            Assert.AreEqual((byte)2, w[16].s3);
+            Assert.AreEqual((byte)3, w[16].s0);
+            Assert.AreEqual((byte)0, w[16].s1);
+            Assert.AreEqual((byte)3, r[45].s0);
+            Assert.AreEqual((byte)4, r[45].s1);
+            Assert.AreEqual((byte)2, r[45].s2);
+            Assert.AreEqual((byte)1, w[17].s2);
+            Assert.AreEqual((byte)2, w[17].s3);
+            Assert.AreEqual((byte)3, w[17].s1);
+            Assert.AreEqual((byte)0, w[17].s0);
+            Assert.AreEqual((byte)3, r[46].s0);
+            Assert.AreEqual((byte)4, r[46].s1);
+            Assert.AreEqual((byte)3, r[46].s2);
+            Assert.AreEqual((byte)3, r[47].s0);
+            Assert.AreEqual((byte)4, r[47].s1);
+            Assert.AreEqual((byte)4, r[47].s2);
+            Assert.AreEqual((byte)4, r[48].s0);
+            Assert.AreEqual((byte)1, r[48].s1);
+            Assert.AreEqual((byte)1, r[48].s2);
+            Assert.AreEqual((byte)4, r[49].s0);
+            Assert.AreEqual((byte)1, r[49].s1);
+            Assert.AreEqual((byte)2, r[49].s2);
+            Assert.AreEqual((byte)1, w[18].s3);
+            Assert.AreEqual((byte)2, w[18].s0);
+            Assert.AreEqual((byte)3, w[18].s1);
+            Assert.AreEqual((byte)0, w[18].s2);
+            Assert.AreEqual((byte)4, r[50].s0);
+            Assert.AreEqual((byte)1, r[50].s1);
+            Assert.AreEqual((byte)3, r[50].s2);
+            Assert.AreEqual((byte)1, w[19].s3);
+            Assert.AreEqual((byte)2, w[19].s0);
+            Assert.AreEqual((byte)3, w[19].s2);
+            Assert.AreEqual((byte)0, w[19].s1);
+            Assert.AreEqual((byte)4, r[51].s0);
+            Assert.AreEqual((byte)1, r[51].s1);
+            Assert.AreEqual((byte)4, r[51].s2);
+            Assert.AreEqual((byte)4, r[52].s0);
+            Assert.AreEqual((byte)2, r[52].s1);
+            Assert.AreEqual((byte)1, r[52].s2);
+            Assert.AreEqual((byte)1, w[20].s3);
+            Assert.AreEqual((byte)2, w[20].s1);
+            Assert.AreEqual((byte)3, w[20].s0);
+            Assert.AreEqual((byte)0, w[20].s2);
+            Assert.AreEqual((byte)4, r[53].s0);
+            Assert.AreEqual((byte)2, r[53].s1);
+            Assert.AreEqual((byte)2, r[53].s2);
+            Assert.AreEqual((byte)4, r[54].s0);
+            Assert.AreEqual((byte)2, r[54].s1);
+            Assert.AreEqual((byte)3, r[54].s2);
+            Assert.AreEqual((byte)1, w[21].s3);
+            Assert.AreEqual((byte)2, w[21].s1);
+            Assert.AreEqual((byte)3, w[21].s2);
+            Assert.AreEqual((byte)0, w[21].s0);
+            Assert.AreEqual((byte)4, r[55].s0);
+            Assert.AreEqual((byte)2, r[55].s1);
+            Assert.AreEqual((byte)4, r[55].s2);
+            Assert.AreEqual((byte)4, r[56].s0);
+            Assert.AreEqual((byte)3, r[56].s1);
+            Assert.AreEqual((byte)1, r[56].s2);
+            Assert.AreEqual((byte)1, w[22].s3);
+            Assert.AreEqual((byte)2, w[22].s2);
+            Assert.AreEqual((byte)3, w[22].s0);
+            Assert.AreEqual((byte)0, w[22].s1);
+            Assert.AreEqual((byte)4, r[57].s0);
+            Assert.AreEqual((byte)3, r[57].s1);
+            Assert.AreEqual((byte)2, r[57].s2);
+            Assert.AreEqual((byte)1, w[23].s3);
+            Assert.AreEqual((byte)2, w[23].s2);
+            Assert.AreEqual((byte)3, w[23].s1);
+            Assert.AreEqual((byte)0, w[23].s0);
+            Assert.AreEqual((byte)4, r[58].s0);
+            Assert.AreEqual((byte)3, r[58].s1);
+            Assert.AreEqual((byte)3, r[58].s2);
+            Assert.AreEqual((byte)4, r[59].s0);
+            Assert.AreEqual((byte)3, r[59].s1);
+            Assert.AreEqual((byte)4, r[59].s2);
+            Assert.AreEqual((byte)4, r[60].s0);
+            Assert.AreEqual((byte)4, r[60].s1);
+            Assert.AreEqual((byte)1, r[60].s2);
+            Assert.AreEqual((byte)4, r[61].s0);
+            Assert.AreEqual((byte)4, r[61].s1);
+            Assert.AreEqual((byte)2, r[61].s2);
+            Assert.AreEqual((byte)4, r[62].s0);
+            Assert.AreEqual((byte)4, r[62].s1);
+            Assert.AreEqual((byte)3, r[62].s2);
+            Assert.AreEqual((byte)4, r[63].s0);
+            Assert.AreEqual((byte)4, r[63].s1);
+            Assert.AreEqual((byte)4, r[63].s2);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        [Ignore("Handling component accessors not implemented in SPIR-V compiler.")]
+        public void TestComponentAccessors3SpirV()
+        {
+            var nr = 64;
+            var nw = 24;
+            var r = new byte3[nr];
+            var w = new byte4[nw];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte4", "test_components3", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_components3"))
             using (var mr = Mem<byte3>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<byte3>()))
             using (var mw = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<byte4>()))
@@ -2703,6 +3361,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestComponentAccessors4Managed()
         {
             var nr = 256;
@@ -3842,6 +4501,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestComponentAccessors4Cl()
         {
             var nr = 256;
@@ -3858,6 +4518,1162 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components4"))
+            using (var mr = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<byte4>()))
+            using (var mw = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<byte4>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(byte4));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
+            }
+            Assert.AreEqual((byte)1, r[0].s0);
+            Assert.AreEqual((byte)1, r[0].s1);
+            Assert.AreEqual((byte)1, r[0].s2);
+            Assert.AreEqual((byte)1, r[0].s3);
+            Assert.AreEqual((byte)1, r[1].s0);
+            Assert.AreEqual((byte)1, r[1].s1);
+            Assert.AreEqual((byte)1, r[1].s2);
+            Assert.AreEqual((byte)2, r[1].s3);
+            Assert.AreEqual((byte)1, r[2].s0);
+            Assert.AreEqual((byte)1, r[2].s1);
+            Assert.AreEqual((byte)1, r[2].s2);
+            Assert.AreEqual((byte)3, r[2].s3);
+            Assert.AreEqual((byte)1, r[3].s0);
+            Assert.AreEqual((byte)1, r[3].s1);
+            Assert.AreEqual((byte)1, r[3].s2);
+            Assert.AreEqual((byte)4, r[3].s3);
+            Assert.AreEqual((byte)1, r[4].s0);
+            Assert.AreEqual((byte)1, r[4].s1);
+            Assert.AreEqual((byte)2, r[4].s2);
+            Assert.AreEqual((byte)1, r[4].s3);
+            Assert.AreEqual((byte)1, r[5].s0);
+            Assert.AreEqual((byte)1, r[5].s1);
+            Assert.AreEqual((byte)2, r[5].s2);
+            Assert.AreEqual((byte)2, r[5].s3);
+            Assert.AreEqual((byte)1, r[6].s0);
+            Assert.AreEqual((byte)1, r[6].s1);
+            Assert.AreEqual((byte)2, r[6].s2);
+            Assert.AreEqual((byte)3, r[6].s3);
+            Assert.AreEqual((byte)1, r[7].s0);
+            Assert.AreEqual((byte)1, r[7].s1);
+            Assert.AreEqual((byte)2, r[7].s2);
+            Assert.AreEqual((byte)4, r[7].s3);
+            Assert.AreEqual((byte)1, r[8].s0);
+            Assert.AreEqual((byte)1, r[8].s1);
+            Assert.AreEqual((byte)3, r[8].s2);
+            Assert.AreEqual((byte)1, r[8].s3);
+            Assert.AreEqual((byte)1, r[9].s0);
+            Assert.AreEqual((byte)1, r[9].s1);
+            Assert.AreEqual((byte)3, r[9].s2);
+            Assert.AreEqual((byte)2, r[9].s3);
+            Assert.AreEqual((byte)1, r[10].s0);
+            Assert.AreEqual((byte)1, r[10].s1);
+            Assert.AreEqual((byte)3, r[10].s2);
+            Assert.AreEqual((byte)3, r[10].s3);
+            Assert.AreEqual((byte)1, r[11].s0);
+            Assert.AreEqual((byte)1, r[11].s1);
+            Assert.AreEqual((byte)3, r[11].s2);
+            Assert.AreEqual((byte)4, r[11].s3);
+            Assert.AreEqual((byte)1, r[12].s0);
+            Assert.AreEqual((byte)1, r[12].s1);
+            Assert.AreEqual((byte)4, r[12].s2);
+            Assert.AreEqual((byte)1, r[12].s3);
+            Assert.AreEqual((byte)1, r[13].s0);
+            Assert.AreEqual((byte)1, r[13].s1);
+            Assert.AreEqual((byte)4, r[13].s2);
+            Assert.AreEqual((byte)2, r[13].s3);
+            Assert.AreEqual((byte)1, r[14].s0);
+            Assert.AreEqual((byte)1, r[14].s1);
+            Assert.AreEqual((byte)4, r[14].s2);
+            Assert.AreEqual((byte)3, r[14].s3);
+            Assert.AreEqual((byte)1, r[15].s0);
+            Assert.AreEqual((byte)1, r[15].s1);
+            Assert.AreEqual((byte)4, r[15].s2);
+            Assert.AreEqual((byte)4, r[15].s3);
+            Assert.AreEqual((byte)1, r[16].s0);
+            Assert.AreEqual((byte)2, r[16].s1);
+            Assert.AreEqual((byte)1, r[16].s2);
+            Assert.AreEqual((byte)1, r[16].s3);
+            Assert.AreEqual((byte)1, r[17].s0);
+            Assert.AreEqual((byte)2, r[17].s1);
+            Assert.AreEqual((byte)1, r[17].s2);
+            Assert.AreEqual((byte)2, r[17].s3);
+            Assert.AreEqual((byte)1, r[18].s0);
+            Assert.AreEqual((byte)2, r[18].s1);
+            Assert.AreEqual((byte)1, r[18].s2);
+            Assert.AreEqual((byte)3, r[18].s3);
+            Assert.AreEqual((byte)1, r[19].s0);
+            Assert.AreEqual((byte)2, r[19].s1);
+            Assert.AreEqual((byte)1, r[19].s2);
+            Assert.AreEqual((byte)4, r[19].s3);
+            Assert.AreEqual((byte)1, r[20].s0);
+            Assert.AreEqual((byte)2, r[20].s1);
+            Assert.AreEqual((byte)2, r[20].s2);
+            Assert.AreEqual((byte)1, r[20].s3);
+            Assert.AreEqual((byte)1, r[21].s0);
+            Assert.AreEqual((byte)2, r[21].s1);
+            Assert.AreEqual((byte)2, r[21].s2);
+            Assert.AreEqual((byte)2, r[21].s3);
+            Assert.AreEqual((byte)1, r[22].s0);
+            Assert.AreEqual((byte)2, r[22].s1);
+            Assert.AreEqual((byte)2, r[22].s2);
+            Assert.AreEqual((byte)3, r[22].s3);
+            Assert.AreEqual((byte)1, r[23].s0);
+            Assert.AreEqual((byte)2, r[23].s1);
+            Assert.AreEqual((byte)2, r[23].s2);
+            Assert.AreEqual((byte)4, r[23].s3);
+            Assert.AreEqual((byte)1, r[24].s0);
+            Assert.AreEqual((byte)2, r[24].s1);
+            Assert.AreEqual((byte)3, r[24].s2);
+            Assert.AreEqual((byte)1, r[24].s3);
+            Assert.AreEqual((byte)1, r[25].s0);
+            Assert.AreEqual((byte)2, r[25].s1);
+            Assert.AreEqual((byte)3, r[25].s2);
+            Assert.AreEqual((byte)2, r[25].s3);
+            Assert.AreEqual((byte)1, r[26].s0);
+            Assert.AreEqual((byte)2, r[26].s1);
+            Assert.AreEqual((byte)3, r[26].s2);
+            Assert.AreEqual((byte)3, r[26].s3);
+            Assert.AreEqual((byte)1, r[27].s0);
+            Assert.AreEqual((byte)2, r[27].s1);
+            Assert.AreEqual((byte)3, r[27].s2);
+            Assert.AreEqual((byte)4, r[27].s3);
+            Assert.AreEqual((byte)1, w[0].s0);
+            Assert.AreEqual((byte)2, w[0].s1);
+            Assert.AreEqual((byte)3, w[0].s2);
+            Assert.AreEqual((byte)4, w[0].s3);
+            Assert.AreEqual((byte)1, r[28].s0);
+            Assert.AreEqual((byte)2, r[28].s1);
+            Assert.AreEqual((byte)4, r[28].s2);
+            Assert.AreEqual((byte)1, r[28].s3);
+            Assert.AreEqual((byte)1, r[29].s0);
+            Assert.AreEqual((byte)2, r[29].s1);
+            Assert.AreEqual((byte)4, r[29].s2);
+            Assert.AreEqual((byte)2, r[29].s3);
+            Assert.AreEqual((byte)1, r[30].s0);
+            Assert.AreEqual((byte)2, r[30].s1);
+            Assert.AreEqual((byte)4, r[30].s2);
+            Assert.AreEqual((byte)3, r[30].s3);
+            Assert.AreEqual((byte)1, w[1].s0);
+            Assert.AreEqual((byte)2, w[1].s1);
+            Assert.AreEqual((byte)3, w[1].s3);
+            Assert.AreEqual((byte)4, w[1].s2);
+            Assert.AreEqual((byte)1, r[31].s0);
+            Assert.AreEqual((byte)2, r[31].s1);
+            Assert.AreEqual((byte)4, r[31].s2);
+            Assert.AreEqual((byte)4, r[31].s3);
+            Assert.AreEqual((byte)1, r[32].s0);
+            Assert.AreEqual((byte)3, r[32].s1);
+            Assert.AreEqual((byte)1, r[32].s2);
+            Assert.AreEqual((byte)1, r[32].s3);
+            Assert.AreEqual((byte)1, r[33].s0);
+            Assert.AreEqual((byte)3, r[33].s1);
+            Assert.AreEqual((byte)1, r[33].s2);
+            Assert.AreEqual((byte)2, r[33].s3);
+            Assert.AreEqual((byte)1, r[34].s0);
+            Assert.AreEqual((byte)3, r[34].s1);
+            Assert.AreEqual((byte)1, r[34].s2);
+            Assert.AreEqual((byte)3, r[34].s3);
+            Assert.AreEqual((byte)1, r[35].s0);
+            Assert.AreEqual((byte)3, r[35].s1);
+            Assert.AreEqual((byte)1, r[35].s2);
+            Assert.AreEqual((byte)4, r[35].s3);
+            Assert.AreEqual((byte)1, r[36].s0);
+            Assert.AreEqual((byte)3, r[36].s1);
+            Assert.AreEqual((byte)2, r[36].s2);
+            Assert.AreEqual((byte)1, r[36].s3);
+            Assert.AreEqual((byte)1, r[37].s0);
+            Assert.AreEqual((byte)3, r[37].s1);
+            Assert.AreEqual((byte)2, r[37].s2);
+            Assert.AreEqual((byte)2, r[37].s3);
+            Assert.AreEqual((byte)1, r[38].s0);
+            Assert.AreEqual((byte)3, r[38].s1);
+            Assert.AreEqual((byte)2, r[38].s2);
+            Assert.AreEqual((byte)3, r[38].s3);
+            Assert.AreEqual((byte)1, r[39].s0);
+            Assert.AreEqual((byte)3, r[39].s1);
+            Assert.AreEqual((byte)2, r[39].s2);
+            Assert.AreEqual((byte)4, r[39].s3);
+            Assert.AreEqual((byte)1, w[2].s0);
+            Assert.AreEqual((byte)2, w[2].s2);
+            Assert.AreEqual((byte)3, w[2].s1);
+            Assert.AreEqual((byte)4, w[2].s3);
+            Assert.AreEqual((byte)1, r[40].s0);
+            Assert.AreEqual((byte)3, r[40].s1);
+            Assert.AreEqual((byte)3, r[40].s2);
+            Assert.AreEqual((byte)1, r[40].s3);
+            Assert.AreEqual((byte)1, r[41].s0);
+            Assert.AreEqual((byte)3, r[41].s1);
+            Assert.AreEqual((byte)3, r[41].s2);
+            Assert.AreEqual((byte)2, r[41].s3);
+            Assert.AreEqual((byte)1, r[42].s0);
+            Assert.AreEqual((byte)3, r[42].s1);
+            Assert.AreEqual((byte)3, r[42].s2);
+            Assert.AreEqual((byte)3, r[42].s3);
+            Assert.AreEqual((byte)1, r[43].s0);
+            Assert.AreEqual((byte)3, r[43].s1);
+            Assert.AreEqual((byte)3, r[43].s2);
+            Assert.AreEqual((byte)4, r[43].s3);
+            Assert.AreEqual((byte)1, r[44].s0);
+            Assert.AreEqual((byte)3, r[44].s1);
+            Assert.AreEqual((byte)4, r[44].s2);
+            Assert.AreEqual((byte)1, r[44].s3);
+            Assert.AreEqual((byte)1, r[45].s0);
+            Assert.AreEqual((byte)3, r[45].s1);
+            Assert.AreEqual((byte)4, r[45].s2);
+            Assert.AreEqual((byte)2, r[45].s3);
+            Assert.AreEqual((byte)1, w[3].s0);
+            Assert.AreEqual((byte)2, w[3].s2);
+            Assert.AreEqual((byte)3, w[3].s3);
+            Assert.AreEqual((byte)4, w[3].s1);
+            Assert.AreEqual((byte)1, r[46].s0);
+            Assert.AreEqual((byte)3, r[46].s1);
+            Assert.AreEqual((byte)4, r[46].s2);
+            Assert.AreEqual((byte)3, r[46].s3);
+            Assert.AreEqual((byte)1, r[47].s0);
+            Assert.AreEqual((byte)3, r[47].s1);
+            Assert.AreEqual((byte)4, r[47].s2);
+            Assert.AreEqual((byte)4, r[47].s3);
+            Assert.AreEqual((byte)1, r[48].s0);
+            Assert.AreEqual((byte)4, r[48].s1);
+            Assert.AreEqual((byte)1, r[48].s2);
+            Assert.AreEqual((byte)1, r[48].s3);
+            Assert.AreEqual((byte)1, r[49].s0);
+            Assert.AreEqual((byte)4, r[49].s1);
+            Assert.AreEqual((byte)1, r[49].s2);
+            Assert.AreEqual((byte)2, r[49].s3);
+            Assert.AreEqual((byte)1, r[50].s0);
+            Assert.AreEqual((byte)4, r[50].s1);
+            Assert.AreEqual((byte)1, r[50].s2);
+            Assert.AreEqual((byte)3, r[50].s3);
+            Assert.AreEqual((byte)1, r[51].s0);
+            Assert.AreEqual((byte)4, r[51].s1);
+            Assert.AreEqual((byte)1, r[51].s2);
+            Assert.AreEqual((byte)4, r[51].s3);
+            Assert.AreEqual((byte)1, r[52].s0);
+            Assert.AreEqual((byte)4, r[52].s1);
+            Assert.AreEqual((byte)2, r[52].s2);
+            Assert.AreEqual((byte)1, r[52].s3);
+            Assert.AreEqual((byte)1, r[53].s0);
+            Assert.AreEqual((byte)4, r[53].s1);
+            Assert.AreEqual((byte)2, r[53].s2);
+            Assert.AreEqual((byte)2, r[53].s3);
+            Assert.AreEqual((byte)1, r[54].s0);
+            Assert.AreEqual((byte)4, r[54].s1);
+            Assert.AreEqual((byte)2, r[54].s2);
+            Assert.AreEqual((byte)3, r[54].s3);
+            Assert.AreEqual((byte)1, w[4].s0);
+            Assert.AreEqual((byte)2, w[4].s3);
+            Assert.AreEqual((byte)3, w[4].s1);
+            Assert.AreEqual((byte)4, w[4].s2);
+            Assert.AreEqual((byte)1, r[55].s0);
+            Assert.AreEqual((byte)4, r[55].s1);
+            Assert.AreEqual((byte)2, r[55].s2);
+            Assert.AreEqual((byte)4, r[55].s3);
+            Assert.AreEqual((byte)1, r[56].s0);
+            Assert.AreEqual((byte)4, r[56].s1);
+            Assert.AreEqual((byte)3, r[56].s2);
+            Assert.AreEqual((byte)1, r[56].s3);
+            Assert.AreEqual((byte)1, r[57].s0);
+            Assert.AreEqual((byte)4, r[57].s1);
+            Assert.AreEqual((byte)3, r[57].s2);
+            Assert.AreEqual((byte)2, r[57].s3);
+            Assert.AreEqual((byte)1, w[5].s0);
+            Assert.AreEqual((byte)2, w[5].s3);
+            Assert.AreEqual((byte)3, w[5].s2);
+            Assert.AreEqual((byte)4, w[5].s1);
+            Assert.AreEqual((byte)1, r[58].s0);
+            Assert.AreEqual((byte)4, r[58].s1);
+            Assert.AreEqual((byte)3, r[58].s2);
+            Assert.AreEqual((byte)3, r[58].s3);
+            Assert.AreEqual((byte)1, r[59].s0);
+            Assert.AreEqual((byte)4, r[59].s1);
+            Assert.AreEqual((byte)3, r[59].s2);
+            Assert.AreEqual((byte)4, r[59].s3);
+            Assert.AreEqual((byte)1, r[60].s0);
+            Assert.AreEqual((byte)4, r[60].s1);
+            Assert.AreEqual((byte)4, r[60].s2);
+            Assert.AreEqual((byte)1, r[60].s3);
+            Assert.AreEqual((byte)1, r[61].s0);
+            Assert.AreEqual((byte)4, r[61].s1);
+            Assert.AreEqual((byte)4, r[61].s2);
+            Assert.AreEqual((byte)2, r[61].s3);
+            Assert.AreEqual((byte)1, r[62].s0);
+            Assert.AreEqual((byte)4, r[62].s1);
+            Assert.AreEqual((byte)4, r[62].s2);
+            Assert.AreEqual((byte)3, r[62].s3);
+            Assert.AreEqual((byte)1, r[63].s0);
+            Assert.AreEqual((byte)4, r[63].s1);
+            Assert.AreEqual((byte)4, r[63].s2);
+            Assert.AreEqual((byte)4, r[63].s3);
+            Assert.AreEqual((byte)2, r[64].s0);
+            Assert.AreEqual((byte)1, r[64].s1);
+            Assert.AreEqual((byte)1, r[64].s2);
+            Assert.AreEqual((byte)1, r[64].s3);
+            Assert.AreEqual((byte)2, r[65].s0);
+            Assert.AreEqual((byte)1, r[65].s1);
+            Assert.AreEqual((byte)1, r[65].s2);
+            Assert.AreEqual((byte)2, r[65].s3);
+            Assert.AreEqual((byte)2, r[66].s0);
+            Assert.AreEqual((byte)1, r[66].s1);
+            Assert.AreEqual((byte)1, r[66].s2);
+            Assert.AreEqual((byte)3, r[66].s3);
+            Assert.AreEqual((byte)2, r[67].s0);
+            Assert.AreEqual((byte)1, r[67].s1);
+            Assert.AreEqual((byte)1, r[67].s2);
+            Assert.AreEqual((byte)4, r[67].s3);
+            Assert.AreEqual((byte)2, r[68].s0);
+            Assert.AreEqual((byte)1, r[68].s1);
+            Assert.AreEqual((byte)2, r[68].s2);
+            Assert.AreEqual((byte)1, r[68].s3);
+            Assert.AreEqual((byte)2, r[69].s0);
+            Assert.AreEqual((byte)1, r[69].s1);
+            Assert.AreEqual((byte)2, r[69].s2);
+            Assert.AreEqual((byte)2, r[69].s3);
+            Assert.AreEqual((byte)2, r[70].s0);
+            Assert.AreEqual((byte)1, r[70].s1);
+            Assert.AreEqual((byte)2, r[70].s2);
+            Assert.AreEqual((byte)3, r[70].s3);
+            Assert.AreEqual((byte)2, r[71].s0);
+            Assert.AreEqual((byte)1, r[71].s1);
+            Assert.AreEqual((byte)2, r[71].s2);
+            Assert.AreEqual((byte)4, r[71].s3);
+            Assert.AreEqual((byte)2, r[72].s0);
+            Assert.AreEqual((byte)1, r[72].s1);
+            Assert.AreEqual((byte)3, r[72].s2);
+            Assert.AreEqual((byte)1, r[72].s3);
+            Assert.AreEqual((byte)2, r[73].s0);
+            Assert.AreEqual((byte)1, r[73].s1);
+            Assert.AreEqual((byte)3, r[73].s2);
+            Assert.AreEqual((byte)2, r[73].s3);
+            Assert.AreEqual((byte)2, r[74].s0);
+            Assert.AreEqual((byte)1, r[74].s1);
+            Assert.AreEqual((byte)3, r[74].s2);
+            Assert.AreEqual((byte)3, r[74].s3);
+            Assert.AreEqual((byte)2, r[75].s0);
+            Assert.AreEqual((byte)1, r[75].s1);
+            Assert.AreEqual((byte)3, r[75].s2);
+            Assert.AreEqual((byte)4, r[75].s3);
+            Assert.AreEqual((byte)1, w[6].s1);
+            Assert.AreEqual((byte)2, w[6].s0);
+            Assert.AreEqual((byte)3, w[6].s2);
+            Assert.AreEqual((byte)4, w[6].s3);
+            Assert.AreEqual((byte)2, r[76].s0);
+            Assert.AreEqual((byte)1, r[76].s1);
+            Assert.AreEqual((byte)4, r[76].s2);
+            Assert.AreEqual((byte)1, r[76].s3);
+            Assert.AreEqual((byte)2, r[77].s0);
+            Assert.AreEqual((byte)1, r[77].s1);
+            Assert.AreEqual((byte)4, r[77].s2);
+            Assert.AreEqual((byte)2, r[77].s3);
+            Assert.AreEqual((byte)2, r[78].s0);
+            Assert.AreEqual((byte)1, r[78].s1);
+            Assert.AreEqual((byte)4, r[78].s2);
+            Assert.AreEqual((byte)3, r[78].s3);
+            Assert.AreEqual((byte)1, w[7].s1);
+            Assert.AreEqual((byte)2, w[7].s0);
+            Assert.AreEqual((byte)3, w[7].s3);
+            Assert.AreEqual((byte)4, w[7].s2);
+            Assert.AreEqual((byte)2, r[79].s0);
+            Assert.AreEqual((byte)1, r[79].s1);
+            Assert.AreEqual((byte)4, r[79].s2);
+            Assert.AreEqual((byte)4, r[79].s3);
+            Assert.AreEqual((byte)2, r[80].s0);
+            Assert.AreEqual((byte)2, r[80].s1);
+            Assert.AreEqual((byte)1, r[80].s2);
+            Assert.AreEqual((byte)1, r[80].s3);
+            Assert.AreEqual((byte)2, r[81].s0);
+            Assert.AreEqual((byte)2, r[81].s1);
+            Assert.AreEqual((byte)1, r[81].s2);
+            Assert.AreEqual((byte)2, r[81].s3);
+            Assert.AreEqual((byte)2, r[82].s0);
+            Assert.AreEqual((byte)2, r[82].s1);
+            Assert.AreEqual((byte)1, r[82].s2);
+            Assert.AreEqual((byte)3, r[82].s3);
+            Assert.AreEqual((byte)2, r[83].s0);
+            Assert.AreEqual((byte)2, r[83].s1);
+            Assert.AreEqual((byte)1, r[83].s2);
+            Assert.AreEqual((byte)4, r[83].s3);
+            Assert.AreEqual((byte)2, r[84].s0);
+            Assert.AreEqual((byte)2, r[84].s1);
+            Assert.AreEqual((byte)2, r[84].s2);
+            Assert.AreEqual((byte)1, r[84].s3);
+            Assert.AreEqual((byte)2, r[85].s0);
+            Assert.AreEqual((byte)2, r[85].s1);
+            Assert.AreEqual((byte)2, r[85].s2);
+            Assert.AreEqual((byte)2, r[85].s3);
+            Assert.AreEqual((byte)2, r[86].s0);
+            Assert.AreEqual((byte)2, r[86].s1);
+            Assert.AreEqual((byte)2, r[86].s2);
+            Assert.AreEqual((byte)3, r[86].s3);
+            Assert.AreEqual((byte)2, r[87].s0);
+            Assert.AreEqual((byte)2, r[87].s1);
+            Assert.AreEqual((byte)2, r[87].s2);
+            Assert.AreEqual((byte)4, r[87].s3);
+            Assert.AreEqual((byte)2, r[88].s0);
+            Assert.AreEqual((byte)2, r[88].s1);
+            Assert.AreEqual((byte)3, r[88].s2);
+            Assert.AreEqual((byte)1, r[88].s3);
+            Assert.AreEqual((byte)2, r[89].s0);
+            Assert.AreEqual((byte)2, r[89].s1);
+            Assert.AreEqual((byte)3, r[89].s2);
+            Assert.AreEqual((byte)2, r[89].s3);
+            Assert.AreEqual((byte)2, r[90].s0);
+            Assert.AreEqual((byte)2, r[90].s1);
+            Assert.AreEqual((byte)3, r[90].s2);
+            Assert.AreEqual((byte)3, r[90].s3);
+            Assert.AreEqual((byte)2, r[91].s0);
+            Assert.AreEqual((byte)2, r[91].s1);
+            Assert.AreEqual((byte)3, r[91].s2);
+            Assert.AreEqual((byte)4, r[91].s3);
+            Assert.AreEqual((byte)2, r[92].s0);
+            Assert.AreEqual((byte)2, r[92].s1);
+            Assert.AreEqual((byte)4, r[92].s2);
+            Assert.AreEqual((byte)1, r[92].s3);
+            Assert.AreEqual((byte)2, r[93].s0);
+            Assert.AreEqual((byte)2, r[93].s1);
+            Assert.AreEqual((byte)4, r[93].s2);
+            Assert.AreEqual((byte)2, r[93].s3);
+            Assert.AreEqual((byte)2, r[94].s0);
+            Assert.AreEqual((byte)2, r[94].s1);
+            Assert.AreEqual((byte)4, r[94].s2);
+            Assert.AreEqual((byte)3, r[94].s3);
+            Assert.AreEqual((byte)2, r[95].s0);
+            Assert.AreEqual((byte)2, r[95].s1);
+            Assert.AreEqual((byte)4, r[95].s2);
+            Assert.AreEqual((byte)4, r[95].s3);
+            Assert.AreEqual((byte)2, r[96].s0);
+            Assert.AreEqual((byte)3, r[96].s1);
+            Assert.AreEqual((byte)1, r[96].s2);
+            Assert.AreEqual((byte)1, r[96].s3);
+            Assert.AreEqual((byte)2, r[97].s0);
+            Assert.AreEqual((byte)3, r[97].s1);
+            Assert.AreEqual((byte)1, r[97].s2);
+            Assert.AreEqual((byte)2, r[97].s3);
+            Assert.AreEqual((byte)2, r[98].s0);
+            Assert.AreEqual((byte)3, r[98].s1);
+            Assert.AreEqual((byte)1, r[98].s2);
+            Assert.AreEqual((byte)3, r[98].s3);
+            Assert.AreEqual((byte)2, r[99].s0);
+            Assert.AreEqual((byte)3, r[99].s1);
+            Assert.AreEqual((byte)1, r[99].s2);
+            Assert.AreEqual((byte)4, r[99].s3);
+            Assert.AreEqual((byte)1, w[8].s1);
+            Assert.AreEqual((byte)2, w[8].s2);
+            Assert.AreEqual((byte)3, w[8].s0);
+            Assert.AreEqual((byte)4, w[8].s3);
+            Assert.AreEqual((byte)2, r[100].s0);
+            Assert.AreEqual((byte)3, r[100].s1);
+            Assert.AreEqual((byte)2, r[100].s2);
+            Assert.AreEqual((byte)1, r[100].s3);
+            Assert.AreEqual((byte)2, r[101].s0);
+            Assert.AreEqual((byte)3, r[101].s1);
+            Assert.AreEqual((byte)2, r[101].s2);
+            Assert.AreEqual((byte)2, r[101].s3);
+            Assert.AreEqual((byte)2, r[102].s0);
+            Assert.AreEqual((byte)3, r[102].s1);
+            Assert.AreEqual((byte)2, r[102].s2);
+            Assert.AreEqual((byte)3, r[102].s3);
+            Assert.AreEqual((byte)2, r[103].s0);
+            Assert.AreEqual((byte)3, r[103].s1);
+            Assert.AreEqual((byte)2, r[103].s2);
+            Assert.AreEqual((byte)4, r[103].s3);
+            Assert.AreEqual((byte)2, r[104].s0);
+            Assert.AreEqual((byte)3, r[104].s1);
+            Assert.AreEqual((byte)3, r[104].s2);
+            Assert.AreEqual((byte)1, r[104].s3);
+            Assert.AreEqual((byte)2, r[105].s0);
+            Assert.AreEqual((byte)3, r[105].s1);
+            Assert.AreEqual((byte)3, r[105].s2);
+            Assert.AreEqual((byte)2, r[105].s3);
+            Assert.AreEqual((byte)2, r[106].s0);
+            Assert.AreEqual((byte)3, r[106].s1);
+            Assert.AreEqual((byte)3, r[106].s2);
+            Assert.AreEqual((byte)3, r[106].s3);
+            Assert.AreEqual((byte)2, r[107].s0);
+            Assert.AreEqual((byte)3, r[107].s1);
+            Assert.AreEqual((byte)3, r[107].s2);
+            Assert.AreEqual((byte)4, r[107].s3);
+            Assert.AreEqual((byte)2, r[108].s0);
+            Assert.AreEqual((byte)3, r[108].s1);
+            Assert.AreEqual((byte)4, r[108].s2);
+            Assert.AreEqual((byte)1, r[108].s3);
+            Assert.AreEqual((byte)1, w[9].s1);
+            Assert.AreEqual((byte)2, w[9].s2);
+            Assert.AreEqual((byte)3, w[9].s3);
+            Assert.AreEqual((byte)4, w[9].s0);
+            Assert.AreEqual((byte)2, r[109].s0);
+            Assert.AreEqual((byte)3, r[109].s1);
+            Assert.AreEqual((byte)4, r[109].s2);
+            Assert.AreEqual((byte)2, r[109].s3);
+            Assert.AreEqual((byte)2, r[110].s0);
+            Assert.AreEqual((byte)3, r[110].s1);
+            Assert.AreEqual((byte)4, r[110].s2);
+            Assert.AreEqual((byte)3, r[110].s3);
+            Assert.AreEqual((byte)2, r[111].s0);
+            Assert.AreEqual((byte)3, r[111].s1);
+            Assert.AreEqual((byte)4, r[111].s2);
+            Assert.AreEqual((byte)4, r[111].s3);
+            Assert.AreEqual((byte)2, r[112].s0);
+            Assert.AreEqual((byte)4, r[112].s1);
+            Assert.AreEqual((byte)1, r[112].s2);
+            Assert.AreEqual((byte)1, r[112].s3);
+            Assert.AreEqual((byte)2, r[113].s0);
+            Assert.AreEqual((byte)4, r[113].s1);
+            Assert.AreEqual((byte)1, r[113].s2);
+            Assert.AreEqual((byte)2, r[113].s3);
+            Assert.AreEqual((byte)2, r[114].s0);
+            Assert.AreEqual((byte)4, r[114].s1);
+            Assert.AreEqual((byte)1, r[114].s2);
+            Assert.AreEqual((byte)3, r[114].s3);
+            Assert.AreEqual((byte)1, w[10].s1);
+            Assert.AreEqual((byte)2, w[10].s3);
+            Assert.AreEqual((byte)3, w[10].s0);
+            Assert.AreEqual((byte)4, w[10].s2);
+            Assert.AreEqual((byte)2, r[115].s0);
+            Assert.AreEqual((byte)4, r[115].s1);
+            Assert.AreEqual((byte)1, r[115].s2);
+            Assert.AreEqual((byte)4, r[115].s3);
+            Assert.AreEqual((byte)2, r[116].s0);
+            Assert.AreEqual((byte)4, r[116].s1);
+            Assert.AreEqual((byte)2, r[116].s2);
+            Assert.AreEqual((byte)1, r[116].s3);
+            Assert.AreEqual((byte)2, r[117].s0);
+            Assert.AreEqual((byte)4, r[117].s1);
+            Assert.AreEqual((byte)2, r[117].s2);
+            Assert.AreEqual((byte)2, r[117].s3);
+            Assert.AreEqual((byte)2, r[118].s0);
+            Assert.AreEqual((byte)4, r[118].s1);
+            Assert.AreEqual((byte)2, r[118].s2);
+            Assert.AreEqual((byte)3, r[118].s3);
+            Assert.AreEqual((byte)2, r[119].s0);
+            Assert.AreEqual((byte)4, r[119].s1);
+            Assert.AreEqual((byte)2, r[119].s2);
+            Assert.AreEqual((byte)4, r[119].s3);
+            Assert.AreEqual((byte)2, r[120].s0);
+            Assert.AreEqual((byte)4, r[120].s1);
+            Assert.AreEqual((byte)3, r[120].s2);
+            Assert.AreEqual((byte)1, r[120].s3);
+            Assert.AreEqual((byte)1, w[11].s1);
+            Assert.AreEqual((byte)2, w[11].s3);
+            Assert.AreEqual((byte)3, w[11].s2);
+            Assert.AreEqual((byte)4, w[11].s0);
+            Assert.AreEqual((byte)2, r[121].s0);
+            Assert.AreEqual((byte)4, r[121].s1);
+            Assert.AreEqual((byte)3, r[121].s2);
+            Assert.AreEqual((byte)2, r[121].s3);
+            Assert.AreEqual((byte)2, r[122].s0);
+            Assert.AreEqual((byte)4, r[122].s1);
+            Assert.AreEqual((byte)3, r[122].s2);
+            Assert.AreEqual((byte)3, r[122].s3);
+            Assert.AreEqual((byte)2, r[123].s0);
+            Assert.AreEqual((byte)4, r[123].s1);
+            Assert.AreEqual((byte)3, r[123].s2);
+            Assert.AreEqual((byte)4, r[123].s3);
+            Assert.AreEqual((byte)2, r[124].s0);
+            Assert.AreEqual((byte)4, r[124].s1);
+            Assert.AreEqual((byte)4, r[124].s2);
+            Assert.AreEqual((byte)1, r[124].s3);
+            Assert.AreEqual((byte)2, r[125].s0);
+            Assert.AreEqual((byte)4, r[125].s1);
+            Assert.AreEqual((byte)4, r[125].s2);
+            Assert.AreEqual((byte)2, r[125].s3);
+            Assert.AreEqual((byte)2, r[126].s0);
+            Assert.AreEqual((byte)4, r[126].s1);
+            Assert.AreEqual((byte)4, r[126].s2);
+            Assert.AreEqual((byte)3, r[126].s3);
+            Assert.AreEqual((byte)2, r[127].s0);
+            Assert.AreEqual((byte)4, r[127].s1);
+            Assert.AreEqual((byte)4, r[127].s2);
+            Assert.AreEqual((byte)4, r[127].s3);
+            Assert.AreEqual((byte)3, r[128].s0);
+            Assert.AreEqual((byte)1, r[128].s1);
+            Assert.AreEqual((byte)1, r[128].s2);
+            Assert.AreEqual((byte)1, r[128].s3);
+            Assert.AreEqual((byte)3, r[129].s0);
+            Assert.AreEqual((byte)1, r[129].s1);
+            Assert.AreEqual((byte)1, r[129].s2);
+            Assert.AreEqual((byte)2, r[129].s3);
+            Assert.AreEqual((byte)3, r[130].s0);
+            Assert.AreEqual((byte)1, r[130].s1);
+            Assert.AreEqual((byte)1, r[130].s2);
+            Assert.AreEqual((byte)3, r[130].s3);
+            Assert.AreEqual((byte)3, r[131].s0);
+            Assert.AreEqual((byte)1, r[131].s1);
+            Assert.AreEqual((byte)1, r[131].s2);
+            Assert.AreEqual((byte)4, r[131].s3);
+            Assert.AreEqual((byte)3, r[132].s0);
+            Assert.AreEqual((byte)1, r[132].s1);
+            Assert.AreEqual((byte)2, r[132].s2);
+            Assert.AreEqual((byte)1, r[132].s3);
+            Assert.AreEqual((byte)3, r[133].s0);
+            Assert.AreEqual((byte)1, r[133].s1);
+            Assert.AreEqual((byte)2, r[133].s2);
+            Assert.AreEqual((byte)2, r[133].s3);
+            Assert.AreEqual((byte)3, r[134].s0);
+            Assert.AreEqual((byte)1, r[134].s1);
+            Assert.AreEqual((byte)2, r[134].s2);
+            Assert.AreEqual((byte)3, r[134].s3);
+            Assert.AreEqual((byte)3, r[135].s0);
+            Assert.AreEqual((byte)1, r[135].s1);
+            Assert.AreEqual((byte)2, r[135].s2);
+            Assert.AreEqual((byte)4, r[135].s3);
+            Assert.AreEqual((byte)1, w[12].s2);
+            Assert.AreEqual((byte)2, w[12].s0);
+            Assert.AreEqual((byte)3, w[12].s1);
+            Assert.AreEqual((byte)4, w[12].s3);
+            Assert.AreEqual((byte)3, r[136].s0);
+            Assert.AreEqual((byte)1, r[136].s1);
+            Assert.AreEqual((byte)3, r[136].s2);
+            Assert.AreEqual((byte)1, r[136].s3);
+            Assert.AreEqual((byte)3, r[137].s0);
+            Assert.AreEqual((byte)1, r[137].s1);
+            Assert.AreEqual((byte)3, r[137].s2);
+            Assert.AreEqual((byte)2, r[137].s3);
+            Assert.AreEqual((byte)3, r[138].s0);
+            Assert.AreEqual((byte)1, r[138].s1);
+            Assert.AreEqual((byte)3, r[138].s2);
+            Assert.AreEqual((byte)3, r[138].s3);
+            Assert.AreEqual((byte)3, r[139].s0);
+            Assert.AreEqual((byte)1, r[139].s1);
+            Assert.AreEqual((byte)3, r[139].s2);
+            Assert.AreEqual((byte)4, r[139].s3);
+            Assert.AreEqual((byte)3, r[140].s0);
+            Assert.AreEqual((byte)1, r[140].s1);
+            Assert.AreEqual((byte)4, r[140].s2);
+            Assert.AreEqual((byte)1, r[140].s3);
+            Assert.AreEqual((byte)3, r[141].s0);
+            Assert.AreEqual((byte)1, r[141].s1);
+            Assert.AreEqual((byte)4, r[141].s2);
+            Assert.AreEqual((byte)2, r[141].s3);
+            Assert.AreEqual((byte)1, w[13].s2);
+            Assert.AreEqual((byte)2, w[13].s0);
+            Assert.AreEqual((byte)3, w[13].s3);
+            Assert.AreEqual((byte)4, w[13].s1);
+            Assert.AreEqual((byte)3, r[142].s0);
+            Assert.AreEqual((byte)1, r[142].s1);
+            Assert.AreEqual((byte)4, r[142].s2);
+            Assert.AreEqual((byte)3, r[142].s3);
+            Assert.AreEqual((byte)3, r[143].s0);
+            Assert.AreEqual((byte)1, r[143].s1);
+            Assert.AreEqual((byte)4, r[143].s2);
+            Assert.AreEqual((byte)4, r[143].s3);
+            Assert.AreEqual((byte)3, r[144].s0);
+            Assert.AreEqual((byte)2, r[144].s1);
+            Assert.AreEqual((byte)1, r[144].s2);
+            Assert.AreEqual((byte)1, r[144].s3);
+            Assert.AreEqual((byte)3, r[145].s0);
+            Assert.AreEqual((byte)2, r[145].s1);
+            Assert.AreEqual((byte)1, r[145].s2);
+            Assert.AreEqual((byte)2, r[145].s3);
+            Assert.AreEqual((byte)3, r[146].s0);
+            Assert.AreEqual((byte)2, r[146].s1);
+            Assert.AreEqual((byte)1, r[146].s2);
+            Assert.AreEqual((byte)3, r[146].s3);
+            Assert.AreEqual((byte)3, r[147].s0);
+            Assert.AreEqual((byte)2, r[147].s1);
+            Assert.AreEqual((byte)1, r[147].s2);
+            Assert.AreEqual((byte)4, r[147].s3);
+            Assert.AreEqual((byte)1, w[14].s2);
+            Assert.AreEqual((byte)2, w[14].s1);
+            Assert.AreEqual((byte)3, w[14].s0);
+            Assert.AreEqual((byte)4, w[14].s3);
+            Assert.AreEqual((byte)3, r[148].s0);
+            Assert.AreEqual((byte)2, r[148].s1);
+            Assert.AreEqual((byte)2, r[148].s2);
+            Assert.AreEqual((byte)1, r[148].s3);
+            Assert.AreEqual((byte)3, r[149].s0);
+            Assert.AreEqual((byte)2, r[149].s1);
+            Assert.AreEqual((byte)2, r[149].s2);
+            Assert.AreEqual((byte)2, r[149].s3);
+            Assert.AreEqual((byte)3, r[150].s0);
+            Assert.AreEqual((byte)2, r[150].s1);
+            Assert.AreEqual((byte)2, r[150].s2);
+            Assert.AreEqual((byte)3, r[150].s3);
+            Assert.AreEqual((byte)3, r[151].s0);
+            Assert.AreEqual((byte)2, r[151].s1);
+            Assert.AreEqual((byte)2, r[151].s2);
+            Assert.AreEqual((byte)4, r[151].s3);
+            Assert.AreEqual((byte)3, r[152].s0);
+            Assert.AreEqual((byte)2, r[152].s1);
+            Assert.AreEqual((byte)3, r[152].s2);
+            Assert.AreEqual((byte)1, r[152].s3);
+            Assert.AreEqual((byte)3, r[153].s0);
+            Assert.AreEqual((byte)2, r[153].s1);
+            Assert.AreEqual((byte)3, r[153].s2);
+            Assert.AreEqual((byte)2, r[153].s3);
+            Assert.AreEqual((byte)3, r[154].s0);
+            Assert.AreEqual((byte)2, r[154].s1);
+            Assert.AreEqual((byte)3, r[154].s2);
+            Assert.AreEqual((byte)3, r[154].s3);
+            Assert.AreEqual((byte)3, r[155].s0);
+            Assert.AreEqual((byte)2, r[155].s1);
+            Assert.AreEqual((byte)3, r[155].s2);
+            Assert.AreEqual((byte)4, r[155].s3);
+            Assert.AreEqual((byte)3, r[156].s0);
+            Assert.AreEqual((byte)2, r[156].s1);
+            Assert.AreEqual((byte)4, r[156].s2);
+            Assert.AreEqual((byte)1, r[156].s3);
+            Assert.AreEqual((byte)1, w[15].s2);
+            Assert.AreEqual((byte)2, w[15].s1);
+            Assert.AreEqual((byte)3, w[15].s3);
+            Assert.AreEqual((byte)4, w[15].s0);
+            Assert.AreEqual((byte)3, r[157].s0);
+            Assert.AreEqual((byte)2, r[157].s1);
+            Assert.AreEqual((byte)4, r[157].s2);
+            Assert.AreEqual((byte)2, r[157].s3);
+            Assert.AreEqual((byte)3, r[158].s0);
+            Assert.AreEqual((byte)2, r[158].s1);
+            Assert.AreEqual((byte)4, r[158].s2);
+            Assert.AreEqual((byte)3, r[158].s3);
+            Assert.AreEqual((byte)3, r[159].s0);
+            Assert.AreEqual((byte)2, r[159].s1);
+            Assert.AreEqual((byte)4, r[159].s2);
+            Assert.AreEqual((byte)4, r[159].s3);
+            Assert.AreEqual((byte)3, r[160].s0);
+            Assert.AreEqual((byte)3, r[160].s1);
+            Assert.AreEqual((byte)1, r[160].s2);
+            Assert.AreEqual((byte)1, r[160].s3);
+            Assert.AreEqual((byte)3, r[161].s0);
+            Assert.AreEqual((byte)3, r[161].s1);
+            Assert.AreEqual((byte)1, r[161].s2);
+            Assert.AreEqual((byte)2, r[161].s3);
+            Assert.AreEqual((byte)3, r[162].s0);
+            Assert.AreEqual((byte)3, r[162].s1);
+            Assert.AreEqual((byte)1, r[162].s2);
+            Assert.AreEqual((byte)3, r[162].s3);
+            Assert.AreEqual((byte)3, r[163].s0);
+            Assert.AreEqual((byte)3, r[163].s1);
+            Assert.AreEqual((byte)1, r[163].s2);
+            Assert.AreEqual((byte)4, r[163].s3);
+            Assert.AreEqual((byte)3, r[164].s0);
+            Assert.AreEqual((byte)3, r[164].s1);
+            Assert.AreEqual((byte)2, r[164].s2);
+            Assert.AreEqual((byte)1, r[164].s3);
+            Assert.AreEqual((byte)3, r[165].s0);
+            Assert.AreEqual((byte)3, r[165].s1);
+            Assert.AreEqual((byte)2, r[165].s2);
+            Assert.AreEqual((byte)2, r[165].s3);
+            Assert.AreEqual((byte)3, r[166].s0);
+            Assert.AreEqual((byte)3, r[166].s1);
+            Assert.AreEqual((byte)2, r[166].s2);
+            Assert.AreEqual((byte)3, r[166].s3);
+            Assert.AreEqual((byte)3, r[167].s0);
+            Assert.AreEqual((byte)3, r[167].s1);
+            Assert.AreEqual((byte)2, r[167].s2);
+            Assert.AreEqual((byte)4, r[167].s3);
+            Assert.AreEqual((byte)3, r[168].s0);
+            Assert.AreEqual((byte)3, r[168].s1);
+            Assert.AreEqual((byte)3, r[168].s2);
+            Assert.AreEqual((byte)1, r[168].s3);
+            Assert.AreEqual((byte)3, r[169].s0);
+            Assert.AreEqual((byte)3, r[169].s1);
+            Assert.AreEqual((byte)3, r[169].s2);
+            Assert.AreEqual((byte)2, r[169].s3);
+            Assert.AreEqual((byte)3, r[170].s0);
+            Assert.AreEqual((byte)3, r[170].s1);
+            Assert.AreEqual((byte)3, r[170].s2);
+            Assert.AreEqual((byte)3, r[170].s3);
+            Assert.AreEqual((byte)3, r[171].s0);
+            Assert.AreEqual((byte)3, r[171].s1);
+            Assert.AreEqual((byte)3, r[171].s2);
+            Assert.AreEqual((byte)4, r[171].s3);
+            Assert.AreEqual((byte)3, r[172].s0);
+            Assert.AreEqual((byte)3, r[172].s1);
+            Assert.AreEqual((byte)4, r[172].s2);
+            Assert.AreEqual((byte)1, r[172].s3);
+            Assert.AreEqual((byte)3, r[173].s0);
+            Assert.AreEqual((byte)3, r[173].s1);
+            Assert.AreEqual((byte)4, r[173].s2);
+            Assert.AreEqual((byte)2, r[173].s3);
+            Assert.AreEqual((byte)3, r[174].s0);
+            Assert.AreEqual((byte)3, r[174].s1);
+            Assert.AreEqual((byte)4, r[174].s2);
+            Assert.AreEqual((byte)3, r[174].s3);
+            Assert.AreEqual((byte)3, r[175].s0);
+            Assert.AreEqual((byte)3, r[175].s1);
+            Assert.AreEqual((byte)4, r[175].s2);
+            Assert.AreEqual((byte)4, r[175].s3);
+            Assert.AreEqual((byte)3, r[176].s0);
+            Assert.AreEqual((byte)4, r[176].s1);
+            Assert.AreEqual((byte)1, r[176].s2);
+            Assert.AreEqual((byte)1, r[176].s3);
+            Assert.AreEqual((byte)3, r[177].s0);
+            Assert.AreEqual((byte)4, r[177].s1);
+            Assert.AreEqual((byte)1, r[177].s2);
+            Assert.AreEqual((byte)2, r[177].s3);
+            Assert.AreEqual((byte)1, w[16].s2);
+            Assert.AreEqual((byte)2, w[16].s3);
+            Assert.AreEqual((byte)3, w[16].s0);
+            Assert.AreEqual((byte)4, w[16].s1);
+            Assert.AreEqual((byte)3, r[178].s0);
+            Assert.AreEqual((byte)4, r[178].s1);
+            Assert.AreEqual((byte)1, r[178].s2);
+            Assert.AreEqual((byte)3, r[178].s3);
+            Assert.AreEqual((byte)3, r[179].s0);
+            Assert.AreEqual((byte)4, r[179].s1);
+            Assert.AreEqual((byte)1, r[179].s2);
+            Assert.AreEqual((byte)4, r[179].s3);
+            Assert.AreEqual((byte)3, r[180].s0);
+            Assert.AreEqual((byte)4, r[180].s1);
+            Assert.AreEqual((byte)2, r[180].s2);
+            Assert.AreEqual((byte)1, r[180].s3);
+            Assert.AreEqual((byte)1, w[17].s2);
+            Assert.AreEqual((byte)2, w[17].s3);
+            Assert.AreEqual((byte)3, w[17].s1);
+            Assert.AreEqual((byte)4, w[17].s0);
+            Assert.AreEqual((byte)3, r[181].s0);
+            Assert.AreEqual((byte)4, r[181].s1);
+            Assert.AreEqual((byte)2, r[181].s2);
+            Assert.AreEqual((byte)2, r[181].s3);
+            Assert.AreEqual((byte)3, r[182].s0);
+            Assert.AreEqual((byte)4, r[182].s1);
+            Assert.AreEqual((byte)2, r[182].s2);
+            Assert.AreEqual((byte)3, r[182].s3);
+            Assert.AreEqual((byte)3, r[183].s0);
+            Assert.AreEqual((byte)4, r[183].s1);
+            Assert.AreEqual((byte)2, r[183].s2);
+            Assert.AreEqual((byte)4, r[183].s3);
+            Assert.AreEqual((byte)3, r[184].s0);
+            Assert.AreEqual((byte)4, r[184].s1);
+            Assert.AreEqual((byte)3, r[184].s2);
+            Assert.AreEqual((byte)1, r[184].s3);
+            Assert.AreEqual((byte)3, r[185].s0);
+            Assert.AreEqual((byte)4, r[185].s1);
+            Assert.AreEqual((byte)3, r[185].s2);
+            Assert.AreEqual((byte)2, r[185].s3);
+            Assert.AreEqual((byte)3, r[186].s0);
+            Assert.AreEqual((byte)4, r[186].s1);
+            Assert.AreEqual((byte)3, r[186].s2);
+            Assert.AreEqual((byte)3, r[186].s3);
+            Assert.AreEqual((byte)3, r[187].s0);
+            Assert.AreEqual((byte)4, r[187].s1);
+            Assert.AreEqual((byte)3, r[187].s2);
+            Assert.AreEqual((byte)4, r[187].s3);
+            Assert.AreEqual((byte)3, r[188].s0);
+            Assert.AreEqual((byte)4, r[188].s1);
+            Assert.AreEqual((byte)4, r[188].s2);
+            Assert.AreEqual((byte)1, r[188].s3);
+            Assert.AreEqual((byte)3, r[189].s0);
+            Assert.AreEqual((byte)4, r[189].s1);
+            Assert.AreEqual((byte)4, r[189].s2);
+            Assert.AreEqual((byte)2, r[189].s3);
+            Assert.AreEqual((byte)3, r[190].s0);
+            Assert.AreEqual((byte)4, r[190].s1);
+            Assert.AreEqual((byte)4, r[190].s2);
+            Assert.AreEqual((byte)3, r[190].s3);
+            Assert.AreEqual((byte)3, r[191].s0);
+            Assert.AreEqual((byte)4, r[191].s1);
+            Assert.AreEqual((byte)4, r[191].s2);
+            Assert.AreEqual((byte)4, r[191].s3);
+            Assert.AreEqual((byte)4, r[192].s0);
+            Assert.AreEqual((byte)1, r[192].s1);
+            Assert.AreEqual((byte)1, r[192].s2);
+            Assert.AreEqual((byte)1, r[192].s3);
+            Assert.AreEqual((byte)4, r[193].s0);
+            Assert.AreEqual((byte)1, r[193].s1);
+            Assert.AreEqual((byte)1, r[193].s2);
+            Assert.AreEqual((byte)2, r[193].s3);
+            Assert.AreEqual((byte)4, r[194].s0);
+            Assert.AreEqual((byte)1, r[194].s1);
+            Assert.AreEqual((byte)1, r[194].s2);
+            Assert.AreEqual((byte)3, r[194].s3);
+            Assert.AreEqual((byte)4, r[195].s0);
+            Assert.AreEqual((byte)1, r[195].s1);
+            Assert.AreEqual((byte)1, r[195].s2);
+            Assert.AreEqual((byte)4, r[195].s3);
+            Assert.AreEqual((byte)4, r[196].s0);
+            Assert.AreEqual((byte)1, r[196].s1);
+            Assert.AreEqual((byte)2, r[196].s2);
+            Assert.AreEqual((byte)1, r[196].s3);
+            Assert.AreEqual((byte)4, r[197].s0);
+            Assert.AreEqual((byte)1, r[197].s1);
+            Assert.AreEqual((byte)2, r[197].s2);
+            Assert.AreEqual((byte)2, r[197].s3);
+            Assert.AreEqual((byte)4, r[198].s0);
+            Assert.AreEqual((byte)1, r[198].s1);
+            Assert.AreEqual((byte)2, r[198].s2);
+            Assert.AreEqual((byte)3, r[198].s3);
+            Assert.AreEqual((byte)1, w[18].s3);
+            Assert.AreEqual((byte)2, w[18].s0);
+            Assert.AreEqual((byte)3, w[18].s1);
+            Assert.AreEqual((byte)4, w[18].s2);
+            Assert.AreEqual((byte)4, r[199].s0);
+            Assert.AreEqual((byte)1, r[199].s1);
+            Assert.AreEqual((byte)2, r[199].s2);
+            Assert.AreEqual((byte)4, r[199].s3);
+            Assert.AreEqual((byte)4, r[200].s0);
+            Assert.AreEqual((byte)1, r[200].s1);
+            Assert.AreEqual((byte)3, r[200].s2);
+            Assert.AreEqual((byte)1, r[200].s3);
+            Assert.AreEqual((byte)4, r[201].s0);
+            Assert.AreEqual((byte)1, r[201].s1);
+            Assert.AreEqual((byte)3, r[201].s2);
+            Assert.AreEqual((byte)2, r[201].s3);
+            Assert.AreEqual((byte)1, w[19].s3);
+            Assert.AreEqual((byte)2, w[19].s0);
+            Assert.AreEqual((byte)3, w[19].s2);
+            Assert.AreEqual((byte)4, w[19].s1);
+            Assert.AreEqual((byte)4, r[202].s0);
+            Assert.AreEqual((byte)1, r[202].s1);
+            Assert.AreEqual((byte)3, r[202].s2);
+            Assert.AreEqual((byte)3, r[202].s3);
+            Assert.AreEqual((byte)4, r[203].s0);
+            Assert.AreEqual((byte)1, r[203].s1);
+            Assert.AreEqual((byte)3, r[203].s2);
+            Assert.AreEqual((byte)4, r[203].s3);
+            Assert.AreEqual((byte)4, r[204].s0);
+            Assert.AreEqual((byte)1, r[204].s1);
+            Assert.AreEqual((byte)4, r[204].s2);
+            Assert.AreEqual((byte)1, r[204].s3);
+            Assert.AreEqual((byte)4, r[205].s0);
+            Assert.AreEqual((byte)1, r[205].s1);
+            Assert.AreEqual((byte)4, r[205].s2);
+            Assert.AreEqual((byte)2, r[205].s3);
+            Assert.AreEqual((byte)4, r[206].s0);
+            Assert.AreEqual((byte)1, r[206].s1);
+            Assert.AreEqual((byte)4, r[206].s2);
+            Assert.AreEqual((byte)3, r[206].s3);
+            Assert.AreEqual((byte)4, r[207].s0);
+            Assert.AreEqual((byte)1, r[207].s1);
+            Assert.AreEqual((byte)4, r[207].s2);
+            Assert.AreEqual((byte)4, r[207].s3);
+            Assert.AreEqual((byte)4, r[208].s0);
+            Assert.AreEqual((byte)2, r[208].s1);
+            Assert.AreEqual((byte)1, r[208].s2);
+            Assert.AreEqual((byte)1, r[208].s3);
+            Assert.AreEqual((byte)4, r[209].s0);
+            Assert.AreEqual((byte)2, r[209].s1);
+            Assert.AreEqual((byte)1, r[209].s2);
+            Assert.AreEqual((byte)2, r[209].s3);
+            Assert.AreEqual((byte)4, r[210].s0);
+            Assert.AreEqual((byte)2, r[210].s1);
+            Assert.AreEqual((byte)1, r[210].s2);
+            Assert.AreEqual((byte)3, r[210].s3);
+            Assert.AreEqual((byte)1, w[20].s3);
+            Assert.AreEqual((byte)2, w[20].s1);
+            Assert.AreEqual((byte)3, w[20].s0);
+            Assert.AreEqual((byte)4, w[20].s2);
+            Assert.AreEqual((byte)4, r[211].s0);
+            Assert.AreEqual((byte)2, r[211].s1);
+            Assert.AreEqual((byte)1, r[211].s2);
+            Assert.AreEqual((byte)4, r[211].s3);
+            Assert.AreEqual((byte)4, r[212].s0);
+            Assert.AreEqual((byte)2, r[212].s1);
+            Assert.AreEqual((byte)2, r[212].s2);
+            Assert.AreEqual((byte)1, r[212].s3);
+            Assert.AreEqual((byte)4, r[213].s0);
+            Assert.AreEqual((byte)2, r[213].s1);
+            Assert.AreEqual((byte)2, r[213].s2);
+            Assert.AreEqual((byte)2, r[213].s3);
+            Assert.AreEqual((byte)4, r[214].s0);
+            Assert.AreEqual((byte)2, r[214].s1);
+            Assert.AreEqual((byte)2, r[214].s2);
+            Assert.AreEqual((byte)3, r[214].s3);
+            Assert.AreEqual((byte)4, r[215].s0);
+            Assert.AreEqual((byte)2, r[215].s1);
+            Assert.AreEqual((byte)2, r[215].s2);
+            Assert.AreEqual((byte)4, r[215].s3);
+            Assert.AreEqual((byte)4, r[216].s0);
+            Assert.AreEqual((byte)2, r[216].s1);
+            Assert.AreEqual((byte)3, r[216].s2);
+            Assert.AreEqual((byte)1, r[216].s3);
+            Assert.AreEqual((byte)1, w[21].s3);
+            Assert.AreEqual((byte)2, w[21].s1);
+            Assert.AreEqual((byte)3, w[21].s2);
+            Assert.AreEqual((byte)4, w[21].s0);
+            Assert.AreEqual((byte)4, r[217].s0);
+            Assert.AreEqual((byte)2, r[217].s1);
+            Assert.AreEqual((byte)3, r[217].s2);
+            Assert.AreEqual((byte)2, r[217].s3);
+            Assert.AreEqual((byte)4, r[218].s0);
+            Assert.AreEqual((byte)2, r[218].s1);
+            Assert.AreEqual((byte)3, r[218].s2);
+            Assert.AreEqual((byte)3, r[218].s3);
+            Assert.AreEqual((byte)4, r[219].s0);
+            Assert.AreEqual((byte)2, r[219].s1);
+            Assert.AreEqual((byte)3, r[219].s2);
+            Assert.AreEqual((byte)4, r[219].s3);
+            Assert.AreEqual((byte)4, r[220].s0);
+            Assert.AreEqual((byte)2, r[220].s1);
+            Assert.AreEqual((byte)4, r[220].s2);
+            Assert.AreEqual((byte)1, r[220].s3);
+            Assert.AreEqual((byte)4, r[221].s0);
+            Assert.AreEqual((byte)2, r[221].s1);
+            Assert.AreEqual((byte)4, r[221].s2);
+            Assert.AreEqual((byte)2, r[221].s3);
+            Assert.AreEqual((byte)4, r[222].s0);
+            Assert.AreEqual((byte)2, r[222].s1);
+            Assert.AreEqual((byte)4, r[222].s2);
+            Assert.AreEqual((byte)3, r[222].s3);
+            Assert.AreEqual((byte)4, r[223].s0);
+            Assert.AreEqual((byte)2, r[223].s1);
+            Assert.AreEqual((byte)4, r[223].s2);
+            Assert.AreEqual((byte)4, r[223].s3);
+            Assert.AreEqual((byte)4, r[224].s0);
+            Assert.AreEqual((byte)3, r[224].s1);
+            Assert.AreEqual((byte)1, r[224].s2);
+            Assert.AreEqual((byte)1, r[224].s3);
+            Assert.AreEqual((byte)4, r[225].s0);
+            Assert.AreEqual((byte)3, r[225].s1);
+            Assert.AreEqual((byte)1, r[225].s2);
+            Assert.AreEqual((byte)2, r[225].s3);
+            Assert.AreEqual((byte)1, w[22].s3);
+            Assert.AreEqual((byte)2, w[22].s2);
+            Assert.AreEqual((byte)3, w[22].s0);
+            Assert.AreEqual((byte)4, w[22].s1);
+            Assert.AreEqual((byte)4, r[226].s0);
+            Assert.AreEqual((byte)3, r[226].s1);
+            Assert.AreEqual((byte)1, r[226].s2);
+            Assert.AreEqual((byte)3, r[226].s3);
+            Assert.AreEqual((byte)4, r[227].s0);
+            Assert.AreEqual((byte)3, r[227].s1);
+            Assert.AreEqual((byte)1, r[227].s2);
+            Assert.AreEqual((byte)4, r[227].s3);
+            Assert.AreEqual((byte)4, r[228].s0);
+            Assert.AreEqual((byte)3, r[228].s1);
+            Assert.AreEqual((byte)2, r[228].s2);
+            Assert.AreEqual((byte)1, r[228].s3);
+            Assert.AreEqual((byte)1, w[23].s3);
+            Assert.AreEqual((byte)2, w[23].s2);
+            Assert.AreEqual((byte)3, w[23].s1);
+            Assert.AreEqual((byte)4, w[23].s0);
+            Assert.AreEqual((byte)4, r[229].s0);
+            Assert.AreEqual((byte)3, r[229].s1);
+            Assert.AreEqual((byte)2, r[229].s2);
+            Assert.AreEqual((byte)2, r[229].s3);
+            Assert.AreEqual((byte)4, r[230].s0);
+            Assert.AreEqual((byte)3, r[230].s1);
+            Assert.AreEqual((byte)2, r[230].s2);
+            Assert.AreEqual((byte)3, r[230].s3);
+            Assert.AreEqual((byte)4, r[231].s0);
+            Assert.AreEqual((byte)3, r[231].s1);
+            Assert.AreEqual((byte)2, r[231].s2);
+            Assert.AreEqual((byte)4, r[231].s3);
+            Assert.AreEqual((byte)4, r[232].s0);
+            Assert.AreEqual((byte)3, r[232].s1);
+            Assert.AreEqual((byte)3, r[232].s2);
+            Assert.AreEqual((byte)1, r[232].s3);
+            Assert.AreEqual((byte)4, r[233].s0);
+            Assert.AreEqual((byte)3, r[233].s1);
+            Assert.AreEqual((byte)3, r[233].s2);
+            Assert.AreEqual((byte)2, r[233].s3);
+            Assert.AreEqual((byte)4, r[234].s0);
+            Assert.AreEqual((byte)3, r[234].s1);
+            Assert.AreEqual((byte)3, r[234].s2);
+            Assert.AreEqual((byte)3, r[234].s3);
+            Assert.AreEqual((byte)4, r[235].s0);
+            Assert.AreEqual((byte)3, r[235].s1);
+            Assert.AreEqual((byte)3, r[235].s2);
+            Assert.AreEqual((byte)4, r[235].s3);
+            Assert.AreEqual((byte)4, r[236].s0);
+            Assert.AreEqual((byte)3, r[236].s1);
+            Assert.AreEqual((byte)4, r[236].s2);
+            Assert.AreEqual((byte)1, r[236].s3);
+            Assert.AreEqual((byte)4, r[237].s0);
+            Assert.AreEqual((byte)3, r[237].s1);
+            Assert.AreEqual((byte)4, r[237].s2);
+            Assert.AreEqual((byte)2, r[237].s3);
+            Assert.AreEqual((byte)4, r[238].s0);
+            Assert.AreEqual((byte)3, r[238].s1);
+            Assert.AreEqual((byte)4, r[238].s2);
+            Assert.AreEqual((byte)3, r[238].s3);
+            Assert.AreEqual((byte)4, r[239].s0);
+            Assert.AreEqual((byte)3, r[239].s1);
+            Assert.AreEqual((byte)4, r[239].s2);
+            Assert.AreEqual((byte)4, r[239].s3);
+            Assert.AreEqual((byte)4, r[240].s0);
+            Assert.AreEqual((byte)4, r[240].s1);
+            Assert.AreEqual((byte)1, r[240].s2);
+            Assert.AreEqual((byte)1, r[240].s3);
+            Assert.AreEqual((byte)4, r[241].s0);
+            Assert.AreEqual((byte)4, r[241].s1);
+            Assert.AreEqual((byte)1, r[241].s2);
+            Assert.AreEqual((byte)2, r[241].s3);
+            Assert.AreEqual((byte)4, r[242].s0);
+            Assert.AreEqual((byte)4, r[242].s1);
+            Assert.AreEqual((byte)1, r[242].s2);
+            Assert.AreEqual((byte)3, r[242].s3);
+            Assert.AreEqual((byte)4, r[243].s0);
+            Assert.AreEqual((byte)4, r[243].s1);
+            Assert.AreEqual((byte)1, r[243].s2);
+            Assert.AreEqual((byte)4, r[243].s3);
+            Assert.AreEqual((byte)4, r[244].s0);
+            Assert.AreEqual((byte)4, r[244].s1);
+            Assert.AreEqual((byte)2, r[244].s2);
+            Assert.AreEqual((byte)1, r[244].s3);
+            Assert.AreEqual((byte)4, r[245].s0);
+            Assert.AreEqual((byte)4, r[245].s1);
+            Assert.AreEqual((byte)2, r[245].s2);
+            Assert.AreEqual((byte)2, r[245].s3);
+            Assert.AreEqual((byte)4, r[246].s0);
+            Assert.AreEqual((byte)4, r[246].s1);
+            Assert.AreEqual((byte)2, r[246].s2);
+            Assert.AreEqual((byte)3, r[246].s3);
+            Assert.AreEqual((byte)4, r[247].s0);
+            Assert.AreEqual((byte)4, r[247].s1);
+            Assert.AreEqual((byte)2, r[247].s2);
+            Assert.AreEqual((byte)4, r[247].s3);
+            Assert.AreEqual((byte)4, r[248].s0);
+            Assert.AreEqual((byte)4, r[248].s1);
+            Assert.AreEqual((byte)3, r[248].s2);
+            Assert.AreEqual((byte)1, r[248].s3);
+            Assert.AreEqual((byte)4, r[249].s0);
+            Assert.AreEqual((byte)4, r[249].s1);
+            Assert.AreEqual((byte)3, r[249].s2);
+            Assert.AreEqual((byte)2, r[249].s3);
+            Assert.AreEqual((byte)4, r[250].s0);
+            Assert.AreEqual((byte)4, r[250].s1);
+            Assert.AreEqual((byte)3, r[250].s2);
+            Assert.AreEqual((byte)3, r[250].s3);
+            Assert.AreEqual((byte)4, r[251].s0);
+            Assert.AreEqual((byte)4, r[251].s1);
+            Assert.AreEqual((byte)3, r[251].s2);
+            Assert.AreEqual((byte)4, r[251].s3);
+            Assert.AreEqual((byte)4, r[252].s0);
+            Assert.AreEqual((byte)4, r[252].s1);
+            Assert.AreEqual((byte)4, r[252].s2);
+            Assert.AreEqual((byte)1, r[252].s3);
+            Assert.AreEqual((byte)4, r[253].s0);
+            Assert.AreEqual((byte)4, r[253].s1);
+            Assert.AreEqual((byte)4, r[253].s2);
+            Assert.AreEqual((byte)2, r[253].s3);
+            Assert.AreEqual((byte)4, r[254].s0);
+            Assert.AreEqual((byte)4, r[254].s1);
+            Assert.AreEqual((byte)4, r[254].s2);
+            Assert.AreEqual((byte)3, r[254].s3);
+            Assert.AreEqual((byte)4, r[255].s0);
+            Assert.AreEqual((byte)4, r[255].s1);
+            Assert.AreEqual((byte)4, r[255].s2);
+            Assert.AreEqual((byte)4, r[255].s3);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        [Ignore("Handling component accessors not implemented in SPIR-V compiler.")]
+        public void TestComponentAccessors4SpirV()
+        {
+            var nr = 256;
+            var nw = 24;
+            var r = new byte4[nr];
+            var w = new byte4[nw];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte4", "test_components4", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_components4"))
             using (var mr = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<byte4>()))
             using (var mw = Mem<byte4>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<byte4>()))

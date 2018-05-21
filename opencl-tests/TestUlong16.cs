@@ -23,6 +23,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAddManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -74,6 +75,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAddCl()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -136,6 +138,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestAddSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -206,6 +209,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestSubManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -257,6 +261,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestSubCl()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -319,6 +324,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestSubSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -389,6 +395,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestMulManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -440,6 +447,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestMulCl()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -502,6 +510,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestMulSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -572,6 +581,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestDivManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -623,6 +633,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestDivCl()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -685,6 +696,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestDivSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -755,6 +767,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestEqManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -806,6 +819,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestEqCl()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -868,6 +882,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestEqSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -938,6 +953,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestNeqManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -989,6 +1005,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestNeqCl()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1051,6 +1068,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestNeqSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1121,6 +1139,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLtManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1172,6 +1191,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLtCl()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1234,6 +1254,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLtSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1304,6 +1325,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLeManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1355,6 +1377,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLeCl()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1417,6 +1440,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLeSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1487,6 +1511,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGtManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1538,6 +1563,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGtCl()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1600,6 +1626,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGtSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1670,6 +1697,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGeManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1721,6 +1749,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGeCl()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1783,6 +1812,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGeSpirV()
         {
             var a = new ulong16[] { new ulong16((ulong)  30, (ulong)  29, (ulong)  28, (ulong)  27, (ulong)  26, (ulong)  25, (ulong)  24, (ulong)  23, (ulong)  22, (ulong)  21, (ulong)  20, (ulong)  19, (ulong)  18, (ulong)  17, (ulong)  16, (ulong)  15), new ulong16((ulong)   0, (ulong)   1, (ulong)   2, (ulong)   3, (ulong)   4, (ulong)   5, (ulong)   6, (ulong)   7, (ulong)   8, (ulong)   9, (ulong)  10, (ulong)  11, (ulong)  12, (ulong)  13, (ulong)  14, (ulong)  15) };
@@ -1853,6 +1883,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAndManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -1904,6 +1935,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAndCl()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -1965,6 +1997,70 @@ namespace OpenCl.Tests
             Assert.AreEqual(  80, r[1].sf);
         }
 
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestAndSpirV()
+        {
+            var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
+            var b = new ulong16[] { new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80), new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112) };
+            var r = new ulong16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong16", "test_ulong16_and", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_ulong16_and"))
+            using (var ma = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<ulong16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   5, r[0].s0);
+            Assert.AreEqual(  10, r[0].s1);
+            Assert.AreEqual(   5, r[0].s2);
+            Assert.AreEqual(  20, r[0].s3);
+            Assert.AreEqual(   1, r[0].s4);
+            Assert.AreEqual(  10, r[0].s5);
+            Assert.AreEqual(  33, r[0].s6);
+            Assert.AreEqual(  40, r[0].s7);
+            Assert.AreEqual(  45, r[0].s8);
+            Assert.AreEqual(   2, r[0].s9);
+            Assert.AreEqual(   5, r[0].sa);
+            Assert.AreEqual(  20, r[0].sb);
+            Assert.AreEqual(  65, r[0].sc);
+            Assert.AreEqual(  66, r[0].sd);
+            Assert.AreEqual(  73, r[0].se);
+            Assert.AreEqual(  80, r[0].sf);
+            Assert.AreEqual(   5, r[1].s0);
+            Assert.AreEqual(  10, r[1].s1);
+            Assert.AreEqual(   5, r[1].s2);
+            Assert.AreEqual(  20, r[1].s3);
+            Assert.AreEqual(   1, r[1].s4);
+            Assert.AreEqual(  10, r[1].s5);
+            Assert.AreEqual(  33, r[1].s6);
+            Assert.AreEqual(  40, r[1].s7);
+            Assert.AreEqual(  45, r[1].s8);
+            Assert.AreEqual(   2, r[1].s9);
+            Assert.AreEqual(   5, r[1].sa);
+            Assert.AreEqual(  20, r[1].sb);
+            Assert.AreEqual(  65, r[1].sc);
+            Assert.AreEqual(  66, r[1].sd);
+            Assert.AreEqual(  73, r[1].se);
+            Assert.AreEqual(  80, r[1].sf);
+        }
+
         [Kernel]
         private static void test_ulong16_or([Global] ulong16[] a, [Global] ulong16[] b, [Global] ulong16[] r)
         {
@@ -1973,6 +2069,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestOrManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -2024,6 +2121,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestOrCl()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -2085,6 +2183,70 @@ namespace OpenCl.Tests
             Assert.AreEqual( 112, r[1].sf);
         }
 
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestOrSpirV()
+        {
+            var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
+            var b = new ulong16[] { new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80), new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112) };
+            var r = new ulong16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong16", "test_ulong16_or", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_ulong16_or"))
+            using (var ma = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<ulong16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   7, r[0].s0);
+            Assert.AreEqual(  14, r[0].s1);
+            Assert.AreEqual(  31, r[0].s2);
+            Assert.AreEqual(  28, r[0].s3);
+            Assert.AreEqual(  59, r[0].s4);
+            Assert.AreEqual(  62, r[0].s5);
+            Assert.AreEqual(  51, r[0].s6);
+            Assert.AreEqual(  56, r[0].s7);
+            Assert.AreEqual(  63, r[0].s8);
+            Assert.AreEqual( 118, r[0].s9);
+            Assert.AreEqual( 127, r[0].sa);
+            Assert.AreEqual( 124, r[0].sb);
+            Assert.AreEqual(  91, r[0].sc);
+            Assert.AreEqual( 102, r[0].sd);
+            Assert.AreEqual( 107, r[0].se);
+            Assert.AreEqual( 112, r[0].sf);
+            Assert.AreEqual(   7, r[1].s0);
+            Assert.AreEqual(  14, r[1].s1);
+            Assert.AreEqual(  31, r[1].s2);
+            Assert.AreEqual(  28, r[1].s3);
+            Assert.AreEqual(  59, r[1].s4);
+            Assert.AreEqual(  62, r[1].s5);
+            Assert.AreEqual(  51, r[1].s6);
+            Assert.AreEqual(  56, r[1].s7);
+            Assert.AreEqual(  63, r[1].s8);
+            Assert.AreEqual( 118, r[1].s9);
+            Assert.AreEqual( 127, r[1].sa);
+            Assert.AreEqual( 124, r[1].sb);
+            Assert.AreEqual(  91, r[1].sc);
+            Assert.AreEqual( 102, r[1].sd);
+            Assert.AreEqual( 107, r[1].se);
+            Assert.AreEqual( 112, r[1].sf);
+        }
+
         [Kernel]
         private static void test_ulong16_xor([Global] ulong16[] a, [Global] ulong16[] b, [Global] ulong16[] r)
         {
@@ -2093,6 +2255,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestXorManaged()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -2144,6 +2307,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestXorCl()
         {
             var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
@@ -2159,6 +2323,70 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_ulong16_xor"))
+            using (var ma = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<ulong16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   2, r[0].s0);
+            Assert.AreEqual(   4, r[0].s1);
+            Assert.AreEqual(  26, r[0].s2);
+            Assert.AreEqual(   8, r[0].s3);
+            Assert.AreEqual(  58, r[0].s4);
+            Assert.AreEqual(  52, r[0].s5);
+            Assert.AreEqual(  18, r[0].s6);
+            Assert.AreEqual(  16, r[0].s7);
+            Assert.AreEqual(  18, r[0].s8);
+            Assert.AreEqual( 116, r[0].s9);
+            Assert.AreEqual( 122, r[0].sa);
+            Assert.AreEqual( 104, r[0].sb);
+            Assert.AreEqual(  26, r[0].sc);
+            Assert.AreEqual(  36, r[0].sd);
+            Assert.AreEqual(  34, r[0].se);
+            Assert.AreEqual(  32, r[0].sf);
+            Assert.AreEqual(   2, r[1].s0);
+            Assert.AreEqual(   4, r[1].s1);
+            Assert.AreEqual(  26, r[1].s2);
+            Assert.AreEqual(   8, r[1].s3);
+            Assert.AreEqual(  58, r[1].s4);
+            Assert.AreEqual(  52, r[1].s5);
+            Assert.AreEqual(  18, r[1].s6);
+            Assert.AreEqual(  16, r[1].s7);
+            Assert.AreEqual(  18, r[1].s8);
+            Assert.AreEqual( 116, r[1].s9);
+            Assert.AreEqual( 122, r[1].sa);
+            Assert.AreEqual( 104, r[1].sb);
+            Assert.AreEqual(  26, r[1].sc);
+            Assert.AreEqual(  36, r[1].sd);
+            Assert.AreEqual(  34, r[1].se);
+            Assert.AreEqual(  32, r[1].sf);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestXorSpirV()
+        {
+            var a = new ulong16[] { new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112), new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80) };
+            var b = new ulong16[] { new ulong16((ulong)   5, (ulong)  10, (ulong)  15, (ulong)  20, (ulong)  25, (ulong)  30, (ulong)  35, (ulong)  40, (ulong)  45, (ulong)  50, (ulong)  55, (ulong)  60, (ulong)  65, (ulong)  70, (ulong)  75, (ulong)  80), new ulong16((ulong)   7, (ulong)  14, (ulong)  21, (ulong)  28, (ulong)  35, (ulong)  42, (ulong)  49, (ulong)  56, (ulong)  63, (ulong)  70, (ulong)  77, (ulong)  84, (ulong)  91, (ulong)  98, (ulong) 105, (ulong) 112) };
+            var r = new ulong16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestUlong16", "test_ulong16_xor", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_ulong16_xor"))
             using (var ma = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
             using (var mb = Mem<ulong16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))

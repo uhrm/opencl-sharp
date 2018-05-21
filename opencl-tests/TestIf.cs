@@ -28,6 +28,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestIfManaged()
         {
             var a = new int[] { 7, 14, 6, 10 };
@@ -51,6 +52,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         [Ignore("Handling Booleans not implemented in CL compiler.")]
         public void TestIfCl()
         {
@@ -86,6 +88,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestIfSpirV()
         {
             var a = new int[] { 7, 14, 6, 10 };

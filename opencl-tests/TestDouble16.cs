@@ -23,6 +23,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAddManaged()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -74,6 +75,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAddCl()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -136,6 +138,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestAddSpirV()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -206,6 +209,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestSubManaged()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -257,6 +261,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestSubCl()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -319,6 +324,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestSubSpirV()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -389,6 +395,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestMulManaged()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -440,6 +447,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestMulCl()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -502,6 +510,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestMulSpirV()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -572,6 +581,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestDivManaged()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -623,6 +633,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestDivCl()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -685,6 +696,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestDivSpirV()
         {
             var a = new double16[] { new double16((double)   7, (double)  14, (double)  21, (double)  28, (double)  35, (double)  42, (double)  49, (double)  56, (double)  63, (double)  70, (double)  77, (double)  84, (double)  91, (double)  98, (double) 105, (double) 112), new double16((double)   5, (double)  10, (double)  15, (double)  20, (double)  25, (double)  30, (double)  35, (double)  40, (double)  45, (double)  50, (double)  55, (double)  60, (double)  65, (double)  70, (double)  75, (double)  80) };
@@ -755,6 +767,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestEqManaged()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -806,6 +819,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestEqCl()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -868,6 +882,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestEqSpirV()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -938,6 +953,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestNeqManaged()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -989,6 +1005,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestNeqCl()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1051,6 +1068,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestNeqSpirV()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1121,6 +1139,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLtManaged()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1172,6 +1191,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLtCl()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1234,6 +1254,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLtSpirV()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1304,6 +1325,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLeManaged()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1355,6 +1377,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLeCl()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1417,6 +1440,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLeSpirV()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1487,6 +1511,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGtManaged()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1538,6 +1563,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGtCl()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1600,6 +1626,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGtSpirV()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1670,6 +1697,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGeManaged()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1721,6 +1749,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGeCl()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };
@@ -1783,6 +1812,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGeSpirV()
         {
             var a = new double16[] { new double16((double)  30, (double)  29, (double)  28, (double)  27, (double)  26, (double)  25, (double)  24, (double)  23, (double)  22, (double)  21, (double)  20, (double)  19, (double)  18, (double)  17, (double)  16, (double)  15), new double16((double)   0, (double)   1, (double)   2, (double)   3, (double)   4, (double)   5, (double)   6, (double)   7, (double)   8, (double)   9, (double)  10, (double)  11, (double)  12, (double)  13, (double)  14, (double)  15) };

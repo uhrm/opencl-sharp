@@ -23,6 +23,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAddManaged()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -46,6 +47,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAddCl()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -80,6 +82,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestAddSpirV()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -122,6 +125,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestSubManaged()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -145,6 +149,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestSubCl()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -179,6 +184,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestSubSpirV()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -221,6 +227,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestMulManaged()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -244,6 +251,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestMulCl()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -278,6 +286,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestMulSpirV()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -320,6 +329,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestDivManaged()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -343,6 +353,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestDivCl()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -377,6 +388,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestDivSpirV()
         {
             var a = new double2[] { new double2((double)   7, (double)  14), new double2((double)   5, (double)  10) };
@@ -419,6 +431,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestEqManaged()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -442,6 +455,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestEqCl()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -476,6 +490,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestEqSpirV()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -518,6 +533,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestNeqManaged()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -541,6 +557,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestNeqCl()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -575,6 +592,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestNeqSpirV()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -617,6 +635,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLtManaged()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -640,6 +659,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLtCl()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -674,6 +694,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLtSpirV()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -716,6 +737,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLeManaged()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -739,6 +761,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLeCl()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -773,6 +796,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLeSpirV()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -815,6 +839,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGtManaged()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -838,6 +863,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGtCl()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -872,6 +898,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGtSpirV()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -914,6 +941,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGeManaged()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -937,6 +965,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGeCl()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -971,6 +1000,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGeSpirV()
         {
             var a = new double2[] { new double2((double)   2, (double)   1), new double2((double)   0, (double)   1) };
@@ -1017,6 +1047,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestComponentAccessors1Managed()
         {
             var nr = 2;
@@ -1042,6 +1073,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestComponentAccessors1Cl()
         {
             var nr = 2;
@@ -1079,6 +1111,48 @@ namespace OpenCl.Tests
             Assert.AreEqual((double)1, w[1].s1);
             Assert.AreEqual((double)0, w[1].s0);
         }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        [Ignore("Handling component accessors not implemented in SPIR-V compiler.")]
+        public void TestComponentAccessors1SpirV()
+        {
+            var nr = 2;
+            var nw = 2;
+            var r = new double[nr];
+            var w = new double2[nw];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_components1", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_components1"))
+            using (var mr = Mem<double>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<double>()))
+            using (var mw = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<double2>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(double2));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
+            }
+            Assert.AreEqual((double)1, r[0]);
+            Assert.AreEqual((double)1, w[0].s0);
+            Assert.AreEqual((double)0, w[0].s1);
+            Assert.AreEqual((double)2, r[1]);
+            Assert.AreEqual((double)1, w[1].s1);
+            Assert.AreEqual((double)0, w[1].s0);
+        }
         [Kernel]
         private static void test_components2([Global] double2[] r, [Global] double2[] w)
         {
@@ -1093,6 +1167,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestComponentAccessors2Managed()
         {
             var nr = 4;
@@ -1124,6 +1199,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestComponentAccessors2Cl()
         {
             var nr = 4;
@@ -1140,6 +1216,54 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_components2"))
+            using (var mr = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<double2>()))
+            using (var mw = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<double2>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)mr);
+                kernel.SetKernelArg(1, (HandleObject)mw);
+                queue.EnqueueFillBuffer(mw, default(double2));
+                queue.Finish();
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 1 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, false, r);
+                queue.EnqueueReadBuffer(mw, false, w);
+                queue.Finish();
+            }
+            Assert.AreEqual((double)1, r[0].s0);
+            Assert.AreEqual((double)1, r[0].s1);
+            Assert.AreEqual((double)1, r[1].s0);
+            Assert.AreEqual((double)2, r[1].s1);
+            Assert.AreEqual((double)1, w[0].s0);
+            Assert.AreEqual((double)2, w[0].s1);
+            Assert.AreEqual((double)2, r[2].s0);
+            Assert.AreEqual((double)1, r[2].s1);
+            Assert.AreEqual((double)1, w[1].s1);
+            Assert.AreEqual((double)2, w[1].s0);
+            Assert.AreEqual((double)2, r[3].s0);
+            Assert.AreEqual((double)2, r[3].s1);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        [Ignore("Handling component accessors not implemented in SPIR-V compiler.")]
+        public void TestComponentAccessors2SpirV()
+        {
+            var nr = 4;
+            var nw = 2;
+            var r = new double2[nr];
+            var w = new double2[nw];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestDouble2", "test_components2", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_components2"))
             using (var mr = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, nr*Marshal.SizeOf<double2>()))
             using (var mw = Mem<double2>.CreateBuffer(context, MemFlags.WriteOnly, nw*Marshal.SizeOf<double2>()))

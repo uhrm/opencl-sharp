@@ -23,6 +23,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAddManaged()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -74,6 +75,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAddCl()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -136,6 +138,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestAddSpirV()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -206,6 +209,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestSubManaged()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -257,6 +261,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestSubCl()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -319,6 +324,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestSubSpirV()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -389,6 +395,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestMulManaged()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -440,6 +447,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestMulCl()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -502,6 +510,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestMulSpirV()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -572,6 +581,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestDivManaged()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -623,6 +633,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestDivCl()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -685,6 +696,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestDivSpirV()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -755,6 +767,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestEqManaged()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -806,6 +819,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestEqCl()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -868,6 +882,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestEqSpirV()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -938,6 +953,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestNeqManaged()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -989,6 +1005,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestNeqCl()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1051,6 +1068,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestNeqSpirV()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1121,6 +1139,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLtManaged()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1172,6 +1191,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLtCl()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1234,6 +1254,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLtSpirV()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1304,6 +1325,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestLeManaged()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1355,6 +1377,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestLeCl()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1417,6 +1440,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestLeSpirV()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1487,6 +1511,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGtManaged()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1538,6 +1563,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGtCl()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1600,6 +1626,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGtSpirV()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1670,6 +1697,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestGeManaged()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1721,6 +1749,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestGeCl()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1783,6 +1812,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.SpirV")]
         public void TestGeSpirV()
         {
             var a = new byte16[] { new byte16((byte)  30, (byte)  29, (byte)  28, (byte)  27, (byte)  26, (byte)  25, (byte)  24, (byte)  23, (byte)  22, (byte)  21, (byte)  20, (byte)  19, (byte)  18, (byte)  17, (byte)  16, (byte)  15), new byte16((byte)   0, (byte)   1, (byte)   2, (byte)   3, (byte)   4, (byte)   5, (byte)   6, (byte)   7, (byte)   8, (byte)   9, (byte)  10, (byte)  11, (byte)  12, (byte)  13, (byte)  14, (byte)  15) };
@@ -1853,6 +1883,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestAndManaged()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -1904,6 +1935,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestAndCl()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -1965,6 +1997,70 @@ namespace OpenCl.Tests
             Assert.AreEqual(  80, r[1].sf);
         }
 
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestAndSpirV()
+        {
+            var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
+            var b = new byte16[] { new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80), new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112) };
+            var r = new byte16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte16", "test_byte16_and", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_byte16_and"))
+            using (var ma = Mem<byte16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<byte16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<byte16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<byte16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   5, r[0].s0);
+            Assert.AreEqual(  10, r[0].s1);
+            Assert.AreEqual(   5, r[0].s2);
+            Assert.AreEqual(  20, r[0].s3);
+            Assert.AreEqual(   1, r[0].s4);
+            Assert.AreEqual(  10, r[0].s5);
+            Assert.AreEqual(  33, r[0].s6);
+            Assert.AreEqual(  40, r[0].s7);
+            Assert.AreEqual(  45, r[0].s8);
+            Assert.AreEqual(   2, r[0].s9);
+            Assert.AreEqual(   5, r[0].sa);
+            Assert.AreEqual(  20, r[0].sb);
+            Assert.AreEqual(  65, r[0].sc);
+            Assert.AreEqual(  66, r[0].sd);
+            Assert.AreEqual(  73, r[0].se);
+            Assert.AreEqual(  80, r[0].sf);
+            Assert.AreEqual(   5, r[1].s0);
+            Assert.AreEqual(  10, r[1].s1);
+            Assert.AreEqual(   5, r[1].s2);
+            Assert.AreEqual(  20, r[1].s3);
+            Assert.AreEqual(   1, r[1].s4);
+            Assert.AreEqual(  10, r[1].s5);
+            Assert.AreEqual(  33, r[1].s6);
+            Assert.AreEqual(  40, r[1].s7);
+            Assert.AreEqual(  45, r[1].s8);
+            Assert.AreEqual(   2, r[1].s9);
+            Assert.AreEqual(   5, r[1].sa);
+            Assert.AreEqual(  20, r[1].sb);
+            Assert.AreEqual(  65, r[1].sc);
+            Assert.AreEqual(  66, r[1].sd);
+            Assert.AreEqual(  73, r[1].se);
+            Assert.AreEqual(  80, r[1].sf);
+        }
+
         [Kernel]
         private static void test_byte16_or([Global] byte16[] a, [Global] byte16[] b, [Global] byte16[] r)
         {
@@ -1973,6 +2069,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestOrManaged()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -2024,6 +2121,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestOrCl()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -2085,6 +2183,70 @@ namespace OpenCl.Tests
             Assert.AreEqual( 112, r[1].sf);
         }
 
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestOrSpirV()
+        {
+            var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
+            var b = new byte16[] { new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80), new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112) };
+            var r = new byte16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte16", "test_byte16_or", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
+            using (var kernel = Kernel.CreateKernel(program, "test_byte16_or"))
+            using (var ma = Mem<byte16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<byte16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<byte16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<byte16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   7, r[0].s0);
+            Assert.AreEqual(  14, r[0].s1);
+            Assert.AreEqual(  31, r[0].s2);
+            Assert.AreEqual(  28, r[0].s3);
+            Assert.AreEqual(  59, r[0].s4);
+            Assert.AreEqual(  62, r[0].s5);
+            Assert.AreEqual(  51, r[0].s6);
+            Assert.AreEqual(  56, r[0].s7);
+            Assert.AreEqual(  63, r[0].s8);
+            Assert.AreEqual( 118, r[0].s9);
+            Assert.AreEqual( 127, r[0].sa);
+            Assert.AreEqual( 124, r[0].sb);
+            Assert.AreEqual(  91, r[0].sc);
+            Assert.AreEqual( 102, r[0].sd);
+            Assert.AreEqual( 107, r[0].se);
+            Assert.AreEqual( 112, r[0].sf);
+            Assert.AreEqual(   7, r[1].s0);
+            Assert.AreEqual(  14, r[1].s1);
+            Assert.AreEqual(  31, r[1].s2);
+            Assert.AreEqual(  28, r[1].s3);
+            Assert.AreEqual(  59, r[1].s4);
+            Assert.AreEqual(  62, r[1].s5);
+            Assert.AreEqual(  51, r[1].s6);
+            Assert.AreEqual(  56, r[1].s7);
+            Assert.AreEqual(  63, r[1].s8);
+            Assert.AreEqual( 118, r[1].s9);
+            Assert.AreEqual( 127, r[1].sa);
+            Assert.AreEqual( 124, r[1].sb);
+            Assert.AreEqual(  91, r[1].sc);
+            Assert.AreEqual( 102, r[1].sd);
+            Assert.AreEqual( 107, r[1].se);
+            Assert.AreEqual( 112, r[1].sf);
+        }
+
         [Kernel]
         private static void test_byte16_xor([Global] byte16[] a, [Global] byte16[] b, [Global] byte16[] r)
         {
@@ -2093,6 +2255,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Managed")]
         public void TestXorManaged()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -2144,6 +2307,7 @@ namespace OpenCl.Tests
         }
 
         [Test]
+        [Category("Compiled.Cl")]
         public void TestXorCl()
         {
             var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
@@ -2159,6 +2323,70 @@ namespace OpenCl.Tests
             using (var context = Context.CreateContext(platform, device, null, null))
             using (var queue = CommandQueue.CreateCommandQueue(context, device))
             using (var program = Program.CreateProgramWithSource(context, device, source))
+            using (var kernel = Kernel.CreateKernel(program, "test_byte16_xor"))
+            using (var ma = Mem<byte16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
+            using (var mb = Mem<byte16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
+            using (var mr = Mem<byte16>.CreateBuffer(context, MemFlags.ReadWrite, 2*Marshal.SizeOf<byte16>()))
+            {
+                kernel.SetKernelArg(0, (HandleObject)ma);
+                kernel.SetKernelArg(1, (HandleObject)mb);
+                kernel.SetKernelArg(2, (HandleObject)mr);
+                queue.EnqueueNDRangeKernel(kernel, null, new int[] { 2 }, null, null);
+                queue.Finish();
+                queue.EnqueueReadBuffer(mr, true, r);
+            }
+            Assert.AreEqual(   2, r[0].s0);
+            Assert.AreEqual(   4, r[0].s1);
+            Assert.AreEqual(  26, r[0].s2);
+            Assert.AreEqual(   8, r[0].s3);
+            Assert.AreEqual(  58, r[0].s4);
+            Assert.AreEqual(  52, r[0].s5);
+            Assert.AreEqual(  18, r[0].s6);
+            Assert.AreEqual(  16, r[0].s7);
+            Assert.AreEqual(  18, r[0].s8);
+            Assert.AreEqual( 116, r[0].s9);
+            Assert.AreEqual( 122, r[0].sa);
+            Assert.AreEqual( 104, r[0].sb);
+            Assert.AreEqual(  26, r[0].sc);
+            Assert.AreEqual(  36, r[0].sd);
+            Assert.AreEqual(  34, r[0].se);
+            Assert.AreEqual(  32, r[0].sf);
+            Assert.AreEqual(   2, r[1].s0);
+            Assert.AreEqual(   4, r[1].s1);
+            Assert.AreEqual(  26, r[1].s2);
+            Assert.AreEqual(   8, r[1].s3);
+            Assert.AreEqual(  58, r[1].s4);
+            Assert.AreEqual(  52, r[1].s5);
+            Assert.AreEqual(  18, r[1].s6);
+            Assert.AreEqual(  16, r[1].s7);
+            Assert.AreEqual(  18, r[1].s8);
+            Assert.AreEqual( 116, r[1].s9);
+            Assert.AreEqual( 122, r[1].sa);
+            Assert.AreEqual( 104, r[1].sb);
+            Assert.AreEqual(  26, r[1].sc);
+            Assert.AreEqual(  36, r[1].sd);
+            Assert.AreEqual(  34, r[1].se);
+            Assert.AreEqual(  32, r[1].sf);
+        }
+
+        [Test]
+        [Category("Compiled.SpirV")]
+        public void TestXorSpirV()
+        {
+            var a = new byte16[] { new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112), new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80) };
+            var b = new byte16[] { new byte16((byte)   5, (byte)  10, (byte)  15, (byte)  20, (byte)  25, (byte)  30, (byte)  35, (byte)  40, (byte)  45, (byte)  50, (byte)  55, (byte)  60, (byte)  65, (byte)  70, (byte)  75, (byte)  80), new byte16((byte)   7, (byte)  14, (byte)  21, (byte)  28, (byte)  35, (byte)  42, (byte)  49, (byte)  56, (byte)  63, (byte)  70, (byte)  77, (byte)  84, (byte)  91, (byte)  98, (byte) 105, (byte) 112) };
+            var r = new byte16[2];
+
+            // compile SPIR-V kernel
+            var module = new MemoryStream();
+            SpirCompiler.EmitKernel("opencl-tests", "OpenCl.Tests.TestByte16", "test_byte16_xor", module);
+
+            // test SPIR-V kernel
+            var platform = Platform.GetPlatformIDs().First();
+            var device = Device.GetDeviceIDs(platform, DeviceType.All).First();
+            using (var context = Context.CreateContext(platform, device, null, null))
+            using (var queue = CommandQueue.CreateCommandQueue(context, device))
+            using (var program = Program.CreateProgramWithIL(context, device, module.ToArray()))
             using (var kernel = Kernel.CreateKernel(program, "test_byte16_xor"))
             using (var ma = Mem<byte16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, a))
             using (var mb = Mem<byte16>.CreateBuffer(context, MemFlags.ReadOnly | MemFlags.CopyHostPtr, b))
