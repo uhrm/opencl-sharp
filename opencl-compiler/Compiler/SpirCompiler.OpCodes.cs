@@ -73,6 +73,74 @@ namespace OpenCl.Compiler
         }
     }
 
+    class OpUndef : TypedResultOpCode
+    {
+        private readonly SpirCompiler compiler;
+        private readonly TypeOpCode type;
+
+        public OpUndef(SpirCompiler compiler, TypeOpCode type)
+        {
+            this.compiler = compiler;
+            this.type = type;
+        }
+
+        public override int ResultId
+        {
+            get { return this.compiler.UndefResultId(this); }
+        }
+
+        public override TypeOpCode ResultType
+        {
+            get { return this.type; }
+        }
+
+        public override void Emit(Stream stream)
+        {
+            stream.WriteShortLE(1);
+            stream.WriteShortLE(3);
+            stream.WriteIntLE(this.type.ResultId);
+            stream.WriteIntLE(ResultId);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType()) {
+                return false;
+            }
+            var c = obj as OpUndef;
+            return this.type.Equals(c.type);
+        }
+        
+        public override int GetHashCode()
+        {
+            unchecked {
+                var result = 0x1c01d82b;
+                result = 397*result + this.type.GetHashCode();
+                return result;
+            }
+        }
+    }
+
+    // TODO: OpSizeOf (321)
+
+    // TODO: OpSourceContinued (2)
+
+    // TODO: OpSource (3)
+
+    // TODO: OpSourceExtension (4)
+
+    // TODO: OpName (5)
+
+    // TODO: OpMemberName (6)
+
+    // TODO: OpString (7)
+
+    // TODO: OpLine (8)
+
+    // TODO: OpNoLine (317)
+
+    // TODO: OpModuleProcessed (330)
+
     abstract class OpDecorate : SpirOpCode
     {
         public readonly ResultOpCode target;
@@ -1034,36 +1102,16 @@ namespace OpenCl.Compiler
             if (this.type is OpTypeInt) {
                 switch (this.type.Width) {
                 case 8:
-                    // if ((this.type as OpTypeInt).Signedness == 1) {
-                    stream.WriteIntLE(Convert.ToSByte(this.value));
-                    // }
-                    // else {
-                    //     stream.WriteByteLE(Convert.ToByte(this.value));
-                    // }
+                    stream.WriteIntLE(Convert.ToSByte(this.value) & 0xFF);
                     break;
                 case 16:
-                    // if ((this.type as OpTypeInt).Signedness == 1) {
-                    stream.WriteIntLE(Convert.ToInt16(this.value));
-                    // }
-                    // else {
-                    //     stream.WriteShortLE(Convert.ToUInt16(this.value));
-                    // }
+                    stream.WriteIntLE(Convert.ToInt16(this.value) & 0xFFFF);
                     break;
                 case 32:
-                    // if ((this.type as OpTypeInt).Signedness == 1) {
                     stream.WriteIntLE(Convert.ToInt32(this.value));
-                    // }
-                    // else {
-                    //     stream.WriteIntLE(Convert.ToUInt32(this.value));
-                    // }
                     break;
                 case 64:
-                    // if ((this.type as OpTypeInt).Signedness == 1) {
                     stream.WriteLongLE(Convert.ToInt64(this.value));
-                    // }
-                    // else {
-                    //     stream.WriteLongLE(Convert.ToUInt64(this.value));
-                    // }
                     break;
                 default:
                     throw new CompilerException($"Unsupported integer width: {this.type.Width} (expected width 8, 16, 32, or 64)");
@@ -1700,11 +1748,14 @@ namespace OpenCl.Compiler
 
     class OpCompositeExtract : DefaultTypedResultOpCode
     {
-        private readonly CompositeTypeOpCode composite;
+        private readonly TypedResultOpCode composite;
         private readonly int[] index;
 
-        public OpCompositeExtract(int rid, CompositeTypeOpCode composite, params int[] index) : base(rid)
+        public OpCompositeExtract(int rid, TypedResultOpCode composite, params int[] index) : base(rid)
         {
+            if (!(composite.ResultType is CompositeTypeOpCode)) {
+                throw new ArgumentException($"Invalid type of argument '{nameof(composite)}': expected 'CompositeTypeOpCode', found '{composite.ResultType.GetType().Name}'.", nameof(composite));
+            }
             this.composite = composite;
             this.index = index;
         }
@@ -1712,7 +1763,7 @@ namespace OpenCl.Compiler
         public override TypeOpCode ResultType
         {
             get {
-                TypeOpCode result = this.composite;
+                TypeOpCode result = this.composite.ResultType;
                 foreach (var i in this.index) {
                     result = (result as CompositeTypeOpCode).GetResultType(i);
                 }
@@ -1726,6 +1777,48 @@ namespace OpenCl.Compiler
             stream.WriteShortLE((short)(4+this.index.Length));
             stream.WriteIntLE(ResultType.ResultId);
             stream.WriteIntLE(ResultId);
+            stream.WriteIntLE(this.composite.ResultId);
+            foreach (var idx in this.index) {
+                stream.WriteIntLE(idx);
+            }
+        }
+    }
+
+    class OpCompositeInsert : DefaultTypedResultOpCode
+    {
+        private readonly TypedResultOpCode value;
+        private readonly TypedResultOpCode composite;
+        private readonly int[] index;
+
+        public OpCompositeInsert(int rid, TypedResultOpCode value, TypedResultOpCode composite, params int[] index) : base(rid)
+        {
+            if (!(composite.ResultType is CompositeTypeOpCode)) {
+                throw new ArgumentException($"Invalid type of argument '{nameof(composite)}': expected 'CompositeTypeOpCode', found '{composite.ResultType.GetType().Name}'.", nameof(composite));
+            }
+            TypeOpCode t = composite.ResultType;
+            foreach (var i in index) {
+                t = (t as CompositeTypeOpCode).GetResultType(i);
+            }
+            if (!(t.Equals(value.ResultType))) {
+                throw new ArgumentException($"Invalid type of argument '{nameof(value)}': expected '{t.GetType().Name}', found '{value.ResultType.GetType().Name}'.", nameof(value));
+            }
+            this.value = value;
+            this.composite = composite;
+            this.index = index;
+        }
+
+        public override TypeOpCode ResultType
+        {
+            get { return this.composite.ResultType; }
+        }
+
+        public override void Emit(Stream stream)
+        {
+            stream.WriteShortLE(82);
+            stream.WriteShortLE((short)(5+this.index.Length));
+            stream.WriteIntLE(ResultType.ResultId);
+            stream.WriteIntLE(ResultId);
+            stream.WriteIntLE(this.value.ResultId);
             stream.WriteIntLE(this.composite.ResultId);
             foreach (var idx in this.index) {
                 stream.WriteIntLE(idx);
@@ -2448,6 +2541,18 @@ namespace OpenCl.Compiler
 
     public partial class SpirCompiler
     {
+        private OpNop OpNop()
+        {
+            return new OpNop();
+        }
+
+        private OpUndef OpUndef(TypeOpCode type)
+        {
+            var result = new OpUndef(this, type);
+            RegisterOpUndef(result);
+            return result;
+        }
+
         private OpDecorateBuiltIn OpDecorateBuiltIn(ResultOpCode target, BuiltIn builtin)
         {
             return new OpDecorateBuiltIn(target, builtin);
@@ -2498,9 +2603,7 @@ namespace OpenCl.Compiler
 
         private OpTypeInt OpTypeInt(int width)
         {
-            var op = new OpTypeInt(this, width);
-            RegisterTypeOpCode(op);
-            return op;
+            return OpTypeInt(width, 0);
         }
 
         private OpTypeInt OpTypeInt(int width, int signedness)
@@ -2700,9 +2803,14 @@ namespace OpenCl.Compiler
             return new OpVectorExtractDynamic(this.rcount++, vector, index);
         }
 
-        private OpCompositeExtract OpCompositeExtract(CompositeTypeOpCode composite, params int[] index)
+        private OpCompositeExtract OpCompositeExtract(TypedResultOpCode composite, params int[] index)
         {
             return new OpCompositeExtract(this.rcount++, composite, index);
+        }
+
+        private OpCompositeInsert OpCompositeInsert(TypedResultOpCode value, TypedResultOpCode composite, params int[] index)
+        {
+            return new OpCompositeInsert(this.rcount++, value, composite, index);
         }
 
         private OpConvertFToU OpConvertFToU(TypeOpCode resultType, TypedResultOpCode value)

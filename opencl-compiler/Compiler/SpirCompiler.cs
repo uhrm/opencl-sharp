@@ -87,6 +87,45 @@ namespace OpenCl.Compiler
             { "OpenCl.double16", c => c.OpTypeVector(16, c.OpTypeFloat(64)) },
         };
 
+        // builtin variables (https://github.com/KhronosGroup/SPIRV-LLVM/blob/khronos/spirv-3.6.1/test/SPIRV/builtin_vars-decorate.ll)
+        // __spirv_BuiltInWorkDim = external addrspace(1) global i32
+        // __spirv_BuiltInGlobalSize = external addrspace(1) global <3 x i32>
+        // __spirv_BuiltInGlobalInvocationId = external addrspace(1) global <3 x i32>
+        // __spirv_BuiltInWorkgroupSize = external addrspace(1) global <3 x i32>
+        // __spirv_BuiltInEnqueuedWorkgroupSize = external addrspace(1) global <3 x i32>
+        // __spirv_BuiltInLocalInvocationId = external addrspace(1) global <3 x i32>
+        // __spirv_BuiltInNumWorkgroups = external addrspace(1) global <3 x i32>
+        // __spirv_BuiltInWorkgroupId = external addrspace(1) global <3 x i32>
+        // __spirv_BuiltInGlobalOffset = external addrspace(1) global <3 x i32>
+        // __spirv_BuiltInGlobalLinearId = external addrspace(1) global i32
+        // __spirv_BuiltInLocalInvocationIndex = external addrspace(1) global i32
+        // __spirv_BuiltInSubgroupSize = external addrspace(1) global i32
+        // __spirv_BuiltInSubgroupMaxSize = external addrspace(1) global i32
+        // __spirv_BuiltInNumSubgroups = external addrspace(1) global i32
+        // __spirv_BuiltInSubgroupId = external addrspace(1) global i32
+        // __spirv_BuiltInSubgroupLocalInvocationId = external addrspace(1) global i32
+        private static readonly Dictionary<string,(BuiltIn,int)> builtin_vars = new Dictionary<string,(BuiltIn,int)>() {
+            { "OpenCl.Cl.GetWorkDim", (BuiltIn.WorkDim, 1) },
+            { "OpenCl.Cl.GetGlobalId", (BuiltIn.GlobalInvocationId, 3) },
+            { "OpenCl.Cl.GetWorkgroupSize", (BuiltIn.WorkgroupSize, 3) },
+            { "OpenCl.Cl.GetEnqueuedWorkgroupSize", (BuiltIn.EnqueuedWorkgroupSize, 3) },
+            { "OpenCl.Cl.GetLocalId", (BuiltIn.LocalInvocationId, 3) },
+            { "OpenCl.Cl.GetNumWorkgroups", (BuiltIn.NumWorkgroups, 3) },
+            { "OpenCl.Cl.GetWorkgroupId", (BuiltIn.WorkgroupId, 3) },
+            { "OpenCl.Cl.GetGlobalOffset", (BuiltIn.GlobalOffset, 3) },
+            { "OpenCl.Cl.GetGlobalLinearId", (BuiltIn.GlobalLinearId, 1) },
+            { "OpenCl.Cl.GetLocalIndex", (BuiltIn.LocalInvocationIndex, 1) },
+            { "OpenCl.Cl.GetSubgroupSize", (BuiltIn.SubgroupSize, 1) },
+            { "OpenCl.Cl.GetSubgroupMaxSize", (BuiltIn.SubgroupMaxSize, 1) },
+            { "OpenCl.Cl.GetNumSubgroups", (BuiltIn.NumSubgroups, 1) },
+            { "OpenCl.Cl.GetNumEnqueuedSubgroups", (BuiltIn.NumEnqueuedSubgroups, 1) },
+            { "OpenCl.Cl.GetSubgroupId", (BuiltIn.SubgroupId, 1) },
+            { "OpenCl.Cl.GetSubgroupLocalId", (BuiltIn.SubgroupLocalInvocationId, 1) }
+        };
+
+        private static readonly Dictionary<string,BuiltIn> builtin_vectors = new Dictionary<string,BuiltIn>() {
+        };
+
         // IL source data
 
         private readonly Queue<MethodDefinition> queue;
@@ -95,10 +134,12 @@ namespace OpenCl.Compiler
 
         private int rcount;
 
+        private HashSet<OpCapability> capabilities;
         private List<OpEntryPoint> entryPoints;
         private List<OpDecorate> decorations;
         private Dictionary<TypeOpCode,int> types;
         private Dictionary<string,TypedResultOpCode> imports;
+        private Dictionary<OpUndef,int> undefs;
         private Dictionary<ConstOpCode,int> constants;
         private List<List<SpirOpCode>> functions;
 
@@ -108,10 +149,16 @@ namespace OpenCl.Compiler
         {
             this.queue = new Queue<MethodDefinition>(methods);
             this.rcount = 1;
+            this.capabilities = new HashSet<OpCapability>() {
+                OpCapability(Capability.Addresses),
+                OpCapability(Capability.Linkage),
+                OpCapability(Capability.Kernel)
+            };
             this.entryPoints = new List<OpEntryPoint>();
             this.decorations = new List<OpDecorate>();
             this.types = new Dictionary<TypeOpCode,int>();
             this.imports = new Dictionary<String,TypedResultOpCode>();
+            this.undefs = new Dictionary<OpUndef,int>();
             this.constants = new Dictionary<ConstOpCode,int>();
             this.functions = new List<List<SpirOpCode>>();
         }
@@ -133,6 +180,30 @@ namespace OpenCl.Compiler
             if (!this.types.ContainsKey(op)) {
                 var id = this.rcount++;
                 this.types.Add(op, id);
+                switch ((op as OpTypeInt)?.Width)
+                {
+                    case var width when width.HasValue && width.Value == 8:
+                        this.capabilities.Add(OpCapability(Capability.Int8));
+                        break;
+                    case var width when width.HasValue && width.Value == 16:
+                        this.capabilities.Add(OpCapability(Capability.Int16));
+                        break;
+                    case var width when width.HasValue && width.Value == 64:
+                        this.capabilities.Add(OpCapability(Capability.Int64));
+                        break;
+                }
+                switch ((op as OpTypeFloat)?.Width)
+                {
+                    case var width when width.HasValue && width.Value == 64:
+                        this.capabilities.Add(OpCapability(Capability.Float64));
+                        break;
+                }
+                switch ((op as OpTypeVector)?.ComponentCount)
+                {
+                    case var count when count.HasValue && (count.Value == 8 || count.Value == 16):
+                        this.capabilities.Add(OpCapability(Capability.Vector16));
+                        break;
+                }
             }
         }
 
@@ -235,16 +306,22 @@ namespace OpenCl.Compiler
             throw new CompilerException($"Unsupported type conversion: {src.ResultType} -> {dst}.");
         }
 
-        // constant helper
+        // undef helper
 
-        // private int SpirConstantCallback(ConstOpCode op)
-        // {
-        //     if (!this.constants.TryGetValue(op, out int id)) {
-        //         id = this.rcount++;
-        //         this.constants.Add(op, id);
-        //     }
-        //     return id;
-        // }
+        private void RegisterOpUndef(OpUndef op)
+        {
+            if (!this.undefs.ContainsKey(op)) {
+                var id = this.rcount++;
+                this.undefs.Add(op, id);
+            }
+        }
+
+        internal int UndefResultId(OpUndef op)
+        {
+            return this.undefs[op];
+        }
+
+        // constant helper
 
         private void RegisterConstOpCode(ConstOpCode op)
         {
@@ -266,6 +343,39 @@ namespace OpenCl.Compiler
                 .Select((attr, idx) => attr.ConstructorArguments[0].Value as string)
                 .DefaultIfEmpty(mdef.Name)
                 .First();
+        }
+        TypedResultOpCode GetBuiltInVariable(String name, BuiltIn builtin)
+        {
+            if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
+                // type of import symbol
+                var t = OpTypePointer(StorageClass.UniformConstant, OpTypeInt(BUILTIN_WIDTH));
+                // import symbol
+                sym = OpVariable(t);
+                this.imports.Add(name, sym);
+                // import decorations
+                this.decorations.Add(OpDecorateBuiltIn(sym, builtin));
+                this.decorations.Add(OpDecorateConstant(sym));
+                this.decorations.Add(OpDecorateLinkageAttributes(sym, LinkageType.Import, builtin));
+            }
+            return OpLoad(sym);
+        }
+
+        (TypedResultOpCode,TypedResultOpCode) GetBuiltInVector(String name, ResultOpCode index, BuiltIn builtin)
+        {
+            if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
+                // type of import symbol
+                var t = OpTypePointer(StorageClass.UniformConstant, OpTypeVector(3, OpTypeInt(BUILTIN_WIDTH)));
+                // import symbol
+                sym = OpVariable(t);
+                this.imports.Add(name, sym);
+                // import decorations
+                this.decorations.Add(OpDecorateBuiltIn(sym, builtin));
+                this.decorations.Add(OpDecorateConstant(sym));
+                this.decorations.Add(OpDecorateLinkageAttributes(sym, LinkageType.Import, builtin));
+            }
+            var ld = OpLoad(sym);
+            var op = OpVectorExtractDynamic(ld, index);
+            return (ld, op);
         }
 
         private void Parse(MethodDefinition method)
@@ -994,81 +1104,44 @@ namespace OpenCl.Compiler
                     }
                     switch (name)
                     {
-                    // builtin variables (https://github.com/KhronosGroup/SPIRV-LLVM/blob/khronos/spirv-3.6.1/test/SPIRV/builtin_vars-decorate.ll)
-                    case "OpenCl.Cl.GetWorkDim": {
-                        // __spirv_BuiltInWorkDim = external addrspace(1) global i32
-                        if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
-                            // type of import symbol
-                            var t = OpTypePointer(StorageClass.UniformConstant, OpTypeInt(BUILTIN_WIDTH));
-                            // import symbol
-                            sym = OpVariable(t);
-                            this.imports.Add(name, sym);
-                            // import decorations
-                            this.decorations.Add(OpDecorateBuiltIn(sym, BuiltIn.WorkDim));
-                            this.decorations.Add(OpDecorateConstant(sym));
-                            this.decorations.Add(OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.WorkDim));
+                    case string _ when builtin_vars.ContainsKey(name): {
+                        var (builtin, size) = builtin_vars[name];
+                        switch (size) {
+                        case 1: {
+                            var ld = GetBuiltInVariable(name, builtin);
+                            funcdef.Add(ld);
+                            stack.Push(ld);
+                            break;
                         }
-                        var ld = OpLoad(sym);
-                        var op = OpVectorExtractDynamic(ld, stack.Pop());
-                        funcdef.Add(ld);
-                        funcdef.Add(op);
-                        stack.Push(op);
+                        default: {
+                            var (ld, op) = GetBuiltInVector(name, stack.Pop(), builtin);
+                            funcdef.Add(ld);
+                            funcdef.Add(op);
+                            stack.Push(op);
+                            break;
+                        }}
                         break;
                     }
-                    case "OpenCl.Cl.GetGlobalSize": {
-                        // __spirv_BuiltInGlobalSize = external addrspace(1) global <3 x i32>
-                        if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
-                            // type of import symbol
-                            var t = OpTypePointer(StorageClass.UniformConstant, OpTypeVector(3, OpTypeInt(BUILTIN_WIDTH)));
-                            // import symbol
-                            sym = OpVariable(t);
-                            this.imports.Add(name, sym);
-                            // import decorations
-                            this.decorations.Add(OpDecorateBuiltIn(sym, BuiltIn.GlobalSize));
-                            this.decorations.Add(OpDecorateConstant(sym));
-                            this.decorations.Add(OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.GlobalSize));
+                    case string _ when mdef.IsConstructor: {
+                        if (!tdef.IsValueType) {
+                            throw new CompilerException("Instantiation of reference types is not supported.");
                         }
-                        var ld = OpLoad(sym);
-                        var op = OpVectorExtractDynamic(ld, stack.Pop());
-                        funcdef.Add(ld);
-                        funcdef.Add(op);
-                        stack.Push(op);
+                        // Note: this assumes that the type has a constructor
+                        // compatible with C-style compound literals.
+                        var args = new TypedResultOpCode[nargs];
+                        for (var i=nargs-1; i>=0; i--) {
+                            args[i] = stack.Pop();
+                        }
+                        var objtype = args[0].ResultType as OpTypePointer;
+                        var res = OpUndef(objtype.BaseType.ResultType) as TypedResultOpCode;
+                        funcdef.Add(res);
+                        for (var i=1; i<nargs; i++) {
+                            res = OpCompositeInsert(args[i], res, i-1);
+                            funcdef.Add(res);
+                        }
+                        funcdef.Add(OpStore(args[0], res));
                         break;
                     }
-                    case "OpenCl.Cl.GetGlobalId": {
-                        // __spirv_BuiltInGlobalInvocationId = external addrspace(1) global <3 x i32>
-                        if (!this.imports.TryGetValue(name, out TypedResultOpCode sym)) {
-                            // type of import symbol
-                            var t = OpTypePointer(StorageClass.UniformConstant, OpTypeVector(3, OpTypeInt(BUILTIN_WIDTH)));
-                            // import symbol
-                            sym = OpVariable(t);
-                            this.imports.Add(name, sym);
-                            // import decorations
-                            this.decorations.Add(OpDecorateBuiltIn(sym, BuiltIn.GlobalInvocationId));
-                            this.decorations.Add(OpDecorateConstant(sym));
-                            this.decorations.Add(OpDecorateLinkageAttributes(sym, LinkageType.Import, BuiltIn.GlobalInvocationId));
-                        }
-                        var ld = OpLoad(sym);
-                        var op = OpVectorExtractDynamic(ld, stack.Pop());
-                        funcdef.Add(ld);
-                        funcdef.Add(op);
-                        stack.Push(op);
-                        break;
-                    }
-// @__spirv_BuiltInWorkgroupSize = external addrspace(1) global <3 x i32>
-// @__spirv_BuiltInEnqueuedWorkgroupSize = external addrspace(1) global <3 x i32>
-// @__spirv_BuiltInLocalInvocationId = external addrspace(1) global <3 x i32>
-// @__spirv_BuiltInNumWorkgroups = external addrspace(1) global <3 x i32>
-// @__spirv_BuiltInWorkgroupId = external addrspace(1) global <3 x i32>
-// @__spirv_BuiltInGlobalOffset = external addrspace(1) global <3 x i32>
-// @__spirv_BuiltInGlobalLinearId = external addrspace(1) global i32
-// @__spirv_BuiltInLocalInvocationIndex = external addrspace(1) global i32
-// @__spirv_BuiltInSubgroupSize = external addrspace(1) global i32
-// @__spirv_BuiltInSubgroupMaxSize = external addrspace(1) global i32
-// @__spirv_BuiltInNumSubgroups = external addrspace(1) global i32
-// @__spirv_BuiltInNumEnqueuedSubgroups = external addrspace(1) global i32
-// @__spirv_BuiltInSubgroupId = external addrspace(1) global i32
-// @__spirv_BuiltInSubgroupLocalInvocationId = external addrspace(1) global i32
                     case string _ when name.EndsWith("op_Addition"): {
                         TypedResultOpCode b = stack.Pop();
                         TypedResultOpCode a = stack.Pop();
@@ -1419,6 +1492,48 @@ namespace OpenCl.Compiler
                         funcdef.Add(cmp);
                         funcdef.Add(sel);
                         stack.Push(sel);
+                        break;
+                    }
+                    case string _ when name.EndsWith("op_BitwiseAnd"): {
+                        TypedResultOpCode b = stack.Pop();
+                        TypedResultOpCode a = stack.Pop();
+                        TypedResultOpCode res;
+                        if (a.ResultType is OpTypeInt || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
+                            res = OpBitwiseAnd(a, b);
+                        }
+                        else {
+                            throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_GreaterThanOrEqual' call.");
+                        }
+                        funcdef.Add(res);
+                        stack.Push(res);
+                        break;
+                    }
+                    case string _ when name.EndsWith("op_BitwiseOr"): {
+                        TypedResultOpCode b = stack.Pop();
+                        TypedResultOpCode a = stack.Pop();
+                        TypedResultOpCode res;
+                        if (a.ResultType is OpTypeInt || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
+                            res = OpBitwiseOr(a, b);
+                        }
+                        else {
+                            throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_GreaterThanOrEqual' call.");
+                        }
+                        funcdef.Add(res);
+                        stack.Push(res);
+                        break;
+                    }
+                    case string _ when name.EndsWith("op_ExclusiveOr"): {
+                        TypedResultOpCode b = stack.Pop();
+                        TypedResultOpCode a = stack.Pop();
+                        TypedResultOpCode res;
+                        if (a.ResultType is OpTypeInt || (a.ResultType as OpTypeVector)?.ComponentType is OpTypeInt) {
+                            res = OpBitwiseXor(a, b);
+                        }
+                        else {
+                            throw new CompilerException($"Unsupported type '{a.ResultType}' in 'op_GreaterThanOrEqual' call.");
+                        }
+                        funcdef.Add(res);
+                        stack.Push(res);
                         break;
                     }
                     default:
@@ -1837,11 +1952,9 @@ namespace OpenCl.Compiler
             // reserved (must be zero)
             output.WriteIntLE(0x00);
             // capabilities
-            OpCapability(Capability.Addresses).Emit(output);
-            OpCapability(Capability.Linkage).Emit(output);
-            OpCapability(Capability.Kernel).Emit(output);
-            OpCapability(Capability.Int16).Emit(output);
-            OpCapability(Capability.Int64).Emit(output);
+            foreach (var capability in this.capabilities) {
+                capability.Emit(output);
+            }
             // import OpenCL extended instruction set
             // see: https://www.khronos.org/registry/spir-v/specs/1.0/OpenCL.ExtendedInstructionSet.100.html
             OpExtInstImport("OpenCL.std").Emit(output);
